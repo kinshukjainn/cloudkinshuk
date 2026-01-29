@@ -98,6 +98,26 @@ const MOCK_BLOG_POSTS: BlogPost[] = [
     ],
     author: { name: "Kinshuk Jain" },
   },
+  {
+    id: "blogD",
+    title: "How AWS Lambda Scales Seamlessly",
+    brief:
+      "AWS Lambda is a serverless compute service that automatically scales your applications in response to incoming traffic. This article explores the architecture and mechanisms behind Lambda's seamless scaling capabilities.",
+    slug: "aws-lambda-scaling",
+    publishedAt: "2025-01-25T10:00:00Z",
+    updatedAt: "2025-01-25T10:00:00Z",
+    readTimeInMinutes: 10,
+    views: 0,
+    reactionCount: 0,
+    tags: [
+      { id: "1", name: "AWS", slug: "aws" },
+      { id: "2", name: "Serverless", slug: "serverless" },
+      { id: "3", name: "Scalability", slug: "scalability" },
+      { id: "4", name: "Lambda", slug: "lambda" },
+      { id: "5", name: "Cloud Computing", slug: "cloud-computing" },
+    ],
+    author: { name: "Kinshuk Jain" },
+  },
 ];
 
 class SimpleSearchEngine {

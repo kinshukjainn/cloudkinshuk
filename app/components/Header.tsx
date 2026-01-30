@@ -3,6 +3,7 @@
 import React from "react";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import {
@@ -67,6 +68,13 @@ const Header = () => {
             href="/"
             className="flex items-center gap-2 font-bold text-lg sm:text-xl text-slate-900 transition-colors"
           >
+            <Image
+              src="/corelogo.png"
+              alt="Cloudkinshuk Logo"
+              width={40}
+              height={40}
+              className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
+            />
             <span className="hidden sm:inline">CLOUDKINSHUK</span>
             <span className="sm:hidden">Cloudkinshuk</span>
           </Link>

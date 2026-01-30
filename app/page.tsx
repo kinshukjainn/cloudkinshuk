@@ -308,7 +308,7 @@ export default function Home() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-8 h-8 flex items-center justify-center bg-black hover:text-blue-800 text-white  rounded-full transition-colors"
+                    className="w-8 h-8 flex items-center justify-center bg-black  text-white  rounded-full transition-colors"
                     title={social.handle}
                   >
                     <SocialIcon icon={social.icon} />

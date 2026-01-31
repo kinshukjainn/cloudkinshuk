@@ -362,7 +362,7 @@ export default function Home() {
             <a
               href="/kinshukfinalresume.pdf"
               download="kinshukfinalresume.pdf"
-              className="inline-flex items-center gap-2 text-black border-2 border-black  p-3 sm:p-2 bg-yellow-200 rounded-full font-bold transition-colors text-xs sm:text-sm md:text-base"
+              className="inline-flex items-center gap-2 text-white p-3 sm:p-2 bg-gray-700 rounded-md font-bold transition-colors text-xs sm:text-sm md:text-base"
             >
               <Download className="w-4 h-4 flex-shrink-0" />
               Download
@@ -385,7 +385,7 @@ export default function Home() {
             </p>
             <a
               href="/home-blog"
-              className="inline-flex items-center gap-2 text-black border-black border-2  p-3 sm:p-2 bg-yellow-200  rounded-2xl sm:rounded-3xl font-bold transition-colors text-xs sm:text-sm md:text-base"
+              className="inline-flex items-center gap-2 text-white   p-3 sm:p-2 bg-gray-700 rounded-md  font-bold transition-colors text-xs sm:text-sm md:text-base"
             >
               Check out Blogs
               <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
@@ -487,7 +487,7 @@ export default function Home() {
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-white p-3 sm:p-2  bg-blue-700 hover:bg-blue-800 rounded-2xl sm:rounded-3xl w-max font-semibold transition-colors text-xs sm:text-sm md:text-base"
+                      className="inline-flex items-center gap-2 text-white p-3 sm:p-2  bg-gray-700 rounded-md w-max font-semibold transition-colors text-xs sm:text-sm md:text-base"
                     >
                       View Project
                       <ExternalLink className="w-3.5 sm:w-4 h-3.5 sm:h-4 flex-shrink-0" />
@@ -498,7 +498,7 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-white p-3 sm:p-2 bg-black hover:bg-gray-900 w-max rounded-2xl sm:rounded-3xl font-semibold transition-colors text-xs sm:text-sm md:text-base"
+                      className="inline-flex items-center gap-2 text-white p-3 sm:p-2 bg-black hover:bg-gray-900 w-max rounded-md font-semibold transition-colors text-xs sm:text-sm md:text-base"
                     >
                       <Github className="w-3.5 sm:w-4 h-3.5 sm:h-4 flex-shrink-0" />
                       Source Code
@@ -528,7 +528,7 @@ export default function Home() {
                   {skills.map((skill) => (
                     <span
                       key={skill}
-                      className="inline-flex items-center px-2 sm:px-3bg-gray-300 rounded-2xl py-1.5 sm:py-2 text-xs sm:text-sm text-black font-medium whitespace-nowrap"
+                      className="inline-flex items-center px-2 sm:px-3 bg-gray-300 rounded-md py-1.5 sm:py-2 text-xs sm:text-sm text-black font-medium whitespace-nowrap"
                     >
                       {skill}
                     </span>
@@ -582,7 +582,7 @@ export default function Home() {
                     href={cert.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-black bg-yellow-200 p-2 sm:p-2 rounded-full  font-bold border-2 border-black transition-colors text-xs sm:text-sm md:text-base"
+                    className="inline-flex items-center gap-2 text-white bg-gray-700  p-2 sm:p-2 rounded-md  font-bold transition-colors text-xs sm:text-sm md:text-base"
                   >
                     View Credential
                     <ExternalLink className="w-3.5 sm:w-4 h-3.5 sm:h-4 flex-shrink-0" />

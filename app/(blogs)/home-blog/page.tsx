@@ -44,8 +44,8 @@ const MOCK_BLOG_POSTS: BlogPost[] = [
     title: "How Instagram Is Engineered Under The Hood",
     brief: "Explore how Instagram is designed under the hood.",
     slug: "instagram-engineering",
-    publishedAt: "2025-01-25T10:00:00Z",
-    updatedAt: "2025-01-25T10:00:00Z",
+    publishedAt: "2025-06-19T10:00:00Z",
+    updatedAt: "2025-06-19T10:00:00Z",
     readTimeInMinutes: 10,
     views: 0,
     reactionCount: 0,
@@ -64,8 +64,8 @@ const MOCK_BLOG_POSTS: BlogPost[] = [
     brief:
       "As a student navigating the world of software development, my comfort zone has always been Windows. It's the OS I grew up with. For years, it has served me well as I've dived into technologies like React, TypeScript, and TailwindCSS. ",
     slug: "linux-for-development",
-    publishedAt: "2025-01-25T10:00:00Z",
-    updatedAt: "2025-01-25T10:00:00Z",
+    publishedAt: "2025-11-19T10:00:00Z",
+    updatedAt: "2025-11-19T10:00:00Z",
     readTimeInMinutes: 10,
     views: 0,
     reactionCount: 0,
@@ -84,8 +84,8 @@ const MOCK_BLOG_POSTS: BlogPost[] = [
     brief:
       "AWS Lambda is a serverless compute service that automatically scales your applications in response to incoming traffic. This article explores the architecture and mechanisms behind Lambda's seamless scaling capabilities.",
     slug: "aws-lambda-scaling",
-    publishedAt: "2025-01-25T10:00:00Z",
-    updatedAt: "2025-01-25T10:00:00Z",
+    publishedAt: "2025-12-25T10:00:00Z",
+    updatedAt: "2025-12-25T10:00:00Z",
     readTimeInMinutes: 10,
     views: 0,
     reactionCount: 0,
@@ -100,18 +100,22 @@ const MOCK_BLOG_POSTS: BlogPost[] = [
   },
   {
     id: "blogD",
-    title: "How AWS Lambda Scales Seamlessly",
+    title: "Lets Understand AWS Shared Responsibility Model",
     brief:
-      "AWS Lambda is a serverless compute service that automatically scales your applications in response to incoming traffic. This article explores the architecture and mechanisms behind Lambda's seamless scaling capabilities.",
-    slug: "aws-lambda-scaling",
-    publishedAt: "2025-01-25T10:00:00Z",
-    updatedAt: "2025-01-25T10:00:00Z",
+      "The AWS Shared Responsibility Model defines the division of security responsibilities between AWS and the customer. This article explains how AWS handles infrastructure security while customers are responsible for securing their data, applications, and configurations.",
+    slug: "aws-shared-responsibility-model",
+    publishedAt: "2026-01-29T10:00:00Z",
+    updatedAt: "2026-01-31T10:00:00Z",
     readTimeInMinutes: 10,
     views: 0,
     reactionCount: 0,
     tags: [
       { id: "1", name: "AWS", slug: "aws" },
-      { id: "2", name: "Serverless", slug: "serverless" },
+      {
+        id: "2",
+        name: "Shared Responsibility Model",
+        slug: "shared-responsibility-model",
+      },
       { id: "3", name: "Scalability", slug: "scalability" },
       { id: "4", name: "Lambda", slug: "lambda" },
       { id: "5", name: "Cloud Computing", slug: "cloud-computing" },
@@ -229,7 +233,7 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
           </div>
           <Link
             href={`/home-blog/${post.id}`}
-            className="flex-shrink-0 px-2 py-2 bg-yellow-200 text-black text-sm md:text-base font-bold rounded-full border-2 border-black cursor-pointer transition-colors duration-200 whitespace-nowrap"
+            className="flex-shrink-0 px-2 py-2 bg-gray-700 text-white text-sm md:text-base font-bold rounded-md cursor-pointer transition-colors duration-200 whitespace-nowrap"
           >
             Read More
           </Link>

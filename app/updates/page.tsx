@@ -115,7 +115,7 @@ export default function CurrentWorkings() {
 
         {/* Current Projects */}
         <section className="mb-20">
-          <h2 className="text-sm uppercase tracking-widest text-gray-500 font-bold mb-10 border-b border-gray-100 pb-2">
+          <h2 className="text-sm uppercase tracking-widest text-gray-900 font-bold mb-10 border-b border-gray-100 pb-2">
             Current Projects
           </h2>
           <div className="space-y-16">
@@ -159,7 +159,7 @@ export default function CurrentWorkings() {
 
         {/* Current Learning */}
         <section className="mb-20">
-          <h2 className="text-sm uppercase tracking-widest text-gray-500 font-bold mb-10 border-b border-gray-100 pb-2">
+          <h2 className="text-sm uppercase tracking-widest text-gray-900 font-bold mb-10 border-b border-gray-100 pb-2">
             Currently Learning
           </h2>
           <div className="space-y-12">
@@ -184,16 +184,16 @@ export default function CurrentWorkings() {
 
         {/* Current Interests */}
         <section className="mb-20">
-          <h2 className="text-sm uppercase tracking-widest text-gray-500 font-bold mb-8 border-b border-gray-100 pb-2">
+          <h2 className="text-sm uppercase tracking-widest text-gray-900 font-bold mb-8 border-b border-gray-100 pb-2">
             Current Interests
           </h2>
           <ul className="space-y-4">
             {NOW_CONFIG.interests.map((interest, index) => (
               <li
                 key={index}
-                className="text-lg text-gray-800 leading-relaxed flex items-start"
+                className="text-lg text-gray-900 font-semibold leading-relaxed flex items-start"
               >
-                <span className="mr-3 text-gray-300">•</span>
+                <span className="mr-3 text-gray-900">•</span>
                 {interest}
               </li>
             ))}
@@ -202,13 +202,13 @@ export default function CurrentWorkings() {
 
         {/* Currently Consuming */}
         <section className="mb-20">
-          <h2 className="text-sm uppercase tracking-widest text-gray-500 font-bold mb-10 border-b border-gray-100 pb-2">
+          <h2 className="text-sm uppercase tracking-widest text-gray-900 font-bold mb-10 border-b border-gray-100 pb-2">
             Reading & Following
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
             {NOW_CONFIG.consuming.map((item, index) => (
               <div key={index}>
-                <p className="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-2">
+                <p className="text-xs uppercase tracking-wider text-gray-900 underline font-semibold mb-2">
                   {item.type}
                 </p>
                 <p className="text-lg text-gray-900 font-bold mb-1 tracking-tight">
@@ -222,16 +222,16 @@ export default function CurrentWorkings() {
 
         {/* Current Goals */}
         <section className="mb-20">
-          <h2 className="text-sm uppercase tracking-widest text-gray-500 font-bold mb-8 border-b border-gray-100 pb-2">
+          <h2 className="text-sm uppercase tracking-widest text-gray-900 font-bold mb-8 border-b border-gray-100 pb-2">
             Current Goals
           </h2>
           <ul className="space-y-4">
             {NOW_CONFIG.goals.map((goal, index) => (
               <li
                 key={index}
-                className="text-lg text-gray-800 leading-relaxed flex items-start"
+                className="text-lg text-gray-900 leading-relaxed flex items-start"
               >
-                <span className="mr-3 text-gray-300">•</span>
+                <span className="mr-3 text-gray-900">•</span>
                 {goal}
               </li>
             ))}
@@ -240,11 +240,11 @@ export default function CurrentWorkings() {
 
         {/* Not Doing */}
         {NOW_CONFIG.notDoing && NOW_CONFIG.notDoing.length > 0 && (
-          <section className="mb-20 opacity-75 hover:opacity-100 transition-opacity">
-            <h2 className="text-sm uppercase tracking-widest text-gray-500 font-bold mb-8 border-b border-gray-100 pb-2">
+          <section className="mb-20  transition-opacity">
+            <h2 className="text-sm uppercase tracking-widest text-gray-900 font-bold mb-8 border-b border-gray-100 pb-2">
               Not Doing Right Now
             </h2>
-            <p className="text-lg text-gray-700 mb-6 leading-relaxed max-w-2xl">
+            <p className="text-lg text-gray-900 mb-6 leading-relaxed max-w-2xl">
               Being intentional about what to focus on also means being clear
               about what to avoid.
             </p>
@@ -252,7 +252,7 @@ export default function CurrentWorkings() {
               {NOW_CONFIG.notDoing.map((item, index) => (
                 <li
                   key={index}
-                  className="text-lg text-gray-600 italic leading-relaxed flex items-start"
+                  className="text-lg text-gray-900 italic leading-relaxed flex items-start"
                 >
                   <span className="mr-3 text-gray-300 not-italic">–</span>
                   {item}

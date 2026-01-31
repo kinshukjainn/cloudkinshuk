@@ -96,13 +96,13 @@ const ToolCard: React.FC<ToolCardProps> = ({ section, index }) => {
         <div className="pl-3 sm:pl-4 pb-4 sm:pb-6">
           {/* Header */}
           <div className="flex items-center gap-2 mb-3 sm:mb-4">
-            <div className="w-6 h-6 sm:w-7 sm:h-7 bg-neutral-200 flex items-center justify-center">
-              <CategoryIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
+            <div className=" p-3  rounded-md bg-blue-700 flex items-center justify-center">
+              <CategoryIcon className="w-6 h-6 sm:w-4 sm:h-4 text-white" />
             </div>
-            <h2 className="text-xs sm:text-sm font-semibold text-neutral-800 uppercase tracking-wider">
+            <h2 className="text-md sm:text-sm font-bold text-neutral-800 uppercase tracking-wider">
               {section.category}
             </h2>
-            <span className="ml-auto text-[10px] sm:text-xs text-neutral-500 font-mono">
+            <span className="ml-auto text-[10px] sm:text-xs text-neutral-500 ">
               [{section.items.length}]
             </span>
           </div>
@@ -114,16 +114,16 @@ const ToolCard: React.FC<ToolCardProps> = ({ section, index }) => {
               return (
                 <div
                   key={idx}
-                  className="group/item flex items-start gap-2 sm:gap-3 p-2 sm:p-2.5 hover:bg-neutral-100 transition-colors cursor-pointer"
+                  className="group/item flex items-start gap-2 sm:gap-3 p-2 sm:p-2.5 hover:bg-blue-100 rounded-lg  transition-colors cursor-pointer"
                 >
-                  <div className="w-5 h-5 sm:w-6 sm:h-6 bg-white border border-neutral-300 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <ItemIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-neutral-600 group-hover/item:text-blue-600 transition-colors" />
+                  <div className="p-3 rounded-full bg-blue-500  flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <ItemIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white transition-colors" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs sm:text-sm text-neutral-900 font-medium mb-0.5">
+                    <div className="text-md sm:text-sm text-neutral-900 font-semibold mb-0.5">
                       {item.name}
                     </div>
-                    <div className="text-[10px] sm:text-xs text-neutral-600 font-mono">
+                    <div className="text-[10px] sm:text-xs text-neutral-600 ">
                       {item.spec}
                     </div>
                   </div>
@@ -169,13 +169,13 @@ export default function DevToolsCompact() {
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-neutral-900 mb-2 tracking-tight">
                 Development Stack
               </h1>
-              <p className="text-xs sm:text-sm text-neutral-600 max-w-xl font-mono">
+              <p className="text-xs sm:text-sm text-neutral-600 max-w-xl ">
                 Tools and technologies powering my development workflow
               </p>
             </div>
             <div className="flex gap-4 sm:gap-6 text-center">
               <div>
-                <div className="text-xl sm:text-2xl font-bold text-blue-600 font-mono">
+                <div className="text-xl sm:text-2xl font-bold text-blue-600 ">
                   {totalTools}
                 </div>
                 <div className="text-[10px] sm:text-xs text-neutral-500 uppercase tracking-wider">
@@ -183,7 +183,7 @@ export default function DevToolsCompact() {
                 </div>
               </div>
               <div>
-                <div className="text-xl sm:text-2xl font-bold text-blue-600 font-mono">
+                <div className="text-xl sm:text-2xl font-bold text-blue-600 ">
                   {setupData.length}
                 </div>
                 <div className="text-[10px] sm:text-xs text-neutral-500 uppercase tracking-wider">
@@ -210,11 +210,11 @@ export default function DevToolsCompact() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-green-500 animate-pulse"></div>
-              <span className="text-[10px] sm:text-xs text-neutral-600 font-mono">
+              <span className="text-[10px] sm:text-xs text-neutral-600 ">
                 Last updated: 2025
               </span>
             </div>
-            <div className="text-[10px] sm:text-xs text-neutral-500 font-mono">
+            <div className="text-[10px] sm:text-xs text-neutral-500 ">
               Built with Next.js 16 • React • Tailwind CSS
             </div>
           </div>

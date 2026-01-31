@@ -11,8 +11,8 @@ const config: Config = {
     extend: {
       fontFamily: {
         // Add your custom font here
-        sans: ["var(--font-inter)", "sans-serif"],
-        blog: ["var(--font-fira-sans)", "sans-serif"],
+        sans: ["var(--font-roboto)", "sans-serif"],
+        blog: ["var(--font-inter)", "sans-serif"],
       },
     },
   },

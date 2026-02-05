@@ -13,7 +13,7 @@ export default function BlogLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className={` antialiased`}>
+    <section className={` antialiased bg-[#f5f3ed]`}>
       <Blogheader />
       {children}
     </section>

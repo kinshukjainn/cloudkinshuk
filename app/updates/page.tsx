@@ -85,15 +85,15 @@ const NOW_CONFIG = {
 
 export default function CurrentWorkings() {
   return (
-    <div className="min-h-screen pt-10 bg-white antialiased">
+    <div className="min-h-screen pt-10 bg-[#f5f3ed] antialiased">
       <div className="max-w-3xl mx-auto px-6 sm:px-8 lg:px-12 py-12 sm:py-16">
         {/* Header */}
         <header className="mb-20 sm:mb-24">
           <div className="mb-10">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 tracking-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-gray-900 mb-4 tracking-tight">
               Current Workings
             </h1>
-            <p className="text-lg sm:text-xl text-gray-600 mb-4 font-medium">
+            <p className="text-lg sm:text-2xl text-gray-600 mb-4 font-medium">
               My focus and progress in real-time
             </p>
             <p className="text-sm text-gray-500 font-medium">
@@ -104,7 +104,7 @@ export default function CurrentWorkings() {
           </div>
 
           <div className="space-y-5">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-light text-gray-900 tracking-tight">
               {NOW_CONFIG.intro.title}
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed max-w-2xl">
@@ -115,7 +115,7 @@ export default function CurrentWorkings() {
 
         {/* Current Projects */}
         <section className="mb-20">
-          <h2 className="text-sm uppercase tracking-widest text-gray-900 font-bold mb-10 border-b border-gray-100 pb-2">
+          <h2 className="text-2xl uppercase tracking-widest text-gray-900 font-light mb-10 border-b border-gray-100 pb-2">
             Current Projects
           </h2>
           <div className="space-y-16">
@@ -123,7 +123,7 @@ export default function CurrentWorkings() {
               return (
                 <div key={index} className="group">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-                    <h3 className="text-2xl font-bold text-gray-900 tracking-tight group-hover:text-blue-600 transition-colors">
+                    <h3 className="text-lg font-normal text-gray-900 tracking-tight group-hover:text-blue-600 transition-colors">
                       {project.title}
                     </h3>
                     <span className="inline-block px-3 py-1 text-xs font-semibold text-blue-700 bg-blue-50 rounded-full w-fit">
@@ -159,14 +159,14 @@ export default function CurrentWorkings() {
 
         {/* Current Learning */}
         <section className="mb-20">
-          <h2 className="text-sm uppercase tracking-widest text-gray-900 font-bold mb-10 border-b border-gray-100 pb-2">
+          <h2 className="text-2xl uppercase tracking-widest text-gray-900 font-light mb-10 border-b border-gray-100 pb-2">
             Currently Learning
           </h2>
           <div className="space-y-12">
             {NOW_CONFIG.learning.map((item, index) => {
               return (
                 <div key={index}>
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 tracking-tight">
+                  <h3 className="text-lg sm:text-lg font-normal text-gray-900 mb-3 tracking-tight">
                     {item.topic}
                   </h3>
                   <p className="text-lg text-gray-700 mb-3 leading-relaxed max-w-2xl">
@@ -184,14 +184,14 @@ export default function CurrentWorkings() {
 
         {/* Current Interests */}
         <section className="mb-20">
-          <h2 className="text-sm uppercase tracking-widest text-gray-900 font-bold mb-8 border-b border-gray-100 pb-2">
+          <h2 className="text-2xl uppercase tracking-widest text-gray-900 font-light mb-8 border-b border-gray-100 pb-2">
             Current Interests
           </h2>
           <ul className="space-y-4">
             {NOW_CONFIG.interests.map((interest, index) => (
               <li
                 key={index}
-                className="text-lg text-gray-900 font-semibold leading-relaxed flex items-start"
+                className="text-lg text-gray-900 font-normal leading-relaxed flex items-start"
               >
                 <span className="mr-3 text-gray-900">•</span>
                 {interest}
@@ -202,16 +202,16 @@ export default function CurrentWorkings() {
 
         {/* Currently Consuming */}
         <section className="mb-20">
-          <h2 className="text-sm uppercase tracking-widest text-gray-900 font-bold mb-10 border-b border-gray-100 pb-2">
+          <h2 className="text-2xl uppercase tracking-widest text-gray-900 font-light mb-10 border-b border-gray-100 pb-2">
             Reading & Following
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
             {NOW_CONFIG.consuming.map((item, index) => (
               <div key={index}>
-                <p className="text-xs uppercase tracking-wider text-gray-900 underline font-semibold mb-2">
+                <p className="text-xs uppercase tracking-wider text-gray-900 underline font-normal mb-2">
                   {item.type}
                 </p>
-                <p className="text-lg text-gray-900 font-bold mb-1 tracking-tight">
+                <p className="text-lg text-gray-900 font-normal mb-1 tracking-tight">
                   {item.title}
                 </p>
                 <p className="text-base text-gray-600">{item.author}</p>
@@ -222,7 +222,7 @@ export default function CurrentWorkings() {
 
         {/* Current Goals */}
         <section className="mb-20">
-          <h2 className="text-sm uppercase tracking-widest text-gray-900 font-bold mb-8 border-b border-gray-100 pb-2">
+          <h2 className="text-2xl uppercase tracking-widest text-gray-900 font-light mb-8 border-b border-gray-100 pb-2">
             Current Goals
           </h2>
           <ul className="space-y-4">
@@ -241,7 +241,7 @@ export default function CurrentWorkings() {
         {/* Not Doing */}
         {NOW_CONFIG.notDoing && NOW_CONFIG.notDoing.length > 0 && (
           <section className="mb-20  transition-opacity">
-            <h2 className="text-sm uppercase tracking-widest text-gray-900 font-bold mb-8 border-b border-gray-100 pb-2">
+            <h2 className="text-2xl uppercase tracking-widest text-gray-900 font-light mb-8 border-b border-gray-100 pb-2">
               Not Doing Right Now
             </h2>
             <p className="text-lg text-gray-900 mb-6 leading-relaxed max-w-2xl">

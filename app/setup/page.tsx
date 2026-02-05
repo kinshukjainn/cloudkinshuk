@@ -147,7 +147,7 @@ export default function DevToolsCompact() {
   );
 
   return (
-    <div className="min-h-screen bg-neutral-50 text-neutral-900">
+    <div className="min-h-screen bg-[#f5f3ed] text-neutral-900">
       {/* Header */}
       <header
         ref={headerRef}
@@ -158,15 +158,15 @@ export default function DevToolsCompact() {
           transition: "all 0.6s cubic-bezier(0.17, 0.55, 0.55, 1)",
         }}
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <div className="max-w-6xl mx-auto  px-4 sm:px-6 py-6 sm:py-8">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <div>
               <div className="inline-block px-2 py-1 bg-blue-600 mb-3 sm:mb-4">
-                <span className="text-[10px] sm:text-xs font-bold text-white tracking-wider">
+                <span className="text-[10px] sm:text-xs  text-white tracking-wider">
                   DEVELOPMENT
                 </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-neutral-900 mb-2 tracking-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-light text-neutral-900 mb-2 tracking-tight">
                 Development Stack
               </h1>
               <p className="text-xs sm:text-sm text-neutral-600 max-w-xl ">

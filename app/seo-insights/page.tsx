@@ -395,7 +395,7 @@ export default function SeoInsights() {
   // ========================================================================
 
   return (
-    <div className="min-h-screen bg-white pt-20 sm:pt-24">
+    <div className="min-h-screen bg-[#f5f3ed] pt-20 sm:pt-24">
       <Header
         date={formattedDate}
         showFilters={showFilters}
@@ -584,7 +584,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
               priority: e.target.value as Priority | "all",
             })
           }
-          className="w-full px-3 py-2 text-sm bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 text-sm  border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="all">All Priorities</option>
           <option value="high">High Priority</option>
@@ -609,7 +609,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
               category: e.target.value as Category | "all",
             })
           }
-          className="w-full px-3 py-2 text-sm bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 text-sm  border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="all">All Categories</option>
           <option value="performance">Performance</option>
@@ -656,7 +656,7 @@ const Header: React.FC<HeaderProps> = ({
   onResetFilters,
   onExportMarkdown,
 }) => (
-  <header className="top-0 left-0 right-0 bg-white border-b border-gray-200 z-40 shadow-sm">
+  <header className="top-0 left-0 right-0  border-b border-gray-200 z-40 shadow-sm">
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
         <div>

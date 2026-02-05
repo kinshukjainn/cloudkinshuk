@@ -1,141 +1,149 @@
 export default function BlogPost() {
   return (
-    <article className="max-w-4xl pt-20 mx-auto px-6 py-12">
+    <article className="max-w-4xl bg-[#f5f3ed] pt-20 mx-auto px-6 py-12">
       <h1 className="text-4xl font-bold mb-4">
-        How AWS Lambda Scales Seamlessly
+        My Experience with UPPTCL Internship Program
       </h1>
 
       <p className="text-lg mb-8">
-        AWS Lambda is one of the most popular serverless services offered by
-        Amazon Web Services. Many developers use it because it removes the need
-        to manage servers, but one of its most powerful features is how it
-        automatically scales applications without any manual effort. To really
-        understand why Lambda feels so smooth and reliable, it helps to look at
-        how scaling actually works behind the scenes.
+        I had the opportunity to intern at UPPTCL (Uttar Pradesh Power
+        Transmission Corporation Limited) during my final year of engineering.
+        This experience provided me with valuable insights into the power
+        transmission sector and helped shape my understanding of how electrical
+        infrastructure works at scale across one of India&apos;s largest states.
       </p>
 
       <p className="mb-6">
-        At a basic level, AWS Lambda allows you to run code in response to
-        events. These events can come from many sources, such as API Gateway
-        requests, file uploads to S3, messages from SQS, or scheduled jobs. When
-        an event happens, Lambda runs your function. You do not create servers,
-        you do not configure load balancers, and you do not worry about
-        capacity. AWS handles all of that for you.
+        UPPTCL is responsible for operating and maintaining the power
+        transmission network across Uttar Pradesh. During my internship, I was
+        exposed to various aspects of power transmission, including substations,
+        grid management, and the challenges of maintaining uninterrupted power
+        supply to millions of consumers across the state.
       </p>
 
       <p className="mb-6">
-        The core idea behind Lambda scaling is simple but powerful. Each request
-        is handled independently. When one request comes in, AWS creates an
-        execution environment and runs your function. If ten requests arrive at
-        the same time, ten instances of your function run in parallel. If a
-        thousand requests arrive together, Lambda can handle all of them
-        simultaneously. There is no single server that becomes overloaded.
-      </p>
-
-      <h2 className="text-2xl font-bold mt-8 mb-4">
-        What Happens Behind the Scenes
-      </h2>
-
-      <p className="mb-6">
-        Behind the scenes, AWS maintains a massive pool of compute resources
-        spread across multiple data centers. When your Lambda function is
-        invoked, AWS assigns a small, isolated environment with the memory, CPU,
-        and runtime you selected. This environment is created in milliseconds,
-        your code runs, and once execution finishes, the environment is either
-        reused or discarded.
-      </p>
-
-      <p className="mb-6">
-        You never see or manage these machines, but they are always available.
-        This is why Lambda can scale so quickly. AWS does not need to boot new
-        servers when traffic increases. The capacity already exists and is
-        shared securely across customers.
+        The internship lasted for eight weeks and took place at one of
+        UPPTCL&apos;s major substations. I worked alongside experienced
+        engineers who had spent years managing complex electrical systems. From
+        day one, I realized how different real-world engineering is from what we
+        learn in classrooms. The practical challenges, safety protocols, and
+        decision-making processes opened my eyes to the realities of working in
+        the power sector.
       </p>
 
       <h2 className="text-2xl font-bold mt-8 mb-4">
-        Understanding Concurrency
+        Understanding the Substation Operations
       </h2>
 
       <p className="mb-6">
-        Concurrency refers to how many instances of your Lambda function are
-        running at the same time. As traffic increases, AWS automatically
-        increases concurrency. When traffic decreases, concurrency drops as
-        well. This happens without any configuration in most cases, and you are
-        only billed for the time your function actually runs.
+        One of the first things I learned was how substations function as
+        critical nodes in the power transmission network. These facilities step
+        down high-voltage electricity from transmission lines to lower voltages
+        suitable for distribution. I observed the daily operations, monitoring
+        systems, and maintenance routines that keep these stations running
+        twenty-four hours a day.
       </p>
 
       <p className="mb-6">
-        This automatic adjustment is one of the biggest advantages of Lambda.
-        Traditional systems require careful capacity planning, but Lambda adapts
-        in real time. Whether your application handles ten users or ten million,
-        the scaling logic remains the same.
-      </p>
-
-      <h2 className="text-2xl font-bold mt-8 mb-4">Handling Traffic Spikes</h2>
-
-      <p className="mb-6">
-        One of the strongest features of AWS Lambda is its ability to handle
-        sudden traffic spikes. Imagine a flash sale, a viral post, or a breaking
-        news event. With traditional servers, this can lead to downtime if
-        scaling is not configured properly. With Lambda, AWS detects the surge
-        and instantly runs more function instances to match demand.
-      </p>
-
-      <p className="mb-6">
-        This works because Lambda does not rely on long-running servers. Each
-        execution is short-lived and independent. As a result, applications
-        remain responsive even during extreme spikes in traffic.
+        The complexity of managing multiple transformers, circuit breakers, and
+        control systems was fascinating. Every component plays a vital role, and
+        any failure can affect thousands of people. This gave me a deep
+        appreciation for the engineers who ensure grid stability and respond to
+        issues at any hour.
       </p>
 
       <h2 className="text-2xl font-bold mt-8 mb-4">
-        Cold Starts Explained Simply
+        Hands-On Learning and Technical Skills
       </h2>
 
       <p className="mb-6">
-        You may hear the term “cold start” when discussing Lambda. A cold start
-        happens when AWS creates a new execution environment for your function.
-        This can add a small delay, especially for functions that are not called
-        frequently. However, once the environment is created, AWS often reuses
-        it for future requests, which makes subsequent executions much faster.
+        During my internship, I had the chance to work on several technical
+        tasks. I assisted in routine inspections, learned to read single-line
+        diagrams, and understood how protection relays safeguard equipment from
+        faults. I also gained exposure to SCADA systems that monitor and control
+        the grid remotely.
       </p>
 
       <p className="mb-6">
-        Cold starts are not a scaling problem but a natural part of how Lambda
-        grows to meet demand. For most applications, the impact is minimal and
-        well worth the benefits of automatic scaling.
+        What stood out most was the emphasis on safety. Before entering any
+        high-voltage area, strict protocols had to be followed. This included
+        proper grounding, lockout-tagout procedures, and wearing protective
+        equipment. These practices reinforced how seriously the power industry
+        treats worker safety and operational reliability.
       </p>
 
       <h2 className="text-2xl font-bold mt-8 mb-4">
-        Built for Modern Cloud Architectures
+        Challenges in Power Transmission
       </h2>
 
       <p className="mb-6">
-        AWS Lambda works especially well with other AWS services that are
-        designed to scale automatically, such as API Gateway, S3, DynamoDB, and
-        SQS. This makes Lambda ideal for event-driven architectures where
-        workloads are unpredictable and traffic patterns change frequently.
+        I witnessed firsthand some of the challenges UPPTCL faces. Managing an
+        aging infrastructure while upgrading to modern technology requires
+        careful planning and significant investment. Load balancing during peak
+        demand hours, handling equipment failures, and coordinating with
+        distribution companies are all part of the daily operations.
       </p>
 
       <p className="mb-6">
-        From a developer’s point of view, this means less time worrying about
-        infrastructure and more time focusing on writing business logic. You
-        write the function, define the trigger, and AWS handles the rest.
+        Weather conditions also play a major role. Monsoon season brings
+        challenges like lightning strikes and flooding, while summer heat
+        increases demand and stresses equipment. Observing how engineers respond
+        to these situations taught me the importance of preparedness and quick
+        decision-making.
+      </p>
+
+      <h2 className="text-2xl font-bold mt-8 mb-4">
+        Learning Beyond Technical Knowledge
+      </h2>
+
+      <p className="mb-6">
+        Beyond the technical aspects, this internship taught me valuable lessons
+        about teamwork and communication. Engineers at UPPTCL work in close
+        coordination with field teams, control centers, and management. Clear
+        communication is essential, especially during emergencies when quick
+        responses can prevent major outages.
+      </p>
+
+      <p className="mb-6">
+        I also learned about the regulatory and administrative side of the power
+        sector. Understanding government policies, tariff structures, and
+        compliance requirements gave me a broader perspective on how the
+        industry operates beyond just the engineering aspects.
+      </p>
+
+      <h2 className="text-2xl font-bold mt-8 mb-4">
+        The People Who Made It Memorable
+      </h2>
+
+      <p className="mb-6">
+        The engineers and staff at UPPTCL were incredibly supportive throughout
+        my internship. They patiently explained concepts, answered my questions,
+        and shared their experiences from years in the field. Their dedication
+        to maintaining a reliable power supply, often working in challenging
+        conditions, left a lasting impression on me.
+      </p>
+
+      <p className="mb-6">
+        I also had the chance to interact with other interns from different
+        engineering colleges. Sharing experiences and learning together made the
+        internship more enriching and helped build connections that continue
+        beyond the program.
       </p>
 
       <h2 className="text-2xl font-bold mt-8 mb-4">Final Thoughts</h2>
 
       <p className="mb-6">
-        AWS Lambda scales seamlessly because it runs each request independently,
-        uses a massive shared infrastructure, and creates execution environments
-        on demand. It grows when traffic increases and shrinks when traffic
-        disappears. This combination of flexibility, performance, and simplicity
-        is what makes Lambda such a powerful tool for modern applications.
+        My internship at UPPTCL was a transformative experience that bridged the
+        gap between academic knowledge and practical application. It showed me
+        the critical role power transmission plays in modern society and the
+        dedication required to keep the lights on for millions of people.
       </p>
 
       <p className="mb-6">
-        If you are building cloud-native applications or just starting with
-        serverless, understanding how Lambda scales will help you design systems
-        that are reliable, cost-effective, and ready for real-world traffic.
+        For any engineering student considering an internship in the power
+        sector, I highly recommend it. The exposure to real-world challenges,
+        hands-on learning opportunities, and insights from experienced
+        professionals make it an invaluable part of your engineering education.
       </p>
 
       <div className="mt-12 pt-6 border-t">

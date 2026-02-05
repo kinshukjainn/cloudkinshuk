@@ -12,7 +12,6 @@ import {
   ExternalLink,
   Award,
 } from "lucide-react";
-import Image from "next/image";
 
 const CONFIG = {
   personal: {
@@ -52,18 +51,6 @@ const CONFIG = {
       url: "http://x.com/realkinshuk004",
       icon: "x",
       handle: "@realkinshuk004",
-    },
-    {
-      platform: "Instagram",
-      url: "http://instagram.com/kinshuk.0",
-      icon: "instagram",
-      handle: "@kinshuk.0",
-    },
-    {
-      platform: "Credly",
-      url: "https://www.credly.com/users/kinshuk004",
-      icon: "award",
-      handle: "@kinshuk004",
     },
   ],
   certifications: [
@@ -220,13 +207,13 @@ const CopyButton = ({ text }: { text: string }) => {
   return (
     <button
       onClick={handleCopy}
-      className="p-1 cursor-pointer hover:text-blue-600 transition-colors flex-shrink-0"
+      className="p-1.5 cursor-pointer hover:bg-gray-700 rounded transition-colors flex-shrink-0"
       title="Copy to clipboard"
     >
       {copied ? (
-        <Check className="w-4 h-4 text-green-600" />
+        <Check className="w-4 h-4 text-green-500" />
       ) : (
-        <Copy className="w-4 h-4 text-black" />
+        <Copy className="w-4 h-4 text-gray-400" />
       )}
     </button>
   );
@@ -253,19 +240,6 @@ const SocialIcon = ({ icon }: { icon: string }) => {
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.627l-5.1-6.658-5.848 6.658H2.425l7.752-8.858L.754 2.25h6.844l4.608 6.09L17.502 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
         </svg>
       );
-    case "instagram":
-      return (
-        <svg
-          className="w-5 h-5"
-          fill="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163C8.756 0 8.335.012 7.052.07 2.695.278.273 2.882.06 7.052.009 8.333 0 8.756 0 12s.012 3.667.06 4.948c.213 4.17 2.635 6.774 6.948 6.932 1.284.058 1.705.07 4.052.07 2.347 0 2.768-.012 4.052-.07 4.305-.158 6.734-2.764 6.949-6.932.048-1.281.06-1.702.06-4.948 0-3.246-.012-3.667-.06-4.948-.216-4.165-2.639-6.774-6.949-6.932C15.667.012 15.246 0 12 0z" />
-          <circle cx="12" cy="12" r="3.6" />
-          <circle cx="18.406" cy="5.594" r="0.9" />
-        </svg>
-      );
     default:
       return null;
   }
@@ -273,224 +247,207 @@ const SocialIcon = ({ icon }: { icon: string }) => {
 
 export default function Home() {
   return (
-    <div className="min-h-screen pt-16 sm:pt-20 md:pt-16 lg:pt-20 xl:pt-30 bg-white">
-      <div className="max-w-4xl mx-auto px-3 sm:px-4 md:px-6 py-6 sm:py-8 md:py-12">
-        {/* Header Section */}
-        <header className="mb-6 sm:mb-8 pb-6 sm:pb-8">
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mb-4 sm:mb-6">
-            {/* Profile Image */}
-            <div className="flex-shrink-0 mx-auto sm:mx-0">
-              <div className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full  overflow-hidden">
-                <Image
-                  src={CONFIG.personal.photoUrl || "/placeholder.svg"}
-                  alt="Kinshuk Jain"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            </div>
+    <div className="min-h-screen pt-20 bg-[#f5f3ed]">
+      {/* Hero Header */}
+      <header className="border-b border-black/10 bg-[#f5f3ed]">
+        <div className="max-w-4xl mx-auto px-6 py-16">
+          <h1
+            className="
+    font-light text-black mb-6
+    text-[clamp(1.75rem,5vw,4.5rem)]
+    leading-tight
+  "
+          >
+            Cloudkinshuk.in
+          </h1>
 
-            {/* Profile Info */}
-            <div className="flex-1 text-center sm:text-left">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mb-2">
-                Kinshuk Jain
-              </h1>
-              <p className="text-base sm:text-lg text-black mb-4">
-                Student first. Builder always.
-              </p>
-
-              {/* Social Media Icons */}
-              <div className="flex gap-2 sm:gap-3 mb-4 justify-center sm:justify-start flex-wrap">
-                {CONFIG.social.map((social) => (
-                  <a
-                    key={social.platform}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-8 h-8 flex items-center justify-center bg-black  text-white  rounded-full transition-colors"
-                    title={social.handle}
-                  >
-                    <SocialIcon icon={social.icon} />
-                  </a>
-                ))}
-              </div>
-
-              {/* Location and Status */}
-              <div className="flex flex-col sm:flex-row sm:flex-wrap items-center gap-2 sm:gap-3 text-sm md:text-base text-black justify-center sm:justify-start">
-                <div className="flex p-2 sm:p-3bg-white] rounded-2xl items-center gap-1.5">
-                  <MapPin className="w-4 h-4 flex-shrink-0" />
-                  <span className="text-xs font-bold  sm:text-sm md:text-base">
-                    {CONFIG.personal.location}
-                  </span>
-                </div>
-                <span className="hidden sm:inline text-black">|</span>
-                <div className="flex items-center gap-1.5 text-black p-2 sm:p-3 bg-white font-bold rounded-2xl">
-                  <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></div>
-                  <span className="text-xs sm:text-sm md:text-base whitespace-nowrap">
-                    Available for opportunities
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Bio */}
-          <div className="text-xs sm:text-sm md:text-base text-black leading-relaxed space-y-3 max-w-2xl">
-            <p>
-              I am currently pursuing my Bachelors in Electrical Engineering
-              learning how systems work, how they fail, and how they evolve.
-              Alongside that, I am exploring the cloud, building small things
-              that might someday scale, experimenting with infrastructure, and
-              understanding how technology connects people.
+          <div className="space-y-4">
+            <p className="text-xl text-black/80 leading-relaxed">
+              Hey there! My name is{" "}
+              <span className="font-semibold">Kinshuk</span> and I&apos;m a
+              student and builder with a focus on cloud infrastructure and
+              systems. I&apos;m currently pursuing my Bachelor&apos;s in
+              Electrical Engineering at JSS Academy of Technical Education. Here
+              are some projects of mine on github {"->"}{" "}
+              <a
+                href="https://github.com/kinshukjainn"
+                className="underline font-bold hover:text-black/60 transition-colors"
+              >
+                open source
+              </a>
+              .
             </p>
           </div>
-        </header>
+        </div>
+      </header>
 
-        {/* Resume Download */}
-        <section className="mb-6 sm:mb-8">
-          <h2 className="text-sm sm:text-base md:text-lg font-bold text-black uppercase tracking-wider mb-4">
-            Resume
-          </h2>
-          <div className="flex flex-col sm:flex-row items-start sm:items-centerbg-white] rounded-2xl sm:rounded-3xl justify-between gap-3 p-4">
+      <div className="max-w-4xl mx-auto px-6 py-12">
+        {/* About Section */}
+        <section className="mb-16">
+          <p className="text-lg text-black/80 leading-relaxed mb-6">
+            I am currently learning how systems work, how they fail, and how
+            they evolve. Alongside that, I am exploring the cloud, building
+            small things that might someday scale, experimenting with
+            infrastructure, and understanding how technology connects people.
+          </p>
+          <div className="flex items-center gap-3 text-black/70 mb-4">
+            <MapPin className="w-5 h-5" />
+            <span>{CONFIG.personal.location}</span>
+          </div>
+          <div className="flex items-center gap-3 text-green-600 mb-6">
+            <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></div>
+            <span className="text-black/70">Available for opportunities</span>
+          </div>
+          <div className="flex gap-3 flex-wrap">
+            {CONFIG.social.map((social) => (
+              <a
+                key={social.platform}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-black/70 hover:text-black underline transition-colors"
+              >
+                <SocialIcon icon={social.icon} />
+                <span>{social.handle}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        {/* Resume Section */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-light text-black mb-6">Resume</h2>
+          <a
+            href="/kinshukfinalresume.pdf"
+            download="kinshukfinalresume.pdf"
+            className="inline-flex items-center gap-2 text-black/70 hover:text-black underline transition-colors"
+          >
+            <Download className="w-5 h-5" />
+            Download Resume (PDF)
+          </a>
+        </section>
+
+        {/* Publications Section */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-light text-black mb-6">Publications</h2>
+          <div className="space-y-6">
             <div>
-              <h3 className="font-semibold text-black text-xs sm:text-sm md:text-base">
-                My Resume
+              <h3 className="text-xl font-medium text-black mb-2">
+                <a
+                  href="/home-blog"
+                  className="underline font-bold hover:text-black/60"
+                >
+                  @checkout blogs
+                </a>
               </h3>
-              <p className="text-xs sm:text-sm text-black">PDF Format</p>
-            </div>
-            <a
-              href="/kinshukfinalresume.pdf"
-              download="kinshukfinalresume.pdf"
-              className="inline-flex items-center gap-2 text-white p-3 sm:p-2 bg-gray-700 rounded-md font-bold transition-colors text-xs sm:text-sm md:text-base"
-            >
-              <Download className="w-4 h-4 flex-shrink-0" />
-              Download
-            </a>
-          </div>
-        </section>
-
-        {/* Publications */}
-        <section className="mb-6 sm:mb-8">
-          <h2 className="text-sm sm:text-base md:text-lg font-bold text-black uppercase tracking-wider mb-4">
-            Publications
-          </h2>
-          <div className="p-4bg-white] rounded-2xl sm:rounded-3xl">
-            <h3 className="font-semibold text-black text-sm sm:text-base md:text-lg mb-2">
-              Technical Blog
-            </h3>
-            <p className="text-xs sm:text-sm md:text-base text-black mb-4 leading-relaxed">
-              Research notes, security findings, and technical deep-dives on
-              cloud infrastructure and systems architecture.
-            </p>
-            <a
-              href="/home-blog"
-              className="inline-flex items-center gap-2 text-white   p-3 sm:p-2 bg-gray-700 rounded-md  font-bold transition-colors text-xs sm:text-sm md:text-base"
-            >
-              Check out Blogs
-              <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-            </a>
-          </div>
-        </section>
-
-        {/* Experience */}
-        <section className="mb-6 sm:mb-8">
-          <h2 className="text-sm sm:text-base md:text-lg font-bold text-black uppercase tracking-wider mb-4">
-            Experience
-          </h2>
-          <div className="p-4bg-white] rounded-2xl sm:rounded-3xl">
-            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-3 gap-1">
-              <h3 className="font-bold text-black text-sm sm:text-base md:text-lg">
-                UPPTCL
-              </h3>
-              <span className="text-xs sm:text-sm text-black">
-                July 2025 - Aug 2025
-              </span>
-            </div>
-            <p className="text-xs sm:text-sm md:text-base text-black mb-4 font-semibold">
-              Uttar Pradesh Power Transmission Corporation Limited
-            </p>
-            <div className="space-y-3 text-xs sm:text-sm md:text-base text-black leading-relaxed">
-              <p>
-                Worked with the transmission division to understand the
-                operation, protection, and maintenance of 132kV and 220kV
-                substations. Studied working principles of power transformers,
-                circuit breakers, busbars, and protection relays.
-              </p>
-              <p>
-                Observed real-time SCADA dashboards for grid monitoring, load
-                management, and outage reporting. Assisted engineers during
-                shutdown procedures, equipment inspections, and testing of CTs,
-                PTs, and relays.
-              </p>
-              <p>
-                Prepared technical documentation and maintained logs on
-                equipment performance and safety checks. Improved technical
-                workflows by creating well-organized digital reports using cloud
-                and web tools.
+              <p className="text-black/70 leading-relaxed">
+                Research notes, security findings, and technical deep-dives on
+                cloud infrastructure and systems architecture.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Projects */}
-        <section className="mb-6 sm:mb-8">
-          <h2 className="text-sm sm:text-base md:text-lg font-bold text-black uppercase tracking-wider mb-4">
+        {/* Experience Section */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-light text-black mb-6">Experience</h2>
+          <div className="space-y-6">
+            <div>
+              <div className="flex items-baseline justify-between mb-2">
+                <h3 className="text-xl font-medium text-black">UPPTCL</h3>
+                <span className="text-black/60">July 2025 - Aug 2025</span>
+              </div>
+              <p className="text-black/70 mb-3">
+                Uttar Pradesh Power Transmission Corporation Limited
+              </p>
+              <div className="text-black/70 leading-relaxed space-y-3">
+                <p>
+                  Worked with the transmission division to understand the
+                  operation, protection, and maintenance of 132kV and 220kV
+                  substations. Studied working principles of power transformers,
+                  circuit breakers, busbars, and protection relays.
+                </p>
+                <p>
+                  Observed real-time SCADA dashboards for grid monitoring, load
+                  management, and outage reporting. Assisted engineers during
+                  shutdown procedures, equipment inspections, and testing of
+                  CTs, PTs, and relays.
+                </p>
+                <p>
+                  Prepared technical documentation and maintained logs on
+                  equipment performance and safety checks. Improved technical
+                  workflows by creating well-organized digital reports using
+                  cloud and web tools.
+                </p>
+                <span>To Know more in depth checkout my blog : </span>
+                <a
+                  href="/home-blog/blogE"
+                  className="underline font-bold hover:text-black/60"
+                >
+                  @Read
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Projects Section */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-light text-black mb-6">
             Selected Projects
           </h2>
-          <div className="space-y-6">
+          <div className="space-y-8">
             {CONFIG.projects.map((project) => (
-              <div
-                key={project.title}
-                className="p-4 sm:p-5bg-white] rounded-2xl sm:rounded-3xl"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-3 gap-1">
-                  <h3 className="font-bold text-black text-sm sm:text-base md:text-lg">
-                    {project.title}
+              <div key={project.title}>
+                <div className="flex items-baseline justify-between mb-2">
+                  <h3 className="text-xl font-medium text-black">
+                    {project.links.live ? (
+                      <a
+                        href={project.links.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:underline"
+                      >
+                        {project.title}
+                      </a>
+                    ) : (
+                      project.title
+                    )}
                   </h3>
-                  <div className="flex items-center gap-2 p-2 font-semibold  w-max text-xs sm:text-sm md:text-base text-black">
-                    <span>{project.type}</span>
-                    <span>•</span>
-                    <span>{project.year}</span>
-                  </div>
+                  <span className="text-black/60">{project.year}</span>
                 </div>
-
-                <div className="space-y-3 mb-4 text-xs sm:text-sm md:text-base text-black leading-relaxed">
+                <p className="text-sm text-black/60 mb-3">{project.type}</p>
+                <div className="text-black/70 leading-relaxed space-y-3 mb-4">
                   {project.description.map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
                 </div>
-
                 <div className="mb-4">
-                  <span className="text-xs sm:text-sm md:text-base font-semibold text-black uppercase">
-                    Technologies:{" "}
-                  </span>
-                  <span className="text-xs sm:text-sm md:text-base text-black break-words">
+                  <span className="text-black/70">Technologies: </span>
+                  <span className="text-black/60">
                     {project.technologies.join(", ")}
                   </span>
                 </div>
-
                 {project.dockerCommand !== "Image is not available" && (
-                  <div className=" p-3 mb-4 font-mono text-xs sm:text-sm overflow-x-auto">
-                    <div className="flex items-start sm:items-center justify-between gap-2">
-                      <code className="text-black whitespace-nowrap sm:break-all">
+                  <div className="p-4 mb-4 font-mono text-sm bg-black/5 rounded border border-black/10">
+                    <div className="flex items-center justify-between gap-3">
+                      <code className="text-black/70 break-all flex-1">
                         {project.dockerCommand}
                       </code>
                       <CopyButton text={project.dockerCommand} />
                     </div>
                   </div>
                 )}
-
-                <div className="flex flex-col xs:flex-row flex-wrap gap-2 sm:gap-4">
+                <div className="flex gap-3 flex-wrap">
                   {project.links.live && (
                     <a
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-white p-3 sm:p-2  bg-gray-700 rounded-md w-max font-semibold transition-colors text-xs sm:text-sm md:text-base"
+                      className="inline-flex items-center gap-2 text-black/70 hover:text-black underline transition-colors"
                     >
                       View Project
-                      <ExternalLink className="w-3.5 sm:w-4 h-3.5 sm:h-4 flex-shrink-0" />
+                      <ExternalLink className="w-4 h-4" />
                     </a>
                   )}
                   {project.links.repo && (
@@ -498,9 +455,9 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-white p-3 sm:p-2 bg-black hover:bg-gray-900 w-max rounded-md font-semibold transition-colors text-xs sm:text-sm md:text-base"
+                      className="inline-flex items-center gap-2 text-black/70 hover:text-black underline transition-colors"
                     >
-                      <Github className="w-3.5 sm:w-4 h-3.5 sm:h-4 flex-shrink-0" />
+                      <Github className="w-4 h-4" />
                       Source Code
                     </a>
                   )}
@@ -510,132 +467,108 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Technical Skills */}
-        <section className="mb-6 sm:mb-8">
-          <h2 className="text-sm sm:text-base md:text-lg font-bold text-black uppercase tracking-wider mb-4">
+        {/* Technical Skills Section */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-light text-black mb-6">
             Technical Proficiencies
           </h2>
-          <div className="space-y-5">
+          <div className="space-y-6">
             {Object.entries(CONFIG.skills).map(([category, skills]) => (
-              <div
-                key={category}
-                className="p-4bg-white] rounded-2xl sm:rounded-3xl"
-              >
-                <h3 className="text-xs sm:text-sm md:text-base font-bold text-black mb-3 uppercase tracking-wide">
+              <div key={category}>
+                <h3 className="text-lg font-medium text-black mb-3">
                   {category}
                 </h3>
-                <div className="flex flex-wrap gap-2 sm:gap-3">
-                  {skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="inline-flex items-center px-2 sm:px-3 bg-gray-300 rounded-md py-1.5 sm:py-2 text-xs sm:text-sm text-black font-medium whitespace-nowrap"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
+                <p className="text-black/70">{skills.join(", ")}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Certifications */}
-        <section className="mb-6 sm:mb-8">
-          <h2 className="text-sm sm:text-base md:text-lg font-bold text-black uppercase tracking-wider mb-4">
+        {/* Certifications Section */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-light text-black mb-6">
             Certifications
           </h2>
-          <div className="space-y-5">
+          <div className="space-y-8">
             {CONFIG.certifications.map((cert) => (
-              <div
-                key={cert.title}
-                className="p-4bg-white] rounded-2xl sm:rounded-3xl"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-1">
-                  <h3 className="font-bold text-black text-xs sm:text-sm md:text-base">
-                    {cert.title}
+              <div key={cert.title}>
+                <div className="flex items-baseline justify-between mb-2">
+                  <h3 className="text-xl font-medium text-black">
+                    {cert.url ? (
+                      <a
+                        href={cert.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:underline"
+                      >
+                        {cert.title}
+                      </a>
+                    ) : (
+                      cert.title
+                    )}
                   </h3>
-                  <span className="text-xs p-2 w-max rounded-full font-bold text-black">
-                    {cert.year}
-                  </span>
+                  <span className="text-black/60">{cert.year}</span>
                 </div>
-                <div className="inline-flex items-center gap-2 px-2 py-1 text-xs sm:text-sm mb-3">
-                  <Award className="w-5 h-5 text-black flex-shrink-0" />
-                  <span className="font-semibold text-black">
-                    {cert.organization}
-                  </span>
+                <div className="flex items-center gap-2 mb-3">
+                  <Award className="w-4 h-4 text-black/60" />
+                  <span className="text-black/70">{cert.organization}</span>
                 </div>
-                <p className="text-xs sm:text-sm md:text-base text-black mb-3 leading-relaxed">
+                <p className="text-black/70 leading-relaxed mb-3">
                   {cert.description}
                 </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {cert.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-2 sm:px-3 py-1bg-gray-300 rounded-full text-xs sm:text-sm text-black font-medium"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-                {cert.url && (
-                  <a
-                    href={cert.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-white bg-gray-700  p-2 sm:p-2 rounded-md  font-bold transition-colors text-xs sm:text-sm md:text-base"
-                  >
-                    View Credential
-                    <ExternalLink className="w-3.5 sm:w-4 h-3.5 sm:h-4 flex-shrink-0" />
-                  </a>
-                )}
+                <p className="text-black/60">
+                  Skills: {cert.skills.join(", ")}
+                </p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Education */}
-        <section className="mb-6 sm:mb-8">
-          <h2 className="text-sm sm:text-base md:text-lg font-bold text-black uppercase tracking-wider mb-4">
-            Education
-          </h2>
-          <div className="p-4bg-white] rounded-2xl sm:rounded-3xl">
-            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-3 gap-1">
-              <h3 className="font-bold text-black text-xs sm:text-sm md:text-base">
+        {/* Education Section */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-light text-black mb-6">Education</h2>
+          <div>
+            <div className="flex items-baseline justify-between mb-2">
+              <h3 className="text-xl font-medium text-black">
                 {CONFIG.education.degree}
               </h3>
-              <span className="text-xs font-semibold sm:text-sm p-2  w-max text-black">
-                {CONFIG.education.period}
-              </span>
+              <span className="text-black/60">{CONFIG.education.period}</span>
             </div>
-            <p className="text-xs sm:text-sm md:text-base font-semibold text-black mb-1">
-              {CONFIG.education.field}
-            </p>
-            <p className="text-xs sm:text-sm md:text-base text-black mb-3">
+            <p className="text-black/70 mb-2">{CONFIG.education.field}</p>
+            <p className="text-black/60 mb-3">
               {CONFIG.education.institution}, {CONFIG.education.location}
             </p>
-            <p className="text-xs sm:text-sm md:text-base text-black leading-relaxed">
+            <p className="text-black/70 leading-relaxed">
               {CONFIG.education.description}
             </p>
           </div>
         </section>
 
-        {/* CLI Tool */}
-        <section className="mb-6 sm:mb-8">
-          <h2 className="text-sm sm:text-base md:text-lg font-bold text-black uppercase tracking-wider mb-4">
-            CLI Tool
-          </h2>
-          <div className=" p-4 rounded-2xl sm:rounded-3xl">
-            <p className="text-xs sm:text-sm md:text-base text-black mb-4">
-              Interactive command-line portfolio viewer built with Node.js
-            </p>
-            <div className="space-y-1 font-mono text-xs sm:text-sm overflow-x-auto">
-              <div className=" rounded-lg sm:rounded-xl p-1 whitespace-nowrap">
-                <span className="text-green-400">$</span>{" "}
-                <span className="text-black">npm install -g hackkinshuk</span>
+        {/* CLI Tool Section */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-light text-black mb-6">CLI Tool</h2>
+          <p className="text-black/70 mb-6 leading-relaxed">
+            Interactive command-line portfolio viewer built with Node.js
+          </p>
+          <div className="space-y-3 font-mono text-sm">
+            <div className="rounded p-4 bg-black/5 border border-black/10">
+              <div className="flex items-center justify-between gap-3">
+                <div className="break-all flex-1">
+                  <span className="text-black/60">$</span>{" "}
+                  <span className="text-black/70">
+                    npm install -g hackkinshuk
+                  </span>
+                </div>
+                <CopyButton text="npm install -g hackkinshuk" />
               </div>
-              <div className=" rounded-lg sm:rounded-xl p-1 whitespace-nowrap">
-                <span className="text-green-400">$</span>{" "}
-                <span className="text-black">cloudkinshuk</span>
+            </div>
+            <div className="rounded p-4 bg-black/5 border border-black/10">
+              <div className="flex items-center justify-between gap-3">
+                <div className="break-all flex-1">
+                  <span className="text-black/60">$</span>{" "}
+                  <span className="text-black/70">cloudkinshuk</span>
+                </div>
+                <CopyButton text="cloudkinshuk" />
               </div>
             </div>
           </div>

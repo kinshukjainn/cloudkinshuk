@@ -60,7 +60,7 @@ const Header = () => {
   }, [isMenuOpen]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white backdrop-blur-md ">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#eae8dc] backdrop-blur-md ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo */}
@@ -128,7 +128,7 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white">
+        <div className="md:hidden bg-[#eae8dc] ">
           <nav className="flex flex-col gap-1 p-4">
             {navItems.map((item) => (
               <Link

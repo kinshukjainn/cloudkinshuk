@@ -16,7 +16,7 @@ export default function Blogheader() {
   return (
     // ADJUST THE 'mt-16' value to match the height of your Parent Header
     // 'bg-white' ensures no transparency issues
-    <header className="w-full  bg-gray-200 h-14 flex items-center mt-16 relative z-40">
+    <header className="w-full bg-[#eae8dc] h-14 flex items-center mt-16 relative z-40">
       <div className="max-w-7xl w-full mx-auto px-4">
         {/* LOGIC A: Home Title */}
         {isHome && (

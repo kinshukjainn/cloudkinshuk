@@ -310,8 +310,9 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
       >
         <div className=" border border-gray-500 rounded-lg p-6">
           <div>
-            <label className="block text-sm font-medium text-black mb-3">
-              Tags {filters.tags.length > 0 && `(${filters.tags.length})`}
+            <label className="block text-sm font-medium text-white mb-3">
+              Filtering Tags{" "}
+              {filters.tags.length > 0 && `(${filters.tags.length})`}
             </label>
             <div className="max-h-48 overflow-y-auto">
               <div className="flex flex-wrap gap-2">

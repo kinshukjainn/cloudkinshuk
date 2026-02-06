@@ -112,21 +112,23 @@ const AUDIT_DATA = {
 // ============================================================================
 
 const getScoreColor = (score: number): string => {
-  if (score >= 90) return "bg-emerald-600";
+  if (score >= 90) return "bg-emerald-500";
   if (score >= 50) return "bg-amber-500";
   return "bg-red-500";
 };
 
 const getStatusColor = (status: VitalStatus): string => {
-  if (status === "good") return "text-emerald-600";
-  if (status === "needs-improvement") return "text-amber-600";
-  return "text-red-600";
+  if (status === "good") return "text-emerald-400";
+  if (status === "needs-improvement") return "text-amber-400";
+  return "text-red-400";
 };
 
 const getPriorityColor = (priority: Priority): string => {
-  if (priority === "high") return "bg-red-100 text-red-700";
-  if (priority === "medium") return "bg-amber-100 text-amber-700";
-  return "bg-blue-100 text-blue-700";
+  if (priority === "high")
+    return "bg-red-500/20 text-red-300 border border-red-500/30";
+  if (priority === "medium")
+    return "bg-amber-500/20 text-amber-300 border border-amber-500/30";
+  return "bg-blue-500/20 text-blue-300 border border-blue-500/30";
 };
 
 const formatDate = (dateString: string): string => {
@@ -232,14 +234,14 @@ interface ScoreBarProps {
 }
 
 const ScoreBar: React.FC<ScoreBarProps> = ({ score, label }) => (
-  <div className="space-y-1.5">
+  <div className="space-y-2">
     <div className="flex items-center justify-between">
-      <span className="text-sm font-medium text-gray-900">{label}</span>
-      <span className="text-lg font-bold text-gray-900">{score}</span>
+      <span className="text-sm font-medium text-gray-200">{label}</span>
+      <span className="text-lg font-bold text-white">{score}</span>
     </div>
-    <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+    <div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
       <div
-        className={`h-full ${getScoreColor(score)}`}
+        className={`h-full ${getScoreColor(score)} transition-all duration-500`}
         style={{ width: `${score}%` }}
       />
     </div>
@@ -261,29 +263,29 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   badge,
   children,
 }) => (
-  <div className="border-t border-gray-200">
+  <div className="border-t border-zinc-800">
     <button
       onClick={onToggle}
-      className="w-full py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+      className="w-full py-5 flex items-center justify-between hover:bg-zinc-900/50 transition-colors px-1"
       aria-expanded={isExpanded}
       type="button"
     >
       <div className="flex items-center gap-3">
-        <h2 className="text-sm font-semibold text-gray-900">{title}</h2>
+        <h2 className="text-base font-semibold text-white">{title}</h2>
         {badge && (
-          <span className="px-2 py-0.5 text-xs bg-blue-100 text-blue-700 rounded">
+          <span className="px-2.5 py-1 text-xs bg-blue-500/20 text-blue-300 rounded-md border border-blue-500/30">
             {badge}
           </span>
         )}
       </div>
       <ChevronDown
-        className={`w-5 h-5 text-gray-400 transition-transform ${
+        className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${
           isExpanded ? "rotate-180" : ""
         }`}
       />
     </button>
     {isExpanded && (
-      <div className="pb-4 space-y-4 text-gray-700">{children}</div>
+      <div className="pb-6 space-y-4 text-gray-300 px-1">{children}</div>
     )}
   </div>
 );
@@ -395,7 +397,7 @@ export default function SeoInsights() {
   // ========================================================================
 
   return (
-    <div className="min-h-screen bg-[#f5f3ed] pt-20 sm:pt-24">
+    <div className="min-h-screen bg-[#1c1c1c]">
       <Header
         date={formattedDate}
         showFilters={showFilters}
@@ -407,7 +409,7 @@ export default function SeoInsights() {
         onExportMarkdown={handleExportMarkdown}
       />
 
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8 pt-32">
         {/* Quick Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
           <StatCard label="Avg Score" value={avgScore} trend={2} />
@@ -426,18 +428,18 @@ export default function SeoInsights() {
 
         {/* Active Filters Info */}
         {hasActiveFilters && (
-          <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="mb-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-2 flex-1">
-                <Filter className="w-4 h-4 text-blue-600 flex-shrink-0" />
-                <span className="text-sm font-medium text-blue-900">
+                <Filter className="w-4 h-4 text-blue-300 flex-shrink-0" />
+                <span className="text-sm font-medium text-blue-200">
                   Showing {filteredOpportunities.length} of{" "}
                   {AUDIT_DATA.insights.performanceImprovements.length} items
                 </span>
               </div>
               <button
                 onClick={handleResetFilters}
-                className="text-sm text-blue-600 hover:text-blue-800 font-medium whitespace-nowrap"
+                className="text-sm text-blue-400 hover:text-blue-300 font-medium whitespace-nowrap transition-colors"
                 type="button"
               >
                 Clear All
@@ -446,99 +448,102 @@ export default function SeoInsights() {
           </div>
         )}
 
-        {/* Environment */}
-        <CollapsibleSection
-          title="Test Environment"
-          isExpanded={expanded.environment}
-          onToggle={() => toggleSection("environment")}
-        >
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
-            <div>
-              <p className="text-gray-500 text-xs uppercase tracking-wide">
-                Device
-              </p>
-              <p className="font-medium">
-                {AUDIT_DATA.auditMeta.environment.device}
-              </p>
+        {/* Main Content Card */}
+        <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden">
+          {/* Environment */}
+          <CollapsibleSection
+            title="Test Environment"
+            isExpanded={expanded.environment}
+            onToggle={() => toggleSection("environment")}
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+              <div className="p-3 bg-zinc-800/50 rounded-lg border border-zinc-700/50">
+                <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">
+                  Device
+                </p>
+                <p className="font-medium text-white">
+                  {AUDIT_DATA.auditMeta.environment.device}
+                </p>
+              </div>
+              <div className="p-3 bg-zinc-800/50 rounded-lg border border-zinc-700/50">
+                <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">
+                  Network
+                </p>
+                <p className="font-medium text-white">
+                  {AUDIT_DATA.auditMeta.environment.network}
+                </p>
+              </div>
+              <div className="p-3 bg-zinc-800/50 rounded-lg border border-zinc-700/50">
+                <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">
+                  Version
+                </p>
+                <p className="font-medium text-white">
+                  v{AUDIT_DATA.auditMeta.environment.lighthouseVersion}
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="text-gray-500 text-xs uppercase tracking-wide">
-                Network
-              </p>
-              <p className="font-medium">
-                {AUDIT_DATA.auditMeta.environment.network}
-              </p>
-            </div>
-            <div>
-              <p className="text-gray-500 text-xs uppercase tracking-wide">
-                Version
-              </p>
-              <p className="font-medium">
-                v{AUDIT_DATA.auditMeta.environment.lighthouseVersion}
-              </p>
-            </div>
-          </div>
-        </CollapsibleSection>
+          </CollapsibleSection>
 
-        {/* Overall Scores */}
-        <CollapsibleSection
-          title="Overall Scores"
-          isExpanded={expanded.scores}
-          onToggle={() => toggleSection("scores")}
-        >
-          <div className="space-y-4">
-            <ScoreBar
-              score={AUDIT_DATA.scores.performance}
-              label="Performance"
-            />
-            <ScoreBar
-              score={AUDIT_DATA.scores.accessibility}
-              label="Accessibility"
-            />
-            <ScoreBar
-              score={AUDIT_DATA.scores.bestPractices}
-              label="Best Practices"
-            />
-            <ScoreBar score={AUDIT_DATA.scores.seo} label="SEO" />
-          </div>
-        </CollapsibleSection>
-
-        {/* Core Web Vitals */}
-        <CollapsibleSection
-          title="Core Web Vitals"
-          isExpanded={expanded.vitals}
-          onToggle={() => toggleSection("vitals")}
-          badge="Critical"
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {Object.entries(AUDIT_DATA.coreWebVitals).map(([key, vital]) => (
-              <VitalCard key={key} vital={vital} />
-            ))}
-          </div>
-        </CollapsibleSection>
-
-        {/* Performance Opportunities */}
-        <CollapsibleSection
-          title="Performance Opportunities"
-          isExpanded={expanded.opportunities}
-          onToggle={() => toggleSection("opportunities")}
-          badge={`${filteredOpportunities.length}`}
-        >
-          {filteredOpportunities.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              <Filter className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-              <p className="text-sm">
-                No opportunities match your current filters
-              </p>
+          {/* Overall Scores */}
+          <CollapsibleSection
+            title="Overall Scores"
+            isExpanded={expanded.scores}
+            onToggle={() => toggleSection("scores")}
+          >
+            <div className="space-y-5">
+              <ScoreBar
+                score={AUDIT_DATA.scores.performance}
+                label="Performance"
+              />
+              <ScoreBar
+                score={AUDIT_DATA.scores.accessibility}
+                label="Accessibility"
+              />
+              <ScoreBar
+                score={AUDIT_DATA.scores.bestPractices}
+                label="Best Practices"
+              />
+              <ScoreBar score={AUDIT_DATA.scores.seo} label="SEO" />
             </div>
-          ) : (
-            <div className="space-y-3">
-              {filteredOpportunities.map((item, idx) => (
-                <OpportunityItem key={idx} item={item} />
+          </CollapsibleSection>
+
+          {/* Core Web Vitals */}
+          <CollapsibleSection
+            title="Core Web Vitals"
+            isExpanded={expanded.vitals}
+            onToggle={() => toggleSection("vitals")}
+            badge="Critical"
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {Object.entries(AUDIT_DATA.coreWebVitals).map(([key, vital]) => (
+                <VitalCard key={key} vital={vital} />
               ))}
             </div>
-          )}
-        </CollapsibleSection>
+          </CollapsibleSection>
+
+          {/* Performance Opportunities */}
+          <CollapsibleSection
+            title="Performance Opportunities"
+            isExpanded={expanded.opportunities}
+            onToggle={() => toggleSection("opportunities")}
+            badge={`${filteredOpportunities.length}`}
+          >
+            {filteredOpportunities.length === 0 ? (
+              <div className="text-center py-12 text-gray-400">
+                <Filter className="w-12 h-12 mx-auto mb-3 text-gray-600" />
+                <p className="text-sm">
+                  No opportunities match your current filters
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {filteredOpportunities.map((item, idx) => (
+                  <OpportunityItem key={idx} item={item} />
+                ))}
+              </div>
+            )}
+          </CollapsibleSection>
+        </div>
       </main>
     </div>
   );
@@ -561,10 +566,10 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   hasActiveFilters,
   onResetFilters,
 }) => (
-  <div className="space-y-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+  <div className="space-y-3 p-4 bg-zinc-900/80 rounded-lg border border-zinc-700/50 backdrop-blur-sm">
     <div className="flex items-center gap-2 mb-3">
-      <Filter className="w-4 h-4 text-gray-600" />
-      <h3 className="text-sm font-semibold text-gray-900">Filter Options</h3>
+      <Filter className="w-4 h-4 text-gray-300" />
+      <h3 className="text-sm font-semibold text-white">Filter Options</h3>
     </div>
 
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -572,7 +577,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
       <div>
         <label
           htmlFor="priority-filter"
-          className="block text-xs font-medium text-gray-700 mb-1"
+          className="block text-xs font-medium text-gray-300 mb-2"
         >
           Priority Level
         </label>
@@ -584,7 +589,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
               priority: e.target.value as Priority | "all",
             })
           }
-          className="w-full px-3 py-2 text-sm  border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full bg-zinc-800 text-white px-3 py-2.5 text-sm border border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
         >
           <option value="all">All Priorities</option>
           <option value="high">High Priority</option>
@@ -597,7 +602,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
       <div>
         <label
           htmlFor="category-filter"
-          className="block text-xs font-medium text-gray-700 mb-1"
+          className="block text-xs font-medium text-gray-300 mb-2"
         >
           Category
         </label>
@@ -609,7 +614,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
               category: e.target.value as Category | "all",
             })
           }
-          className="w-full px-3 py-2 text-sm  border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full bg-zinc-800 text-white px-3 py-2.5 text-sm border border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
         >
           <option value="all">All Categories</option>
           <option value="performance">Performance</option>
@@ -622,7 +627,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     {hasActiveFilters && (
       <button
         onClick={onResetFilters}
-        className="w-full py-2 text-sm text-blue-600 hover:text-blue-800 font-medium bg-blue-50 hover:bg-blue-100 rounded transition-colors"
+        className="w-full py-2.5 text-sm text-white font-medium bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors border border-zinc-700"
         type="button"
       >
         Reset All Filters
@@ -656,14 +661,14 @@ const Header: React.FC<HeaderProps> = ({
   onResetFilters,
   onExportMarkdown,
 }) => (
-  <header className="top-0 left-0 right-0  border-b border-gray-200 z-40 shadow-sm">
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4">
+  <header className=" pt-20  top-0 left-0 right-0 bg-[#1c1c1c]/95 backdrop-blur-md border-b border-zinc-800 z-40 shadow-lg">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-5">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
             SEO & Performance
           </h1>
-          <p className="text-sm text-gray-500 flex items-center gap-2">
+          <p className="text-sm text-gray-400 flex items-center gap-2 mt-1">
             <Calendar className="w-3.5 h-3.5" />
             Lighthouse Audit • {date}
           </p>
@@ -671,10 +676,10 @@ const Header: React.FC<HeaderProps> = ({
         <div className="flex gap-2">
           <button
             onClick={() => onToggleFilters(!showFilters)}
-            className={`flex items-center gap-2 px-3 py-2 text-sm rounded transition-colors relative ${
+            className={`flex items-center gap-2 px-4 py-2.5 text-sm rounded-lg transition-all relative font-medium ${
               showFilters
-                ? "bg-blue-600 text-white hover:bg-blue-700"
-                : "bg-gray-100 text-gray-900 hover:bg-gray-200"
+                ? "bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-600/30"
+                : "bg-zinc-800 text-gray-200 hover:bg-zinc-700 border border-zinc-700"
             }`}
             type="button"
             aria-pressed={showFilters}
@@ -683,12 +688,12 @@ const Header: React.FC<HeaderProps> = ({
             <Filter className="w-4 h-4" />
             <span className="hidden sm:inline">Filters</span>
             {hasActiveFilters && (
-              <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full" />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full ring-2 ring-[#1c1c1c]" />
             )}
           </button>
           <button
             onClick={onExportMarkdown}
-            className="flex items-center gap-2 px-3 py-2 bg-gray-900 text-white text-sm rounded hover:bg-gray-800 transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 bg-zinc-800 border border-zinc-700 text-white text-sm rounded-lg hover:bg-zinc-700 transition-all font-medium"
             type="button"
             aria-label="Export as Markdown"
           >
@@ -721,14 +726,18 @@ interface StatCardProps {
 }
 
 const StatCard: React.FC<StatCardProps> = ({ label, value, trend }) => (
-  <div className="p-3 bg-gray-50 rounded border border-gray-200">
-    <p className="text-xs text-gray-500 uppercase tracking-wide">{label}</p>
-    <div className="flex items-center justify-between mt-1">
-      <p className="text-2xl font-bold text-gray-900">{value}</p>
+  <div className="p-4 bg-zinc-900/50 rounded-lg border border-zinc-800 hover:border-zinc-700 transition-all">
+    <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">
+      {label}
+    </p>
+    <div className="flex items-center justify-between">
+      <p className="text-3xl font-bold text-white">{value}</p>
       {trend !== undefined && (
         <div
-          className={`flex items-center gap-1 text-xs font-medium ${
-            trend > 0 ? "text-emerald-600" : "text-red-600"
+          className={`flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-md ${
+            trend > 0
+              ? "text-emerald-400 bg-emerald-500/10"
+              : "text-red-400 bg-red-500/10"
           }`}
         >
           {trend > 0 ? (
@@ -756,17 +765,17 @@ interface VitalCardProps {
 }
 
 const getStatusIcon = (status: VitalStatus) => {
-  if (status === "good") return <CheckCircle2 className="w-4 h-4" />;
-  return <AlertCircle className="w-4 h-4" />;
+  if (status === "good") return <CheckCircle2 className="w-5 h-5" />;
+  return <AlertCircle className="w-5 h-5" />;
 };
 
 const VitalCard: React.FC<VitalCardProps> = ({ vital }) => (
-  <div className="p-3 bg-gray-50 rounded border border-gray-200">
-    <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
+  <div className="p-4 bg-zinc-800/50 rounded-lg border border-zinc-700/50 hover:border-zinc-600 transition-all">
+    <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">
       {vital.label}
     </p>
     <div className="flex items-start justify-between">
-      <p className="text-xl font-bold text-gray-900">{vital.value}</p>
+      <p className="text-2xl font-bold text-white">{vital.value}</p>
       <div className={getStatusColor(vital.status)} aria-hidden="true">
         {getStatusIcon(vital.status)}
       </div>
@@ -788,23 +797,26 @@ interface OpportunityItemProps {
 }
 
 const OpportunityItem: React.FC<OpportunityItemProps> = ({ item }) => (
-  <div className="flex items-start gap-3 p-3 bg-gray-50 rounded border border-gray-200 hover:border-gray-300 transition-colors">
+  <div className="flex items-start gap-3 p-4 bg-zinc-800/30 rounded-lg border border-zinc-700/50 hover:border-zinc-600 hover:bg-zinc-800/50 transition-all">
     <Zap
-      className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0"
+      className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"
       aria-hidden="true"
     />
     <div className="flex-1 min-w-0">
-      <p className="text-sm font-medium text-gray-900">{item.title}</p>
-      <div className="flex items-center gap-3 mt-1">
-        <p className="text-xs text-gray-500">Savings: {item.savings}</p>
-        <span className="text-xs text-gray-400" aria-hidden="true">
+      <p className="text-sm font-medium text-white mb-2">{item.title}</p>
+      <div className="flex items-center gap-3 text-xs text-gray-400">
+        <span>
+          Savings:{" "}
+          <span className="text-gray-300 font-medium">{item.savings}</span>
+        </span>
+        <span className="text-zinc-600" aria-hidden="true">
           •
         </span>
-        <p className="text-xs text-gray-500 capitalize">{item.category}</p>
+        <span className="capitalize">{item.category}</span>
       </div>
     </div>
     <span
-      className={`px-2 py-0.5 text-xs rounded font-medium whitespace-nowrap ${getPriorityColor(item.priority)}`}
+      className={`px-3 py-1.5 text-xs rounded-md font-semibold whitespace-nowrap ${getPriorityColor(item.priority)}`}
     >
       {item.priority.toUpperCase()}
     </span>

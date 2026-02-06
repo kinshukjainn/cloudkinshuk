@@ -60,13 +60,12 @@ const Header = () => {
   }, [isMenuOpen]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#eae8dc] backdrop-blur-md ">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black backdrop-blur-md ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
-          {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-2 font-bold text-lg sm:text-xl text-slate-900 transition-colors"
+            className="flex items-center gap-2 font-bold text-lg sm:text-xl text-slate-200 transition-colors"
           >
             <Image
               src="/corelogo.png"
@@ -87,8 +86,8 @@ const Header = () => {
                 href={item.href}
                 className={`flex items-center gap-2 px-3 sm:px-4 py-2  text-sm font-medium transition-all ${
                   isActive(item.href)
-                    ? " border-b-4 border-blue-800 text-black"
-                    : "hover:border-blue-800  hover:border-b-4 text-black "
+                    ? " border-b-4 border-yellow-200 text-white"
+                    : "hover:border-yellow-200  hover:border-b-4 text-slate-200 hover:text-white"
                 }`}
               >
                 {item.icon}
@@ -105,7 +104,7 @@ const Header = () => {
               target="_blank"
               rel="noopener noreferrer"
               title="GitHub Repository"
-              className="p-2 text-black hover:text-blue-800 hover:border-b-4 hover:border-blue-800"
+              className="p-2 text-white hover:text-blue-400 hover:border-b-4 hover:border-blue-400"
             >
               <Github className="w-5 h-5" />
             </a>
@@ -113,7 +112,7 @@ const Header = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 text-black cursor-pointer"
+              className="md:hidden p-2 text-white cursor-pointer"
               aria-label="Toggle menu"
             >
               {isMenuOpen ? (
@@ -128,17 +127,17 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden bg-[#eae8dc] ">
+        <div className="md:hidden bg-black ">
           <nav className="flex flex-col gap-1 p-4">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsMenuOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3  text-sm font-medium transition-all ${
+                className={`flex items-center gap-2 px-2 py-1  text-sm font-medium transition-all ${
                   isActive(item.href)
-                    ? "border-l-3 border-blue-800 text-black"
-                    : "text-black font-semibold hover:border-l-4 hover:border-blue-500 hover:text-blue-800 "
+                    ? "border-l-3 border-blue-800 text-white"
+                    : "text-white font-semibold hover:border-l-4 hover:border-yellow-200 hover:text-blue-400 "
                 }`}
               >
                 {item.icon}

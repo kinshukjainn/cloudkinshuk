@@ -227,20 +227,20 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
     }, []);
 
     return (
-      <div className="py-6 border-b border-black/10 last:border-b-0">
+      <div className="py-6 border-b border-gray-500 last:border-b-0">
         <Link href={`/home-blog/${post.id}`} className="group block">
-          <h3 className="text-xl hover:font-bold  text-black mb-3 hover:underline">
+          <h3 className="text-xl   text-white mb-3 hover:underline">
             {highlightText(post.title, searchQuery)}
           </h3>
-          <p className="text-black/70 mb-3 leading-relaxed">{post.brief}</p>
+          <p className="text-white/70 mb-3 leading-relaxed">{post.brief}</p>
           <div className="flex flex-wrap gap-2">
             {post.tags.slice(0, 3).map((tag) => (
-              <span key={tag.id} className="text-sm text-black/60">
+              <span key={tag.id} className="text-sm text-yellow-200">
                 {tag.name}
               </span>
             ))}
             {post.tags.length > 3 && (
-              <span className="text-sm text-black/60">
+              <span className="text-sm text-white">
                 +{post.tags.length - 3} more
               </span>
             )}
@@ -308,7 +308,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
             : "max-h-0 md:max-h-none opacity-0 md:opacity-100"
         } md:opacity-100 md:max-h-none`}
       >
-        <div className=" border border-black/10 rounded-lg p-6">
+        <div className=" border border-gray-500 rounded-lg p-6">
           <div>
             <label className="block text-sm font-medium text-black mb-3">
               Tags {filters.tags.length > 0 && `(${filters.tags.length})`}
@@ -319,10 +319,10 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                   <button
                     key={tag}
                     onClick={() => toggleTag(tag)}
-                    className={`px-3 py-1.5 text-sm rounded-full transition-all duration-200 ${
+                    className={`px-3 py-1.5 text-xs rounded-sm transition-all duration-200 ${
                       filters.tags.includes(tag)
                         ? "bg-black text-white"
-                        : "bg-black/5 text-black hover:bg-black/10"
+                        : "bg-[#141414] text-white cursor-pointer hover:bg-black/80 hover:text-white"
                     }`}
                   >
                     {tag}
@@ -335,7 +335,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
           {activeFiltersCount > 0 && (
             <button
               onClick={resetFilters}
-              className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-2 bg-black/5 hover:bg-black/10 text-black text-sm font-medium rounded-lg transition-colors duration-200"
+              className="mt-4 w-full flex items-center justify-center cursor-pointer gap-2 px-2 py-2 bg-black  text-white text-sm font-medium rounded-sm transition-colors duration-200"
             >
               <RotateCcw size={16} />
               Clear filters
@@ -365,26 +365,26 @@ const SearchBar: React.FC<SearchBarProps> = ({
       <div className="relative">
         <Search
           size={20}
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-black/40"
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-yellow-200"
         />
         <input
           type="text"
           placeholder="Search articles..."
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="w-full pl-12 pr-12 py-3  border border-black/10 rounded-lg text-black placeholder-black/40 text-base focus:outline-none focus:border-black/30 transition-colors duration-200"
+          className="w-full pl-12 pr-12 py-3  bg-[#141414] border border-[#444444] rounded-lg text-white  placeholder-gray-400 text-base focus:outline-none focus:border-white/20 transition-colors duration-200"
         />
         {searchInput && (
           <button
             onClick={() => setSearchInput("")}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-black/40 hover:text-black cursor-pointer transition-colors"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white cursor-pointer transition-colors"
           >
             <X size={20} />
           </button>
         )}
       </div>
       {searchInput && (
-        <div className="mt-3 text-sm text-black/60">
+        <div className="mt-3 text-sm text-white/60">
           Found {resultsCount} of {totalCount} articles
         </div>
       )}
@@ -428,18 +428,19 @@ export default function BlogsPage() {
   }, [posts, searchInput, searchEngine, filters]);
 
   return (
-    <div className="min-h-screen bg-[#f5f3ed]">
+    <div className="min-h-screen bg-[#1c1c1c]">
       {/* Header */}
-      <header className="border-b border-black/10 bg-[#f5f3ed]">
+      <header className="border-b border-black/10 bg-[#1c1c1c]">
         <div className="max-w-4xl mx-auto px-6 py-16">
-          <h1 className="text-7xl font-light text-black mb-6">Blogs</h1>
-          <p className="text-xl text-black/80 leading-relaxed max-w-3xl">
-            Hi <span className="font-semibold">@everyone</span>, here I&apos;m
-            sharing my learning journey in cloud computing, DevOps, security,
-            and infrastructure engineering. I write about AWS services,
-            serverless and container-based systems, CI/CD basics, Terraform, and
-            AI-powered projects, focusing on understanding concepts through
-            hands-on practice, experiments, and real academic projects.
+          <h1 className="text-7xl font-light text-white mb-6">Dev. Blogs</h1>
+          <p className="text-xl text-white/80 leading-relaxed max-w-3xl">
+            Hi <span className="font-semibold text-blue-500">@everyone</span>,
+            here I&apos;m sharing my learning journey in cloud computing,
+            DevOps, security, and infrastructure engineering. I write about AWS
+            services, serverless and container-based systems, CI/CD basics,
+            Terraform, and AI-powered projects, focusing on understanding
+            concepts through hands-on practice, experiments, and real academic
+            projects.
           </p>
         </div>
       </header>
@@ -462,10 +463,10 @@ export default function BlogsPage() {
 
         {filteredPosts.length === 0 ? (
           <div className="text-center py-16">
-            <h3 className="text-xl font-medium text-black mb-2">
+            <h3 className="text-xl font-medium text-white mb-2">
               No articles found
             </h3>
-            <p className="text-black/70 mb-6">
+            <p className="text-white/70 mb-6">
               Try adjusting your search or filters
             </p>
             <button

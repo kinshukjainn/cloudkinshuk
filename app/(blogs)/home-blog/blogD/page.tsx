@@ -1,6 +1,6 @@
 export default function BlogPost() {
   return (
-    <article className="max-w-4xl bg-[#f5f3ed]  pt-20 mx-auto px-6 py-12">
+    <article className="max-w-4xl text-white bg-[#1c1c1c] pt-20 mx-auto px-6 py-12">
       <h1 className="text-4xl font-bold mb-4">
         The AWS Shared Responsibility Mode
       </h1>

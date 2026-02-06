@@ -16,18 +16,16 @@ export default function Blogheader() {
   return (
     // ADJUST THE 'mt-16' value to match the height of your Parent Header
     // 'bg-white' ensures no transparency issues
-    <header className="w-full bg-[#eae8dc] h-14 flex items-center mt-16 relative z-40">
+    <header className="w-full bg-[#141414] h-14 flex items-center mt-16 relative z-40">
       <div className="max-w-7xl w-full mx-auto px-4">
         {/* LOGIC A: Home Title */}
-        {isHome && (
-          <h1 className="text-xl font-semibold text-gray-900">Home</h1>
-        )}
+        {isHome && <h1 className="text-xl font-semibold text-white">Home</h1>}
 
         {/* LOGIC B: Back Button (Scales for blog-1, blog-2, blog-99...) */}
         {isBlogPost && (
           <button
             onClick={() => router.push("/home-blog")}
-            className="flex items-center cursor-pointer  justify-center p-2 -ml-2 rounded-full text-gray-900 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+            className="flex items-center cursor-pointer  justify-center p-2 -ml-2 rounded-full text-white hover:text-gray-200 hover:bg-gray-800 transition-colors"
           >
             {/* Microsoft-style Minimalist Chevron */}
             <svg

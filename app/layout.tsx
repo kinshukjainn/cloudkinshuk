@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Roboto, IBM_Plex_Serif } from "next/font/google";
+import { Inter, Alegreya, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -11,11 +11,12 @@ const inter = Inter({
   display: "swap",
 });
 
-const roboto = Roboto({
+const alegreya = Alegreya({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-roboto",
+  weight: ["400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
   display: "swap",
+  variable: "--font-alegreya",
 });
 
 const ibmplex_serif = IBM_Plex_Serif({
@@ -38,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${roboto.variable} ${ibmplex_serif.variable} antialiased`}
+        className={`${inter.variable} ${alegreya.variable} ${ibmplex_serif.variable} antialiased`}
       >
         <Header />
         {children}

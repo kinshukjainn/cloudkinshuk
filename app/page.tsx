@@ -32,25 +32,25 @@ const CONFIG = {
       platform: "GitHub",
       url: "https://github.com/kinshukjainn",
       icon: "github",
-      handle: "@kinshukjainn",
+      handle: "Github",
     },
     {
       platform: "LinkedIn",
       url: "https://linkedin.com/in/kinshukjainn/",
       icon: "linkedin",
-      handle: "@kinshukjainn",
+      handle: "LinkedIn",
     },
     {
       platform: "Gmail",
       url: "mailto:kinshuk25jan04@gmail.com",
       icon: "mail",
-      handle: "kinshuk25jan04@gmail.com",
+      handle: "Mail to",
     },
     {
       platform: "X",
       url: "http://x.com/realkinshuk004",
       icon: "x",
-      handle: "@realkinshuk004",
+      handle: "X (Twitter)",
     },
   ],
   certifications: [
@@ -207,13 +207,13 @@ const CopyButton = ({ text }: { text: string }) => {
   return (
     <button
       onClick={handleCopy}
-      className="p-1.5 cursor-pointer hover:bg-gray-700 rounded transition-colors flex-shrink-0"
+      className="p-1.5 cursor-pointer hover:bg-black rounded transition-colors flex-shrink-0"
       title="Copy to clipboard"
     >
       {copied ? (
-        <Check className="w-4 h-4 text-green-500" />
+        <Check className="w-4 h-4 text-white" />
       ) : (
-        <Copy className="w-4 h-4 text-gray-400" />
+        <Copy className="w-4 h-4 text-white" />
       )}
     </button>
   );
@@ -247,13 +247,13 @@ const SocialIcon = ({ icon }: { icon: string }) => {
 
 export default function Home() {
   return (
-    <div className="min-h-screen pt-20 bg-[#f5f3ed]">
+    <div className="min-h-screen pt-20 bg-[#1c1c1c] text-white">
       {/* Hero Header */}
-      <header className="border-b border-black/10 bg-[#f5f3ed]">
+      <header className="border-b border-black/10 bg-[#1c1c1c]">
         <div className="max-w-4xl mx-auto px-6 py-16">
           <h1
             className="
-    font-light text-black mb-6
+    font-light text-white mb-6
     text-[clamp(1.75rem,5vw,4.5rem)]
     leading-tight
   "
@@ -262,18 +262,18 @@ export default function Home() {
           </h1>
 
           <div className="space-y-4">
-            <p className="text-xl text-black/80 leading-relaxed">
-              Hey there! My name is{" "}
-              <span className="font-semibold">Kinshuk</span> and I&apos;m a
-              student and builder with a focus on cloud infrastructure and
+            <p className="text-xl text-white/80 leading-relaxed">
+              Hi <span className="text-blue-500 ">@everyone</span> ! My name is{" "}
+              <span className="font-semibold italic">Kinshuk</span> and I&apos;m
+              a student and builder with a focus on cloud infrastructure and
               systems. I&apos;m currently pursuing my Bachelor&apos;s in
               Electrical Engineering at JSS Academy of Technical Education. Here
               are some projects of mine on github {"->"}{" "}
               <a
                 href="https://github.com/kinshukjainn"
-                className="underline font-bold hover:text-black/60 transition-colors"
+                className=" font-bold underline text-yellow-200 italic transition-colors"
               >
-                open source
+                @open_source
               </a>
               .
             </p>
@@ -284,19 +284,19 @@ export default function Home() {
       <div className="max-w-4xl mx-auto px-6 py-12">
         {/* About Section */}
         <section className="mb-16">
-          <p className="text-lg text-black/80 leading-relaxed mb-6">
+          <p className="text-lg text-white/80 leading-relaxed mb-6">
             I am currently learning how systems work, how they fail, and how
             they evolve. Alongside that, I am exploring the cloud, building
             small things that might someday scale, experimenting with
             infrastructure, and understanding how technology connects people.
           </p>
-          <div className="flex items-center gap-3 text-black/70 mb-4">
+          <div className="flex items-center gap-3 text-white  mb-4">
             <MapPin className="w-5 h-5" />
             <span>{CONFIG.personal.location}</span>
           </div>
           <div className="flex items-center gap-3 text-green-600 mb-6">
             <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-black/70">Available for opportunities</span>
+            <span className="text-white">Available for opportunities</span>
           </div>
           <div className="flex gap-3 flex-wrap">
             {CONFIG.social.map((social) => (
@@ -305,9 +305,11 @@ export default function Home() {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-black/70 hover:text-black underline transition-colors"
+                className="inline-flex items-center gap-2 text-white p-2 bg-[#252525] rounded-sm  hover:text-yellow-200  transition-colors"
               >
-                <SocialIcon icon={social.icon} />
+                <div className="text-yellow-200 p-1 bg-[#141414] rounded-xs">
+                  <SocialIcon icon={social.icon} />
+                </div>
                 <span>{social.handle}</span>
               </a>
             ))}
@@ -316,33 +318,38 @@ export default function Home() {
 
         {/* Resume Section */}
         <section className="mb-16">
-          <h2 className="text-3xl font-light text-black mb-6">Resume</h2>
+          <h2 className="text-3xl font-light text-white mb-6">Resume</h2>
           <a
             href="/kinshukfinalresume.pdf"
             download="kinshukfinalresume.pdf"
-            className="inline-flex items-center gap-2 text-black/70 hover:text-black underline transition-colors"
+            className="inline-flex items-center gap-2 text-yellow-200 p-2  bg-black rounded-sm hover:text-white  transition-colors"
           >
             <Download className="w-5 h-5" />
-            Download Resume (PDF)
+            Download (PDF)
           </a>
+          <p className="text-white/70 mt-4 leading-relaxed">
+            You can also view and download my resume !
+          </p>
         </section>
 
         {/* Publications Section */}
         <section className="mb-16">
-          <h2 className="text-3xl font-light text-black mb-6">Publications</h2>
+          <h2 className="text-3xl font-light text-white mb-6">Publications</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-medium text-black mb-2">
+              <h3 className="text-xl font-medium text-white mb-2">
                 <a
                   href="/home-blog"
-                  className="underline font-bold hover:text-black/60"
+                  className="font-bold text-yellow-200 p-2 bg-black  rounded-sm  transition-colors"
                 >
-                  @checkout blogs
+                  checkout blogs
                 </a>
               </h3>
-              <p className="text-black/70 leading-relaxed">
-                Research notes, security findings, and technical deep-dives on
-                cloud infrastructure and systems architecture.
+              <p className="text-white/70 leading-relaxed">
+                My person point of view/opinions on technology , infrastructure
+                and apart from technology more topics which i have tried to
+                explore on. If you are interested you can definetly checkout and
+                give opinions
               </p>
             </div>
           </div>
@@ -350,17 +357,17 @@ export default function Home() {
 
         {/* Experience Section */}
         <section className="mb-16">
-          <h2 className="text-3xl font-light text-black mb-6">Experience</h2>
+          <h2 className="text-3xl font-light text-white  mb-6">Experience</h2>
           <div className="space-y-6">
             <div>
               <div className="flex items-baseline justify-between mb-2">
-                <h3 className="text-xl font-medium text-black">UPPTCL</h3>
-                <span className="text-black/60">July 2025 - Aug 2025</span>
+                <h3 className="text-2xl font-medium text-white">UPPTCL</h3>
+                <span className="text-white">July 2025 - Aug 2025</span>
               </div>
-              <p className="text-black/70 mb-3">
+              <p className="text-white mb-3">
                 Uttar Pradesh Power Transmission Corporation Limited
               </p>
-              <div className="text-black/70 leading-relaxed space-y-3">
+              <div className="text-white/70 leading-relaxed space-y-3">
                 <p>
                   Worked with the transmission division to understand the
                   operation, protection, and maintenance of 132kV and 220kV
@@ -382,7 +389,7 @@ export default function Home() {
                 <span>To Know more in depth checkout my blog : </span>
                 <a
                   href="/home-blog/blogE"
-                  className="underline font-bold hover:text-black/60"
+                  className=" font-bold italic text-yellow-200  underline  hover:text-white  transition-colors"
                 >
                   @Read
                 </a>
@@ -393,20 +400,20 @@ export default function Home() {
 
         {/* Projects Section */}
         <section className="mb-16">
-          <h2 className="text-3xl font-light text-black mb-6">
+          <h2 className="text-3xl font-light text-white mb-6">
             Selected Projects
           </h2>
           <div className="space-y-8">
             {CONFIG.projects.map((project) => (
               <div key={project.title}>
                 <div className="flex items-baseline justify-between mb-2">
-                  <h3 className="text-xl font-medium text-black">
+                  <h3 className="text-xl font-medium text-white">
                     {project.links.live ? (
                       <a
                         href={project.links.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:underline"
+                        className="hover:text-yellow-200 transition-colors"
                       >
                         {project.title}
                       </a>
@@ -414,24 +421,24 @@ export default function Home() {
                       project.title
                     )}
                   </h3>
-                  <span className="text-black/60">{project.year}</span>
+                  <span className="text-white/60">{project.year}</span>
                 </div>
-                <p className="text-sm text-black/60 mb-3">{project.type}</p>
-                <div className="text-black/70 leading-relaxed space-y-3 mb-4">
+                <p className="text-sm text-white/60 mb-3">{project.type}</p>
+                <div className="text-white/70 leading-relaxed space-y-3 mb-4">
                   {project.description.map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
                 </div>
                 <div className="mb-4">
-                  <span className="text-black/70">Technologies: </span>
-                  <span className="text-black/60">
+                  <span className="text-white/70">Technologies: </span>
+                  <span className="text-white/60">
                     {project.technologies.join(", ")}
                   </span>
                 </div>
                 {project.dockerCommand !== "Image is not available" && (
-                  <div className="p-4 mb-4 font-mono text-sm bg-black/5 rounded border border-black/10">
+                  <div className="p-4 mb-4 font-mono text-sm bg-[#141414] rounded-sm border border-black/10">
                     <div className="flex items-center justify-between gap-3">
-                      <code className="text-black/70 break-all flex-1">
+                      <code className="text-green-500 break-all flex-1">
                         {project.dockerCommand}
                       </code>
                       <CopyButton text={project.dockerCommand} />
@@ -444,7 +451,7 @@ export default function Home() {
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-black/70 hover:text-black underline transition-colors"
+                      className="inline-flex items-center gap-2 text-yellow-200 bg-black p-1 rounded-sm  transition-colors"
                     >
                       View Project
                       <ExternalLink className="w-4 h-4" />
@@ -455,7 +462,7 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-black/70 hover:text-black underline transition-colors"
+                      className="inline-flex p-1 bg-black rounded-sm items-center gap-2 text-yellow-200   transition-colors"
                     >
                       <Github className="w-4 h-4" />
                       Source Code
@@ -469,16 +476,16 @@ export default function Home() {
 
         {/* Technical Skills Section */}
         <section className="mb-16">
-          <h2 className="text-3xl font-light text-black mb-6">
+          <h2 className="text-3xl font-light text-white mb-6">
             Technical Proficiencies
           </h2>
           <div className="space-y-6">
             {Object.entries(CONFIG.skills).map(([category, skills]) => (
               <div key={category}>
-                <h3 className="text-lg font-medium text-black mb-3">
+                <h3 className="text-lg font-medium text-white mb-3">
                   {category}
                 </h3>
-                <p className="text-black/70">{skills.join(", ")}</p>
+                <p className="text-white/70">{skills.join(", ")}</p>
               </div>
             ))}
           </div>
@@ -486,20 +493,20 @@ export default function Home() {
 
         {/* Certifications Section */}
         <section className="mb-16">
-          <h2 className="text-3xl font-light text-black mb-6">
+          <h2 className="text-3xl font-light text-white mb-6">
             Certifications
           </h2>
           <div className="space-y-8">
             {CONFIG.certifications.map((cert) => (
               <div key={cert.title}>
                 <div className="flex items-baseline justify-between mb-2">
-                  <h3 className="text-xl font-medium text-black">
+                  <h3 className="text-xl font-medium text-white">
                     {cert.url ? (
                       <a
                         href={cert.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:underline"
+                        className="hover:text-yellow-200 transition-colors "
                       >
                         {cert.title}
                       </a>
@@ -507,16 +514,16 @@ export default function Home() {
                       cert.title
                     )}
                   </h3>
-                  <span className="text-black/60">{cert.year}</span>
+                  <span className="text-white/60">{cert.year}</span>
                 </div>
                 <div className="flex items-center gap-2 mb-3">
-                  <Award className="w-4 h-4 text-black/60" />
-                  <span className="text-black/70">{cert.organization}</span>
+                  <Award className="w-4 h-4 text-yellow-200" />
+                  <span className="text-yellow-200">{cert.organization}</span>
                 </div>
-                <p className="text-black/70 leading-relaxed mb-3">
+                <p className="text-white/70 leading-relaxed mb-3">
                   {cert.description}
                 </p>
-                <p className="text-black/60">
+                <p className="text-white/60">
                   Skills: {cert.skills.join(", ")}
                 </p>
               </div>
@@ -526,19 +533,19 @@ export default function Home() {
 
         {/* Education Section */}
         <section className="mb-16">
-          <h2 className="text-3xl font-light text-black mb-6">Education</h2>
+          <h2 className="text-3xl font-light text-white mb-6">Education</h2>
           <div>
             <div className="flex items-baseline justify-between mb-2">
-              <h3 className="text-xl font-medium text-black">
+              <h3 className="text-xl font-medium text-white">
                 {CONFIG.education.degree}
               </h3>
-              <span className="text-black/60">{CONFIG.education.period}</span>
+              <span className="text-white/60">{CONFIG.education.period}</span>
             </div>
-            <p className="text-black/70 mb-2">{CONFIG.education.field}</p>
-            <p className="text-black/60 mb-3">
+            <p className="text-white/70 mb-2">{CONFIG.education.field}</p>
+            <p className="text-white/60 mb-3">
               {CONFIG.education.institution}, {CONFIG.education.location}
             </p>
-            <p className="text-black/70 leading-relaxed">
+            <p className="text-white/70 leading-relaxed">
               {CONFIG.education.description}
             </p>
           </div>
@@ -546,27 +553,29 @@ export default function Home() {
 
         {/* CLI Tool Section */}
         <section className="mb-16">
-          <h2 className="text-3xl font-light text-black mb-6">CLI Tool</h2>
-          <p className="text-black/70 mb-6 leading-relaxed">
+          <h2 className="text-3xl font-light text-white mb-6">CLI Tool</h2>
+          <p className="text-white/70 mb-6 leading-relaxed">
             Interactive command-line portfolio viewer built with Node.js
           </p>
           <div className="space-y-3 font-mono text-sm">
-            <div className="rounded p-4 bg-black/5 border border-black/10">
+            <div className="rounded p-2 bg-[#141414] border border-black/10">
               <div className="flex items-center justify-between gap-3">
                 <div className="break-all flex-1">
-                  <span className="text-black/60">$</span>{" "}
-                  <span className="text-black/70">
-                    npm install -g hackkinshuk
+                  <span className="text-blue-500">$</span>{" "}
+                  <span className="text-white/70">
+                    <span className="text-yellow-200">npm</span> install{" "}
+                    <span className="text-yellow-200">-g</span>{" "}
+                    <span className="text-yellow-200">hackkinshuk</span>
                   </span>
                 </div>
                 <CopyButton text="npm install -g hackkinshuk" />
               </div>
             </div>
-            <div className="rounded p-4 bg-black/5 border border-black/10">
+            <div className="rounded p-2 bg-[#141414] border border-black/10">
               <div className="flex items-center justify-between gap-3">
                 <div className="break-all flex-1">
-                  <span className="text-black/60">$</span>{" "}
-                  <span className="text-black/70">cloudkinshuk</span>
+                  <span className="text-blue-500">$</span>{" "}
+                  <span className="text-white/70">cloudkinshuk</span>
                 </div>
                 <CopyButton text="cloudkinshuk" />
               </div>

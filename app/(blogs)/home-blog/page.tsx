@@ -158,6 +158,19 @@ const MOCK_BLOG_POSTS: BlogPost[] = [
     ],
     author: { name: "Kinshuk Jain" },
   },
+  {
+    id: "blogF",
+    title: "Comming Soon",
+    brief: "This blog is comming soons",
+    slug: "Comming-soon",
+    publishedAt: "2026-02-10T10:00:00Z",
+    updatedAt: "2026-02-10T10:00:00Z",
+    readTimeInMinutes: 10,
+    views: 0,
+    reactionCount: 0,
+    tags: [{ id: "1", name: "comming soon", slug: "Comming-soon" }],
+    author: { name: "Kinshuk Jain" },
+  },
 ];
 
 class SimpleSearchEngine {

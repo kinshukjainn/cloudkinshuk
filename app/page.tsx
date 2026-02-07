@@ -12,6 +12,7 @@ import {
   ExternalLink,
   Award,
 } from "lucide-react";
+import Signaturekinshuk from "./components/Signaturekinshuk";
 
 const CONFIG = {
   personal: {
@@ -247,7 +248,7 @@ const SocialIcon = ({ icon }: { icon: string }) => {
 
 export default function Home() {
   return (
-    <div className="min-h-screen pt-20 bg-[#1c1c1c] text-white">
+    <div className="min-h-screen pt-10 bg-[#1c1c1c] text-white">
       {/* Hero Header */}
       <header className="border-b border-black/10 bg-[#1c1c1c]">
         <div className="max-w-4xl mx-auto px-6 py-16">
@@ -258,7 +259,7 @@ export default function Home() {
     leading-tight
   "
           >
-            Cloudkinshuk.in
+            <Signaturekinshuk />
           </h1>
 
           <div className="space-y-4">

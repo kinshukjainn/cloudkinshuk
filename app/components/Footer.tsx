@@ -8,6 +8,7 @@ import {
   FaInstagram,
   FaEnvelope,
 } from "react-icons/fa";
+import Signaturekinshuk from "./Signaturekinshuk";
 
 interface SocialLink {
   icon: React.ElementType;
@@ -57,18 +58,18 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-white border-t border-gray-200">
+    <footer className="bg-[#1c1c1c] border-t border-gray-200">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="flex flex-col items-center space-y-8">
           {/* Logo and brand section */}
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center gap-3">
-              <FaCloud className="w-8 h-8 sm:w-10 sm:h-10 text-gray-900" />
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
-                CloudKinshuk
+              <FaCloud className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
+                <Signaturekinshuk />
               </h2>
             </div>
-            <p className="text-sm sm:text-base text-gray-600">
+            <p className="text-sm sm:text-base text-white">
               Building the future, one cloud at a time
             </p>
           </div>
@@ -80,7 +81,7 @@ const Footer = () => {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm sm:text-base text-gray-700 hover:font-bold hover:text-gray-900"
+                    className="text-sm sm:text-base text-white hover:font-bold hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -96,7 +97,7 @@ const Footer = () => {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-gray-700 hover:text-gray-900"
+                  className="text-white hover:text-white"
                   aria-label={link.label}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -110,7 +111,7 @@ const Footer = () => {
 
           {/* Copyright section */}
           <div className="text-center space-y-2 pt-4">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-white">
               © {new Date().getFullYear()} Kinshuk Jain. All rights reserved.
             </p>
             <p className="text-sm text-gray-500">Made with ❤️ and lots of ☕</p>

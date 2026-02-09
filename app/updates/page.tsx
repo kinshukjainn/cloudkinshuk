@@ -85,7 +85,7 @@ const NOW_CONFIG = {
 
 export default function CurrentWorkings() {
   return (
-    <div className="min-h-screen pt-10 bg-[#1c1c1c] antialiased">
+    <div className="min-h-screen pt-10 bg-black antialiased">
       <div className="max-w-3xl mx-auto px-6 sm:px-8 lg:px-12 py-12 sm:py-16">
         {/* Header */}
         <header className="mb-20 sm:mb-24">

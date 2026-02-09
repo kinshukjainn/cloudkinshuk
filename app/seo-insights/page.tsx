@@ -397,7 +397,7 @@ export default function SeoInsights() {
   // ========================================================================
 
   return (
-    <div className="min-h-screen bg-[#1c1c1c]">
+    <div className="min-h-screen bg-black">
       <Header
         date={formattedDate}
         showFilters={showFilters}
@@ -661,7 +661,7 @@ const Header: React.FC<HeaderProps> = ({
   onResetFilters,
   onExportMarkdown,
 }) => (
-  <header className=" pt-20  top-0 left-0 right-0 bg-[#1c1c1c]/95 backdrop-blur-md border-b border-zinc-800 z-40 shadow-lg">
+  <header className=" pt-20  top-0 left-0 right-0 bg-black/95 backdrop-blur-md border-b border-zinc-800 z-40 shadow-lg">
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-5">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
         <div>
@@ -688,7 +688,7 @@ const Header: React.FC<HeaderProps> = ({
             <Filter className="w-4 h-4" />
             <span className="hidden sm:inline">Filters</span>
             {hasActiveFilters && (
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full ring-2 ring-[#1c1c1c]" />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full ring-2 ring-[black]" />
             )}
           </button>
           <button

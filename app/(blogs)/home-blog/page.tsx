@@ -160,15 +160,23 @@ const MOCK_BLOG_POSTS: BlogPost[] = [
   },
   {
     id: "blogF",
-    title: "Comming Soon",
-    brief: "This blog is comming soons",
-    slug: "Comming-soon",
+    title: "Why did i start blogging ?",
+    brief:
+      "In a world overflowing with information, quality blogging stands as a beacon of authentic learning and meaningful communication. I believe in the transformative power of blogging – not just as a platform, but as a commitment to clarity, growth, and community. This is why I'm dedicating myself to blogging in the most intentional and impactful way possible.",
+    slug: "why-did-i-start-blogging",
     publishedAt: "2026-02-10T10:00:00Z",
     updatedAt: "2026-02-10T10:00:00Z",
-    readTimeInMinutes: 10,
+    readTimeInMinutes: 5,
     views: 0,
     reactionCount: 0,
-    tags: [{ id: "1", name: "comming soon", slug: "Comming-soon" }],
+    tags: [
+      { id: "1", name: "blogs", slug: "blogs" },
+      { id: "2", name: "devlopers", slug: "devlopers" },
+      { id: "3", name: "devlopers blogs", slug: "devlopers-blogs" },
+      { id: "4", name: "student", slug: "student" },
+      { id: "5", name: "reasoning", slug: "reasoning" },
+      { id: "6", name: "community", slug: "community" },
+    ],
     author: { name: "Kinshuk Jain" },
   },
 ];
@@ -301,17 +309,19 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     <div className="mb-8">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex md:hidden items-center justify-between w-full px-4 py-3  border border-black/10 rounded-lg transition-colors duration-200 mb-4"
+        className="flex md:hidden items-center justify-between w-full px-4 py-3  border border-blue-500 rounded-lg transition-colors duration-200 mb-4"
       >
-        <span className="text-sm font-medium text-black">
+        <span className="text-sm font-medium text-white">
           Filter by tags {activeFiltersCount > 0 && `(${activeFiltersCount})`}
         </span>
-        <ChevronDown
-          size={20}
-          className={`text-black/60 transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
-          }`}
-        />
+        <div className="p-1 bg-[#ff9100] rounded-full">
+          <ChevronDown
+            size={20}
+            className={`text-black  transition-transform duration-200 ${
+              isOpen ? "rotate-180" : ""
+            }`}
+          />
+        </div>
       </button>
 
       <div
@@ -323,7 +333,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
       >
         <div className=" border border-gray-500 rounded-lg p-6">
           <div>
-            <label className="block text-sm font-medium text-white mb-3">
+            <label className="block text-sm font-medium text-white  mb-3">
               Filtering Tags{" "}
               {filters.tags.length > 0 && `(${filters.tags.length})`}
             </label>
@@ -333,10 +343,10 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                   <button
                     key={tag}
                     onClick={() => toggleTag(tag)}
-                    className={`px-3 py-1.5 text-xs rounded-sm transition-all duration-200 ${
+                    className={`px-3 py-1.5 text-xs  transition-all duration-200 ${
                       filters.tags.includes(tag)
-                        ? "bg-black text-white"
-                        : "bg-[#141414] text-white cursor-pointer hover:bg-black/80 hover:text-white"
+                        ? "bg-[#ff9100] text-black font-semibold  rounded-full"
+                        : "bg-[#141414] text-white rounded-md cursor-pointer hover:rounded-full hover:text-white"
                     }`}
                   >
                     {tag}
@@ -349,7 +359,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
           {activeFiltersCount > 0 && (
             <button
               onClick={resetFilters}
-              className="mt-4 w-full flex items-center justify-center cursor-pointer gap-2 px-2 py-2 bg-black  text-white text-sm font-medium rounded-sm transition-colors duration-200"
+              className="mt-4  flex items-center justify-center cursor-pointer gap-2 px-2 py-2 w-max  bg-blue-800  text-white text-sm font-medium rounded-full transition-colors duration-200"
             >
               <RotateCcw size={16} />
               Clear filters
@@ -442,9 +452,9 @@ export default function BlogsPage() {
   }, [posts, searchInput, searchEngine, filters]);
 
   return (
-    <div className="min-h-screen bg-[#1c1c1c]">
+    <div className="min-h-screen bg-black">
       {/* Header */}
-      <header className="border-b border-black/10 bg-[#1c1c1c]">
+      <header className="border-b border-black/10 bg-black">
         <div className="max-w-4xl mx-auto px-6 py-16">
           <h1 className="text-7xl font-light text-white mb-6">Dev. Blogs</h1>
           <p className="text-xl text-white/80 leading-relaxed max-w-3xl">

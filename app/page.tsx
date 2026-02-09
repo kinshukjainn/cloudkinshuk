@@ -13,6 +13,7 @@ import {
   Award,
 } from "lucide-react";
 import Signaturekinshuk from "./components/Signaturekinshuk";
+// 1. Updated Import Name to match the file created previously
 
 const CONFIG = {
   personal: {
@@ -248,19 +249,16 @@ const SocialIcon = ({ icon }: { icon: string }) => {
 
 export default function Home() {
   return (
-    <div className="min-h-screen pt-10 bg-[#1c1c1c] text-white">
+    <div className="min-h-screen pt-10 bg-black text-white">
       {/* Hero Header */}
-      <header className="border-b border-black/10 bg-[#1c1c1c]">
-        <div className="max-w-4xl mx-auto px-6 py-16">
-          <h1
-            className="
-    font-light text-white mb-6
-    text-[clamp(1.75rem,5vw,4.5rem)]
-    leading-tight
-  "
-          >
+      <header className="border-b border-black/10 bg-black">
+        <div className="max-w-4xl mx-auto px-10 py-10">
+          {/* 2. UPDATED: Wrapper for the 3D Signature. 
+             Since the component now has intrinsic height (140px mobile / 180px desktop),
+             we just let it flow naturally in the flex container. */}
+          <div className="mb-2 w-full  flex justify-start">
             <Signaturekinshuk />
-          </h1>
+          </div>
 
           <div className="space-y-4">
             <p className="text-xl text-white/80 leading-relaxed">
@@ -291,8 +289,10 @@ export default function Home() {
             small things that might someday scale, experimenting with
             infrastructure, and understanding how technology connects people.
           </p>
-          <div className="flex items-center gap-3 text-white  mb-4">
-            <MapPin className="w-5 h-5" />
+          <div className="flex items-center gap-3  w-max rounded-full text-white  mb-4">
+            <div className="bg-[#ff9100] p-1 rounded-full text-black">
+              <MapPin className="w-5 h-5" />
+            </div>
             <span>{CONFIG.personal.location}</span>
           </div>
           <div className="flex items-center gap-3 text-green-600 mb-6">
@@ -306,9 +306,9 @@ export default function Home() {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-white p-2 bg-[#252525] rounded-sm  hover:text-yellow-200  transition-colors"
+                className="inline-flex items-center gap-2 text-white p-1 bg-[#141414] rounded-full  hover:text-yellow-200  transition-colors"
               >
-                <div className="text-yellow-200 p-1 bg-[#141414] rounded-xs">
+                <div className="text-black p-1 bg-[#ff9100] rounded-full">
                   <SocialIcon icon={social.icon} />
                 </div>
                 <span>{social.handle}</span>
@@ -323,9 +323,11 @@ export default function Home() {
           <a
             href="/kinshukfinalresume.pdf"
             download="kinshukfinalresume.pdf"
-            className="inline-flex items-center gap-2 text-yellow-200 p-2  bg-black rounded-sm hover:text-white  transition-colors"
+            className="inline-flex items-center gap-2 text-white p-2  bg-[#141414] rounded-full  transition-colors"
           >
-            <Download className="w-5 h-5" />
+            <div className="bg-[#ff9100] p-1  rounded-full text-black">
+              <Download className="w-5 h-5" />
+            </div>
             Download (PDF)
           </a>
           <p className="text-white/70 mt-4 leading-relaxed">
@@ -341,7 +343,7 @@ export default function Home() {
               <h3 className="text-xl font-medium text-white mb-2">
                 <a
                   href="/home-blog"
-                  className="font-bold text-yellow-200 p-2 bg-black  rounded-sm  transition-colors"
+                  className="font-bold text-black p-2 bg-[#ff9100]  rounded-full  transition-colors"
                 >
                   checkout blogs
                 </a>
@@ -390,9 +392,10 @@ export default function Home() {
                 <span>To Know more in depth checkout my blog : </span>
                 <a
                   href="/home-blog/blogE"
-                  className=" font-bold italic text-yellow-200  underline  hover:text-white  transition-colors"
+                  className=" font-bold text-[#ff9100]  font-mono   transition-colors"
                 >
-                  @Read
+                  {"-> "}
+                  <span className="hover:underline">Read</span>
                 </a>
               </div>
             </div>
@@ -452,7 +455,7 @@ export default function Home() {
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-yellow-200 bg-black p-1 rounded-sm  transition-colors"
+                      className="inline-flex items-center gap-2 text-[#ff9100] font-mono  hover:underline transition-colors"
                     >
                       View Project
                       <ExternalLink className="w-4 h-4" />
@@ -463,7 +466,7 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex p-1 bg-black rounded-sm items-center gap-2 text-yellow-200   transition-colors"
+                      className="inline-flex items-center gap-2 text-[#ff9100] font-mono hover:underline   transition-colors"
                     >
                       <Github className="w-4 h-4" />
                       Source Code

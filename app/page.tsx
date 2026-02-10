@@ -324,11 +324,11 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-white px-3 py-2  transition-all duration-300 group text-sm md:text-base"
               >
-                <div className="text-black p-1.5 bg-blue-500 rounded-full group-hover:text-white transition-colors">
+                <div className="text-white p-1.5 bg-blue-800 rounded-full group-hover:text-white transition-colors">
                   <SocialIcon icon={social.icon} />
                 </div>
                 <span className="font-medium">{social.handle}</span>
-                <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
+                <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
               </a>
             ))}
           </div>

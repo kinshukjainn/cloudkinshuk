@@ -14,23 +14,25 @@ export default function Blogheader() {
     pathname.startsWith("/home-blog/") && pathname !== "/home-blog";
 
   return (
-    // ADJUST THE 'mt-16' value to match the height of your Parent Header
-    // 'bg-white' ensures no transparency issues
-    <header className="w-full bg-[#141414] h-14 flex items-center mt-16 relative z-40">
-      <div className="max-w-7xl w-full mx-auto px-4">
-        {/* LOGIC A: Home Title */}
-        {isHome && <h1 className="text-xl font-semibold text-white">Home</h1>}
+    // Pill-shaped header with responsive spacing
+    <header className="w-full px-3 sm:px-4 md:px-6 mt-12  sm:mt-14 md:mt-16 relative z-40">
+      <div className="max-w-6xl mx-auto bg-[#141414]  rounded-b-2xl h-12 sm:h-14 md:h-16 flex items-center px-4 sm:px-6 md:px-8 shadow-lg">
+        {isHome && (
+          <h1 className="text-base sm:text-lg md:text-xl font-semibold text-white truncate">
+            Home
+          </h1>
+        )}
 
         {/* LOGIC B: Back Button (Scales for blog-1, blog-2, blog-99...) */}
         {isBlogPost && (
           <button
             onClick={() => router.push("/home-blog")}
-            className="flex items-center cursor-pointer  justify-center p-2 -ml-2 rounded-full text-white hover:text-gray-200 hover:bg-gray-800 transition-colors"
+            className="flex items-center gap-1 sm:gap-1.5 -ml-2 sm:-ml-3 px-2 sm:px-3 py-1.5 sm:py-2 rounded-full cursor-pointer text-white hover:text-gray-200 hover:bg-white/10 transition-all duration-200 active:scale-95 group"
+            aria-label="Back to home"
           >
             {/* Microsoft-style Minimalist Chevron */}
             <svg
-              width="24"
-              height="24"
+              className="w-5 h-5 sm:w-6 sm:h-6 transition-transform group-hover:-translate-x-0.5"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +45,9 @@ export default function Blogheader() {
                 strokeLinejoin="round"
               />
             </svg>
-            Back
+            <span className="text-sm sm:text-base md:text-lg font-medium">
+              Back
+            </span>
           </button>
         )}
       </div>

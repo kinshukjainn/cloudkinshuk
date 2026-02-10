@@ -250,7 +250,7 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
     return (
       <div className="py-6 border-b border-gray-500 last:border-b-0">
         <Link href={`/home-blog/${post.id}`} className="group block">
-          <h3 className="text-xl   text-white mb-3 hover:underline">
+          <h3 className="text-xl   text-white mb-3 font-bold  hover:underline">
             {highlightText(post.title, searchQuery)}
           </h3>
           <p className="text-white/70 mb-3 leading-relaxed">{post.brief}</p>
@@ -309,7 +309,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     <div className="mb-8">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex md:hidden items-center justify-between w-full px-4 py-3  border border-blue-500 rounded-lg transition-colors duration-200 mb-4"
+        className="flex md:hidden items-center justify-between w-full px-4 py-3 bg-[#141414] border border-[#444444] rounded-2xl transition-colors duration-200 mb-4"
       >
         <span className="text-sm font-medium text-white">
           Filter by tags {activeFiltersCount > 0 && `(${activeFiltersCount})`}
@@ -331,11 +331,10 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
             : "max-h-0 md:max-h-none opacity-0 md:opacity-100"
         } md:opacity-100 md:max-h-none`}
       >
-        <div className=" border border-gray-500 rounded-lg p-6">
+        <div className=" border border-gray-500 bg-[#141414] rounded-2xl p-6">
           <div>
             <label className="block text-sm font-medium text-white  mb-3">
-              Filtering Tags{" "}
-              {filters.tags.length > 0 && `(${filters.tags.length})`}
+              TAGS {filters.tags.length > 0 && `(${filters.tags.length})`}
             </label>
             <div className="max-h-48 overflow-y-auto">
               <div className="flex flex-wrap gap-2">
@@ -346,7 +345,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                     className={`px-3 py-1.5 text-xs  transition-all duration-200 ${
                       filters.tags.includes(tag)
                         ? "bg-[#ff9100] text-black font-semibold  rounded-full"
-                        : "bg-[#141414] text-white rounded-md cursor-pointer hover:rounded-full hover:text-white"
+                        : "bg-black text-white rounded-lg cursor-pointer hover:rounded-full hover:text-white"
                     }`}
                   >
                     {tag}
@@ -393,10 +392,10 @@ const SearchBar: React.FC<SearchBarProps> = ({
         />
         <input
           type="text"
-          placeholder="Search articles..."
+          placeholder="articles , blogs , devlopers blogs , student , reasoning , community"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="w-full pl-12 pr-12 py-3  bg-[#141414] border border-[#444444] rounded-lg text-white  placeholder-gray-400 text-base focus:outline-none focus:border-white/20 transition-colors duration-200"
+          className="w-full pl-12 pr-12 py-3  bg-[#141414] border border-[#444444] rounded-2xl text-white  placeholder-gray-400 text-base focus:outline-none focus:border-white/20 transition-colors duration-200"
         />
         {searchInput && (
           <button
@@ -456,7 +455,7 @@ export default function BlogsPage() {
       {/* Header */}
       <header className="border-b border-black/10 bg-black">
         <div className="max-w-4xl mx-auto px-6 py-16">
-          <h1 className="text-7xl font-light text-white mb-6">Dev. Blogs</h1>
+          <h1 className="text-7xl font-bold text-white mb-6">Dev. Blogs</h1>
           <p className="text-xl text-white/80 leading-relaxed max-w-3xl">
             Hi <span className="font-semibold text-blue-500">@everyone</span>,
             here I&apos;m sharing my learning journey in cloud computing,

@@ -263,10 +263,10 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   badge,
   children,
 }) => (
-  <div className="border-t border-zinc-800">
+  <div className="bg-[#141414] rounded-2xl mt-4 border border-zinc-700/50">
     <button
       onClick={onToggle}
-      className="w-full py-5 flex items-center justify-between hover:bg-zinc-900/50 transition-colors px-1"
+      className="w-full py-5  flex items-center rounded-xl justify-between hover:bg-zinc-900/50 transition-colors px-1"
       aria-expanded={isExpanded}
       type="button"
     >
@@ -278,14 +278,16 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
           </span>
         )}
       </div>
-      <ChevronDown
-        className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${
-          isExpanded ? "rotate-180" : ""
-        }`}
-      />
+      <div className="bg-blue-800 p-1 rounded-full">
+        <ChevronDown
+          className={`w-6 h-6 text-white transition-transform duration-200 ${
+            isExpanded ? "rotate-180" : ""
+          }`}
+        />
+      </div>
     </button>
     {isExpanded && (
-      <div className="pb-6 space-y-4 text-gray-300 px-1">{children}</div>
+      <div className="pb-6 space-y-4 text-white px-1">{children}</div>
     )}
   </div>
 );
@@ -428,18 +430,18 @@ export default function SeoInsights() {
 
         {/* Active Filters Info */}
         {hasActiveFilters && (
-          <div className="mb-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+          <div className="mb-6 p-4">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-2 flex-1">
-                <Filter className="w-4 h-4 text-blue-300 flex-shrink-0" />
-                <span className="text-sm font-medium text-blue-200">
+                <Filter className="w-4 h-4 text-white flex-shrink-0" />
+                <span className="text-sm font-medium text-white">
                   Showing {filteredOpportunities.length} of{" "}
                   {AUDIT_DATA.insights.performanceImprovements.length} items
                 </span>
               </div>
               <button
                 onClick={handleResetFilters}
-                className="text-sm text-blue-400 hover:text-blue-300 font-medium whitespace-nowrap transition-colors"
+                className="text-sm text-white bg-blue-800 px-3 py-2  rounded-full font-bold whitespace-nowrap transition-colors"
                 type="button"
               >
                 Clear All
@@ -449,32 +451,32 @@ export default function SeoInsights() {
         )}
 
         {/* Main Content Card */}
-        <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden">
+        <div className="  p-4 rounded-3xl overflow-hidden">
           {/* Environment */}
           <CollapsibleSection
             title="Test Environment"
             isExpanded={expanded.environment}
             onToggle={() => toggleSection("environment")}
           >
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-              <div className="p-3 bg-zinc-800/50 rounded-lg border border-zinc-700/50">
-                <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+              <div className="p-5 bg-zinc-800/50 rounded-3xl border border-zinc-700/50">
+                <p className="text-blue-400 text-xs uppercase font-bold tracking-wide mb-1">
                   Device
                 </p>
                 <p className="font-medium text-white">
                   {AUDIT_DATA.auditMeta.environment.device}
                 </p>
               </div>
-              <div className="p-3 bg-zinc-800/50 rounded-lg border border-zinc-700/50">
-                <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">
+              <div className="p-3 bg-zinc-800/50 rounded-3xl border border-zinc-700/50">
+                <p className="text-blue-400 text-xs uppercase font-bold tracking-wide mb-1">
                   Network
                 </p>
                 <p className="font-medium text-white">
                   {AUDIT_DATA.auditMeta.environment.network}
                 </p>
               </div>
-              <div className="p-3 bg-zinc-800/50 rounded-lg border border-zinc-700/50">
-                <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">
+              <div className="p-3 bg-zinc-800/50 rounded-3xl border border-zinc-700/50">
+                <p className="text-blue-400 text-xs uppercase font-bold tracking-wide mb-1">
                   Version
                 </p>
                 <p className="font-medium text-white">
@@ -566,7 +568,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   hasActiveFilters,
   onResetFilters,
 }) => (
-  <div className="space-y-3 p-4 bg-zinc-900/80 rounded-lg border border-zinc-700/50 backdrop-blur-sm">
+  <div className="space-y-3 p-4 bg-zinc-900/80 rounded-2xl border border-zinc-700/50 backdrop-blur-sm">
     <div className="flex items-center gap-2 mb-3">
       <Filter className="w-4 h-4 text-gray-300" />
       <h3 className="text-sm font-semibold text-white">Filter Options</h3>
@@ -676,7 +678,7 @@ const Header: React.FC<HeaderProps> = ({
         <div className="flex gap-2">
           <button
             onClick={() => onToggleFilters(!showFilters)}
-            className={`flex items-center gap-2 px-4 py-2.5 text-sm rounded-lg transition-all relative font-medium ${
+            className={`flex items-center gap-2 px-4 py-2.5 text-sm rounded-full transition-all relative font-medium ${
               showFilters
                 ? "bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-600/30"
                 : "bg-zinc-800 text-gray-200 hover:bg-zinc-700 border border-zinc-700"
@@ -693,7 +695,7 @@ const Header: React.FC<HeaderProps> = ({
           </button>
           <button
             onClick={onExportMarkdown}
-            className="flex items-center gap-2 px-4 py-2.5 bg-zinc-800 border border-zinc-700 text-white text-sm rounded-lg hover:bg-zinc-700 transition-all font-medium"
+            className="flex items-center gap-2 px-4 py-2.5 bg-zinc-800 border border-zinc-700 text-white text-sm rounded-full hover:bg-zinc-700 transition-all font-medium"
             type="button"
             aria-label="Export as Markdown"
           >
@@ -726,8 +728,8 @@ interface StatCardProps {
 }
 
 const StatCard: React.FC<StatCardProps> = ({ label, value, trend }) => (
-  <div className="p-4 bg-zinc-900/50 rounded-lg border border-zinc-800 hover:border-zinc-700 transition-all">
-    <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">
+  <div className="p-4 bg-zinc-900/50 rounded-3xl border border-zinc-800 hover:border-zinc-700 transition-all">
+    <p className="text-xs font-bold text-blue-500 uppercase tracking-wide mb-2">
       {label}
     </p>
     <div className="flex items-center justify-between">
@@ -735,9 +737,7 @@ const StatCard: React.FC<StatCardProps> = ({ label, value, trend }) => (
       {trend !== undefined && (
         <div
           className={`flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-md ${
-            trend > 0
-              ? "text-emerald-400 bg-emerald-500/10"
-              : "text-red-400 bg-red-500/10"
+            trend > 0 ? "text-white bg-slate-900" : "text-red-400 bg-red-500/10"
           }`}
         >
           {trend > 0 ? (
@@ -770,8 +770,8 @@ const getStatusIcon = (status: VitalStatus) => {
 };
 
 const VitalCard: React.FC<VitalCardProps> = ({ vital }) => (
-  <div className="p-4 bg-zinc-800/50 rounded-lg border border-zinc-700/50 hover:border-zinc-600 transition-all">
-    <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">
+  <div className="p-4 bg-[#131313] rounded-3xl border border-zinc-700/50 hover:border-zinc-600 transition-all">
+    <p className="text-sm font-bold text-blue-400 uppercase tracking-wide mb-2">
       {vital.label}
     </p>
     <div className="flex items-start justify-between">
@@ -797,11 +797,13 @@ interface OpportunityItemProps {
 }
 
 const OpportunityItem: React.FC<OpportunityItemProps> = ({ item }) => (
-  <div className="flex items-start gap-3 p-4 bg-zinc-800/30 rounded-lg border border-zinc-700/50 hover:border-zinc-600 hover:bg-zinc-800/50 transition-all">
-    <Zap
-      className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"
-      aria-hidden="true"
-    />
+  <div className="flex items-start gap-3 p-4 bg-zinc-800/30 rounded-3xl border border-zinc-700/50 hover:border-zinc-600 hover:bg-zinc-800/50 transition-all">
+    <div className="bg-green-500 p-1 rounded-full">
+      <Zap
+        className="w-5 h-5 text-black  mt-0.5 flex-shrink-0"
+        aria-hidden="true"
+      />
+    </div>
     <div className="flex-1 min-w-0">
       <p className="text-sm font-medium text-white mb-2">{item.title}</p>
       <div className="flex items-center gap-3 text-xs text-gray-400">
@@ -816,7 +818,7 @@ const OpportunityItem: React.FC<OpportunityItemProps> = ({ item }) => (
       </div>
     </div>
     <span
-      className={`px-3 py-1.5 text-xs rounded-md font-semibold whitespace-nowrap ${getPriorityColor(item.priority)}`}
+      className={`px-3 py-1.5 text-xs rounded-full font-semibold whitespace-nowrap ${getPriorityColor(item.priority)}`}
     >
       {item.priority.toUpperCase()}
     </span>

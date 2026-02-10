@@ -96,14 +96,14 @@ const ToolCard: React.FC<ToolCardProps> = ({ section, index }) => {
         <div className="pl-3 sm:pl-4 pb-4 sm:pb-6">
           {/* Header */}
           <div className="flex items-center gap-2 mb-3 sm:mb-4">
-            <div className=" p-3  rounded-md bg-black flex items-center justify-center">
-              <CategoryIcon className="w-6 h-6 sm:w-4 sm:h-4 text-white" />
+            <div className=" p-1.5 rounded-full bg-[#ff9100] flex items-center justify-center">
+              <CategoryIcon className="w-6 h-6 sm:w-6 sm:h-6 text-black" />
             </div>
             <h2 className="text-md sm:text-sm font-bold text-neutral-100 uppercase tracking-wider">
               {section.category}
             </h2>
-            <span className="ml-auto text-[10px] sm:text-xs text-neutral-100 ">
-              [{section.items.length}]
+            <span className="ml-auto text-sm p-1.5 bg-blue-800 font-semibold  sm:text-sm text-white rounded-full">
+              {section.items.length}
             </span>
           </div>
 
@@ -116,8 +116,8 @@ const ToolCard: React.FC<ToolCardProps> = ({ section, index }) => {
                   key={idx}
                   className="group/item flex items-start gap-2 sm:gap-3 p-2 sm:p-2.5   transition-colors cursor-pointer"
                 >
-                  <div className="p-3 rounded-sm bg-black  flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <ItemIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white transition-colors" />
+                  <div className="p-3 rounded-full bg-blue-800  flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <ItemIcon className="w-5 h-5 sm:w-5 sm:h-5 text-white transition-colors" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="text-md sm:text-sm text-neutral-100 font-semibold mb-0.5">
@@ -147,7 +147,7 @@ export default function DevToolsCompact() {
   );
 
   return (
-    <div className="min-h-screen bg-black text-neutral-900">
+    <div className="min-h-screen bg-black text-neutral-900 pt-10">
       {/* Header */}
       <header
         ref={headerRef}
@@ -161,12 +161,12 @@ export default function DevToolsCompact() {
         <div className="max-w-6xl mx-auto  px-4 sm:px-6 py-6 sm:py-8">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <div>
-              <div className="inline-block px-2 py-1 bg-blue-600 mb-3 sm:mb-4">
-                <span className="text-[10px] sm:text-xs  text-white  tracking-wider">
+              <div className="inline-block px-2 py-1 rounded-full bg-[#ff9100] mb-3 sm:mb-4">
+                <span className="text-[10px] sm:text-xs  text-black font-bold  tracking-wider">
                   DEVELOPMENT
                 </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-light text-neutral-100 mb-2 tracking-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-neutral-100 mb-2 tracking-tight">
                 Development Stack
               </h1>
               <p className="text-xs sm:text-sm text-neutral-100 max-w-xl ">
@@ -178,7 +178,7 @@ export default function DevToolsCompact() {
                 <div className="text-xl sm:text-2xl font-bold text-blue-400 ">
                   {totalTools}
                 </div>
-                <div className="text-[10px] sm:text-xs text-neutral-100 uppercase tracking-wider">
+                <div className="text-[10px] sm:text-xs text-neutral-100 font-semibold uppercase tracking-wider">
                   Tools
                 </div>
               </div>
@@ -186,7 +186,7 @@ export default function DevToolsCompact() {
                 <div className="text-xl sm:text-2xl font-bold text-blue-400 ">
                   {setupData.length}
                 </div>
-                <div className="text-[10px] sm:text-xs text-neutral-100 uppercase tracking-wider">
+                <div className="text-[10px] sm:text-xs text-neutral-100 font-semibold uppercase tracking-wider">
                   Categories
                 </div>
               </div>

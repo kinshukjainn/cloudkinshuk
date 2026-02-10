@@ -90,7 +90,7 @@ export default function CurrentWorkings() {
         {/* Header */}
         <header className="mb-20 sm:mb-24">
           <div className="mb-10">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-gray-100 mb-4 tracking-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-100 mb-4 tracking-tight">
               Current Workings
             </h1>
             <p className="text-lg sm:text-2xl text-gray-200 mb-4 font-medium">
@@ -115,7 +115,7 @@ export default function CurrentWorkings() {
 
         {/* Current Projects */}
         <section className="mb-20">
-          <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-light mb-10 border-b border-gray-100 pb-2">
+          <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-bold  mb-10 border-b border-gray-100 pb-2">
             Current Projects
           </h2>
           <div className="space-y-16">
@@ -159,7 +159,7 @@ export default function CurrentWorkings() {
 
         {/* Current Learning */}
         <section className="mb-20">
-          <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-light mb-10 border-b border-gray-100 pb-2">
+          <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-bold mb-10 border-b border-gray-100 pb-2">
             Currently Learning
           </h2>
           <div className="space-y-12">
@@ -184,7 +184,7 @@ export default function CurrentWorkings() {
 
         {/* Current Interests */}
         <section className="mb-20">
-          <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-light mb-8 border-b border-gray-100 pb-2">
+          <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-bold mb-8 border-b border-gray-100 pb-2">
             Current Interests
           </h2>
           <ul className="space-y-4">
@@ -202,7 +202,7 @@ export default function CurrentWorkings() {
 
         {/* Currently Consuming */}
         <section className="mb-20">
-          <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-light mb-10 border-b border-gray-100 pb-2">
+          <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-bold  mb-10 border-b border-gray-100 pb-2">
             Reading & Following
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
@@ -222,7 +222,7 @@ export default function CurrentWorkings() {
 
         {/* Current Goals */}
         <section className="mb-20">
-          <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-light mb-8 border-b border-gray-100 pb-2">
+          <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-bold  mb-8 border-b border-gray-100 pb-2">
             Current Goals
           </h2>
           <ul className="space-y-4">
@@ -241,7 +241,7 @@ export default function CurrentWorkings() {
         {/* Not Doing */}
         {NOW_CONFIG.notDoing && NOW_CONFIG.notDoing.length > 0 && (
           <section className="mb-20  transition-opacity">
-            <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-light mb-8 border-b border-gray-100 pb-2">
+            <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-bold mb-8 border-b border-gray-100 pb-2">
               Not Doing Right Now
             </h2>
             <p className="text-lg text-gray-100 mb-6 leading-relaxed max-w-2xl">

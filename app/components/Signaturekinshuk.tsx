@@ -68,7 +68,7 @@ function ResponsiveText() {
           >
             cloudkinshuk.in
             <meshStandardMaterial
-              color="#ff9100"
+              color="#a5bced"
               roughness={0.1}
               metalness={0.8}
             />

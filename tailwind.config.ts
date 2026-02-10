@@ -12,7 +12,7 @@ const config: Config = {
       fontFamily: {
         // Add your custom font here
         serif: ["var(--font-alegreya)", "serif"],
-        blog: ["var(--font-inter)", "sans-serif"],
+        inter: ["var(--font-inter)", "sans-serif"],
       },
     },
   },

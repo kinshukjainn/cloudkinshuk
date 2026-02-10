@@ -80,7 +80,7 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md mx-2 mt-0 rounded-b-2xl border-x border-b border-white/10">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md mx-2 mt-0 rounded-b-4xl border-x border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
           <Link
@@ -115,7 +115,7 @@ const Header = () => {
                 {isActive(item.href) && (
                   <motion.div
                     layoutId="activeNav"
-                    className="absolute bottom-0 left-0 right-0 h-1 bg-yellow-200 rounded-full"
+                    className="absolute bottom-0 left-0 right-0 h-1 bg-blue-200 rounded-b-full"
                   />
                 )}
               </Link>
@@ -163,10 +163,10 @@ const Header = () => {
                   <Link
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-colors ${
+                    className={`flex items-center gap-3 px-5 w-max py-2 rounded-full text-base font-medium transition-colors ${
                       isActive(item.href)
-                        ? "bg-blue-600/20 text-blue-400 border-l-4 border-blue-500"
-                        : "text-slate-300 hover:bg-white/5"
+                        ? "bg-blue-800 text-white border-l-4 border-white"
+                        : "text-slate-100 hover:bg-white/5"
                     }`}
                   >
                     {item.icon}

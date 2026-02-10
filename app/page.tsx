@@ -11,6 +11,13 @@ import {
   Download,
   ExternalLink,
   Award,
+  BookOpen,
+  Briefcase,
+  Code,
+  GraduationCap,
+  Star,
+  FileText,
+  Zap,
 } from "lucide-react";
 import Signaturekinshuk from "./components/Signaturekinshuk";
 // 1. Updated Import Name to match the file created previously
@@ -137,8 +144,9 @@ const CONFIG = {
       status: "Live",
       type: "Security Tool",
       description: [
-        "A modern, secure password generation tool built with React and TypeScript, focusing on creating cryptographically secure passwords with customizable parameters.",
-        "Features include multiple generation algorithms, strength analysis, and secure clipboard integration.",
+        "A modern, secure password generation tool built with React and TypeScript, focusing on creating cryptographically secure passwords with customizable parameters. Zeroleaks leverages the Web Crypto API for true randomness and implements industry-standard security practices.",
+        "Features include multiple generation algorithms (memorable, random, pronounceable), real-time strength analysis with detailed feedback, secure clipboard integration, and password history management. The tool provides visual feedback on password entropy and follows NIST guidelines for password security.",
+        "Deployed with zero-trust security principles, ensuring no passwords are logged or transmitted insecurely. The application works entirely client-side for maximum privacy.",
       ],
       technologies: [
         "React",
@@ -157,12 +165,14 @@ const CONFIG = {
       title: "AI Based FDS (Fault Detection System)",
       year: "2025",
       status: "Development Stage",
-      type: "Ai Tool",
+      type: "AI Tool",
       description: [
-        "An AI-powered Fault Detection System built using modern web technologies. This project is primarily designed to identify and analyze faults that commonly occur in power transmission lines and transformers, enhancing reliability and efficiency in power system monitoring.",
+        "An AI-powered Fault Detection System designed to identify and analyze faults in power transmission lines and transformers. This intelligent system enhances reliability and efficiency in power grid monitoring by leveraging machine learning models to predict equipment failures before they occur.",
+        "Built with Next.js 16 and integrated with Amazon Bedrock's Nova Pro model, FDS processes real-time sensor data and historical patterns to detect anomalies. The system provides actionable insights through an intuitive dashboard with real-time alerts, detailed fault analysis reports, and predictive maintenance recommendations.",
+        "Features include multi-parameter fault classification, severity assessment, root cause analysis, and integration with AWS Lambda for serverless scalability. The system monitors voltage fluctuations, temperature patterns, harmonic distortion, and impedance changes to provide comprehensive power system health analysis.",
       ],
       technologies: [
-        "Nextjs16",
+        "Next.js 16",
         "TypeScript",
         "Tailwind CSS",
         "React Icons",
@@ -172,7 +182,7 @@ const CONFIG = {
         "Amazon Nova Pro Model",
         "AWS Lambda",
         "AWS Amplify",
-        "Aws Route53",
+        "AWS Route 53",
       ],
       links: {
         live: null,
@@ -209,7 +219,7 @@ const CopyButton = ({ text }: { text: string }) => {
   return (
     <button
       onClick={handleCopy}
-      className="p-1.5 cursor-pointer hover:bg-black rounded transition-colors flex-shrink-0"
+      className="p-2 cursor-pointer hover:bg-blue-800 rounded-full transition-colors flex-shrink-0"
       title="Copy to clipboard"
     >
       {copied ? (
@@ -251,8 +261,8 @@ export default function Home() {
   return (
     <div className="min-h-screen pt-10 bg-black text-white">
       {/* Hero Header */}
-      <header className="border-b border-black/10 bg-black">
-        <div className="max-w-4xl mx-auto px-10 py-10">
+      <header className="border-b border-white/10 bg-black">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12">
           {/* 2. UPDATED: Wrapper for the 3D Signature. 
              Since the component now has intrinsic height (140px mobile / 180px desktop),
              we just let it flow naturally in the flex container. */}
@@ -261,18 +271,18 @@ export default function Home() {
           </div>
 
           <div className="space-y-4">
-            <p className="text-xl text-white/80 leading-relaxed">
-              Hi <span className="text-blue-500 ">@everyone</span> ! My name is{" "}
-              <span className="font-semibold italic">Kinshuk</span> and I&apos;m
-              a student and builder with a focus on cloud infrastructure and
-              systems. I&apos;m currently pursuing my Bachelor&apos;s in
-              Electrical Engineering at JSS Academy of Technical Education. Here
-              are some projects of mine on github {"->"}{" "}
+            <p className="text-base md:text-lg lg:text-xl text-white/80 leading-relaxed">
+              Hi <span className="text-blue-500 font-bold">@everyone</span> ! My
+              name is <span className="font-semibold italic">Kinshuk</span>, and
+              I&apos;m a student and builder focused on cloud infrastructure and
+              distributed systems. I&apos;m pursuing my Bachelor&apos;s in
+              Electrical Engineering at JSS Academy of Technical Education while
+              exploring modern web technologies. Check out my projects on{" "}
               <a
                 href="https://github.com/kinshukjainn"
-                className=" font-bold underline text-yellow-200 italic transition-colors"
+                className="hover:text-blue-300 underline font-mono text-blue-400 transition-colors"
               >
-                @open_source
+                GitHub
               </a>
               .
             </p>
@@ -280,87 +290,108 @@ export default function Home() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-6 py-12">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12">
         {/* About Section */}
-        <section className="mb-16">
-          <p className="text-lg text-white/80 leading-relaxed mb-6">
+        <section className="mb-16 scroll-mt-20">
+          <p className="text-base md:text-lg text-white/80 leading-relaxed mb-6">
             I am currently learning how systems work, how they fail, and how
             they evolve. Alongside that, I am exploring the cloud, building
             small things that might someday scale, experimenting with
             infrastructure, and understanding how technology connects people.
           </p>
-          <div className="flex items-center gap-3  w-max rounded-full text-white  mb-4">
-            <div className="bg-[#ff9100] p-1 rounded-full text-black">
-              <MapPin className="w-5 h-5" />
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
+            <div className="flex items-center gap-3 w-max  px-4 py-2 ">
+              <div className="bg-blue-500 p-2 rounded-full text-black flex-shrink-0">
+                <MapPin className="w-5 h-5" />
+              </div>
+              <span className="text-white font-semibold">
+                {CONFIG.personal.location}
+              </span>
             </div>
-            <span>{CONFIG.personal.location}</span>
+            <div className="flex items-center gap-3  px-4 py-2 ">
+              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse flex-shrink-0"></div>
+              <span className="text-green-300 font-semibold">
+                Available for opportunities
+              </span>
+            </div>
           </div>
-          <div className="flex items-center gap-3 text-green-600 mb-6">
-            <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-white">Available for opportunities</span>
-          </div>
-          <div className="flex gap-3 flex-wrap">
+          <div className="flex gap-2 flex-wrap">
             {CONFIG.social.map((social) => (
               <a
                 key={social.platform}
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-white p-1 bg-[#141414] rounded-full  hover:text-yellow-200  transition-colors"
+                className="inline-flex items-center gap-2 text-white px-3 py-2  transition-all duration-300 group text-sm md:text-base"
               >
-                <div className="text-black p-1 bg-[#ff9100] rounded-full">
+                <div className="text-black p-1.5 bg-blue-500 rounded-full group-hover:text-white transition-colors">
                   <SocialIcon icon={social.icon} />
                 </div>
-                <span>{social.handle}</span>
+                <span className="font-medium">{social.handle}</span>
+                <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
               </a>
             ))}
           </div>
         </section>
 
         {/* Resume Section */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-light text-white mb-6">Resume</h2>
+        <section className="mb-16 scroll-mt-20">
+          <div className="flex items-center gap-3 mb-6">
+            <FileText className="w-8 h-8 text-blue-500 flex-shrink-0" />
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              Resume
+            </h2>
+          </div>
           <a
             href="/kinshukfinalresume.pdf"
             download="kinshukfinalresume.pdf"
-            className="inline-flex items-center gap-2 text-white p-2  bg-[#141414] rounded-full  transition-colors"
+            className="inline-flex items-center gap-3 text-white px-2 md:px-6 py-2 bg-blue-800 rounded-full transition-all duration-300 hover:scale-105 group"
           >
-            <div className="bg-[#ff9100] p-1  rounded-full text-black">
-              <Download className="w-5 h-5" />
-            </div>
-            Download (PDF)
+            <Download className="w-5 h-5 group-hover:animate-bounce" />
+            <span className="font-semibold">Download (PDF)</span>
           </a>
           <p className="text-white/70 mt-4 leading-relaxed">
-            You can also view and download my resume !
+            View and download my comprehensive resume showcasing my technical
+            expertise, project experience, and professional achievements.
           </p>
         </section>
 
         {/* Publications Section */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-light text-white mb-6">Publications</h2>
+        <section className="mb-16 scroll-mt-20">
+          <div className="flex items-center gap-3 mb-6">
+            <BookOpen className="w-8 h-8 text-blue-500 flex-shrink-0" />
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              Publications
+            </h2>
+          </div>
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-medium text-white mb-2">
-                <a
-                  href="/home-blog"
-                  className="font-bold text-black p-2 bg-[#ff9100]  rounded-full  transition-colors"
-                >
-                  checkout blogs
-                </a>
-              </h3>
-              <p className="text-white/70 leading-relaxed">
-                My person point of view/opinions on technology , infrastructure
-                and apart from technology more topics which i have tried to
-                explore on. If you are interested you can definetly checkout and
-                give opinions
+              <p className="text-white/70 leading-relaxed mb-4">
+                My personal perspectives and in-depth technical insights on
+                cloud infrastructure, systems design, distributed computing, and
+                emerging technologies. I share detailed explorations of
+                challenges, solutions, and lessons learned from real-world
+                projects and engineering experiences.
               </p>
+              <a
+                href="/home-blog"
+                className="inline-flex items-center gap-2 text-white px-2 md:px-6 py-2 bg-blue-800 rounded-full font-bold transition-all duration-300 hover:scale-105 group"
+              >
+                <span>Explore Blogs</span>
+                <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
             </div>
           </div>
         </section>
 
         {/* Experience Section */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-light text-white  mb-6">Experience</h2>
+        <section className="mb-16 scroll-mt-20">
+          <div className="flex items-center gap-3 mb-6">
+            <Briefcase className="w-8 h-8 text-blue-500 flex-shrink-0" />
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              Experience
+            </h2>
+          </div>
           <div className="space-y-6">
             <div>
               <div className="flex items-baseline justify-between mb-2">
@@ -389,76 +420,104 @@ export default function Home() {
                   workflows by creating well-organized digital reports using
                   cloud and web tools.
                 </p>
-                <span>To Know more in depth checkout my blog : </span>
-                <a
-                  href="/home-blog/blogE"
-                  className=" font-bold text-[#ff9100]  font-mono   transition-colors"
-                >
-                  {"-> "}
-                  <span className="hover:underline">Read</span>
-                </a>
+                <p className="pt-2">
+                  <a
+                    href="/home-blog/blogE"
+                    className="inline-flex items-center gap-2 px-3 py-2 bg-blue-800 rounded-full transition-all duration-300 font-semibold text-white group text-sm md:text-base"
+                  >
+                    <span>Read Detailed Experience Blog</span>
+                    <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </p>
               </div>
             </div>
           </div>
         </section>
 
         {/* Projects Section */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-light text-white mb-6">
-            Selected Projects
-          </h2>
+        <section className="mb-16 scroll-mt-20">
+          <div className="flex items-center gap-3 mb-6">
+            <Code className="w-8 h-8 text-blue-500 flex-shrink-0" />
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              Selected Projects
+            </h2>
+          </div>
           <div className="space-y-8">
             {CONFIG.projects.map((project) => (
-              <div key={project.title}>
-                <div className="flex items-baseline justify-between mb-2">
-                  <h3 className="text-xl font-medium text-white">
+              <div key={project.title} className="group">
+                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-3 gap-2">
+                  <h3 className="text-xl md:text-2xl font-semibold text-white">
                     {project.links.live ? (
                       <a
                         href={project.links.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-yellow-200 transition-colors"
+                        className="hover:text-blue-400 transition-colors inline-flex items-center gap-2"
                       >
                         {project.title}
+                        <ExternalLink className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </a>
                     ) : (
                       project.title
                     )}
                   </h3>
-                  <span className="text-white/60">{project.year}</span>
-                </div>
-                <p className="text-sm text-white/60 mb-3">{project.type}</p>
-                <div className="text-white/70 leading-relaxed space-y-3 mb-4">
-                  {project.description.map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
-                </div>
-                <div className="mb-4">
-                  <span className="text-white/70">Technologies: </span>
-                  <span className="text-white/60">
-                    {project.technologies.join(", ")}
+                  <span className="text-white/60 text-sm md:text-base flex-shrink-0">
+                    {project.year}
                   </span>
                 </div>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs md:text-sm font-medium">
+                    {project.type}
+                  </span>
+                  <span className="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-xs md:text-sm font-medium">
+                    {project.status}
+                  </span>
+                </div>
+                <div className="text-white/70 leading-relaxed space-y-3 mb-4">
+                  {project.description.map((p, i) => (
+                    <p key={i} className="text-sm md:text-base">
+                      {p}
+                    </p>
+                  ))}
+                </div>
+                <div className="mb-4 ">
+                  <p className="text-white/50 text-md md:text-sm mb-2 font-semibold">
+                    Technologies:
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2 py-1 bg-blue-700 text-white font-semibold  rounded-full text-xs md:text-sm"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
                 {project.dockerCommand !== "Image is not available" && (
-                  <div className="p-4 mb-4 font-mono text-sm bg-[#141414] rounded-sm border border-black/10">
-                    <div className="flex items-center justify-between gap-3">
-                      <code className="text-green-500 break-all flex-1">
+                  <div className="p-3 md:p-4 mb-4 font-mono text-xs md:text-sm bg-[#141414] rounded-2xl  overflow-x-auto">
+                    <div className="flex items-center justify-between gap-3 min-w-max md:min-w-full">
+                      <code className="text-green-400 break-all flex-1">
                         {project.dockerCommand}
                       </code>
                       <CopyButton text={project.dockerCommand} />
                     </div>
                   </div>
                 )}
-                <div className="flex gap-3 flex-wrap">
+                <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
                   {project.links.live && (
                     <a
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-[#ff9100] font-mono  hover:underline transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-blue-800 rounded-full transition-all duration-300 text-white font-semibold group text-sm md:text-base"
                     >
-                      View Project
                       <ExternalLink className="w-4 h-4" />
+                      View Project
+                      <span className="group-hover:translate-x-1 transition-transform inline-block">
+                        →
+                      </span>
                     </a>
                   )}
                   {project.links.repo && (
@@ -466,10 +525,13 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-[#ff9100] font-mono hover:underline   transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-[#141414] rounded-full transition-all duration-300 text-white font-semibold group text-sm md:text-base"
                     >
                       <Github className="w-4 h-4" />
                       Source Code
+                      <span className="group-hover:translate-x-1 transition-transform inline-block">
+                        →
+                      </span>
                     </a>
                   )}
                 </div>
@@ -479,107 +541,152 @@ export default function Home() {
         </section>
 
         {/* Technical Skills Section */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-light text-white mb-6">
-            Technical Proficiencies
-          </h2>
+        <section className="mb-16 scroll-mt-20">
+          <div className="flex items-center gap-3 mb-6">
+            <Zap className="w-8 h-8 text-blue-500 flex-shrink-0" />
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              Technical Proficiencies
+            </h2>
+          </div>
           <div className="space-y-6">
             {Object.entries(CONFIG.skills).map(([category, skills]) => (
               <div key={category}>
-                <h3 className="text-lg font-medium text-white mb-3">
+                <h3 className="text-lg md:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></span>
                   {category}
                 </h3>
-                <p className="text-white/70">{skills.join(", ")}</p>
+                <div className="flex flex-wrap gap-2">
+                  {skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1.5 bg-[#141414] hover:bg-blue-500 text-white hover:text-black hover:font-bold cursor-pointer rounded-full text-sm md:text-sm transition-colors border border-white/20"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
         </section>
 
         {/* Certifications Section */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-light text-white mb-6">
-            Certifications
-          </h2>
-          <div className="space-y-8">
+        <section className="mb-16 scroll-mt-20">
+          <div className="flex items-center gap-3 mb-6">
+            <Star className="w-8 h-8 text-blue-500 flex-shrink-0" />
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              Certifications
+            </h2>
+          </div>
+          <div className="space-y-6">
             {CONFIG.certifications.map((cert) => (
-              <div key={cert.title}>
-                <div className="flex items-baseline justify-between mb-2">
-                  <h3 className="text-xl font-medium text-white">
+              <div
+                key={cert.title}
+                className="border-b border-white/20 rounded-2xl p-4 md:p-6 "
+              >
+                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-3 gap-2">
+                  <h3 className="text-lg md:text-xl font-semibold text-white">
                     {cert.url ? (
                       <a
                         href={cert.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-yellow-200 transition-colors "
+                        className="hover:text-blue-400 transition-colors inline-flex items-center gap-2 group"
                       >
                         {cert.title}
+                        <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </a>
                     ) : (
                       cert.title
                     )}
                   </h3>
-                  <span className="text-white/60">{cert.year}</span>
+                  <span className="text-white/60 text-sm md:text-base flex-shrink-0">
+                    {cert.year}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 mb-3">
-                  <Award className="w-4 h-4 text-yellow-200" />
-                  <span className="text-yellow-200">{cert.organization}</span>
+                  <Award className="w-5 h-5 text-yellow-400 flex-shrink-0" />
+                  <span className="font-semibold text-yellow-300">
+                    {cert.organization}
+                  </span>
                 </div>
-                <p className="text-white/70 leading-relaxed mb-3">
+                <p className="text-white/70 leading-relaxed mb-3 text-sm md:text-base">
                   {cert.description}
                 </p>
-                <p className="text-white/60">
-                  Skills: {cert.skills.join(", ")}
-                </p>
+                <div className="flex flex-wrap gap-2">
+                  {cert.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-2 py-1 bg-[#141414] text-white rounded-full text-xs md:text-sm font-medium"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
         </section>
 
         {/* Education Section */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-light text-white mb-6">Education</h2>
-          <div>
-            <div className="flex items-baseline justify-between mb-2">
-              <h3 className="text-xl font-medium text-white">
+        <section className="mb-16 scroll-mt-20">
+          <div className="flex items-center gap-3 mb-6">
+            <GraduationCap className="w-8 h-8 text-blue-500 flex-shrink-0" />
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              Education
+            </h2>
+          </div>
+          <div className=" p-4 md:p-6">
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-3 gap-2">
+              <h3 className="text-lg md:text-xl font-semibold text-white">
                 {CONFIG.education.degree}
               </h3>
-              <span className="text-white/60">{CONFIG.education.period}</span>
+              <span className="text-white/60 text-sm md:text-base flex-shrink-0">
+                {CONFIG.education.period}
+              </span>
             </div>
-            <p className="text-white/70 mb-2">{CONFIG.education.field}</p>
-            <p className="text-white/60 mb-3">
+            <p className="text-blue-300 font-semibold mb-2">
+              {CONFIG.education.field}
+            </p>
+            <p className="text-white/70 mb-3 text-sm md:text-base">
               {CONFIG.education.institution}, {CONFIG.education.location}
             </p>
-            <p className="text-white/70 leading-relaxed">
+            <p className="text-white/70 leading-relaxed text-sm md:text-base">
               {CONFIG.education.description}
             </p>
           </div>
         </section>
 
         {/* CLI Tool Section */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-light text-white mb-6">CLI Tool</h2>
-          <p className="text-white/70 mb-6 leading-relaxed">
+        <section className="mb-16 scroll-mt-20">
+          <div className="flex items-center gap-3 mb-6">
+            <Code className="w-8 h-8 text-blue-500 flex-shrink-0" />
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              CLI Tool
+            </h2>
+          </div>
+          <p className="text-white/70 mb-6 leading-relaxed text-sm md:text-base">
             Interactive command-line portfolio viewer built with Node.js
           </p>
-          <div className="space-y-3 font-mono text-sm">
-            <div className="rounded p-2 bg-[#141414] border border-black/10">
-              <div className="flex items-center justify-between gap-3">
+          <div className="space-y-3 font-mono text-xs md:text-sm">
+            <div className="rounded-lg p-3 md:p-4 bg-[#141414] border border-white/20 overflow-x-auto">
+              <div className="flex items-center justify-between gap-3 min-w-max md:min-w-full">
                 <div className="break-all flex-1">
-                  <span className="text-blue-500">$</span>{" "}
-                  <span className="text-white/70">
-                    <span className="text-yellow-200">npm</span> install{" "}
-                    <span className="text-yellow-200">-g</span>{" "}
-                    <span className="text-yellow-200">hackkinshuk</span>
+                  <span className="text-cyan-400">$</span>{" "}
+                  <span className="text-white/90">
+                    <span className="text-yellow-300">npm</span> install{" "}
+                    <span className="text-yellow-300">-g</span>{" "}
+                    <span className="text-yellow-300">hackkinshuk</span>
                   </span>
                 </div>
                 <CopyButton text="npm install -g hackkinshuk" />
               </div>
             </div>
-            <div className="rounded p-2 bg-[#141414] border border-black/10">
-              <div className="flex items-center justify-between gap-3">
+            <div className="rounded-lg p-3 md:p-4 bg-[#141414] border border-white/20 overflow-x-auto">
+              <div className="flex items-center justify-between gap-3 min-w-max md:min-w-full">
                 <div className="break-all flex-1">
-                  <span className="text-blue-500">$</span>{" "}
-                  <span className="text-white/70">cloudkinshuk</span>
+                  <span className="text-cyan-400">$</span>{" "}
+                  <span className="text-white/90">cloudkinshuk</span>
                 </div>
                 <CopyButton text="cloudkinshuk" />
               </div>

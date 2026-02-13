@@ -314,10 +314,10 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
         <span className="text-sm font-medium text-white">
           Filter by tags {activeFiltersCount > 0 && `(${activeFiltersCount})`}
         </span>
-        <div className="p-1 bg-[#ff9100] rounded-full">
+        <div className="p-1 bg-blue-800 rounded-full cursor-pointer">
           <ChevronDown
             size={20}
-            className={`text-black  transition-transform duration-200 ${
+            className={`text-white  transition-transform duration-200 ${
               isOpen ? "rotate-180" : ""
             }`}
           />

@@ -669,7 +669,7 @@ export default function Home() {
             Interactive command-line portfolio viewer built with Node.js
           </p>
           <div className="space-y-3 font-mono text-xs md:text-sm">
-            <div className="rounded-lg p-3 md:p-4 bg-[#141414] border border-white/20 overflow-x-auto">
+            <div className="rounded-2xl p-3 md:p-4 bg-[#141414] border border-white/20 font-semibold text-[16px]  overflow-x-auto">
               <div className="flex items-center justify-between gap-3 min-w-max md:min-w-full">
                 <div className="break-all flex-1">
                   <span className="text-cyan-400">$</span>{" "}
@@ -682,7 +682,7 @@ export default function Home() {
                 <CopyButton text="npm install -g hackkinshuk" />
               </div>
             </div>
-            <div className="rounded-lg p-3 md:p-4 bg-[#141414] border border-white/20 overflow-x-auto">
+            <div className="rounded-2xl p-3 md:p-4 bg-[#141414]  font-semibold text-[16px]  border border-white/20 overflow-x-auto">
               <div className="flex items-center justify-between gap-3 min-w-max md:min-w-full">
                 <div className="break-all flex-1">
                   <span className="text-cyan-400">$</span>{" "}

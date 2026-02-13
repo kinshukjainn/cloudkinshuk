@@ -125,15 +125,15 @@ const Header = () => {
           {/* Actions */}
           <div className="flex items-center gap-2">
             <a
-              href="https://github.com/kinshukjainn/clkinshuk"
-              className="p-2 text-white hover:text-blue-400 transition-colors"
+              href="https://github.com/kinshukjainn/cloudkinshuk"
+              className="p-2 text-black bg-white rounded-full transition-colors"
             >
               <Github className="w-5 h-5" />
             </a>
 
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 text-white outline-none"
+              className="md:hidden p-2 text-white p-2 bg-[#141414] cursor-pointer rounded-full  outline-none"
             >
               <motion.div animate={{ rotate: isMenuOpen ? 90 : 0 }}>
                 {isMenuOpen ? (
@@ -155,7 +155,7 @@ const Header = () => {
             animate="open"
             exit="closed"
             variants={menuVariants}
-            className="md:hidden border-t border-white/5 overflow-hidden"
+            className="md:hidden  overflow-hidden"
           >
             <nav className="flex flex-col gap-2 p-4 pb-6">
               {navItems.map((item) => (

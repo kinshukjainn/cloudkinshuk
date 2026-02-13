@@ -139,14 +139,14 @@ export default function CurrentWorkings() {
                     {project.technologies.map((tech, i) => (
                       <span
                         key={i}
-                        className="text-sm font-medium text-yellow-200 bg-[#141414] px-2 py-1 rounded border border-gray-100"
+                        className="text-sm font-medium text-white  bg-[#141414] px-2 py-1 rounded-full"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
                   {project.progress && (
-                    <p className="text-sm font-medium text-yellow-200">
+                    <p className="text-sm font-medium text-blue-500">
                       Progress:{" "}
                       <span className="text-gray-100">{project.progress}</span>
                     </p>

@@ -147,7 +147,7 @@ export default function DevToolsCompact() {
   );
 
   return (
-    <div className="min-h-screen bg-black text-neutral-900 pt-10">
+    <div className="min-h-screen bg-black text-neutral-900 pt-18">
       {/* Header */}
       <header
         ref={headerRef}

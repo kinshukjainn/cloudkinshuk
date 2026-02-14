@@ -8,6 +8,9 @@ import {
   RotateCcw,
   ArrowUpRight,
   MessageSquare,
+  Clock,
+  Calendar,
+  Sparkles,
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -230,6 +233,50 @@ class SimpleSearchEngine {
   }
 }
 
+// Tag color palette - consistent and vibrant
+const tagStyles = [
+  {
+    bg: "bg-blue-500/15",
+    border: "border-blue-500/40",
+    text: "text-blue-300",
+    hover: "hover:bg-blue-500/25 hover:border-blue-400/60",
+  },
+  {
+    bg: "bg-purple-500/15",
+    border: "border-purple-500/40",
+    text: "text-purple-300",
+    hover: "hover:bg-purple-500/25 hover:border-purple-400/60",
+  },
+  {
+    bg: "bg-emerald-500/15",
+    border: "border-emerald-500/40",
+    text: "text-emerald-300",
+    hover: "hover:bg-emerald-500/25 hover:border-emerald-400/60",
+  },
+  {
+    bg: "bg-amber-500/15",
+    border: "border-amber-500/40",
+    text: "text-amber-300",
+    hover: "hover:bg-amber-500/25 hover:border-amber-400/60",
+  },
+  {
+    bg: "bg-pink-500/15",
+    border: "border-pink-500/40",
+    text: "text-pink-300",
+    hover: "hover:bg-pink-500/25 hover:border-pink-400/60",
+  },
+  {
+    bg: "bg-cyan-500/15",
+    border: "border-cyan-500/40",
+    text: "text-cyan-300",
+    hover: "hover:bg-cyan-500/25 hover:border-cyan-400/60",
+  },
+];
+
+const getTagStyle = (index: number) => {
+  return tagStyles[index % tagStyles.length];
+};
+
 interface BlogItemProps {
   post: BlogPost;
   searchQuery?: string;
@@ -246,7 +293,10 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
       const parts = text.split(regex);
       return parts.map((part, i) =>
         regex.test(part) ? (
-          <mark key={i} className="bg-yellow-200 text-black px-0.5">
+          <mark
+            key={i}
+            className="bg-yellow-400/30 text-yellow-200 px-1 rounded"
+          >
             {part}
           </mark>
         ) : (
@@ -255,27 +305,142 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
       );
     }, []);
 
+    const formatDate = (dateString: string) => {
+      const date = new Date(dateString);
+      return date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
+    };
+
     return (
-      <div className="py-6 border-b border-gray-500 last:border-b-0">
-        <Link href={`/home-blog/${post.id}`} className="group block">
-          <h3 className="text-xl text-white mb-3 font-bold hover:underline">
-            {highlightText(post.title, searchQuery)}
-          </h3>
-          <p className="text-white/70 mb-3 leading-relaxed">{post.brief}</p>
-          <div className="flex flex-wrap gap-2">
-            {post.tags.slice(0, 3).map((tag) => (
-              <span key={tag.id} className="text-sm text-yellow-200">
-                {tag.name}
-              </span>
-            ))}
-            {post.tags.length > 3 && (
-              <span className="text-sm text-white">
-                +{post.tags.length - 3} more
-              </span>
-            )}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="py-4"
+      >
+        <Link
+          href={`/home-blog/${post.id}`}
+          className="group block relative overflow-hidden"
+        >
+          {/* Gradient border effect */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-pink-500/0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl" />
+
+          {/* Main card */}
+          <div
+            className="relative p-6 bg-gradient-to-br from-[#1a1a1a] to-[#141414] rounded-3xl 
+            border border-[#333333] 
+            transition-all duration-500 ease-out
+            group-hover:border-blue-500/50
+            group-hover:shadow-2xl group-hover:shadow-blue-500/10
+            group-hover:translate-y-[-2px]
+            backdrop-blur-sm"
+          >
+            {/* Sparkle effect on hover */}
+            <motion.div
+              className="absolute top-4 right-4 opacity-0 group-hover:opacity-100"
+              initial={{ scale: 0, rotate: 0 }}
+              whileHover={{ scale: 1, rotate: 180 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Sparkles className="w-5 h-5 text-blue-400" />
+            </motion.div>
+
+            {/* Title */}
+            <h3
+              className="text-2xl text-white mb-4 font-bold leading-tight
+              group-hover:text-transparent group-hover:bg-clip-text 
+              group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-purple-400
+              transition-all duration-300"
+            >
+              {highlightText(post.title, searchQuery)}
+            </h3>
+
+            {/* Brief */}
+            <p className="text-white/60 mb-5 leading-relaxed line-clamp-2 group-hover:text-white/80 transition-colors duration-300">
+              {post.brief}
+            </p>
+
+            {/* Metadata */}
+            <div className="flex items-center gap-4 mb-4 text-sm text-white/40">
+              <div className="flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5" />
+                <span>{formatDate(post.publishedAt)}</span>
+              </div>
+              {post.readTimeInMinutes && (
+                <div className="flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>{post.readTimeInMinutes} min read</span>
+                </div>
+              )}
+            </div>
+
+            {/* Enhanced Tags Section - FIXED */}
+            <div className="flex flex-wrap items-center gap-2">
+              {post.tags.slice(0, 4).map((tag, index) => {
+                const style = getTagStyle(index);
+                return (
+                  <motion.span
+                    key={tag.id}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: index * 0.05 }}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    className={`
+                      inline-flex items-center justify-center
+                      px-3 py-1.5
+                      text-xs font-medium
+                      rounded-full
+                      border
+                      ${style.bg} ${style.border} ${style.text} ${style.hover}
+                      backdrop-blur-sm
+                      transition-all duration-300
+                      cursor-pointer
+                      whitespace-nowrap
+                      leading-none
+                    `}
+                  >
+                    {tag.name}
+                  </motion.span>
+                );
+              })}
+
+              {post.tags.length > 4 && (
+                <motion.span
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  whileHover={{ scale: 1.05 }}
+                  className="inline-flex items-center justify-center
+                    px-3 py-1.5
+                    text-xs font-medium
+                    rounded-full
+                    border
+                    bg-gray-500/15 border-gray-500/40 text-gray-300
+                    hover:bg-gray-500/25 hover:border-gray-400/60
+                    backdrop-blur-sm
+                    transition-all duration-300
+                    whitespace-nowrap
+                    leading-none"
+                >
+                  +{post.tags.length - 4}
+                </motion.span>
+              )}
+            </div>
+
+            {/* Hover arrow indicator */}
+            <motion.div
+              className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100"
+              initial={{ x: -10 }}
+              whileHover={{ x: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ArrowUpRight className="w-5 h-5 text-blue-400" />
+            </motion.div>
           </div>
         </Link>
-      </div>
+      </motion.div>
     );
   },
 );
@@ -346,19 +511,34 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
             </label>
             <div className="max-h-48 overflow-y-auto">
               <div className="flex flex-wrap gap-2">
-                {availableTags.map((tag) => (
-                  <button
-                    key={tag}
-                    onClick={() => toggleTag(tag)}
-                    className={`px-3 py-1.5 text-xs transition-all duration-200 ${
-                      filters.tags.includes(tag)
-                        ? "bg-blue-400 text-black font-semibold rounded-full"
-                        : "bg-black text-white rounded-lg cursor-pointer hover:rounded-full hover:text-white"
-                    }`}
-                  >
-                    {tag}
-                  </button>
-                ))}
+                {availableTags.map((tag, index) => {
+                  const isSelected = filters.tags.includes(tag);
+                  const style = getTagStyle(index);
+
+                  return (
+                    <button
+                      key={tag}
+                      onClick={() => toggleTag(tag)}
+                      className={`
+                        inline-flex items-center justify-center
+                        px-3 py-1.5
+                        text-xs font-medium
+                        rounded-full
+                        border
+                        transition-all duration-200
+                        whitespace-nowrap
+                        leading-none
+                        ${
+                          isSelected
+                            ? `${style.bg} ${style.border} ${style.text}`
+                            : "bg-black/50 border-white/10 text-white/70 hover:border-white/30 hover:text-white"
+                        }
+                      `}
+                    >
+                      {tag}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -366,7 +546,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
           {activeFiltersCount > 0 && (
             <button
               onClick={resetFilters}
-              className="mt-4 flex items-center justify-center cursor-pointer gap-2 px-2 py-2 w-max bg-blue-800 text-white text-sm font-medium rounded-full transition-colors duration-200"
+              className="mt-4 flex items-center justify-center cursor-pointer gap-2 px-4 py-2 w-max bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-full transition-all duration-200 hover:scale-105"
             >
               <RotateCcw size={16} />
               Clear filters
@@ -599,7 +779,7 @@ export default function BlogsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-8 bg-[#141414] rounded-3xl p-6 border border-[#444444] transition-all duration-300"
+          className="mb-8 bg-gradient-to-br from-[#1a1a1a] to-[#141414] rounded-3xl p-6 border border-[#333333] transition-all duration-300 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/10"
         >
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex-1">
@@ -665,7 +845,7 @@ export default function BlogsPage() {
             </button>
           </div>
         ) : (
-          <div className="border border-black/10 rounded-lg p-6">
+          <div className="space-y-2">
             {filteredPosts.map((post) => (
               <BlogItem key={post.id} post={post} searchQuery={searchInput} />
             ))}

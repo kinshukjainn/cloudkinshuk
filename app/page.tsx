@@ -525,7 +525,7 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-[#141414] rounded-full transition-all duration-300 text-white font-semibold group text-sm md:text-base"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-[#141414] rounded-full border border-[#444444] transition-all duration-300 text-white font-semibold group text-sm md:text-base"
                     >
                       <Github className="w-4 h-4" />
                       Source Code
@@ -559,7 +559,7 @@ export default function Home() {
                   {skills.map((skill) => (
                     <span
                       key={skill}
-                      className="px-3 py-1.5 bg-[#141414] hover:bg-blue-500 text-white hover:text-black hover:font-bold cursor-pointer rounded-full text-sm md:text-sm transition-colors border border-white/20"
+                      className="px-3 py-1.5 bg-[#141414] hover:border hover:border-blue-500 text-white  cursor-pointer rounded-full text-sm md:text-sm transition-colors border border-white/20"
                     >
                       {skill}
                     </span>

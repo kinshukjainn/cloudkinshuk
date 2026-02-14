@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useCallback } from "react";
 import { Search, X, ChevronDown, RotateCcw } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 interface BlogPost {
   id: string;
@@ -116,7 +117,7 @@ const MOCK_BLOG_POSTS: BlogPost[] = [
       { id: "5", name: "Cloud Computing", slug: "cloud-computing" },
       { id: "6", name: "amazon", slug: "amazon" },
       { id: "7", name: "cloud", slug: "cloud" },
-      { id: "7", name: "Serverless", slug: "Serverless" },
+      { id: "8", name: "Serverless", slug: "Serverless" },
     ],
     author: { name: "Kinshuk Jain" },
   },
@@ -250,7 +251,7 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
     return (
       <div className="py-6 border-b border-gray-500 last:border-b-0">
         <Link href={`/home-blog/${post.id}`} className="group block">
-          <h3 className="text-xl   text-white mb-3 font-bold  hover:underline">
+          <h3 className="text-xl text-white mb-3 font-bold hover:underline">
             {highlightText(post.title, searchQuery)}
           </h3>
           <p className="text-white/70 mb-3 leading-relaxed">{post.brief}</p>
@@ -317,7 +318,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
         <div className="p-1 bg-blue-800 rounded-full cursor-pointer">
           <ChevronDown
             size={20}
-            className={`text-white  transition-transform duration-200 ${
+            className={`text-white transition-transform duration-200 ${
               isOpen ? "rotate-180" : ""
             }`}
           />
@@ -331,9 +332,9 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
             : "max-h-0 md:max-h-none opacity-0 md:opacity-100"
         } md:opacity-100 md:max-h-none`}
       >
-        <div className=" border border-gray-500 bg-[#141414] rounded-2xl p-6">
+        <div className="border border-gray-500 bg-[#141414] rounded-2xl p-6">
           <div>
-            <label className="block text-sm font-medium text-white  mb-3">
+            <label className="block text-sm font-medium text-white mb-3">
               TAGS {filters.tags.length > 0 && `(${filters.tags.length})`}
             </label>
             <div className="max-h-48 overflow-y-auto">
@@ -342,9 +343,9 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                   <button
                     key={tag}
                     onClick={() => toggleTag(tag)}
-                    className={`px-3 py-1.5 text-xs  transition-all duration-200 ${
+                    className={`px-3 py-1.5 text-xs transition-all duration-200 ${
                       filters.tags.includes(tag)
-                        ? "bg-[#ff9100] text-black font-semibold  rounded-full"
+                        ? "bg-[#ff9100] text-black font-semibold rounded-full"
                         : "bg-black text-white rounded-lg cursor-pointer hover:rounded-full hover:text-white"
                     }`}
                   >
@@ -358,7 +359,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
           {activeFiltersCount > 0 && (
             <button
               onClick={resetFilters}
-              className="mt-4  flex items-center justify-center cursor-pointer gap-2 px-2 py-2 w-max  bg-blue-800  text-white text-sm font-medium rounded-full transition-colors duration-200"
+              className="mt-4 flex items-center justify-center cursor-pointer gap-2 px-2 py-2 w-max bg-blue-800 text-white text-sm font-medium rounded-full transition-colors duration-200"
             >
               <RotateCcw size={16} />
               Clear filters
@@ -383,33 +384,150 @@ const SearchBar: React.FC<SearchBarProps> = ({
   resultsCount,
   totalCount,
 }) => {
+  const [isTyping, setIsTyping] = useState(false);
+  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
+    null,
+  );
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value);
+
+    // Trigger typing animation
+    setIsTyping(true);
+
+    // Clear existing timeout
+    if (typingTimeout) {
+      clearTimeout(typingTimeout);
+    }
+
+    // Set new timeout to stop typing animation
+    const timeout = setTimeout(() => {
+      setIsTyping(false);
+    }, 150);
+
+    setTypingTimeout(timeout);
+  };
+
   return (
-    <div className="mb-8">
-      <div className="relative">
-        <Search
-          size={20}
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-yellow-200"
+    <div className="mb-8 w-full">
+      {/* Animated wrapper */}
+      <motion.div
+        initial={false}
+        whileHover="hover"
+        animate={isTyping ? "typing" : searchInput ? "focus" : "rest"}
+        variants={{
+          rest: {
+            boxShadow: "0 0 0 rgba(0,0,0,0)",
+            borderColor: "rgba(255,255,255,0.15)",
+            scale: 1,
+            y: 0,
+          },
+          hover: {
+            boxShadow: "0 8px 30px rgba(0,0,0,0.35)",
+            borderColor: "rgba(255,255,255,0.25)",
+            scale: 1,
+            y: 0,
+          },
+          focus: {
+            boxShadow: "0 10px 40px rgba(59,130,246,0.35)",
+            borderColor: "rgba(255,255,255,0.4)",
+            scale: 1,
+            y: 0,
+          },
+          typing: {
+            boxShadow: [
+              "0 10px 40px rgba(59,130,246,0.35)",
+              "0 12px 50px rgba(139,92,246,0.45)",
+              "0 10px 40px rgba(59,130,246,0.35)",
+            ],
+            borderColor: [
+              "rgba(255,255,255,0.4)",
+              "rgba(168,85,247,0.6)",
+              "rgba(255,255,255,0.4)",
+            ],
+            scale: [1, 1.008, 1],
+            y: [0, -1, 0],
+          },
+        }}
+        transition={{
+          duration: isTyping ? 0.3 : 0.22,
+          ease: isTyping ? [0.34, 1.56, 0.64, 1] : [0.25, 0.8, 0.25, 1],
+          times: isTyping ? [0, 0.5, 1] : undefined,
+        }}
+        className="relative rounded-full border bg-[#141414]"
+      >
+        {/* Glow effect on typing */}
+        <motion.div
+          className="absolute inset-0 rounded-full"
+          animate={isTyping ? "typing" : "idle"}
+          variants={{
+            idle: {
+              opacity: 0,
+            },
+            typing: {
+              opacity: [0, 0.15, 0],
+              scale: [0.98, 1.02, 0.98],
+            },
+          }}
+          transition={{
+            duration: 0.3,
+            ease: "easeOut",
+          }}
+          style={{
+            background:
+              "radial-gradient(circle at center, rgba(139,92,246,0.3), transparent 70%)",
+            filter: "blur(8px)",
+          }}
         />
+
+        {/* Search Icon with typing animation */}
+        <motion.div
+          animate={isTyping ? "typing" : "idle"}
+          variants={{
+            idle: { scale: 1, rotate: 0 },
+            typing: { scale: [1, 1.1, 1], rotate: [0, -5, 0] },
+          }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="absolute left-4 top-1/2 -translate-y-1/2"
+        >
+          <Search size={20} className="text-white/60" />
+        </motion.div>
+
+        {/* Input */}
         <input
           type="text"
-          placeholder="articles , blogs , devlopers blogs , student , reasoning , community"
+          placeholder="Articles, blogs, developers, students, reasoning, community"
           value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          className="w-full pl-12 pr-12 py-3  bg-[#141414] border border-[#444444] rounded-2xl text-white  placeholder-gray-400 text-base focus:outline-none focus:border-white/20 transition-colors duration-200"
+          onChange={handleInputChange}
+          className="w-full pl-12 pr-12 py-3 rounded-full bg-transparent text-white placeholder:text-white/40 focus:outline-none text-base relative z-10"
         />
+
+        {/* Clear Button with subtle animation */}
         {searchInput && (
-          <button
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setSearchInput("")}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white cursor-pointer transition-colors"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors z-10"
           >
             <X size={20} />
-          </button>
+          </motion.button>
         )}
-      </div>
+      </motion.div>
+
+      {/* Result Count */}
       {searchInput && (
-        <div className="mt-3 text-sm text-white/60">
+        <motion.div
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
+          className="mt-3 text-sm text-white/60"
+        >
           Found {resultsCount} of {totalCount} articles
-        </div>
+        </motion.div>
       )}
     </div>
   );
@@ -506,7 +624,7 @@ export default function BlogsPage() {
             </button>
           </div>
         ) : (
-          <div className=" border border-black/10 rounded-lg p-6">
+          <div className="border border-black/10 rounded-lg p-6">
             {filteredPosts.map((post) => (
               <BlogItem key={post.id} post={post} searchQuery={searchInput} />
             ))}

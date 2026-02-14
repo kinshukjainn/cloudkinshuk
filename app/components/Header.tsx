@@ -80,7 +80,7 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md mx-2 mt-0 rounded-b-4xl border-x border-b border-white/10">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md mx-2 mt-2 rounded-4xl border-x border border-[#444444] hover:border-blue-500 hover:shadow-sm hover:shadow-blue-500 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
           <Link
@@ -104,20 +104,14 @@ const Header = () => {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all relative ${
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium  rounded-r-xl transition-all relative ${
                   isActive(item.href)
-                    ? "text-white"
+                    ? "text-white border-l-4 font-mono shadow-sm shadow-blue-500 border-blue-500"
                     : "text-slate-400 hover:text-white"
                 }`}
               >
                 {item.icon}
                 <span>{item.label}</span>
-                {isActive(item.href) && (
-                  <motion.div
-                    layoutId="activeNav"
-                    className="absolute bottom-0 left-0 right-0 h-1 bg-blue-200 rounded-b-full"
-                  />
-                )}
               </Link>
             ))}
           </nav>
@@ -163,9 +157,9 @@ const Header = () => {
                   <Link
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`flex items-center gap-3 px-5 w-max py-2 rounded-full text-base font-medium transition-colors ${
+                    className={`flex items-center gap-3 px-5 w-max py-2 rounded-r-xl text-base font-medium transition-colors ${
                       isActive(item.href)
-                        ? "bg-blue-800 text-white border-l-4 border-white"
+                        ? " text-white border-l-4 font-mono shadow-sm shadow-blue-500 border-blue-500"
                         : "text-slate-100 hover:bg-white/5"
                     }`}
                   >

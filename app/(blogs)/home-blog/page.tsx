@@ -1,7 +1,14 @@
 "use client";
 
 import React, { useState, useMemo, useCallback } from "react";
-import { Search, X, ChevronDown, RotateCcw } from "lucide-react";
+import {
+  Search,
+  X,
+  ChevronDown,
+  RotateCcw,
+  ArrowUpRight,
+  MessageSquare,
+} from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -310,7 +317,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     <div className="mb-8">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex md:hidden items-center justify-between w-full px-4 py-3 bg-[#141414] border border-[#444444] rounded-2xl transition-colors duration-200 mb-4"
+        className="flex md:hidden items-center justify-between w-full px-4 py-3 bg-[#141414] border border-[#444444] rounded-4xl transition-colors duration-200 mb-4"
       >
         <span className="text-sm font-medium text-white">
           Filter by tags {activeFiltersCount > 0 && `(${activeFiltersCount})`}
@@ -332,7 +339,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
             : "max-h-0 md:max-h-none opacity-0 md:opacity-100"
         } md:opacity-100 md:max-h-none`}
       >
-        <div className="border border-gray-500 bg-[#141414] rounded-2xl p-6">
+        <div className="border border-gray-500 bg-[#141414] rounded-3xl p-6">
           <div>
             <label className="block text-sm font-medium text-white mb-3">
               TAGS {filters.tags.length > 0 && `(${filters.tags.length})`}
@@ -345,7 +352,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                     onClick={() => toggleTag(tag)}
                     className={`px-3 py-1.5 text-xs transition-all duration-200 ${
                       filters.tags.includes(tag)
-                        ? "bg-[#ff9100] text-black font-semibold rounded-full"
+                        ? "bg-blue-400 text-black font-semibold rounded-full"
                         : "bg-black text-white rounded-lg cursor-pointer hover:rounded-full hover:text-white"
                     }`}
                   >
@@ -587,6 +594,40 @@ export default function BlogsPage() {
       </header>
 
       <div className="max-w-4xl mx-auto px-6 py-12">
+        {/* Feedback Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-8 bg-[#141414] rounded-3xl p-6 border border-[#444444] transition-all duration-300"
+        >
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-2">
+                <MessageSquare className="w-5 h-5 text-blue-500" />
+                <h3 className="text-lg font-semibold text-white">
+                  Share Your Feedback
+                </h3>
+              </div>
+
+              <p className="text-white/70 text-sm">
+                Help me improve! Your thoughts and suggestions are invaluable
+                for creating better content.
+              </p>
+            </div>
+
+            <a
+              href="https://feedbacks.cloudkinshuk.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-3xl transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap shadow-lg shadow-blue-500/25"
+            >
+              Feedback
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+          </div>
+        </motion.div>
+
         <SearchBar
           searchInput={searchInput}
           setSearchInput={setSearchInput}

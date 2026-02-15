@@ -377,7 +377,7 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
               )}
             </div>
 
-            {/* Enhanced Tags Section - FIXED */}
+            {/* Enhanced Tags Section */}
             <div className="flex flex-wrap items-center gap-2">
               {post.tags.slice(0, 4).map((tag, index) => {
                 const style = getTagStyle(index);
@@ -572,6 +572,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   totalCount,
 }) => {
   const [isTyping, setIsTyping] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
     null,
   );
@@ -579,141 +580,92 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
 
-    // Trigger typing animation
     setIsTyping(true);
 
-    // Clear existing timeout
     if (typingTimeout) {
       clearTimeout(typingTimeout);
     }
 
-    // Set new timeout to stop typing animation
     const timeout = setTimeout(() => {
       setIsTyping(false);
-    }, 150);
+    }, 500);
 
     setTypingTimeout(timeout);
   };
 
   return (
     <div className="mb-8 w-full">
-      {/* Animated wrapper */}
-      <motion.div
-        initial={false}
-        whileHover="hover"
-        animate={isTyping ? "typing" : searchInput ? "focus" : "rest"}
-        variants={{
-          rest: {
-            boxShadow: "0 0 0 rgba(0,0,0,0)",
-            borderColor: "rgba(255,255,255,0.15)",
-            scale: 1,
-            y: 0,
-          },
-          hover: {
-            boxShadow: "0 8px 30px rgba(0,0,0,0.35)",
-            borderColor: "rgba(255,255,255,0.25)",
-            scale: 1,
-            y: 0,
-          },
-          focus: {
-            boxShadow: "0 10px 40px rgba(59,130,246,0.35)",
-            borderColor: "rgba(255,255,255,0.4)",
-            scale: 1,
-            y: 0,
-          },
-          typing: {
-            boxShadow: [
-              "0 10px 40px rgba(59,130,246,0.35)",
-              "0 12px 50px rgba(139,92,246,0.45)",
-              "0 10px 40px rgba(59,130,246,0.35)",
-            ],
-            borderColor: [
-              "rgba(255,255,255,0.4)",
-              "rgba(168,85,247,0.6)",
-              "rgba(255,255,255,0.4)",
-            ],
-            scale: [1, 1.008, 1],
-            y: [0, -1, 0],
-          },
-        }}
-        transition={{
-          duration: isTyping ? 0.3 : 0.22,
-          ease: isTyping ? [0.34, 1.56, 0.64, 1] : [0.25, 0.8, 0.25, 1],
-          times: isTyping ? [0, 0.5, 1] : undefined,
-        }}
-        className="relative rounded-full border bg-[#141414]"
+      {/* Main Container handling the CSS classes based on state */}
+      <div
+        className={`search-container w-full mx-auto 
+          ${isFocused ? "is-focused" : ""} 
+          ${isTyping ? "is-typing" : ""}`}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
       >
-        {/* Glow effect on typing */}
-        <motion.div
-          className="absolute inset-0 rounded-full"
-          animate={isTyping ? "typing" : "idle"}
-          variants={{
-            idle: {
-              opacity: 0,
-            },
-            typing: {
-              opacity: [0, 0.15, 0],
-              scale: [0.98, 1.02, 0.98],
-            },
-          }}
-          transition={{
-            duration: 0.3,
-            ease: "easeOut",
-          }}
-          style={{
-            background:
-              "radial-gradient(circle at center, rgba(139,92,246,0.3), transparent 70%)",
-            filter: "blur(8px)",
-          }}
-        />
+        {/* Animated fluid gradient border (CSS driven) */}
+        <div className="search-glow-border" />
 
-        {/* Search Icon with typing animation */}
-        <motion.div
-          animate={isTyping ? "typing" : "idle"}
-          variants={{
-            idle: { scale: 1, rotate: 0 },
-            typing: { scale: [1, 1.1, 1], rotate: [0, -5, 0] },
-          }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="absolute left-4 top-1/2 -translate-y-1/2"
-        >
-          <Search size={20} className="text-white/60" />
-        </motion.div>
+        {/* Expanding pulse ring (CSS driven) */}
+        <div className="search-pulse-ring" />
 
-        {/* Input */}
-        <input
-          type="text"
-          placeholder="Articles, blogs, developers, students, reasoning, community"
-          value={searchInput}
-          onChange={handleInputChange}
-          className="w-full pl-12 pr-12 py-3 rounded-full bg-transparent text-white placeholder:text-white/40 focus:outline-none text-base relative z-10"
-        />
+        {/* Inner wrapper to act as the dark background above the gradient */}
+        <div className="search-input-wrapper border border-white/10 w-full relative overflow-hidden flex items-center">
+          {/* Animated Search Icon */}
+          <div className="absolute left-4 sm:left-5 z-10 flex items-center justify-center pointer-events-none">
+            <Search
+              className="search-icon-fluid w-5 h-5 sm:w-6 sm:h-6 text-white/40"
+              aria-hidden="true"
+            />
+          </div>
 
-        {/* Clear Button with subtle animation */}
-        {searchInput && (
-          <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setSearchInput("")}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors z-10"
-          >
-            <X size={20} />
-          </motion.button>
-        )}
-      </motion.div>
+          {/* Fluid Input Field */}
+          <input
+            type="text"
+            placeholder="Articles, blogs, developers, students, reasoning..."
+            value={searchInput}
+            onChange={handleInputChange}
+            className="w-full bg-transparent text-white placeholder:text-white/40 focus:outline-none 
+                       pl-12 sm:pl-14 pr-12 sm:pr-14 
+                       py-3.5 sm:py-4 lg:py-4 
+                       text-sm sm:text-base transition-all duration-300 relative z-10"
+          />
 
-      {/* Result Count */}
+          {/* Clear Button with Framer Motion */}
+          {searchInput && (
+            <motion.button
+              initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              exit={{ opacity: 0, scale: 0.5, rotate: 45 }}
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => {
+                setSearchInput("");
+                setIsTyping(false);
+              }}
+              transition={{ duration: 0.2, type: "spring", stiffness: 300 }}
+              className="absolute right-4 sm:right-5 z-10 flex items-center justify-center text-white/40 hover:text-white transition-colors"
+              aria-label="Clear search"
+            >
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
+            </motion.button>
+          )}
+        </div>
+      </div>
+
+      {/* Result Count with Smooth Reveal */}
       {searchInput && (
         <motion.div
-          initial={{ opacity: 0, y: -4 }}
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2 }}
-          className="mt-3 text-sm text-white/60"
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="mt-4 px-2 text-sm text-white/60 flex items-center gap-2"
         >
-          Found {resultsCount} of {totalCount} articles
+          <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+          Found <span className="text-white font-medium">
+            {resultsCount}
+          </span>{" "}
+          of {totalCount} articles
         </motion.div>
       )}
     </div>
@@ -759,9 +711,11 @@ export default function BlogsPage() {
     <div className="min-h-screen bg-black">
       {/* Header */}
       <header className="border-b border-black/10 bg-black">
-        <div className="max-w-4xl mx-auto px-6 py-16">
-          <h1 className="text-7xl font-bold text-white mb-6">Dev. Blogs</h1>
-          <p className="text-xl text-white/80 leading-relaxed max-w-3xl">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6">
+            Dev. Blogs
+          </h1>
+          <p className="text-base sm:text-lg lg:text-xl text-white/80 leading-relaxed max-w-3xl">
             Hi <span className="font-semibold text-blue-500">@everyone</span>,
             here I&apos;m sharing my learning journey in cloud computing,
             DevOps, security, and infrastructure engineering. I write about AWS
@@ -773,7 +727,7 @@ export default function BlogsPage() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-6 py-12">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Feedback Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

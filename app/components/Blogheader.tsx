@@ -16,18 +16,20 @@ export default function Blogheader() {
   return (
     // Pill-shaped header with responsive spacing
     <header className="w-full px-3 sm:px-4 md:px-6 mt-12  sm:mt-14 md:mt-16 relative z-40">
-      <div className="max-w-6xl mx-auto bg-[#141414]  rounded-b-2xl h-12 sm:h-14 md:h-16 flex items-center px-4 sm:px-6 md:px-8 shadow-lg">
+      <div className="max-w-6xl mx-auto   rounded-4xl h-12 sm:h-14 md:h-16 flex items-center px-4 sm:px-6 md:px-8 shadow-lg">
         {isHome && (
-          <h1 className="text-base sm:text-lg md:text-xl font-semibold text-white truncate">
-            Home
-          </h1>
+          <div className="bg-[#141414] px-4 py-2 rounded-full">
+            <h1 className="text-base sm:text-lg md:text-xl font-semibold text-white truncate">
+              Home
+            </h1>
+          </div>
         )}
 
         {/* LOGIC B: Back Button (Scales for blog-1, blog-2, blog-99...) */}
         {isBlogPost && (
           <button
             onClick={() => router.push("/home-blog")}
-            className="flex items-center gap-1 sm:gap-1.5 -ml-2 sm:-ml-3 px-2 sm:px-3 py-1.5 sm:py-2 rounded-full cursor-pointer text-white hover:text-gray-200 hover:bg-white/10 transition-all duration-200 active:scale-95 group"
+            className="flex items-center gap-1 sm:gap-1.5 -ml-2 sm:-ml-3 px-2 sm:px-3 py-1.5 sm:py-2 rounded-full cursor-pointer text-white hover:text-gray-200 border border-[#444444] bg-white/10 transition-all duration-200 active:scale-95 group"
             aria-label="Back to home"
           >
             {/* Microsoft-style Minimalist Chevron */}

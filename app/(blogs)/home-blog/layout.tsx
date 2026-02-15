@@ -13,7 +13,9 @@ export default function BlogLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className={` antialiased bg-black`}>
+    // Added pt-16 (64px) or pt-20 (80px) to push the content down.
+    // Adjust this number to exactly match the height of your main header.
+    <section className={`antialiased bg-black pt-8 lg:pt-6`}>
       <Blogheader />
       {children}
     </section>

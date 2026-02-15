@@ -4,3 +4,110 @@ body {
   background-color: black;
   font-family: var(--font-inter), sans-serif;
 }
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* --- FLUID SEARCH BAR ANIMATIONS --- */
+
+  .search-container {
+    position: relative;
+    border-radius: 9999px;
+    transition:
+      transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.4s ease;
+  }
+
+  .search-container.is-focused {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px -10px rgba(59, 130, 246, 0.4);
+  }
+
+  /* Animated Gradient Border Layer */
+  .search-glow-border {
+    position: absolute;
+    inset: -2px; /* Slight overflow for border effect */
+    border-radius: 9999px;
+    background: linear-gradient(
+      90deg,
+      rgba(59, 130, 246, 0.8),
+      /* Blue */ rgba(168, 85, 247, 0.8),
+      /* Purple */ rgba(236, 72, 153, 0.8),
+      /* Pink */ rgba(59, 130, 246, 0.8) /* Blue (for seamless loop) */
+    );
+    background-size: 300% 100%;
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.3s ease;
+    filter: blur(1px);
+  }
+
+  /* Shimmer animation triggers when typing */
+  .search-container.is-typing .search-glow-border {
+    opacity: 1;
+    animation: shimmerBorder 2s linear infinite;
+  }
+
+  @keyframes shimmerBorder {
+    0% {
+      background-position: 0% 0;
+    }
+    100% {
+      background-position: 300% 0;
+    }
+  }
+
+  /* Outer Pulse Ring */
+  .search-pulse-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    box-shadow: 0 0 0 0 rgba(168, 85, 247, 0);
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .search-container.is-typing .search-pulse-ring {
+    animation: typingPulse 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  @keyframes typingPulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.5);
+      opacity: 1;
+    }
+    100% {
+      box-shadow: 0 0 0 16px rgba(168, 85, 247, 0);
+      opacity: 0;
+    }
+  }
+
+  /* Input inner layer to mask the gradient */
+  .search-input-wrapper {
+    position: relative;
+    background: #141414;
+    border-radius: 9999px;
+    z-index: 1;
+    transition: background 0.3s ease;
+  }
+
+  .search-container.is-focused .search-input-wrapper {
+    background: #1a1a1a;
+  }
+
+  /* Icon Animation */
+  .search-icon-fluid {
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .search-container.is-typing .search-icon-fluid {
+    transform: scale(1.2) rotate(-8deg);
+    color: #a855f7; /* Purple */
+  }
+
+  .search-container.is-focused:not(.is-typing) .search-icon-fluid {
+    color: #3b82f6; /* Blue */
+  }
+}

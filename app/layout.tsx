@@ -1,22 +1,14 @@
 import type { Metadata } from "next";
-import { Inter, Alegreya, Google_Sans, IBM_Plex_Serif } from "next/font/google";
+import { Inter, Alegreya, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-const inter = Inter({
+export const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-inter",
   display: "swap",
-});
-
-// 👇 1. Configure Google Sans
-export const googleSans = Google_Sans({
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-google-sans",
-  subsets: ["latin"],
-  display: "swap", // Recommended for better loading performance
 });
 
 const alegreya = Alegreya({
@@ -47,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${alegreya.variable} ${googleSans.variable} ${ibmplex_serif.variable} antialiased`}
+        className={`${inter.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >
         <Header />
         {children}

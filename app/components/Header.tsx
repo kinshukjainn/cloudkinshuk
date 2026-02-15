@@ -118,7 +118,7 @@ const Header = () => {
       </header>
 
       {/* Mobile Bottom Navigation Bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0a0a0a]  mr-3 ml-3  mb-3 rounded-full ">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#141414] border border-[#444444]  mr-3 ml-3  mb-3 rounded-full ">
         <div className="flex items-center justify-around h-16 px-2">
           {navItems.map((item) => {
             const active = isActive(item.href);

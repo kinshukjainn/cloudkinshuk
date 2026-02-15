@@ -11,8 +11,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         // Add your custom font here
-        serif: ["var(--font-alegreya)", "serif"],
-        inter: ["var(--font-inter)", "sans-serif"],
+        googleSans: "var(--font-google-sans) sans-serif",
       },
     },
   },

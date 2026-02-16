@@ -45,13 +45,14 @@ const Header = () => {
   return (
     <>
       {/* Top Header (Floating Pill Style) */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#141414] backdrop-blur-md mx-2 mt-2 rounded-full  border border-[#444444] transition-all duration-300">
+      {/* Added /90 opacity to the background so backdrop-blur actually works across browsers */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#141414]/90 backdrop-blur-md mx-2 mt-2 pt-[env(safe-area-inset-top)] rounded-full border border-[#444444] transition-all duration-300 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo Group */}
             <Link
               href="/"
-              className="flex items-center gap-2 font-bold text-lg sm:text-xl text-slate-200 hover:text-white transition-colors"
+              className="flex items-center gap-2 font-bold text-lg sm:text-xl text-slate-200 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg"
             >
               <Image
                 src="/corelogo.png"
@@ -59,6 +60,7 @@ const Header = () => {
                 width={40}
                 height={40}
                 className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
+                priority
               />
               <span className="hidden sm:inline tracking-tight">
                 CLOUDKINSHUK
@@ -76,7 +78,7 @@ const Header = () => {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`relative flex items-center gap-2 px-4 h-full text-sm font-medium transition-colors ${
+                    className={`relative flex items-center gap-2 px-4 h-full text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-md ${
                       active ? "text-white" : "text-slate-400 hover:text-white"
                     }`}
                   >
@@ -107,7 +109,7 @@ const Header = () => {
                 href="https://github.com/kinshukjainn/cloudkinshuk"
                 target="_blank"
                 rel="noreferrer"
-                className="p-2 text-black bg-white rounded-full hover:bg-slate-200 transition-colors"
+                className="p-2 text-black bg-white rounded-full hover:bg-slate-200 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 aria-label="GitHub Repository"
               >
                 <Github className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -118,29 +120,35 @@ const Header = () => {
       </header>
 
       {/* Mobile Bottom Navigation Bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#141414] border border-[#444444]    rounded-t-3xl ">
-        <div className="flex items-center justify-around h-17 py-1 px-2">
+      {/* Added pb-[env(safe-area-inset-bottom)] for iOS/Android home indicator gesture bars */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#141414]/95 backdrop-blur-md border-t border-[#444444] rounded-t-3xl pb-[env(safe-area-inset-bottom)] shadow-lg transform-gpu">
+        {/* Replaced invalid h-17 with h-[68px] for standard parsing across engines */}
+        <div className="flex items-center justify-around h-[68px] px-2 w-full">
           {navItems.map((item) => {
             const active = isActive(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${
-                  active ? "text-white" : "text-white "
+                className={`relative flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors touch-manipulation tap-highlight-transparent ${
+                  active ? "text-white" : "text-slate-400 hover:text-slate-200"
                 }`}
               >
                 {/* Mobile Active Background Highlight */}
                 {active && (
                   <motion.div
                     layoutId="mobile-active-bg"
-                    className="absolute inset-1 rounded-full bg-blue-800 -z-10"
+                    className="absolute inset-1 rounded-2xl bg-blue-800 -z-10"
                     initial={false}
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
-                <div className="hover:text-blue-400">{item.icon}</div>
-                <span className="text-xs font-bold tracking-wide">
+                <div
+                  className={`transition-colors ${active ? "text-white" : "text-slate-400"}`}
+                >
+                  {item.icon}
+                </div>
+                <span className="text-[10px] sm:text-xs font-bold tracking-wide">
                   {item.label}
                 </span>
               </Link>

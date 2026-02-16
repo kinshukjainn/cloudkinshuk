@@ -45,7 +45,7 @@ const Header = () => {
   return (
     <>
       {/* Top Header (Floating Pill Style) */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md mx-2 mt-2 rounded-2xl md:rounded-4xl border border-[#333] hover:border-blue-500 hover:shadow-sm hover:shadow-blue-500/20 transition-all duration-300">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#141414] backdrop-blur-md mx-2 mt-2 rounded-full  border border-[#444444] transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo Group */}
@@ -118,8 +118,8 @@ const Header = () => {
       </header>
 
       {/* Mobile Bottom Navigation Bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#141414] border border-[#444444]  mr-3 ml-3  mb-3 rounded-full ">
-        <div className="flex items-center justify-around h-16 px-2">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#141414] border border-[#444444]    rounded-t-3xl ">
+        <div className="flex items-center justify-around h-17 py-1 px-2">
           {navItems.map((item) => {
             const active = isActive(item.href);
             return (
@@ -139,8 +139,8 @@ const Header = () => {
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
-                {item.icon}
-                <span className="text-[10px] font-medium tracking-wide">
+                <div className="hover:text-blue-400">{item.icon}</div>
+                <span className="text-xs font-bold tracking-wide">
                   {item.label}
                 </span>
               </Link>

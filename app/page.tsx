@@ -106,12 +106,7 @@ const CONFIG = {
       url: "https://www.credly.com/badges/a0042ec2-cc6e-4a99-84de-a1516ee5775a/public_url",
       description:
         "Digital badge covering machine learning concepts and AWS ML services",
-      skills: [
-        "Amazon SageMaker",
-        "ML Algorithms",
-        "Data Processing",
-        "Model Deployment",
-      ],
+      skills: ["ML Algorithms", "Data Processing", "Model Deployment"],
     },
   ],
   skills: {
@@ -134,8 +129,8 @@ const CONFIG = {
       "Tailwind CSS",
       "React icons",
     ],
-    "Version Control": ["Git", "GitHub Actions"],
-    "Developer Tools": ["VS Code", "Clerk Auth"],
+    "Version Control": ["Git Terminal", "GitHub Actions"],
+    "Developer Tools": ["VS Code"],
   },
   projects: [
     {
@@ -511,7 +506,7 @@ export default function Home() {
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-blue-800 rounded-full transition-all duration-300 text-white font-semibold group text-sm md:text-base"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-blue-800 w-max rounded-full transition-all duration-300 text-white font-semibold group text-sm md:text-base"
                     >
                       <ExternalLink className="w-4 h-4" />
                       View Project
@@ -525,7 +520,7 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-[#141414] rounded-full border border-[#444444] transition-all duration-300 text-white font-semibold group text-sm md:text-base"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-[#141414] w-max rounded-full border border-[#444444] transition-all duration-300 text-white font-semibold group text-sm md:text-base"
                     >
                       <Github className="w-4 h-4" />
                       Source Code

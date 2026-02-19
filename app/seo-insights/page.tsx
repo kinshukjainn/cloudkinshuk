@@ -1,826 +1,390 @@
 "use client";
 
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import {
-  ChevronDown,
-  Filter,
-  AlertCircle,
+  Smartphone,
+  Monitor,
+  Download,
+  AlertTriangle,
   CheckCircle2,
-  Zap,
-  Calendar,
-  TrendingUp,
-  TrendingDown,
-  FileText,
+  XCircle,
+  Info,
+  Clock,
 } from "lucide-react";
 
 // ============================================================================
-// Types & Constants
+// Data Models (Based on provided Lighthouse dump)
 // ============================================================================
 
-type Priority = "high" | "medium" | "low";
-type Category = "performance" | "seo" | "accessibility";
-type VitalStatus = "good" | "needs-improvement" | "poor";
+type DeviceType = "mobile" | "desktop";
+type ScoreCategory = "performance" | "accessibility" | "bestPractices" | "seo";
+type Status = "pass" | "average" | "fail";
 
-interface FilterState {
-  priority: Priority | "all";
-  category: Category | "all";
+interface Metric {
+  label: string;
+  value: string;
+  status: Status;
 }
 
-interface ExpandedSections {
-  environment: boolean;
-  scores: boolean;
-  vitals: boolean;
-  opportunities: boolean;
+interface AuditItem {
+  title: string;
+  description: string;
+  category: ScoreCategory;
+  status: Status;
+  savings?: string;
 }
 
 const AUDIT_DATA = {
-  auditMeta: {
-    capturedAt: "2026-01-13T10:20:00+05:30",
-    environment: {
-      device: "Moto G Power (Emulated)",
-      network: "Slow 4G",
-      lighthouseVersion: "13.0.1",
-      browser: "HeadlessChromium 137.0.7151.119",
-    },
+  meta: {
+    capturedAt: "Feb 20, 2026, 3:21 AM GMT+5:30",
+    lighthouseVersion: "13.0.1",
+    browser: "HeadlessChromium 144.0.7559.132",
   },
-  scores: {
-    performance: 86,
-    accessibility: 100,
-    bestPractices: 100,
-    seo: 66,
+  mobile: {
+    environment: "Emulated Moto G Power • Slow 4G throttling",
+    scores: {
+      performance: 39,
+      accessibility: 94,
+      bestPractices: 100,
+      seo: 100,
+    },
+    metrics: [
+      {
+        label: "First Contentful Paint (FCP)",
+        value: "3.2 s",
+        status: "average",
+      },
+      {
+        label: "Largest Contentful Paint (LCP)",
+        value: "13.5 s",
+        status: "fail",
+      },
+      { label: "Total Blocking Time (TBT)", value: "1,410 ms", status: "fail" },
+      { label: "Cumulative Layout Shift (CLS)", value: "0", status: "pass" },
+      { label: "Speed Index (SI)", value: "5.7 s", status: "average" },
+    ] as Metric[],
   },
-  coreWebVitals: {
-    fcp: {
-      value: "4.1 s",
-      status: "good" as VitalStatus,
-      label: "First Contentful Paint",
+  desktop: {
+    environment: "Emulated Desktop • Custom throttling",
+    scores: {
+      performance: 70,
+      accessibility: 94,
+      bestPractices: 100,
+      seo: 100,
     },
-    lcp: {
-      value: "7.0 s",
-      status: "poor" as VitalStatus,
-      label: "Largest Contentful Paint",
-    },
-    tbt: {
-      value: "40 ms",
-      status: "good" as VitalStatus,
-      label: "Total Blocking Time",
-    },
-    cls: {
-      value: "0",
-      status: "good" as VitalStatus,
-      label: "Cumulative Layout Shift",
-    },
+    metrics: [
+      { label: "First Contentful Paint (FCP)", value: "0.5 s", status: "pass" },
+      {
+        label: "Largest Contentful Paint (LCP)",
+        value: "0.8 s",
+        status: "pass",
+      },
+      { label: "Total Blocking Time (TBT)", value: "2,640 ms", status: "fail" },
+      { label: "Cumulative Layout Shift (CLS)", value: "0", status: "pass" },
+      { label: "Speed Index (SI)", value: "0.6 s", status: "pass" },
+    ] as Metric[],
   },
-  insights: {
-    performanceImprovements: [
-      {
-        title: "Render Blocking Requests",
-        savings: "2100ms",
-        priority: "high" as Priority,
-        category: "performance" as Category,
-      },
-      {
-        title: "Document Request Latency",
-        savings: "270ms",
-        priority: "medium" as Priority,
-        category: "performance" as Category,
-      },
-      {
-        title: "Improve Image Delivery",
-        savings: "1083 KiB",
-        priority: "high" as Priority,
-        category: "performance" as Category,
-      },
-      {
-        title: "Missing Meta Description",
-        savings: "N/A",
-        priority: "medium" as Priority,
-        category: "seo" as Category,
-      },
-      {
-        title: "Image Alt Text Missing",
-        savings: "N/A",
-        priority: "high" as Priority,
-        category: "accessibility" as Category,
-      },
-    ],
-  },
+  insights: [
+    {
+      title: "Document request latency",
+      description:
+        "Your first network request is the most important. Reduce its latency by avoiding redirects.",
+      category: "performance",
+      status: "fail",
+      savings: "280 ms",
+    },
+    {
+      title: "Render blocking requests",
+      description:
+        "Requests are blocking the page's initial render, which may delay LCP.",
+      category: "performance",
+      status: "fail",
+      savings: "150 ms",
+    },
+    {
+      title: "Legacy JavaScript",
+      description:
+        "Polyfills and transforms enable older browsers to use new JavaScript features.",
+      category: "performance",
+      status: "average",
+      savings: "13 KiB",
+    },
+    {
+      title: "Background and foreground colors lack contrast",
+      description:
+        "Low-contrast text is difficult or impossible for many users to read.",
+      category: "accessibility",
+      status: "fail",
+    },
+    {
+      title: "Ensure CSP is effective against XSS attacks",
+      description:
+        "A strong Content Security Policy significantly reduces the risk of cross-site scripting.",
+      category: "bestPractices",
+      status: "fail",
+    },
+  ] as AuditItem[],
+  passed: [
+    "Page isn't blocked from indexing",
+    "Document has a <title> element",
+    "Document has a meta description",
+    "Page has successful HTTP status code",
+    "Links have descriptive text",
+    "Image elements have [alt] attributes",
+    "Uses HTTPS",
+    "Avoids third-party cookies",
+  ],
 };
 
 // ============================================================================
 // Utility Functions
 // ============================================================================
 
-const getScoreColor = (score: number): string => {
-  if (score >= 90) return "bg-emerald-500";
-  if (score >= 50) return "bg-amber-500";
-  return "bg-red-500";
+const getScoreColor = (score: number) => {
+  if (score >= 90) return "text-green-500";
+  if (score >= 50) return "text-amber-500";
+  return "text-red-500";
 };
 
-const getStatusColor = (status: VitalStatus): string => {
-  if (status === "good") return "text-emerald-400";
-  if (status === "needs-improvement") return "text-amber-400";
-  return "text-red-400";
+const getStatusColor = (status: Status) => {
+  if (status === "pass") return "text-green-500";
+  if (status === "average") return "text-amber-500";
+  return "text-red-500";
 };
 
-const getPriorityColor = (priority: Priority): string => {
-  if (priority === "high")
-    return "bg-red-500/20 text-red-300 border border-red-500/30";
-  if (priority === "medium")
-    return "bg-amber-500/20 text-amber-300 border border-amber-500/30";
-  return "bg-blue-500/20 text-blue-300 border border-blue-500/30";
+const getStatusIcon = (status: Status) => {
+  if (status === "pass")
+    return <CheckCircle2 className="w-4 h-4 text-green-500" />;
+  if (status === "average") return <Info className="w-4 h-4 text-amber-500" />;
+  return <AlertTriangle className="w-4 h-4 text-red-500" />;
 };
 
-const formatDate = (dateString: string): string => {
-  try {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  } catch {
-    return "Invalid Date";
-  }
-};
+const generateMarkdown = (device: DeviceType) => {
+  const data = AUDIT_DATA[device];
+  return `# Lighthouse Audit Report - ${device.toUpperCase()}
+Generated: ${AUDIT_DATA.meta.capturedAt}
 
-const generateMarkdownContent = (
-  auditData: typeof AUDIT_DATA,
-  filteredOpportunities: (typeof AUDIT_DATA.insights.performanceImprovements)[number][],
-  avgScore: number,
-): string => {
-  const date = formatDate(auditData.auditMeta.capturedAt);
-
-  const scoreRows = Object.entries(auditData.scores)
-    .map(
-      ([key, value]) =>
-        `| ${key.replace(/([A-Z])/g, " $1").trim()} | ${value} |`,
-    )
-    .join("\n");
-
-  const vitalRows = Object.entries(auditData.coreWebVitals)
-    .map(
-      ([, vital]) =>
-        `| ${vital.label} | ${vital.value} | ${vital.status.toUpperCase()} |`,
-    )
-    .join("\n");
-
-  const opportunityRows = filteredOpportunities
-    .map(
-      (item, idx) =>
-        `| ${idx + 1} | ${item.title} | ${item.priority.toUpperCase()} | ${item.savings} | ${item.category} |`,
-    )
-    .join("\n");
-
-  return `# SEO & Performance Audit Report
-
-**Generated:** ${date}
-
----
-
-## Executive Summary
-
-- **Overall Score:** ${avgScore}
-- **Critical Issues:** ${filteredOpportunities.filter((i) => i.priority === "high").length}
-- **Total Opportunities:** ${filteredOpportunities.length}
-
----
-
-## Category Scores
-
-| Category | Score |
-|----------|-------|
-${scoreRows}
-
----
+## Scores
+- Performance: ${data.scores.performance}
+- Accessibility: ${data.scores.accessibility}
+- Best Practices: ${data.scores.bestPractices}
+- SEO: ${data.scores.seo}
 
 ## Core Web Vitals
+${data.metrics.map((m) => `- ${m.label}: ${m.value} (${m.status})`).join("\n")}
 
-| Metric | Value | Status |
-|--------|-------|--------|
-${vitalRows}
-
----
-
-## Performance Opportunities
-
-| # | Issue | Priority | Savings | Category |
-|---|-------|----------|---------|----------|
-${opportunityRows}
-
----
-
-## Test Environment
-
-- **Device:** ${auditData.auditMeta.environment.device}
-- **Network:** ${auditData.auditMeta.environment.network}
-- **Browser:** ${auditData.auditMeta.environment.browser}
-- **Lighthouse Version:** v${auditData.auditMeta.environment.lighthouseVersion}
-
----
-
-*Report auto-generated from Lighthouse audit data.*
-`;
+## Key Opportunities
+${AUDIT_DATA.insights.map((i) => `- [${i.category.toUpperCase()}] ${i.title} (Savings: ${i.savings || "N/A"})`).join("\n")}
+  `;
 };
 
 // ============================================================================
-// Components
+// Main Component
 // ============================================================================
-
-interface ScoreBarProps {
-  score: number;
-  label: string;
-}
-
-const ScoreBar: React.FC<ScoreBarProps> = ({ score, label }) => (
-  <div className="space-y-2">
-    <div className="flex items-center justify-between">
-      <span className="text-sm font-medium text-gray-200">{label}</span>
-      <span className="text-lg font-bold text-white">{score}</span>
-    </div>
-    <div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
-      <div
-        className={`h-full ${getScoreColor(score)} transition-all duration-500`}
-        style={{ width: `${score}%` }}
-      />
-    </div>
-  </div>
-);
-
-interface CollapsibleSectionProps {
-  title: string;
-  isExpanded: boolean;
-  onToggle: () => void;
-  badge?: string;
-  children: React.ReactNode;
-}
-
-const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
-  title,
-  isExpanded,
-  onToggle,
-  badge,
-  children,
-}) => (
-  <div className="bg-[#141414] rounded-2xl mt-4 border border-zinc-700/50">
-    <button
-      onClick={onToggle}
-      className="w-full py-5  flex items-center rounded-xl justify-between hover:bg-zinc-900/50 transition-colors px-1"
-      aria-expanded={isExpanded}
-      type="button"
-    >
-      <div className="flex items-center gap-3">
-        <h2 className="text-base font-semibold text-white">{title}</h2>
-        {badge && (
-          <span className="px-2.5 py-1 text-xs bg-blue-500/20 text-blue-300 rounded-md border border-blue-500/30">
-            {badge}
-          </span>
-        )}
-      </div>
-      <div className="bg-blue-800 p-1 rounded-full">
-        <ChevronDown
-          className={`w-6 h-6 text-white transition-transform duration-200 ${
-            isExpanded ? "rotate-180" : ""
-          }`}
-        />
-      </div>
-    </button>
-    {isExpanded && (
-      <div className="pb-6 space-y-4 text-white px-1">{children}</div>
-    )}
-  </div>
-);
 
 export default function SeoInsights() {
-  // ========================================================================
-  // State Management
-  // ========================================================================
+  const [device, setDevice] = useState<DeviceType>("mobile");
 
-  const [expanded, setExpanded] = useState<ExpandedSections>({
-    environment: true,
-    scores: true,
-    vitals: true,
-    opportunities: true,
-  });
+  const currentData = useMemo(() => AUDIT_DATA[device], [device]);
 
-  const [showFilters, setShowFilters] = useState(false);
-  const [filters, setFilters] = useState<FilterState>({
-    priority: "all",
-    category: "all",
-  });
-
-  // ========================================================================
-  // Computed Values
-  // ========================================================================
-
-  const avgScore = useMemo(
-    () =>
-      Math.round(
-        (AUDIT_DATA.scores.performance +
-          AUDIT_DATA.scores.accessibility +
-          AUDIT_DATA.scores.bestPractices +
-          AUDIT_DATA.scores.seo) /
-          4,
-      ),
-    [],
-  );
-
-  const filteredOpportunities = useMemo(
-    () =>
-      AUDIT_DATA.insights.performanceImprovements.filter((item) => {
-        const matchesPriority =
-          filters.priority === "all" || item.priority === filters.priority;
-        const matchesCategory =
-          filters.category === "all" || item.category === filters.category;
-        return matchesPriority && matchesCategory;
-      }),
-    [filters],
-  );
-
-  const hasActiveFilters = useMemo(
-    () => filters.priority !== "all" || filters.category !== "all",
-    [filters],
-  );
-
-  const formattedDate = useMemo(
-    () => formatDate(AUDIT_DATA.auditMeta.capturedAt),
-    [],
-  );
-
-  // ========================================================================
-  // Event Handlers
-  // ========================================================================
-
-  const toggleSection = useCallback((section: keyof ExpandedSections) => {
-    setExpanded((prev) => ({ ...prev, [section]: !prev[section] }));
-  }, []);
-
-  const handleFilterChange = useCallback((newFilters: Partial<FilterState>) => {
-    setFilters((prev) => ({ ...prev, ...newFilters }));
-  }, []);
-
-  const handleResetFilters = useCallback(() => {
-    setFilters({
-      priority: "all",
-      category: "all",
-    });
-  }, []);
-
-  const handleExportMarkdown = useCallback(() => {
-    try {
-      const markdownContent = generateMarkdownContent(
-        AUDIT_DATA,
-        filteredOpportunities,
-        avgScore,
-      );
-
-      const element = document.createElement("a");
-      element.setAttribute(
-        "href",
-        `data:text/markdown;charset=utf-8,${encodeURIComponent(markdownContent)}`,
-      );
-      element.setAttribute(
-        "download",
-        `seo-audit-${new Date().toISOString().split("T")[0]}.md`,
-      );
-      element.style.display = "none";
-      document.body.appendChild(element);
-      element.click();
-      document.body.removeChild(element);
-    } catch (error) {
-      console.error("[v0] Export markdown failed:", error);
-      alert("Failed to export markdown. Please try again.");
-    }
-  }, [filteredOpportunities, avgScore]);
-
-  // ========================================================================
-  // Render
-  // ========================================================================
+  const handleExport = () => {
+    const md = generateMarkdown(device);
+    const blob = new Blob([md], { type: "text/markdown" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `lighthouse-report-${device}.md`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   return (
-    <div className="min-h-screen bg-black">
-      <Header
-        date={formattedDate}
-        showFilters={showFilters}
-        onToggleFilters={setShowFilters}
-        filters={filters}
-        onFilterChange={handleFilterChange}
-        hasActiveFilters={hasActiveFilters}
-        onResetFilters={handleResetFilters}
-        onExportMarkdown={handleExportMarkdown}
-      />
-
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8 pt-32">
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-          <StatCard label="Avg Score" value={avgScore} trend={2} />
-          <StatCard
-            label="Performance"
-            value={AUDIT_DATA.scores.performance}
-            trend={-3}
-          />
-          <StatCard
-            label="Accessibility"
-            value={AUDIT_DATA.scores.accessibility}
-            trend={5}
-          />
-          <StatCard label="SEO" value={AUDIT_DATA.scores.seo} trend={1} />
-        </div>
-
-        {/* Active Filters Info */}
-        {hasActiveFilters && (
-          <div className="mb-6 p-4">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2 flex-1">
-                <Filter className="w-4 h-4 text-white flex-shrink-0" />
-                <span className="text-sm font-medium text-white">
-                  Showing {filteredOpportunities.length} of{" "}
-                  {AUDIT_DATA.insights.performanceImprovements.length} items
-                </span>
-              </div>
-              <button
-                onClick={handleResetFilters}
-                className="text-sm text-white bg-blue-800 px-3 py-2  rounded-full font-bold whitespace-nowrap transition-colors"
-                type="button"
-              >
-                Clear All
-              </button>
+    <div className="min-h-screen pt-16 md:pt-24 bg-[#313131] text-gray-200  selection:bg-green-500 selection:text-black">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        {/* Header Block */}
+        <header className="mb-10 border-b border-[#444] pb-6 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-semibold text-white mb-2 tracking-tight">
+              Lighthouse Intelligence
+            </h1>
+            <div className="text-sm font-mono text-gray-400">
+              Captured: {AUDIT_DATA.meta.capturedAt} | v
+              {AUDIT_DATA.meta.lighthouseVersion}
             </div>
           </div>
-        )}
 
-        {/* Main Content Card */}
-        <div className="  p-4 rounded-3xl overflow-hidden">
-          {/* Environment */}
-          <CollapsibleSection
-            title="Test Environment"
-            isExpanded={expanded.environment}
-            onToggle={() => toggleSection("environment")}
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
-              <div className="p-5 bg-zinc-800/50 rounded-3xl border border-zinc-700/50">
-                <p className="text-blue-400 text-xs uppercase font-bold tracking-wide mb-1">
-                  Device
-                </p>
-                <p className="font-medium text-white">
-                  {AUDIT_DATA.auditMeta.environment.device}
-                </p>
-              </div>
-              <div className="p-3 bg-zinc-800/50 rounded-3xl border border-zinc-700/50">
-                <p className="text-blue-400 text-xs uppercase font-bold tracking-wide mb-1">
-                  Network
-                </p>
-                <p className="font-medium text-white">
-                  {AUDIT_DATA.auditMeta.environment.network}
-                </p>
-              </div>
-              <div className="p-3 bg-zinc-800/50 rounded-3xl border border-zinc-700/50">
-                <p className="text-blue-400 text-xs uppercase font-bold tracking-wide mb-1">
-                  Version
-                </p>
-                <p className="font-medium text-white">
-                  v{AUDIT_DATA.auditMeta.environment.lighthouseVersion}
-                </p>
-              </div>
+          <div className="flex items-center gap-3">
+            {/* Device Toggle */}
+            <div className="flex bg-[#282828] border border-[#444] rounded-sm p-1">
+              <button
+                onClick={() => setDevice("mobile")}
+                className={`flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-sm transition-colors ${
+                  device === "mobile"
+                    ? "bg-[#3f3f3f] text-white shadow-sm"
+                    : "text-gray-400 hover:text-gray-200"
+                }`}
+              >
+                <Smartphone className="w-4 h-4" /> Mobile
+              </button>
+              <button
+                onClick={() => setDevice("desktop")}
+                className={`flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-sm transition-colors ${
+                  device === "desktop"
+                    ? "bg-[#3f3f3f] text-white shadow-sm"
+                    : "text-gray-400 hover:text-gray-200"
+                }`}
+              >
+                <Monitor className="w-4 h-4" /> Desktop
+              </button>
             </div>
-          </CollapsibleSection>
 
-          {/* Overall Scores */}
-          <CollapsibleSection
-            title="Overall Scores"
-            isExpanded={expanded.scores}
-            onToggle={() => toggleSection("scores")}
-          >
-            <div className="space-y-5">
-              <ScoreBar
-                score={AUDIT_DATA.scores.performance}
-                label="Performance"
-              />
-              <ScoreBar
-                score={AUDIT_DATA.scores.accessibility}
-                label="Accessibility"
-              />
-              <ScoreBar
-                score={AUDIT_DATA.scores.bestPractices}
-                label="Best Practices"
-              />
-              <ScoreBar score={AUDIT_DATA.scores.seo} label="SEO" />
-            </div>
-          </CollapsibleSection>
+            {/* Export Button */}
+            <button
+              onClick={handleExport}
+              className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-400 text-black text-sm font-semibold rounded-sm transition-colors"
+            >
+              <Download className="w-4 h-4" /> Export
+            </button>
+          </div>
+        </header>
 
-          {/* Core Web Vitals */}
-          <CollapsibleSection
-            title="Core Web Vitals"
-            isExpanded={expanded.vitals}
-            onToggle={() => toggleSection("vitals")}
-            badge="Critical"
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {Object.entries(AUDIT_DATA.coreWebVitals).map(([key, vital]) => (
-                <VitalCard key={key} vital={vital} />
-              ))}
-            </div>
-          </CollapsibleSection>
+        {/* 1. Environment Details */}
+        <section className="mb-10">
+          <dl className="grid sm:grid-cols-[150px_1fr] gap-x-4 gap-y-2 text-sm">
+            <dt className="text-gray-500 font-mono">Target Device:</dt>
+            <dd className="text-gray-300">{currentData.environment}</dd>
+            <dt className="text-gray-500 font-mono">User Agent:</dt>
+            <dd className="text-gray-300">{AUDIT_DATA.meta.browser}</dd>
+          </dl>
+        </section>
 
-          {/* Performance Opportunities */}
-          <CollapsibleSection
-            title="Performance Opportunities"
-            isExpanded={expanded.opportunities}
-            onToggle={() => toggleSection("opportunities")}
-            badge={`${filteredOpportunities.length}`}
-          >
-            {filteredOpportunities.length === 0 ? (
-              <div className="text-center py-12 text-gray-400">
-                <Filter className="w-12 h-12 mx-auto mb-3 text-gray-600" />
-                <p className="text-sm">
-                  No opportunities match your current filters
-                </p>
+        {/* 2. Primary Scores */}
+        <section className="mb-12">
+          <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
+            <span className="text-green-500 font-mono text-lg">1.</span>{" "}
+            Category Scores
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {Object.entries(currentData.scores).map(([key, value]) => (
+              <div
+                key={key}
+                className="bg-[#282828] border border-[#444] p-5 rounded-sm flex flex-col items-center justify-center text-center"
+              >
+                <div
+                  className={`text-4xl font-mono font-bold mb-2 ${getScoreColor(value)}`}
+                >
+                  {value}
+                </div>
+                <div className="text-sm font-medium text-gray-300 uppercase tracking-wider capitalize">
+                  {key.replace(/([A-Z])/g, " $1").trim()}
+                </div>
               </div>
-            ) : (
-              <div className="space-y-3">
-                {filteredOpportunities.map((item, idx) => (
-                  <OpportunityItem key={idx} item={item} />
+            ))}
+          </div>
+        </section>
+
+        {/* 3. Core Web Vitals */}
+        <section className="mb-12">
+          <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
+            <span className="text-green-500 font-mono text-lg">2.</span> Core
+            Web Vitals
+          </h2>
+          <div className="bg-[#282828] border border-[#444] rounded-sm overflow-hidden">
+            <table className="w-full text-left text-sm whitespace-nowrap">
+              <thead className="bg-[#333] border-b border-[#444]">
+                <tr>
+                  <th className="px-4 py-3 font-medium text-gray-300">
+                    Metric
+                  </th>
+                  <th className="px-4 py-3 font-medium text-gray-300">Value</th>
+                  <th className="px-4 py-3 font-medium text-gray-300">
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#444]">
+                {currentData.metrics.map((metric, idx) => (
+                  <tr
+                    key={idx}
+                    className="hover:bg-[#333]/50 transition-colors"
+                  >
+                    <td className="px-4 py-3 text-gray-200">{metric.label}</td>
+                    <td
+                      className={`px-4 py-3 font-mono font-medium ${getStatusColor(metric.status)}`}
+                    >
+                      {metric.value}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2 capitalize">
+                        {getStatusIcon(metric.status)}
+                        <span className="text-gray-400">{metric.status}</span>
+                      </div>
+                    </td>
+                  </tr>
                 ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* 4. Diagnostics & Opportunities */}
+        <section className="mb-12">
+          <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
+            <span className="text-green-500 font-mono text-lg">3.</span>{" "}
+            Diagnostic Opportunities
+          </h2>
+          <div className="space-y-4">
+            {AUDIT_DATA.insights.map((item, idx) => (
+              <div
+                key={idx}
+                className="bg-[#282828] border-l-2 border-l-[#444] hover:border-l-amber-500 border-t border-r border-b border-t-[#444] border-r-[#444] border-b-[#444] p-4 sm:p-5 rounded-r-sm transition-colors"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-2">
+                  <h3 className="text-base font-medium text-white flex items-start gap-2">
+                    {item.status === "fail" ? (
+                      <XCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                    ) : (
+                      <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                    )}
+                    {item.title}
+                  </h3>
+                  {item.savings && (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#333] border border-[#555] rounded-sm text-xs font-mono text-amber-400 whitespace-nowrap">
+                      <Clock className="w-3.5 h-3.5" /> Est. savings:{" "}
+                      {item.savings}
+                    </span>
+                  )}
+                </div>
+                <p className="text-sm text-gray-400 leading-relaxed ml-7">
+                  {item.description}
+                </p>
+                <div className="mt-3 ml-7">
+                  <span className="text-xs font-mono text-gray-500 uppercase tracking-wider">
+                    Category:{" "}
+                    <span className="text-gray-300">{item.category}</span>
+                  </span>
+                </div>
               </div>
-            )}
-          </CollapsibleSection>
-        </div>
-      </main>
+            ))}
+          </div>
+        </section>
+
+        {/* 5. Passed Audits (Summarized) */}
+        <section>
+          <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
+            <span className="text-green-500 font-mono text-lg">4.</span> Passed
+            Audits
+          </h2>
+          <div className="grid md:grid-cols-2 gap-x-8 gap-y-3">
+            {AUDIT_DATA.passed.map((item, idx) => (
+              <div key={idx} className="flex items-start gap-3">
+                <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                <span className="text-sm text-gray-300">{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
-
-// ============================================================================
-// Filter Panel Component
-// ============================================================================
-
-interface FilterPanelProps {
-  filters: FilterState;
-  onFilterChange: (filters: Partial<FilterState>) => void;
-  hasActiveFilters: boolean;
-  onResetFilters: () => void;
-}
-
-const FilterPanel: React.FC<FilterPanelProps> = ({
-  filters,
-  onFilterChange,
-  hasActiveFilters,
-  onResetFilters,
-}) => (
-  <div className="space-y-3 p-4 bg-zinc-900/80 rounded-2xl border border-zinc-700/50 backdrop-blur-sm">
-    <div className="flex items-center gap-2 mb-3">
-      <Filter className="w-4 h-4 text-gray-300" />
-      <h3 className="text-sm font-semibold text-white">Filter Options</h3>
-    </div>
-
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      {/* Priority Filter */}
-      <div>
-        <label
-          htmlFor="priority-filter"
-          className="block text-xs font-medium text-gray-300 mb-2"
-        >
-          Priority Level
-        </label>
-        <select
-          id="priority-filter"
-          value={filters.priority}
-          onChange={(e) =>
-            onFilterChange({
-              priority: e.target.value as Priority | "all",
-            })
-          }
-          className="w-full bg-zinc-800 text-white px-3 py-2.5 text-sm border border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-        >
-          <option value="all">All Priorities</option>
-          <option value="high">High Priority</option>
-          <option value="medium">Medium Priority</option>
-          <option value="low">Low Priority</option>
-        </select>
-      </div>
-
-      {/* Category Filter */}
-      <div>
-        <label
-          htmlFor="category-filter"
-          className="block text-xs font-medium text-gray-300 mb-2"
-        >
-          Category
-        </label>
-        <select
-          id="category-filter"
-          value={filters.category}
-          onChange={(e) =>
-            onFilterChange({
-              category: e.target.value as Category | "all",
-            })
-          }
-          className="w-full bg-zinc-800 text-white px-3 py-2.5 text-sm border border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-        >
-          <option value="all">All Categories</option>
-          <option value="performance">Performance</option>
-          <option value="seo">SEO</option>
-          <option value="accessibility">Accessibility</option>
-        </select>
-      </div>
-    </div>
-
-    {hasActiveFilters && (
-      <button
-        onClick={onResetFilters}
-        className="w-full py-2.5 text-sm text-white font-medium bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors border border-zinc-700"
-        type="button"
-      >
-        Reset All Filters
-      </button>
-    )}
-  </div>
-);
-
-// ============================================================================
-// Header Component
-// ============================================================================
-
-interface HeaderProps {
-  date: string;
-  showFilters: boolean;
-  onToggleFilters: (show: boolean) => void;
-  filters: FilterState;
-  onFilterChange: (filters: Partial<FilterState>) => void;
-  hasActiveFilters: boolean;
-  onResetFilters: () => void;
-  onExportMarkdown: () => void;
-}
-
-const Header: React.FC<HeaderProps> = ({
-  date,
-  showFilters,
-  onToggleFilters,
-  filters,
-  onFilterChange,
-  hasActiveFilters,
-  onResetFilters,
-  onExportMarkdown,
-}) => (
-  <header className=" pt-20  top-0 left-0 right-0 bg-black/95 backdrop-blur-md border-b border-zinc-800 z-40 shadow-lg">
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-5">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            SEO & Performance
-          </h1>
-          <p className="text-sm text-gray-400 flex items-center gap-2 mt-1">
-            <Calendar className="w-3.5 h-3.5" />
-            Lighthouse Audit • {date}
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <button
-            onClick={() => onToggleFilters(!showFilters)}
-            className={`flex items-center gap-2 px-4 py-2.5 text-sm rounded-full transition-all relative font-medium ${
-              showFilters
-                ? "bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-600/30"
-                : "bg-zinc-800 text-gray-200 hover:bg-zinc-700 border border-zinc-700"
-            }`}
-            type="button"
-            aria-pressed={showFilters}
-            aria-label="Toggle filters"
-          >
-            <Filter className="w-4 h-4" />
-            <span className="hidden sm:inline">Filters</span>
-            {hasActiveFilters && (
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full ring-2 ring-[black]" />
-            )}
-          </button>
-          <button
-            onClick={onExportMarkdown}
-            className="flex items-center gap-2 px-4 py-2.5 bg-zinc-800 border border-zinc-700 text-white text-sm rounded-full hover:bg-zinc-700 transition-all font-medium"
-            type="button"
-            aria-label="Export as Markdown"
-          >
-            <FileText className="w-4 h-4" />
-            <span className="hidden sm:inline">Export MD</span>
-          </button>
-        </div>
-      </div>
-
-      {showFilters && (
-        <FilterPanel
-          filters={filters}
-          onFilterChange={onFilterChange}
-          hasActiveFilters={hasActiveFilters}
-          onResetFilters={onResetFilters}
-        />
-      )}
-    </div>
-  </header>
-);
-
-// ============================================================================
-// Stat Card Component
-// ============================================================================
-
-interface StatCardProps {
-  label: string;
-  value: number;
-  trend?: number;
-}
-
-const StatCard: React.FC<StatCardProps> = ({ label, value, trend }) => (
-  <div className="p-4 bg-zinc-900/50 rounded-3xl border border-zinc-800 hover:border-zinc-700 transition-all">
-    <p className="text-xs font-bold text-blue-500 uppercase tracking-wide mb-2">
-      {label}
-    </p>
-    <div className="flex items-center justify-between">
-      <p className="text-3xl font-bold text-white">{value}</p>
-      {trend !== undefined && (
-        <div
-          className={`flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-md ${
-            trend > 0 ? "text-white bg-slate-900" : "text-red-400 bg-red-500/10"
-          }`}
-        >
-          {trend > 0 ? (
-            <TrendingUp className="w-3.5 h-3.5" aria-hidden="true" />
-          ) : (
-            <TrendingDown className="w-3.5 h-3.5" aria-hidden="true" />
-          )}
-          <span>{Math.abs(trend)}</span>
-        </div>
-      )}
-    </div>
-  </div>
-);
-
-// ============================================================================
-// Vital Card Component
-// ============================================================================
-
-interface VitalCardProps {
-  vital: {
-    value: string;
-    status: VitalStatus;
-    label: string;
-  };
-}
-
-const getStatusIcon = (status: VitalStatus) => {
-  if (status === "good") return <CheckCircle2 className="w-5 h-5" />;
-  return <AlertCircle className="w-5 h-5" />;
-};
-
-const VitalCard: React.FC<VitalCardProps> = ({ vital }) => (
-  <div className="p-4 bg-[#131313] rounded-3xl border border-zinc-700/50 hover:border-zinc-600 transition-all">
-    <p className="text-sm font-bold text-blue-400 uppercase tracking-wide mb-2">
-      {vital.label}
-    </p>
-    <div className="flex items-start justify-between">
-      <p className="text-2xl font-bold text-white">{vital.value}</p>
-      <div className={getStatusColor(vital.status)} aria-hidden="true">
-        {getStatusIcon(vital.status)}
-      </div>
-    </div>
-  </div>
-);
-
-// ============================================================================
-// Opportunity Item Component
-// ============================================================================
-
-interface OpportunityItemProps {
-  item: {
-    title: string;
-    savings: string;
-    priority: Priority;
-    category: Category;
-  };
-}
-
-const OpportunityItem: React.FC<OpportunityItemProps> = ({ item }) => (
-  <div className="flex items-start gap-3 p-4 bg-zinc-800/30 rounded-3xl border border-zinc-700/50 hover:border-zinc-600 hover:bg-zinc-800/50 transition-all">
-    <div className="bg-green-500 p-1 rounded-full">
-      <Zap
-        className="w-5 h-5 text-black  mt-0.5 flex-shrink-0"
-        aria-hidden="true"
-      />
-    </div>
-    <div className="flex-1 min-w-0">
-      <p className="text-sm font-medium text-white mb-2">{item.title}</p>
-      <div className="flex items-center gap-3 text-xs text-gray-400">
-        <span>
-          Savings:{" "}
-          <span className="text-gray-300 font-medium">{item.savings}</span>
-        </span>
-        <span className="text-zinc-600" aria-hidden="true">
-          •
-        </span>
-        <span className="capitalize">{item.category}</span>
-      </div>
-    </div>
-    <span
-      className={`px-3 py-1.5 text-xs rounded-full font-semibold whitespace-nowrap ${getPriorityColor(item.priority)}`}
-    >
-      {item.priority.toUpperCase()}
-    </span>
-  </div>
-);

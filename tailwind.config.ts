@@ -12,6 +12,7 @@ const config: Config = {
       fontFamily: {
         // Add your custom font here
         inter: "var(--font-inter) , sans-serif",
+        ptSans: "var(--font-pt-sans) , sans-serif",
       },
     },
   },

@@ -61,7 +61,7 @@ const navLinks: NavLink[] = [
 
 const Footer = () => {
   return (
-    <footer className="bg-black border-t border-white/10 relative overflow-hidden">
+    <footer className="bg-[#313131] border-t border-white/10 relative overflow-hidden">
       {/* Background Accent */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-gray-500 to-transparent opacity-50" />
 

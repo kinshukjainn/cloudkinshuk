@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useRef } from "react";
-import { useInView } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 import {
   Monitor,
   Settings,
@@ -30,11 +30,6 @@ interface ToolSection {
   category: string;
   icon: LucideIcon;
   items: ToolItem[];
-}
-
-interface ToolCardProps {
-  section: ToolSection;
-  index: number;
 }
 
 const setupData: ToolSection[] = [
@@ -78,148 +73,118 @@ const setupData: ToolSection[] = [
   },
 ];
 
-const ToolCard: React.FC<ToolCardProps> = ({ section, index }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+const ToolCategory = ({
+  section,
+  index,
+}: {
+  section: ToolSection;
+  index: number;
+}) => {
   const CategoryIcon = section.icon;
 
   return (
-    <div
-      ref={ref}
-      style={{
-        transform: isInView ? "none" : "translateY(20px)",
-        opacity: isInView ? 1 : 0,
-        transition: `all 0.5s cubic-bezier(0.17, 0.55, 0.55, 1) ${index * 0.1}s`,
-      }}
+    <motion.section
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+      className="mb-12"
     >
-      <div className="group border-l-2 border-neutral-300 hover:border-blue-600 transition-colors duration-200">
-        <div className="pl-3 sm:pl-4 pb-4 sm:pb-6">
-          {/* Header */}
-          <div className="flex items-center gap-2 mb-3 sm:mb-4">
-            <div className=" p-1.5 rounded-full bg-[#ff9100] flex items-center justify-center">
-              <CategoryIcon className="w-6 h-6 sm:w-6 sm:h-6 text-black" />
-            </div>
-            <h2 className="text-md sm:text-sm font-bold text-neutral-100 uppercase tracking-wider">
-              {section.category}
-            </h2>
-            <span className="ml-auto text-sm p-1.5 bg-blue-800 font-semibold  sm:text-sm text-white rounded-full">
-              {section.items.length}
-            </span>
-          </div>
-
-          {/* Items */}
-          <div className="space-y-2 sm:space-y-2.5">
-            {section.items.map((item: ToolItem, idx: number) => {
-              const ItemIcon = item.icon;
-              return (
-                <div
-                  key={idx}
-                  className="group/item flex items-start gap-2 sm:gap-3 p-2 sm:p-2.5   transition-colors cursor-pointer"
-                >
-                  <div className="p-3 rounded-full bg-blue-800  flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <ItemIcon className="w-5 h-5 sm:w-5 sm:h-5 text-white transition-colors" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-md sm:text-sm text-neutral-100 font-semibold mb-0.5">
-                      {item.name}
-                    </div>
-                    <div className="text-[10px] sm:text-xs text-neutral-100 ">
-                      {item.spec}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+      {/* Category Header */}
+      <div className="flex items-center gap-3 mb-5 border-b border-[#444] pb-2">
+        <CategoryIcon className="w-5 h-5 text-green-500 flex-shrink-0" />
+        <h2 className="text-xl font-medium text-white tracking-tight">
+          {section.category}
+        </h2>
+        <span className="ml-auto text-xs font-medium text-gray-500 bg-[#282828] px-2 py-0.5 rounded-sm border border-[#444]">
+          {section.items.length} items
+        </span>
       </div>
-    </div>
+
+      {/* Clean List Layout */}
+      <ul className="space-y-4">
+        {section.items.map((item, idx) => {
+          const ItemIcon = item.icon;
+          return (
+            <li key={idx} className="flex items-start gap-4 group">
+              <div className="mt-0.5 text-gray-500 group-hover:text-green-500 transition-colors">
+                <ItemIcon className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-base text-gray-200 font-medium leading-snug group-hover:text-white transition-colors">
+                  {item.name}
+                </div>
+                <div className="text-sm text-gray-400 mt-0.5 leading-snug">
+                  {item.spec}
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </motion.section>
   );
 };
 
 export default function DevToolsCompact() {
-  const headerRef = useRef(null);
-  const isHeaderInView = useInView(headerRef, { once: true });
-
   const totalTools = setupData.reduce(
     (acc, section) => acc + section.items.length,
     0,
   );
 
   return (
-    <div className="min-h-screen bg-black text-neutral-900 pt-18">
-      {/* Header */}
-      <header
-        ref={headerRef}
-        className="border-b border-neutral-300"
-        style={{
-          transform: isHeaderInView ? "none" : "translateY(-20px)",
-          opacity: isHeaderInView ? 1 : 0,
-          transition: "all 0.6s cubic-bezier(0.17, 0.55, 0.55, 1)",
-        }}
-      >
-        <div className="max-w-6xl mx-auto  px-4 sm:px-6 py-6 sm:py-8">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-            <div>
-              <div className="inline-block px-2 py-1 rounded-full bg-[#ff9100] mb-3 sm:mb-4">
-                <span className="text-[10px] sm:text-xs  text-black font-bold  tracking-wider">
-                  DEVELOPMENT
-                </span>
-              </div>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-neutral-100 mb-2 tracking-tight">
-                Development Stack
-              </h1>
-              <p className="text-xs sm:text-sm text-neutral-100 max-w-xl ">
-                Tools and technologies powering my development workflow
-              </p>
-            </div>
-            <div className="flex gap-4 sm:gap-6 text-center">
-              <div>
-                <div className="text-xl sm:text-2xl font-bold text-blue-400 ">
-                  {totalTools}
-                </div>
-                <div className="text-[10px] sm:text-xs text-neutral-100 font-semibold uppercase tracking-wider">
-                  Tools
-                </div>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl font-bold text-blue-400 ">
-                  {setupData.length}
-                </div>
-                <div className="text-[10px] sm:text-xs text-neutral-100 font-semibold uppercase tracking-wider">
-                  Categories
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-[#313131] text-gray-100  selection:bg-green-500 selection:text-black pt-16 md:pt-24">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <header className="mb-12 md:mb-16 border-b border-[#444] pb-8">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white mb-4 tracking-tight">
+              Development Stack
+            </h1>
+            <p className="text-lg text-gray-300 leading-relaxed max-w-2xl mb-6">
+              A comprehensive overview of the hardware, software, and services
+              powering my daily workflow and infrastructure.
+            </p>
 
-      {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
-          {setupData.map((section: ToolSection, index: number) => (
-            <ToolCard key={section.category} section={section} index={index} />
+            <div className="flex flex-wrap items-center gap-4 text-sm font-medium text-gray-400">
+              <div className="flex items-center gap-1.5">
+                <span className="text-green-500">{totalTools}</span> Active
+                Tools
+              </div>
+              <span className="text-gray-600">•</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-white">{setupData.length}</span>{" "}
+                Categories
+              </div>
+            </div>
+          </motion.div>
+        </header>
+
+        {/* Main Content Grid */}
+        <main className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+          {setupData.map((section, index) => (
+            <ToolCategory
+              key={section.category}
+              section={section}
+              index={index}
+            />
           ))}
-        </div>
-      </main>
+        </main>
 
-      {/* Footer */}
-      <footer className="border-t border-neutral-600 mt-12 sm:mt-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+        {/* Footer */}
+        <footer className="mt-16 pt-8 border-t border-[#444] pb-12">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-500 animate-pulse"></div>
-              <span className="text-[10px] sm:text-xs text-neutral-100">
-                Last updated: 2025
-              </span>
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+              <span>Environment active and up to date</span>
             </div>
-            <div className="text-[10px] sm:text-xs text-neutral-100 ">
-              Built with Next.js 16 • React • Tailwind CSS
-            </div>
+            <div>Built with Next.js • React • Tailwind</div>
           </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
   );
 }

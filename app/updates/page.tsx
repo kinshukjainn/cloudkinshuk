@@ -64,8 +64,9 @@ const NOW_CONFIG = {
     },
     {
       type: "Following",
-      title: "Currently Nothing Specific",
-      author: "Just focusing on hands-on learning",
+      title: "Google IO 2026 and AWS re:Invent 2026",
+      author:
+        "Just keeping an eye on the latest announcements and trends in cloud computing",
     },
   ],
 
@@ -85,196 +86,224 @@ const NOW_CONFIG = {
 
 export default function CurrentWorkings() {
   return (
-    <div className="min-h-screen pt-10 bg-black antialiased">
-      <div className="max-w-3xl mx-auto px-6 sm:px-8 lg:px-12 py-12 sm:py-16">
-        {/* Header */}
-        <header className="mb-20 sm:mb-24">
-          <div className="mb-10">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-100 mb-4 tracking-tight">
-              Current Workings
-            </h1>
-            <p className="text-lg sm:text-2xl text-gray-200 mb-4 font-medium">
-              My focus and progress in real-time
-            </p>
-            <p className="text-sm text-gray-200 font-medium">
-              Last updated:{" "}
-              <span className="text-gray-100">{NOW_CONFIG.lastUpdated}</span> •
-              Updated every 2 months
-            </p>
+    <div className="min-h-screen pt-16 md:pt-24 bg-[#313131] text-gray-200 font-sans selection:bg-green-500 selection:text-black">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        {/* Header Block */}
+        <header className="mb-12 border-b border-[#444] pb-8">
+          <h1 className="text-3xl md:text-5xl font-semibold text-white mb-3 tracking-tight">
+            Current Workings
+          </h1>
+          <p className="text-lg text-gray-300 font-medium mb-6">
+            My focus and progress in real-time
+          </p>
+          <div className="text-sm font-mono text-gray-400 bg-[#282828] border border-[#444] inline-block px-3 py-1.5 rounded-sm">
+            Last updated:{" "}
+            <span className="text-green-400">{NOW_CONFIG.lastUpdated}</span> |
+            Cycle: Every 2 months
           </div>
 
-          <div className="space-y-5">
-            <h2 className="text-2xl sm:text-3xl font-light text-gray-100 tracking-tight">
+          <div className="mt-8 max-w-3xl">
+            <h2 className="text-xl font-semibold text-white mb-3">
               {NOW_CONFIG.intro.title}
             </h2>
-            <p className="text-lg text-gray-200 leading-relaxed max-w-2xl">
+            <p className="text-base text-gray-300 leading-relaxed">
               {NOW_CONFIG.intro.description}
             </p>
           </div>
         </header>
 
-        {/* Current Projects */}
-        <section className="mb-20">
-          <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-bold  mb-10 border-b border-gray-100 pb-2">
-            Current Projects
-          </h2>
-          <div className="space-y-16">
-            {NOW_CONFIG.projects.map((project, index) => {
-              return (
-                <div key={index} className="group">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-                    <h3 className="text-lg font-normal text-gray-100 tracking-tight group-hover:text-blue-600 transition-colors">
-                      {project.title}
-                    </h3>
-                    <span className="inline-block px-3 py-1 text-xs font-semibold text-blue-700 bg-blue-50 rounded-full w-fit">
-                      {project.status}
-                    </span>
-                  </div>
-
-                  <p className="text-lg text-gray-200 mb-5 leading-relaxed max-w-2xl">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-3 mb-4">
-                    {project.technologies.map((tech, i) => (
-                      <span
-                        key={i}
-                        className="text-sm font-medium text-white  bg-[#141414] px-2 py-1 rounded-full"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  {project.progress && (
-                    <p className="text-sm font-medium text-blue-500">
-                      Progress:{" "}
-                      <span className="text-gray-100">{project.progress}</span>
-                    </p>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* Current Learning */}
-        <section className="mb-20">
-          <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-bold mb-10 border-b border-gray-100 pb-2">
-            Currently Learning
-          </h2>
-          <div className="space-y-12">
-            {NOW_CONFIG.learning.map((item, index) => {
-              return (
-                <div key={index}>
-                  <h3 className="text-lg sm:text-lg font-normal text-gray-100 mb-3 tracking-tight">
-                    {item.topic}
-                  </h3>
-                  <p className="text-lg text-gray-200 mb-3 leading-relaxed max-w-2xl">
-                    {item.description}
-                  </p>
-                  <p className="text-sm font-medium text-yellow-200">
-                    Resource:{" "}
-                    <span className="text-gray-100">{item.resource}</span>
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* Current Interests */}
-        <section className="mb-20">
-          <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-bold mb-8 border-b border-gray-100 pb-2">
-            Current Interests
-          </h2>
-          <ul className="space-y-4">
-            {NOW_CONFIG.interests.map((interest, index) => (
-              <li
-                key={index}
-                className="text-lg text-gray-100 font-normal leading-relaxed flex items-start"
-              >
-                <span className="mr-3 text-gray-100">•</span>
-                {interest}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Currently Consuming */}
-        <section className="mb-20">
-          <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-bold  mb-10 border-b border-gray-100 pb-2">
-            Reading & Following
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-            {NOW_CONFIG.consuming.map((item, index) => (
-              <div key={index}>
-                <p className="text-xs uppercase tracking-wider text-gray-100 underline font-normal mb-2">
-                  {item.type}
-                </p>
-                <p className="text-lg text-gray-100 font-normal mb-1 tracking-tight">
-                  {item.title}
-                </p>
-                <p className="text-base text-yellow-200">{item.author}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Current Goals */}
-        <section className="mb-20">
-          <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-bold  mb-8 border-b border-gray-100 pb-2">
-            Current Goals
-          </h2>
-          <ul className="space-y-4">
-            {NOW_CONFIG.goals.map((goal, index) => (
-              <li
-                key={index}
-                className="text-lg text-gray-100 leading-relaxed flex items-start"
-              >
-                <span className="mr-3 text-gray-100">•</span>
-                {goal}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Not Doing */}
-        {NOW_CONFIG.notDoing && NOW_CONFIG.notDoing.length > 0 && (
-          <section className="mb-20  transition-opacity">
-            <h2 className="text-2xl uppercase tracking-widest text-gray-100 font-bold mb-8 border-b border-gray-100 pb-2">
-              Not Doing Right Now
+        <div className="space-y-16">
+          {/* 1. Current Projects */}
+          <section>
+            <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
+              <span className="text-green-500 font-mono text-lg">1.</span>{" "}
+              Active Projects
             </h2>
-            <p className="text-lg text-gray-100 mb-6 leading-relaxed max-w-2xl">
-              Being intentional about what to focus on also means being clear
-              about what to avoid.
-            </p>
-            <ul className="space-y-4">
-              {NOW_CONFIG.notDoing.map((item, index) => (
-                <li
-                  key={index}
-                  className="text-lg text-gray-100 italic leading-relaxed flex items-start"
-                >
-                  <span className="mr-3 text-gray-300 not-italic">–</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
+
+            <div className="space-y-8">
+              {NOW_CONFIG.projects.map((project, index) => {
+                const Icon = project.icon;
+                return (
+                  <div
+                    key={index}
+                    className="pl-4 border-l-2 border-[#444] hover:border-green-500 transition-colors"
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 mb-2">
+                      <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                        <Icon className="text-green-500 w-4 h-4" />
+                        {project.title}
+                      </h3>
+                      <span className="text-xs font-mono font-medium text-black bg-green-500 px-2 py-0.5 rounded-sm w-fit">
+                        {project.status}
+                      </span>
+                    </div>
+
+                    <p className="text-gray-300 text-sm sm:text-base mb-4 leading-relaxed max-w-2xl">
+                      {project.description}
+                    </p>
+
+                    <dl className="grid sm:grid-cols-[120px_1fr] gap-x-4 gap-y-2 text-sm">
+                      <dt className="text-gray-500 font-mono">Stack:</dt>
+                      <dd className="text-gray-300 flex flex-wrap gap-2">
+                        {project.technologies.map((tech, i) => (
+                          <span
+                            key={i}
+                            className="bg-[#282828] border border-[#555] px-2 py-0.5 rounded-sm text-xs"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </dd>
+
+                      {project.progress && (
+                        <>
+                          <dt className="text-gray-500 font-mono">Progress:</dt>
+                          <dd className="text-green-400 font-medium">
+                            {project.progress}
+                          </dd>
+                        </>
+                      )}
+                    </dl>
+                  </div>
+                );
+              })}
+            </div>
           </section>
-        )}
+
+          {/* 2. Currently Learning */}
+          <section>
+            <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
+              <span className="text-green-500 font-mono text-lg">2.</span>{" "}
+              Currently Learning
+            </h2>
+
+            <div className="space-y-8">
+              {NOW_CONFIG.learning.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={index}
+                    className="pl-4 border-l-2 border-[#444] hover:border-green-500 transition-colors"
+                  >
+                    <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+                      <Icon className="text-green-500 w-4 h-4" />
+                      {item.topic}
+                    </h3>
+                    <p className="text-gray-300 text-sm sm:text-base mb-3 leading-relaxed max-w-2xl">
+                      {item.description}
+                    </p>
+                    <div className="text-sm font-mono text-gray-400">
+                      &gt; Source:{" "}
+                      <span className="text-gray-300 font-sans">
+                        {item.resource}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* 3. Interests & Goals Grid */}
+          <div className="grid md:grid-cols-2 gap-12">
+            <section>
+              <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
+                <span className="text-green-500 font-mono text-lg">3.</span> Key
+                Interests
+              </h2>
+              <ul className="space-y-3">
+                {NOW_CONFIG.interests.map((interest, index) => (
+                  <li
+                    key={index}
+                    className="text-gray-300 text-sm sm:text-base flex items-start"
+                  >
+                    <span className="text-green-500 mr-3 mt-1 text-xs">■</span>
+                    {interest}
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
+                <span className="text-green-500 font-mono text-lg">4.</span>{" "}
+                Current Goals
+              </h2>
+              <ul className="space-y-3">
+                {NOW_CONFIG.goals.map((goal, index) => (
+                  <li
+                    key={index}
+                    className="text-gray-300 text-sm sm:text-base flex items-start"
+                  >
+                    <span className="text-green-500 mr-3 mt-1 text-xs">■</span>
+                    {goal}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </div>
+
+          {/* 5. Reading & Following */}
+          <section>
+            <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
+              <span className="text-green-500 font-mono text-lg">5.</span>{" "}
+              Reading & Following
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-6 bg-[#282828] border border-[#444] p-6 rounded-sm">
+              {NOW_CONFIG.consuming.map((item, index) => (
+                <div key={index}>
+                  <div className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-1">
+                    [{item.type}]
+                  </div>
+                  <div className="text-white font-medium mb-1">
+                    {item.title}
+                  </div>
+                  <div className="text-sm text-green-400">{item.author}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* 6. Not Doing */}
+          {NOW_CONFIG.notDoing && NOW_CONFIG.notDoing.length > 0 && (
+            <section>
+              <h2 className="text-xl font-bold text-white mb-4 border-b border-[#444] pb-2 flex items-center gap-2">
+                <span className="text-gray-500 font-mono text-lg">6.</span> Not
+                Doing Right Now
+              </h2>
+              <p className="text-sm text-gray-400 mb-6 italic">
+                Being intentional about focus means being clear about what to
+                avoid.
+              </p>
+              <ul className="space-y-3">
+                {NOW_CONFIG.notDoing.map((item, index) => (
+                  <li
+                    key={index}
+                    className="text-gray-400 text-sm sm:text-base flex items-start"
+                  >
+                    <span className="text-gray-600 mr-3 mt-0.5 font-mono">
+                      -
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+        </div>
 
         {/* Footer Note */}
-        <footer className="text-center py-12 border-t border-gray-100 mt-12">
-          <p className="text-sm text-gray-500 leading-relaxed">
-            This page is inspired by the{" "}
+        <footer className="mt-20 pt-8 border-t border-[#444]">
+          <p className="text-sm text-gray-500 leading-relaxed font-mono">
             <a
               href="https://nownownow.com/about"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-100 font-semibold underline decoration-gray-300 underline-offset-4 hover:decoration-gray-900 transition-all"
+              className="text-gray-400 hover:text-white underline underline-offset-4 transition-colors"
             >
               /now movement
             </a>
-            . It&apos;s a living document that changes as my focus shifts.
+            . It is a living document that changes as my focus shifts. EOF.
           </p>
         </footer>
       </div>

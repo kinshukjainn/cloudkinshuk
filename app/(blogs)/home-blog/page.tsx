@@ -6,11 +6,10 @@ import {
   X,
   ChevronDown,
   RotateCcw,
-  ArrowUpRight,
+  ArrowRight,
   MessageSquare,
   Clock,
   Calendar,
-  Sparkles,
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -233,50 +232,6 @@ class SimpleSearchEngine {
   }
 }
 
-// Tag color palette - consistent and vibrant
-const tagStyles = [
-  {
-    bg: "bg-blue-500/15",
-    border: "border-blue-500/40",
-    text: "text-blue-300",
-    hover: "hover:bg-blue-500/25 hover:border-blue-400/60",
-  },
-  {
-    bg: "bg-purple-500/15",
-    border: "border-purple-500/40",
-    text: "text-purple-300",
-    hover: "hover:bg-purple-500/25 hover:border-purple-400/60",
-  },
-  {
-    bg: "bg-emerald-500/15",
-    border: "border-emerald-500/40",
-    text: "text-emerald-300",
-    hover: "hover:bg-emerald-500/25 hover:border-emerald-400/60",
-  },
-  {
-    bg: "bg-amber-500/15",
-    border: "border-amber-500/40",
-    text: "text-amber-300",
-    hover: "hover:bg-amber-500/25 hover:border-amber-400/60",
-  },
-  {
-    bg: "bg-pink-500/15",
-    border: "border-pink-500/40",
-    text: "text-pink-300",
-    hover: "hover:bg-pink-500/25 hover:border-pink-400/60",
-  },
-  {
-    bg: "bg-cyan-500/15",
-    border: "border-cyan-500/40",
-    text: "text-cyan-300",
-    hover: "hover:bg-cyan-500/25 hover:border-cyan-400/60",
-  },
-];
-
-const getTagStyle = (index: number) => {
-  return tagStyles[index % tagStyles.length];
-};
-
 interface BlogItemProps {
   post: BlogPost;
   searchQuery?: string;
@@ -295,7 +250,7 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
         regex.test(part) ? (
           <mark
             key={i}
-            className="bg-yellow-400/30 text-yellow-200 px-1 rounded"
+            className="bg-amber-500/20 text-amber-300 font-medium px-1 rounded-sm"
           >
             {part}
           </mark>
@@ -316,128 +271,57 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
 
     return (
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="py-4"
+        transition={{ duration: 0.3 }}
+        className="mb-4"
       >
         <Link
           href={`/home-blog/${post.id}`}
-          className="group block relative overflow-hidden"
+          className="group block p-6 bg-[#282828] border border-[#444] rounded-sm transition-all duration-200 hover:border-[#444444] hover:bg-[#2c2c2c]"
         >
-          {/* Gradient border effect */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-pink-500/0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl" />
+          {/* Title */}
+          <h3 className="text-xl text-white mb-2 font-medium leading-tight transition-colors duration-200 group-hover:text-green-400">
+            {highlightText(post.title, searchQuery)}
+          </h3>
 
-          {/* Main card */}
-          <div
-            className="relative p-6 bg-gradient-to-br from-[#1a1a1a] to-[#141414] rounded-3xl 
-            border border-[#333333] 
-            transition-all duration-500 ease-out
-            group-hover:border-blue-500/50
-            group-hover:shadow-2xl group-hover:shadow-blue-500/10
-            group-hover:translate-y-[-2px]
-            backdrop-blur-sm"
-          >
-            {/* Sparkle effect on hover */}
-            <motion.div
-              className="absolute top-4 right-4 opacity-0 group-hover:opacity-100"
-              initial={{ scale: 0, rotate: 0 }}
-              whileHover={{ scale: 1, rotate: 180 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Sparkles className="w-5 h-5 text-blue-400" />
-            </motion.div>
-
-            {/* Title */}
-            <h3
-              className="text-2xl text-white mb-4 font-bold leading-tight
-              group-hover:text-transparent group-hover:bg-clip-text 
-              group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-purple-400
-              transition-all duration-300"
-            >
-              {highlightText(post.title, searchQuery)}
-            </h3>
-
-            {/* Brief */}
-            <p className="text-white/60 mb-5 leading-relaxed line-clamp-2 group-hover:text-white/80 transition-colors duration-300">
-              {post.brief}
-            </p>
-
-            {/* Metadata */}
-            <div className="flex items-center gap-4 mb-4 text-sm text-white/40">
+          {/* Metadata */}
+          <div className="flex items-center gap-4 mb-4 text-xs text-gray-500">
+            <div className="flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5" />
+              <span>{formatDate(post.publishedAt)}</span>
+            </div>
+            {post.readTimeInMinutes && (
               <div className="flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5" />
-                <span>{formatDate(post.publishedAt)}</span>
+                <Clock className="w-3.5 h-3.5" />
+                <span>{post.readTimeInMinutes} min read</span>
               </div>
-              {post.readTimeInMinutes && (
-                <div className="flex items-center gap-1.5">
-                  <Clock className="w-3.5 h-3.5" />
-                  <span>{post.readTimeInMinutes} min read</span>
-                </div>
-              )}
+            )}
+          </div>
+
+          {/* Brief */}
+          <p className="text-gray-400 text-sm mb-5 leading-relaxed line-clamp-2">
+            {post.brief}
+          </p>
+
+          {/* Tags */}
+          <div className="flex flex-wrap items-center gap-2">
+            {post.tags.slice(0, 4).map((tag) => (
+              <span
+                key={tag.id}
+                className="inline-flex items-center justify-center px-2.5 py-1 text-xs font-medium rounded-sm border bg-[#333] border-[#444] text-gray-300 group-hover:border-[#555]"
+              >
+                {tag.name}
+              </span>
+            ))}
+            {post.tags.length > 4 && (
+              <span className="inline-flex items-center justify-center px-2.5 py-1 text-xs font-medium rounded-sm border bg-[#333] border-[#444] text-gray-400">
+                +{post.tags.length - 4} more
+              </span>
+            )}
+            <div className="ml-auto text-green-300 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-sm font-medium">
+              Read <ArrowRight className="w-4 h-4" />
             </div>
-
-            {/* Enhanced Tags Section */}
-            <div className="flex flex-wrap items-center gap-2">
-              {post.tags.slice(0, 4).map((tag, index) => {
-                const style = getTagStyle(index);
-                return (
-                  <motion.span
-                    key={tag.id}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: index * 0.05 }}
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    className={`
-                      inline-flex items-center justify-center
-                      px-3 py-1.5
-                      text-xs font-medium
-                      rounded-full
-                      border
-                      ${style.bg} ${style.border} ${style.text} ${style.hover}
-                      backdrop-blur-sm
-                      transition-all duration-300
-                      cursor-pointer
-                      whitespace-nowrap
-                      leading-none
-                    `}
-                  >
-                    {tag.name}
-                  </motion.span>
-                );
-              })}
-
-              {post.tags.length > 4 && (
-                <motion.span
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  whileHover={{ scale: 1.05 }}
-                  className="inline-flex items-center justify-center
-                    px-3 py-1.5
-                    text-xs font-medium
-                    rounded-full
-                    border
-                    bg-gray-500/15 border-gray-500/40 text-gray-300
-                    hover:bg-gray-500/25 hover:border-gray-400/60
-                    backdrop-blur-sm
-                    transition-all duration-300
-                    whitespace-nowrap
-                    leading-none"
-                >
-                  +{post.tags.length - 4}
-                </motion.span>
-              )}
-            </div>
-
-            {/* Hover arrow indicator */}
-            <motion.div
-              className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100"
-              initial={{ x: -10 }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <ArrowUpRight className="w-5 h-5 text-blue-400" />
-            </motion.div>
           </div>
         </Link>
       </motion.div>
@@ -482,19 +366,17 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     <div className="mb-8">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex md:hidden items-center justify-between w-full px-4 py-3 bg-[#141414] border border-[#444444] rounded-4xl transition-colors duration-200 mb-4"
+        className="flex md:hidden items-center justify-between w-full px-4 py-3 bg-[#282828] border border-[#444] rounded-sm transition-colors duration-200 mb-4"
       >
         <span className="text-sm font-medium text-white">
           Filter by tags {activeFiltersCount > 0 && `(${activeFiltersCount})`}
         </span>
-        <div className="p-1 bg-blue-800 rounded-full cursor-pointer">
-          <ChevronDown
-            size={20}
-            className={`text-white transition-transform duration-200 ${
-              isOpen ? "rotate-180" : ""
-            }`}
-          />
-        </div>
+        <ChevronDown
+          size={18}
+          className={`text-gray-400 transition-transform duration-200 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
       </button>
 
       <div
@@ -504,52 +386,40 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
             : "max-h-0 md:max-h-none opacity-0 md:opacity-100"
         } md:opacity-100 md:max-h-none`}
       >
-        <div className="border border-gray-500 bg-[#141414] rounded-3xl p-6">
-          <div>
-            <label className="block text-sm font-medium text-white mb-3">
-              TAGS {filters.tags.length > 0 && `(${filters.tags.length})`}
-            </label>
-            <div className="max-h-48 overflow-y-auto">
-              <div className="flex flex-wrap gap-2">
-                {availableTags.map((tag, index) => {
-                  const isSelected = filters.tags.includes(tag);
-                  const style = getTagStyle(index);
-
-                  return (
-                    <button
-                      key={tag}
-                      onClick={() => toggleTag(tag)}
-                      className={`
-                        inline-flex items-center justify-center
-                        px-3 py-1.5
-                        text-xs font-medium
-                        rounded-full
-                        border
-                        transition-all duration-200
-                        whitespace-nowrap
-                        leading-none
-                        ${
-                          isSelected
-                            ? `${style.bg} ${style.border} ${style.text}`
-                            : "bg-black/50 border-white/10 text-white/70 hover:border-white/30 hover:text-white"
-                        }
-                      `}
-                    >
-                      {tag}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+        <div className="border border-[#444] bg-[#282828] rounded-sm p-5">
+          <label className="block text-sm font-medium text-white mb-3">
+            Available Tags{" "}
+            {filters.tags.length > 0 && `(${filters.tags.length} selected)`}
+          </label>
+          <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto">
+            {availableTags.map((tag) => {
+              const isSelected = filters.tags.includes(tag);
+              return (
+                <button
+                  key={tag}
+                  onClick={() => toggleTag(tag)}
+                  className={`
+                    inline-flex items-center justify-center px-3 py-1.5 text-xs font-medium rounded-sm border transition-all duration-200
+                    ${
+                      isSelected
+                        ? "bg-amber-500/10 border-[#444444] text-amber-400"
+                        : "bg-[#333] border-[#444] text-gray-300 hover:border-gray-400 hover:text-white"
+                    }
+                  `}
+                >
+                  {tag}
+                </button>
+              );
+            })}
           </div>
 
           {activeFiltersCount > 0 && (
             <button
               onClick={resetFilters}
-              className="mt-4 flex items-center justify-center cursor-pointer gap-2 px-4 py-2 w-max bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-full transition-all duration-200 hover:scale-105"
+              className="mt-5 flex items-center justify-center gap-2 px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors duration-200"
             >
-              <RotateCcw size={16} />
-              Clear filters
+              <RotateCcw size={14} />
+              Clear selections
             </button>
           )}
         </div>
@@ -571,97 +441,39 @@ const SearchBar: React.FC<SearchBarProps> = ({
   resultsCount,
   totalCount,
 }) => {
-  const [isTyping, setIsTyping] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
-  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
-    null,
-  );
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value);
-
-    setIsTyping(true);
-
-    if (typingTimeout) {
-      clearTimeout(typingTimeout);
-    }
-
-    const timeout = setTimeout(() => {
-      setIsTyping(false);
-    }, 500);
-
-    setTypingTimeout(timeout);
-  };
-
   return (
-    <div className="mb-8 w-full">
-      {/* Main Container handling the CSS classes based on state */}
-      <div
-        className={`search-container w-full mx-auto 
-          ${isFocused ? "is-focused" : ""} 
-          ${isTyping ? "is-typing" : ""}`}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-      >
-        {/* Animated fluid gradient border (CSS driven) */}
-        <div className="search-glow-border" />
-
-        {/* Expanding pulse ring (CSS driven) */}
-        <div className="search-pulse-ring" />
-
-        {/* Inner wrapper to act as the dark background above the gradient */}
-        <div className="search-input-wrapper border border-white/10 w-full relative overflow-hidden flex items-center">
-          {/* Animated Search Icon */}
-          <div className="absolute left-4 sm:left-5 z-10 flex items-center justify-center pointer-events-none">
-            <Search
-              className="search-icon-fluid w-5 h-5 sm:w-6 sm:h-6 text-white/40"
-              aria-hidden="true"
-            />
-          </div>
-
-          {/* Fluid Input Field */}
-          <input
-            type="text"
-            placeholder="Articles, blogs, developers, students, reasoning..."
-            value={searchInput}
-            onChange={handleInputChange}
-            className="w-full bg-transparent text-white placeholder:text-white/40 focus:outline-none 
-                       pl-12 sm:pl-14 pr-12 sm:pr-14 
-                       py-3.5 sm:py-4 lg:py-4 
-                       text-sm sm:text-base transition-all duration-300 relative z-10"
-          />
-
-          {/* Clear Button with Framer Motion */}
-          {searchInput && (
-            <motion.button
-              initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              exit={{ opacity: 0, scale: 0.5, rotate: 45 }}
-              whileHover={{ scale: 1.15 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => {
-                setSearchInput("");
-                setIsTyping(false);
-              }}
-              transition={{ duration: 0.2, type: "spring", stiffness: 300 }}
-              className="absolute right-4 sm:right-5 z-10 flex items-center justify-center text-white/40 hover:text-white transition-colors"
-              aria-label="Clear search"
-            >
-              <X className="w-5 h-5 sm:w-6 sm:h-6" />
-            </motion.button>
-          )}
+    <div className="mb-6 w-full">
+      <div className="relative flex items-center w-full">
+        <div className="absolute left-4 z-10 flex items-center justify-center pointer-events-none">
+          <Search className="w-5 h-5 text-gray-500" aria-hidden="true" />
         </div>
+
+        <input
+          type="text"
+          placeholder="Search articles, tags, or topics..."
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          className="w-full bg-[#282828] border border-[#444] text-white placeholder:text-gray-500 focus:border-[#444444] focus:outline-none rounded-sm pl-12 pr-12 py-3.5 text-sm sm:text-base transition-colors duration-200"
+        />
+
+        {searchInput && (
+          <button
+            onClick={() => setSearchInput("")}
+            className="absolute right-4 z-10 flex items-center justify-center text-gray-500 hover:text-white transition-colors"
+            aria-label="Clear search"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
       </div>
 
-      {/* Result Count with Smooth Reveal */}
       {searchInput && (
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
+          initial={{ opacity: 0, y: -5 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="mt-4 px-2 text-sm text-white/60 flex items-center gap-2"
+          className="mt-3 text-sm text-gray-400 flex items-center gap-2"
         >
-          <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+          <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
           Found <span className="text-white font-medium">
             {resultsCount}
           </span>{" "}
@@ -698,7 +510,7 @@ export default function BlogsPage() {
       );
     }
 
-    // Sort by newest first (default)
+    // Sort by newest first
     result = [...result].sort(
       (a, b) =>
         new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
@@ -708,59 +520,47 @@ export default function BlogsPage() {
   }, [posts, searchInput, searchEngine, filters]);
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-[#313131] text-gray-100  selection:bg-green-500 selection:text-white">
       {/* Header */}
-      <header className="border-b border-black/10 bg-black">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6">
-            Dev. Blogs
+      <header className="border-b border-[#444] mb-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+          <h1 className="text-4xl sm:text-5xl font-semibold text-white mb-6 tracking-tight">
+            Developer Logs
           </h1>
-          <p className="text-base sm:text-lg lg:text-xl text-white/80 leading-relaxed max-w-3xl">
-            Hi <span className="font-semibold text-blue-500">@everyone</span>,
-            here I&apos;m sharing my learning journey in cloud computing,
+          <p className="text-lg text-gray-300 leading-relaxed max-w-3xl">
+            Hi there, here I share my learning journey in cloud computing,
             DevOps, security, and infrastructure engineering. I write about AWS
-            services, serverless and container-based systems, CI/CD basics,
-            Terraform, and AI-powered projects, focusing on understanding
-            concepts through hands-on practice, experiments, and real academic
-            projects.
+            services, serverless systems, CI/CD basics, and Terraform, focusing
+            on understanding concepts through hands-on practice.
           </p>
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         {/* Feedback Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8 bg-gradient-to-br from-[#1a1a1a] to-[#141414] rounded-3xl p-6 border border-[#333333] transition-all duration-300 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/10"
-        >
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-2">
-                <MessageSquare className="w-5 h-5 text-blue-500" />
-                <h3 className="text-lg font-semibold text-white">
-                  Share Your Feedback
-                </h3>
-              </div>
-
-              <p className="text-white/70 text-sm">
-                Help me improve! Your thoughts and suggestions are invaluable
-                for creating better content.
-              </p>
+        <div className="mb-10 bg-[#282828] rounded-sm p-6 border border-[#444] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-2">
+              <MessageSquare className="w-5 h-5 text-green-300" />
+              <h3 className="text-lg font-medium text-white">
+                Share Your Feedback
+              </h3>
             </div>
-
-            <a
-              href="https://feedbacks.cloudkinshuk.in/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-3xl transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap shadow-lg shadow-blue-500/25"
-            >
-              Feedback
-              <ArrowUpRight className="w-4 h-4" />
-            </a>
+            <p className="text-gray-400 text-sm">
+              Help me improve! Your thoughts and suggestions are invaluable for
+              creating better content.
+            </p>
           </div>
-        </motion.div>
+          <a
+            href="https://feedbacks.cloudkinshuk.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-500 hover:bg-green-700 text-black font-medium rounded-sm transition-colors whitespace-nowrap"
+          >
+            Leave Feedback
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
 
         <SearchBar
           searchInput={searchInput}
@@ -778,28 +578,26 @@ export default function BlogsPage() {
         />
 
         {filteredPosts.length === 0 ? (
-          <div className="text-center py-16">
+          <div className="text-center py-20 bg-[#282828] border border-[#444] rounded-sm">
             <h3 className="text-xl font-medium text-white mb-2">
               No articles found
             </h3>
-            <p className="text-white/70 mb-6">
-              Try adjusting your search or filters
+            <p className="text-gray-400 mb-6">
+              Try adjusting your search terms or clearing your filters.
             </p>
             <button
               onClick={() => {
                 setSearchInput("");
-                setFilters({
-                  tags: [],
-                });
+                setFilters({ tags: [] });
                 setFilterOpen(false);
               }}
-              className="px-6 py-2 bg-black hover:bg-black/80 text-white font-medium rounded-lg transition-colors duration-200"
+              className="px-6 py-2 bg-[#3f3f3f] hover:bg-[#4a4a4a] text-white font-medium rounded-sm transition-colors duration-200"
             >
               Clear all filters
             </button>
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-4">
             {filteredPosts.map((post) => (
               <BlogItem key={post.id} post={post} searchQuery={searchInput} />
             ))}

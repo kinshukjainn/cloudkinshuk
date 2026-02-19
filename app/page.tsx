@@ -19,8 +19,6 @@ import {
   FileText,
   Zap,
 } from "lucide-react";
-import Signaturekinshuk from "./components/Signaturekinshuk";
-// 1. Updated Import Name to match the file created previously
 
 const CONFIG = {
   personal: {
@@ -214,13 +212,13 @@ const CopyButton = ({ text }: { text: string }) => {
   return (
     <button
       onClick={handleCopy}
-      className="p-2 cursor-pointer hover:bg-blue-800 rounded-full transition-colors flex-shrink-0"
+      className="p-2 cursor-pointer bg-[#333] hover:bg-[#444] border border-[#555] rounded-sm transition-colors flex-shrink-0 group"
       title="Copy to clipboard"
     >
       {copied ? (
-        <Check className="w-4 h-4 text-white" />
+        <Check className="w-4 h-4 text-green-500" />
       ) : (
-        <Copy className="w-4 h-4 text-white" />
+        <Copy className="w-4 h-4 text-gray-400 group-hover:text-gray-200" />
       )}
     </button>
   );
@@ -252,267 +250,264 @@ const SocialIcon = ({ icon }: { icon: string }) => {
   }
 };
 
+const SectionHeader = ({
+  title,
+  icon: Icon,
+}: {
+  title: string;
+  icon: React.ComponentType<{ className: string }>;
+}) => (
+  <div className="flex items-center gap-3 mb-6">
+    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-green-500 flex-shrink-0" />
+    <h2 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight">
+      {title}
+    </h2>
+  </div>
+);
+
 export default function Home() {
   return (
-    <div className="min-h-screen pt-10 bg-black text-white">
+    <div className="min-h-screen bg-[#313131] pt-10 text-gray-100 selection:bg-green-500 selection:text-black">
       {/* Hero Header */}
-      <header className="border-b border-white/10 bg-black">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12">
-          {/* 2. UPDATED: Wrapper for the 3D Signature. 
-             Since the component now has intrinsic height (140px mobile / 180px desktop),
-             we just let it flow naturally in the flex container. */}
-          <div className="mb-2 w-full  flex justify-start">
-            <Signaturekinshuk />
+      <header className="border-b border-[#444] mb-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+          <div className="mb-4 text-4xl sm:text-5xl font-semibold tracking-tight text-white flex items-center">
+            cloudkinshuk<span className="text-green-500">.in</span>
           </div>
-
-          <div className="space-y-4">
-            <p className="text-base md:text-lg lg:text-xl text-white/80 leading-relaxed">
-              Hi <span className="text-blue-500 font-bold">@everyone</span> ! My
-              name is <span className="font-semibold italic">Kinshuk</span>, and
-              I&apos;m a student and builder focused on cloud infrastructure and
-              distributed systems. I&apos;m pursuing my Bachelor&apos;s in
-              Electrical Engineering at JSS Academy of Technical Education while
-              exploring modern web technologies. Check out my projects on{" "}
-              <a
-                href="https://github.com/kinshukjainn"
-                className="hover:text-blue-300 underline font-mono text-blue-400 transition-colors"
-              >
-                GitHub
-              </a>
-              .
-            </p>
-          </div>
+          <p className="text-lg sm:text-xl text-gray-300 leading-relaxed max-w-3xl">
+            Hi <span className="font-medium text-white">@everyone</span>! My
+            name is <span className="font-medium text-white">Kinshuk</span>, and
+            I&apos;m a student and builder focused on cloud infrastructure and
+            distributed systems. I&apos;m pursuing my Bachelor&apos;s in
+            Electrical Engineering while exploring modern web technologies.
+            Check out my projects on{" "}
+            <a
+              href="https://github.com/kinshukjainn"
+              className="text-green-400 hover:text-green-300 underline underline-offset-4 decoration-green-500/30 hover:decoration-green-400 transition-all font-medium"
+            >
+              GitHub
+            </a>
+            .
+          </p>
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12">
-        {/* About Section */}
-        <section className="mb-16 scroll-mt-20">
-          <p className="text-base md:text-lg text-white/80 leading-relaxed mb-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 space-y-16">
+        {/* About & Socials Section */}
+        <section className="scroll-mt-20">
+          <p className="text-base sm:text-lg text-gray-300 leading-relaxed mb-6">
             I am currently learning how systems work, how they fail, and how
             they evolve. Alongside that, I am exploring the cloud, building
             small things that might someday scale, experimenting with
             infrastructure, and understanding how technology connects people.
           </p>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
-            <div className="flex items-center gap-3 w-max  px-4 py-2 ">
-              <div className="bg-blue-500 p-2 rounded-full text-black flex-shrink-0">
-                <MapPin className="w-5 h-5" />
-              </div>
-              <span className="text-white font-semibold">
+
+          <div className="flex flex-col sm:flex-row gap-4 mb-8">
+            <div className="flex items-center gap-2.5 px-4 py-2.5 bg-[#282828] border border-[#444] rounded-sm w-max">
+              <MapPin className="w-4 h-4 text-gray-400 flex-shrink-0" />
+              <span className="text-gray-200 text-sm font-medium">
                 {CONFIG.personal.location}
               </span>
             </div>
-            <div className="flex items-center gap-3  px-4 py-2 ">
-              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse flex-shrink-0"></div>
-              <span className="text-green-300 font-semibold">
-                Available for opportunities
+            <div className="flex items-center gap-2.5 px-4 py-2.5 bg-[#282828] border border-[#444] rounded-sm w-max">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse flex-shrink-0"></div>
+              <span className="text-gray-200 text-sm font-medium">
+                {CONFIG.personal.availability}
               </span>
             </div>
           </div>
-          <div className="flex gap-2 flex-wrap">
+
+          <div className="flex flex-wrap gap-3">
             {CONFIG.social.map((social) => (
               <a
                 key={social.platform}
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-white px-3 py-2  transition-all duration-300 group text-sm md:text-base"
+                className="flex items-center gap-2.5 px-4 py-2.5 bg-[#282828] border border-[#444] hover:border-green-500 hover:bg-[#2c2c2c] rounded-sm transition-all duration-200 text-gray-300 hover:text-white group"
               >
-                <div className="text-white p-1.5 bg-blue-800 rounded-full group-hover:text-white transition-colors">
+                <div className="text-gray-400 group-hover:text-green-500 transition-colors">
                   <SocialIcon icon={social.icon} />
                 </div>
-                <span className="font-medium">{social.handle}</span>
-                <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
+                <span className="text-sm font-medium">{social.handle}</span>
+                <ExternalLink className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 group-hover:text-green-500 transition-all" />
               </a>
             ))}
           </div>
         </section>
 
-        {/* Resume Section */}
-        <section className="mb-16 scroll-mt-20">
-          <div className="flex items-center gap-3 mb-6">
-            <FileText className="w-8 h-8 text-blue-500 flex-shrink-0" />
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              Resume
-            </h2>
-          </div>
-          <a
-            href="/kinshukfinalresume.pdf"
-            download="kinshukfinalresume.pdf"
-            className="inline-flex items-center gap-3 text-white px-2 md:px-6 py-2 bg-blue-800 rounded-full transition-all duration-300 hover:scale-105 group"
-          >
-            <Download className="w-5 h-5 group-hover:animate-bounce" />
-            <span className="font-semibold">Download (PDF)</span>
-          </a>
-          <p className="text-white/70 mt-4 leading-relaxed">
-            View and download my comprehensive resume showcasing my technical
-            expertise, project experience, and professional achievements.
-          </p>
-        </section>
-
-        {/* Publications Section */}
-        <section className="mb-16 scroll-mt-20">
-          <div className="flex items-center gap-3 mb-6">
-            <BookOpen className="w-8 h-8 text-blue-500 flex-shrink-0" />
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              Publications
-            </h2>
-          </div>
-          <div className="space-y-6">
+        {/* Resume & Publications Grid */}
+        <section className="grid sm:grid-cols-2 gap-6 scroll-mt-20">
+          <div className="bg-[#282828] border border-[#444] rounded-sm p-6 sm:p-8 flex flex-col items-start justify-between transition-colors hover:border-[#555]">
             <div>
-              <p className="text-white/70 leading-relaxed mb-4">
-                My personal perspectives and in-depth technical insights on
-                cloud infrastructure, systems design, distributed computing, and
-                emerging technologies. I share detailed explorations of
-                challenges, solutions, and lessons learned from real-world
-                projects and engineering experiences.
+              <div className="flex items-center gap-3 mb-3">
+                <FileText className="w-6 h-6 text-green-500" />
+                <h2 className="text-xl font-semibold text-white">Resume</h2>
+              </div>
+              <p className="text-gray-400 text-sm mb-6 leading-relaxed">
+                View my comprehensive resume showcasing my technical expertise,
+                project experience, and professional achievements.
               </p>
-              <a
-                href="/home-blog"
-                className="inline-flex items-center gap-2 text-white px-2 md:px-6 py-2 bg-blue-800 rounded-full font-bold transition-all duration-300 hover:scale-105 group"
-              >
-                <span>Explore Blogs</span>
-                <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
             </div>
+            <a
+              href="/kinshukfinalresume.pdf"
+              download="kinshukfinalresume.pdf"
+              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-5 py-2.5 bg-green-500 hover:bg-green-400 text-black font-semibold rounded-sm transition-colors"
+            >
+              <Download className="w-4 h-4" />
+              Download PDF
+            </a>
+          </div>
+
+          <div className="bg-[#282828] border border-[#444] rounded-sm p-6 sm:p-8 flex flex-col items-start justify-between transition-colors hover:border-[#555]">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <BookOpen className="w-6 h-6 text-green-500" />
+                <h2 className="text-xl font-semibold text-white">
+                  Publications
+                </h2>
+              </div>
+              <p className="text-gray-400 text-sm mb-6 leading-relaxed">
+                My perspectives and technical insights on cloud infrastructure,
+                systems design, and emerging technologies.
+              </p>
+            </div>
+            <a
+              href="/home-blog"
+              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-5 py-2.5 bg-[#3f3f3f] hover:bg-[#4a4a4a] text-white font-medium rounded-sm transition-colors"
+            >
+              Read Blogs
+              <ExternalLink className="w-4 h-4" />
+            </a>
           </div>
         </section>
 
         {/* Experience Section */}
-        <section className="mb-16 scroll-mt-20">
-          <div className="flex items-center gap-3 mb-6">
-            <Briefcase className="w-8 h-8 text-blue-500 flex-shrink-0" />
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              Experience
-            </h2>
-          </div>
-          <div className="space-y-6">
-            <div>
-              <div className="flex items-baseline justify-between mb-2">
-                <h3 className="text-2xl font-medium text-white">UPPTCL</h3>
-                <span className="text-white">July 2025 - Aug 2025</span>
-              </div>
-              <p className="text-white mb-3">
-                Uttar Pradesh Power Transmission Corporation Limited
+        <section className="scroll-mt-20">
+          <SectionHeader title="Experience" icon={Briefcase} />
+          <div className="bg-[#282828] border border-[#444] rounded-sm p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-2">
+              <h3 className="text-xl font-medium text-white">UPPTCL</h3>
+              <span className="text-gray-400 text-sm">
+                July 2025 - Aug 2025
+              </span>
+            </div>
+            <p className="text-green-500 text-sm font-medium mb-5">
+              Uttar Pradesh Power Transmission Corporation Limited
+            </p>
+            <div className="text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+              <p>
+                Worked with the transmission division to understand the
+                operation, protection, and maintenance of 132kV and 220kV
+                substations. Studied working principles of power transformers,
+                circuit breakers, busbars, and protection relays.
               </p>
-              <div className="text-white/70 leading-relaxed space-y-3">
-                <p>
-                  Worked with the transmission division to understand the
-                  operation, protection, and maintenance of 132kV and 220kV
-                  substations. Studied working principles of power transformers,
-                  circuit breakers, busbars, and protection relays.
-                </p>
-                <p>
-                  Observed real-time SCADA dashboards for grid monitoring, load
-                  management, and outage reporting. Assisted engineers during
-                  shutdown procedures, equipment inspections, and testing of
-                  CTs, PTs, and relays.
-                </p>
-                <p>
-                  Prepared technical documentation and maintained logs on
-                  equipment performance and safety checks. Improved technical
-                  workflows by creating well-organized digital reports using
-                  cloud and web tools.
-                </p>
-                <p className="pt-2">
-                  <a
-                    href="/home-blog/blogE"
-                    className="inline-flex items-center gap-2 px-3 py-2 bg-blue-800 rounded-full transition-all duration-300 font-semibold text-white group text-sm md:text-base"
-                  >
-                    <span>Read Detailed Experience Blog</span>
-                    <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </a>
-                </p>
+              <p>
+                Observed real-time SCADA dashboards for grid monitoring, load
+                management, and outage reporting. Assisted engineers during
+                shutdown procedures, equipment inspections, and testing of CTs,
+                PTs, and relays.
+              </p>
+              <p>
+                Prepared technical documentation and maintained logs on
+                equipment performance and safety checks. Improved technical
+                workflows by creating well-organized digital reports using cloud
+                and web tools.
+              </p>
+              <div className="pt-3">
+                <a
+                  href="/home-blog/blogE"
+                  className="inline-flex items-center gap-2 text-green-400 hover:text-green-300 font-medium transition-colors text-sm"
+                >
+                  Read Detailed Experience Log{" "}
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
               </div>
             </div>
           </div>
         </section>
 
         {/* Projects Section */}
-        <section className="mb-16 scroll-mt-20">
-          <div className="flex items-center gap-3 mb-6">
-            <Code className="w-8 h-8 text-blue-500 flex-shrink-0" />
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              Selected Projects
-            </h2>
-          </div>
-          <div className="space-y-8">
+        <section className="scroll-mt-20">
+          <SectionHeader title="Selected Projects" icon={Code} />
+          <div className="space-y-6">
             {CONFIG.projects.map((project) => (
-              <div key={project.title} className="group">
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-3 gap-2">
-                  <h3 className="text-xl md:text-2xl font-semibold text-white">
-                    {project.links.live ? (
+              <div
+                key={project.title}
+                className="bg-[#282828] border border-[#444] hover:border-green-500/50 rounded-sm p-6 sm:p-8 transition-colors"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-4 gap-2">
+                  <h3 className="text-xl font-medium text-white flex items-center gap-2">
+                    {project.title}
+                    {project.links.live && (
                       <a
                         href={project.links.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-blue-400 transition-colors inline-flex items-center gap-2"
+                        className="text-gray-500 hover:text-green-500 transition-colors"
                       >
-                        {project.title}
-                        <ExternalLink className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ExternalLink className="w-5 h-5" />
                       </a>
-                    ) : (
-                      project.title
                     )}
                   </h3>
-                  <span className="text-white/60 text-sm md:text-base flex-shrink-0">
+                  <span className="text-gray-400 text-sm flex-shrink-0">
                     {project.year}
                   </span>
                 </div>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs md:text-sm font-medium">
+
+                <div className="flex flex-wrap gap-2 mb-5">
+                  <span className="px-2.5 py-1 bg-[#333] border border-[#444] text-gray-300 rounded-sm text-xs font-medium">
                     {project.type}
                   </span>
-                  <span className="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-xs md:text-sm font-medium">
+                  <span
+                    className={`px-2.5 py-1 border rounded-sm text-xs font-medium ${
+                      project.status === "Live"
+                        ? "bg-green-500/10 border-green-500/30 text-green-400"
+                        : "bg-[#333] border-[#444] text-gray-400"
+                    }`}
+                  >
                     {project.status}
                   </span>
                 </div>
-                <div className="text-white/70 leading-relaxed space-y-3 mb-4">
+
+                <div className="text-gray-300 text-sm sm:text-base leading-relaxed space-y-3 mb-6">
                   {project.description.map((p, i) => (
-                    <p key={i} className="text-sm md:text-base">
-                      {p}
-                    </p>
+                    <p key={i}>{p}</p>
                   ))}
                 </div>
-                <div className="mb-4 ">
-                  <p className="text-white/50 text-md md:text-sm mb-2 font-semibold">
-                    Technologies:
-                  </p>
+
+                <div className="mb-6">
                   <div className="flex flex-wrap gap-2">
                     {project.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2 py-1 bg-blue-700 text-white font-semibold  rounded-full text-xs md:text-sm"
+                        className="px-2.5 py-1 bg-[#333] text-gray-300 border border-[#444] rounded-sm text-xs"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
                 </div>
+
                 {project.dockerCommand !== "Image is not available" && (
-                  <div className="p-3 md:p-4 mb-4 font-mono text-xs md:text-sm bg-[#141414] rounded-2xl  overflow-x-auto">
-                    <div className="flex items-center justify-between gap-3 min-w-max md:min-w-full">
-                      <code className="text-green-400 break-all flex-1">
-                        {project.dockerCommand}
-                      </code>
-                      <CopyButton text={project.dockerCommand} />
-                    </div>
+                  <div className="p-3 mb-6 font-mono text-xs sm:text-sm bg-[#1e1e1e] border border-[#333] rounded-sm flex items-center justify-between gap-3 overflow-hidden">
+                    <code className="text-gray-300 truncate">
+                      <span className="text-green-500/80 mr-2">$</span>
+                      {project.dockerCommand}
+                    </code>
+                    <CopyButton text={project.dockerCommand} />
                   </div>
                 )}
-                <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
+
+                <div className="flex flex-wrap gap-3">
                   {project.links.live && (
                     <a
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-blue-800 w-max rounded-full transition-all duration-300 text-white font-semibold group text-sm md:text-base"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-400 text-black text-sm font-semibold rounded-sm transition-colors"
                     >
-                      <ExternalLink className="w-4 h-4" />
-                      View Project
-                      <span className="group-hover:translate-x-1 transition-transform inline-block">
-                        →
-                      </span>
+                      View Project <ExternalLink className="w-4 h-4" />
                     </a>
                   )}
                   {project.links.repo && (
@@ -520,13 +515,9 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-[#141414] w-max rounded-full border border-[#444444] transition-all duration-300 text-white font-semibold group text-sm md:text-base"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-[#333] hover:bg-[#444] border border-[#555] text-white text-sm font-medium rounded-sm transition-colors"
                     >
-                      <Github className="w-4 h-4" />
-                      Source Code
-                      <span className="group-hover:translate-x-1 transition-transform inline-block">
-                        →
-                      </span>
+                      <Github className="w-4 h-4" /> Source Code
                     </a>
                   )}
                 </div>
@@ -536,25 +527,22 @@ export default function Home() {
         </section>
 
         {/* Technical Skills Section */}
-        <section className="mb-16 scroll-mt-20">
-          <div className="flex items-center gap-3 mb-6">
-            <Zap className="w-8 h-8 text-blue-500 flex-shrink-0" />
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              Technical Proficiencies
-            </h2>
-          </div>
-          <div className="space-y-6">
+        <section className="scroll-mt-20">
+          <SectionHeader title="Technical Proficiencies" icon={Zap} />
+          <div className="grid sm:grid-cols-2 gap-6">
             {Object.entries(CONFIG.skills).map(([category, skills]) => (
-              <div key={category}>
-                <h3 className="text-lg md:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></span>
+              <div
+                key={category}
+                className="bg-[#282828] border border-[#444] rounded-sm p-5 sm:p-6"
+              >
+                <h3 className="text-lg font-medium text-white mb-4">
                   {category}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {skills.map((skill) => (
                     <span
                       key={skill}
-                      className="px-3 py-1.5 bg-[#141414] hover:border hover:border-blue-500 text-white  cursor-pointer rounded-full text-sm md:text-sm transition-colors border border-white/20"
+                      className="px-3 py-1.5 bg-[#333] border border-[#444] text-gray-300 rounded-sm text-xs sm:text-sm font-medium"
                     >
                       {skill}
                     </span>
@@ -566,53 +554,46 @@ export default function Home() {
         </section>
 
         {/* Certifications Section */}
-        <section className="mb-16 scroll-mt-20">
-          <div className="flex items-center gap-3 mb-6">
-            <Star className="w-8 h-8 text-blue-500 flex-shrink-0" />
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              Certifications
-            </h2>
-          </div>
-          <div className="space-y-6">
+        <section className="scroll-mt-20">
+          <SectionHeader title="Certifications" icon={Star} />
+          <div className="grid sm:grid-cols-2 gap-6">
             {CONFIG.certifications.map((cert) => (
               <div
                 key={cert.title}
-                className="border-b border-white/20 rounded-2xl p-4 md:p-6 "
+                className="bg-[#282828] border border-[#444] rounded-sm p-6 flex flex-col justify-between"
               >
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-3 gap-2">
-                  <h3 className="text-lg md:text-xl font-semibold text-white">
-                    {cert.url ? (
-                      <a
-                        href={cert.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-blue-400 transition-colors inline-flex items-center gap-2 group"
-                      >
-                        {cert.title}
-                        <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </a>
-                    ) : (
-                      cert.title
-                    )}
-                  </h3>
-                  <span className="text-white/60 text-sm md:text-base flex-shrink-0">
-                    {cert.year}
-                  </span>
+                <div>
+                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-3 gap-2">
+                    <h3 className="text-lg font-medium text-white">
+                      {cert.url ? (
+                        <a
+                          href={cert.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-green-400 transition-colors inline-flex items-center gap-2"
+                        >
+                          {cert.title}
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      ) : (
+                        cert.title
+                      )}
+                    </h3>
+                  </div>
+                  <div className="flex items-center gap-2 mb-4 text-sm">
+                    <Award className="w-4 h-4 text-green-500" />
+                    <span className="text-gray-300">{cert.organization}</span>
+                    <span className="text-gray-500 ml-auto">{cert.year}</span>
+                  </div>
+                  <p className="text-gray-400 text-sm leading-relaxed mb-5">
+                    {cert.description}
+                  </p>
                 </div>
-                <div className="flex items-center gap-2 mb-3">
-                  <Award className="w-5 h-5 text-yellow-400 flex-shrink-0" />
-                  <span className="font-semibold text-yellow-300">
-                    {cert.organization}
-                  </span>
-                </div>
-                <p className="text-white/70 leading-relaxed mb-3 text-sm md:text-base">
-                  {cert.description}
-                </p>
                 <div className="flex flex-wrap gap-2">
                   {cert.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="px-2 py-1 bg-[#141414] text-white rounded-full text-xs md:text-sm font-medium"
+                      className="px-2 py-1 bg-[#333] border border-[#444] text-gray-300 rounded-sm text-xs"
                     >
                       {skill}
                     </span>
@@ -624,64 +605,49 @@ export default function Home() {
         </section>
 
         {/* Education Section */}
-        <section className="mb-16 scroll-mt-20">
-          <div className="flex items-center gap-3 mb-6">
-            <GraduationCap className="w-8 h-8 text-blue-500 flex-shrink-0" />
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              Education
-            </h2>
-          </div>
-          <div className=" p-4 md:p-6">
-            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-3 gap-2">
-              <h3 className="text-lg md:text-xl font-semibold text-white">
+        <section className="scroll-mt-20">
+          <SectionHeader title="Education" icon={GraduationCap} />
+          <div className="bg-[#282828] border border-[#444] rounded-sm p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-2">
+              <h3 className="text-xl font-medium text-white">
                 {CONFIG.education.degree}
               </h3>
-              <span className="text-white/60 text-sm md:text-base flex-shrink-0">
+              <span className="text-gray-400 text-sm">
                 {CONFIG.education.period}
               </span>
             </div>
-            <p className="text-blue-300 font-semibold mb-2">
+            <p className="text-green-500 font-medium mb-3 text-sm sm:text-base">
               {CONFIG.education.field}
             </p>
-            <p className="text-white/70 mb-3 text-sm md:text-base">
+            <p className="text-gray-300 text-sm sm:text-base mb-4">
               {CONFIG.education.institution}, {CONFIG.education.location}
             </p>
-            <p className="text-white/70 leading-relaxed text-sm md:text-base">
+            <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
               {CONFIG.education.description}
             </p>
           </div>
         </section>
 
         {/* CLI Tool Section */}
-        <section className="mb-16 scroll-mt-20">
-          <div className="flex items-center gap-3 mb-6">
-            <Code className="w-8 h-8 text-blue-500 flex-shrink-0" />
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              CLI Tool
-            </h2>
-          </div>
-          <p className="text-white/70 mb-6 leading-relaxed text-sm md:text-base">
-            Interactive command-line portfolio viewer built with Node.js
-          </p>
-          <div className="space-y-3 font-mono text-xs md:text-sm">
-            <div className="rounded-2xl p-3 md:p-4 bg-[#141414] border border-white/20 font-semibold text-[16px]  overflow-x-auto">
-              <div className="flex items-center justify-between gap-3 min-w-max md:min-w-full">
-                <div className="break-all flex-1">
-                  <span className="text-cyan-400">$</span>{" "}
-                  <span className="text-white/90">
-                    <span className="text-yellow-300">npm</span> install{" "}
-                    <span className="text-yellow-300">-g</span>{" "}
-                    <span className="text-yellow-300">hackkinshuk</span>
-                  </span>
+        <section className="scroll-mt-20">
+          <SectionHeader title="CLI Tool" icon={Code} />
+          <div className="bg-[#282828] border border-[#444] rounded-sm p-6 sm:p-8">
+            <p className="text-gray-300 text-sm sm:text-base mb-6">
+              Interactive command-line portfolio viewer built with Node.js.
+              Install it globally via npm.
+            </p>
+            <div className="space-y-3 font-mono text-sm">
+              <div className="p-3 sm:p-4 bg-[#1e1e1e] border border-[#333] rounded-sm flex items-center justify-between gap-3 overflow-hidden">
+                <div className="truncate text-gray-300">
+                  <span className="text-green-500/80 mr-2">$</span>
+                  npm install -g hackkinshuk
                 </div>
                 <CopyButton text="npm install -g hackkinshuk" />
               </div>
-            </div>
-            <div className="rounded-2xl p-3 md:p-4 bg-[#141414]  font-semibold text-[16px]  border border-white/20 overflow-x-auto">
-              <div className="flex items-center justify-between gap-3 min-w-max md:min-w-full">
-                <div className="break-all flex-1">
-                  <span className="text-cyan-400">$</span>{" "}
-                  <span className="text-white/90">cloudkinshuk</span>
+              <div className="p-3 sm:p-4 bg-[#1e1e1e] border border-[#333] rounded-sm flex items-center justify-between gap-3 overflow-hidden">
+                <div className="truncate text-gray-300">
+                  <span className="text-green-500/80 mr-2">$</span>
+                  cloudkinshuk
                 </div>
                 <CopyButton text="cloudkinshuk" />
               </div>

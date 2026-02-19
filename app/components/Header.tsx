@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { FileText, Zap, Lightbulb, SearchCode, Github } from "lucide-react";
+import { PiGithubLogoBold } from "react-icons/pi";
 
 interface NavItem {
   href: string;
@@ -36,6 +37,11 @@ const Header = () => {
       href: "/seo-insights",
       label: "SEO",
       icon: <SearchCode className="w-5 h-5 md:w-4 md:h-4" />,
+    },
+    {
+      href: "/git-track",
+      label: "Git Tracker",
+      icon: <PiGithubLogoBold className="w-5 h-5 md:w-4 md:h-4" />,
     },
   ];
 

@@ -275,7 +275,7 @@ export default function Home() {
             cloudkinshuk<span className="text-green-500">.in</span>
           </div>
           <p className="text-lg sm:text-xl text-gray-300 leading-relaxed max-w-3xl">
-            Hi <span className="font-medium text-white">@everyone</span>! My
+            Hi <span className="font-bold text-green-500 ">@everyone</span> ! My
             name is <span className="font-medium text-white">Kinshuk</span>, and
             I&apos;m a student and builder focused on cloud infrastructure and
             distributed systems. I&apos;m pursuing my Bachelor&apos;s in
@@ -352,7 +352,7 @@ export default function Home() {
             <a
               href="/kinshukfinalresume.pdf"
               download="kinshukfinalresume.pdf"
-              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-5 py-2.5 bg-green-500 hover:bg-green-400 text-black font-semibold rounded-sm transition-colors"
+              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-5 py-2.5 bg-green-500 hover:bg-green-400 text-black font-semibold rounded-md transition-colors"
             >
               <Download className="w-4 h-4" />
               Download PDF
@@ -374,7 +374,7 @@ export default function Home() {
             </div>
             <a
               href="/home-blog"
-              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-5 py-2.5 bg-[#3f3f3f] hover:bg-[#4a4a4a] text-white font-medium rounded-sm transition-colors"
+              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-5 py-2.5 bg-green-500 hover:bg-green-400 text-black font-bold rounded-md transition-colors"
             >
               Read Blogs
               <ExternalLink className="w-4 h-4" />

@@ -5,7 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { FileText, Zap, Lightbulb, SearchCode, Github } from "lucide-react";
+import {
+  FileText,
+  Zap,
+  Lightbulb,
+  SearchCode,
+  Github,
+  Server,
+} from "lucide-react";
 import { PiGithubLogoBold } from "react-icons/pi";
 
 interface NavItem {
@@ -67,10 +74,10 @@ const Header = () => {
                 className="w-8 h-8 sm:w-9 sm:h-9 object-contain"
                 priority
               />
-              <span className="hidden sm:inline text-2xl font-bold  tracking-tight">
+              <span className="hidden sm:inline text-2xl font-bold tracking-tight">
                 cloudkinshuk
               </span>
-              <span className="sm:hidden font-bold text-2xl text-base tracking-tight">
+              <span className="sm:hidden font-bold text-2xl tracking-tight">
                 cloudkinshuk
               </span>
             </Link>
@@ -114,11 +121,24 @@ const Header = () => {
 
             {/* Actions */}
             <div className="flex items-center gap-3">
+              {/* Buy a Server Button */}
+              <a
+                href="https://brewrepo.cloudkinshuk.in"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 px-2 py-1.5 sm:px-2 sm:py-1.5 bg-yellow-200  text-black text-md font-bold rounded-lg   transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 shadow-sm"
+                aria-label="Buy a Server"
+              >
+                <Server className="w-4 h-4" />
+                <span className="hidden sm:inline">Buy a Server</span>
+              </a>
+
+              {/* GitHub Button */}
               <a
                 href="https://github.com/kinshukjainn/cloudkinshuk"
                 target="_blank"
                 rel="noreferrer"
-                className="p-2 text-black bg-green-500 rounded-sm hover:bg-green-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
+                className="p-2 text-black bg-green-500 rounded-sm  transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
                 aria-label="GitHub Repository"
               >
                 <Github className="w-4 h-4 sm:w-5 sm:h-5" />

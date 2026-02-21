@@ -200,14 +200,14 @@ export default function SeoInsights() {
 
   return (
     <div className="min-h-screen pt-16 md:pt-24 bg-[#313131] text-gray-200  selection:bg-green-500 selection:text-black">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+      <div className="max-w-4xl pt-10 mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         {/* Header Block */}
         <header className="mb-10 border-b border-[#444] pb-6 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <h1 className="text-3xl md:text-4xl font-semibold text-white mb-2 tracking-tight">
+            <h1 className="text-5xl md:text-5xl font-semibold text-white mb-2 tracking-tight">
               Lighthouse Intelligence
             </h1>
-            <div className="text-sm font-mono text-gray-400">
+            <div className="text-sm font-mono text-gray-100">
               Captured: {AUDIT_DATA.meta.capturedAt} | v
               {AUDIT_DATA.meta.lighthouseVersion}
             </div>
@@ -215,10 +215,10 @@ export default function SeoInsights() {
 
           <div className="flex items-center gap-3">
             {/* Device Toggle */}
-            <div className="flex bg-[#282828] border border-[#444] rounded-sm p-1">
+            <div className="flex bg-[#282828] border border-[#444] rounded-md p-1">
               <button
                 onClick={() => setDevice("mobile")}
-                className={`flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-sm transition-colors ${
+                className={`flex items-center gap-2 px-3 py-1.5 text-sm cursor-pointer font-medium rounded-md transition-colors ${
                   device === "mobile"
                     ? "bg-[#3f3f3f] text-white shadow-sm"
                     : "text-gray-400 hover:text-gray-200"
@@ -228,7 +228,7 @@ export default function SeoInsights() {
               </button>
               <button
                 onClick={() => setDevice("desktop")}
-                className={`flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-sm transition-colors ${
+                className={`flex items-center gap-2 px-3 py-1.5  text-sm cursor-pointer font-medium rounded-md transition-colors ${
                   device === "desktop"
                     ? "bg-[#3f3f3f] text-white shadow-sm"
                     : "text-gray-400 hover:text-gray-200"
@@ -241,7 +241,7 @@ export default function SeoInsights() {
             {/* Export Button */}
             <button
               onClick={handleExport}
-              className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-400 text-black text-sm font-semibold rounded-sm transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-green-500 cursor-pointer hover:bg-green-400 text-black text-sm font-semibold rounded-md transition-colors"
             >
               <Download className="w-4 h-4" /> Export
             </button>

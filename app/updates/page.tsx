@@ -86,19 +86,19 @@ const NOW_CONFIG = {
 
 export default function CurrentWorkings() {
   return (
-    <div className="min-h-screen pt-16 md:pt-24 bg-[#313131] text-gray-200 font-sans selection:bg-green-500 selection:text-black">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div className="min-h-screen pt-16 md:pt-24 bg-[#313131] text-gray-200  selection:bg-green-500 selection:text-black">
+      <div className="max-w-4xl pt-10 mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         {/* Header Block */}
         <header className="mb-12 border-b border-[#444] pb-8">
-          <h1 className="text-3xl md:text-5xl font-semibold text-white mb-3 tracking-tight">
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-3 tracking-tight">
             Current Workings
           </h1>
           <p className="text-lg text-gray-300 font-medium mb-6">
             My focus and progress in real-time
           </p>
-          <div className="text-sm font-mono text-gray-400 bg-[#282828] border border-[#444] inline-block px-3 py-1.5 rounded-sm">
+          <div className="text-sm font-mono text-gray-100 inline-block px-3 py-1.5 rounded-sm">
             Last updated:{" "}
-            <span className="text-green-400">{NOW_CONFIG.lastUpdated}</span> |
+            <span className="text-green-300">{NOW_CONFIG.lastUpdated}</span> |
             Cycle: Every 2 months
           </div>
 

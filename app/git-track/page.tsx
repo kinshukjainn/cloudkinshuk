@@ -132,10 +132,10 @@ export default function ChangelogTracker() {
     <div className="min-h-screen pt-16 md:pt-24 bg-[#313131] text-gray-200 selection:bg-green-500 selection:text-black">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         {/* Header Block */}
-        <header className="mb-10 border-b border-[#444] pb-8">
+        <header className="mb-10 pt-10 border-b border-[#444] pb-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-6">
             <div>
-              <h1 className="text-3xl md:text-4xl font-semibold text-white mb-3 tracking-tight">
+              <h1 className="text-5xl md:text-4xl font-semibold text-white mb-3 tracking-tight">
                 Logs
               </h1>
               <p className="text-lg text-gray-300 font-medium">
@@ -147,7 +147,7 @@ export default function ChangelogTracker() {
               href={`https://github.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#282828] border border-[#444] hover:border-green-500 text-white text-sm font-medium rounded-sm transition-colors w-fit"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[#282828] border border-[#444] hover:border-green-500 text-white text-sm font-medium rounded-lg transition-colors w-fit"
             >
               <Github className="w-4 h-4" />
               View on GitHub
@@ -156,17 +156,17 @@ export default function ChangelogTracker() {
           </div>
 
           {/* Config Data List */}
-          <dl className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 bg-[#282828] border border-[#444] rounded-sm text-sm">
+          <dl className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4  text-sm">
             <div className="flex flex-col gap-1">
-              <dt className="text-gray-500 font-mono flex items-center gap-1.5">
-                <User className="w-3.5 h-3.5" /> Repository tracked :
+              <dt className="text-white font-mono flex items-center font-bold  gap-1.5">
+                <User className="w-3.5 h-3.5" /> Repository tracked
               </dt>
-              <dd className="text-gray-200 font-mono">
+              <dd className="text-green-400 font-mono">
                 {GITHUB_CONFIG.username}/{GITHUB_CONFIG.repository}
               </dd>
             </div>
             <div className="flex flex-col gap-1">
-              <dt className="text-gray-500 font-mono flex items-center gap-1.5">
+              <dt className="text-white font-bold font-mono flex items-center gap-1.5">
                 <GitBranch className="w-3.5 h-3.5" /> Branch
               </dt>
               <dd className="text-green-400 font-mono">
@@ -179,7 +179,7 @@ export default function ChangelogTracker() {
                 <button
                   onClick={fetchCommits}
                   disabled={loading}
-                  className="inline-flex items-center gap-2 text-gray-400 hover:text-green-400 transition-colors disabled:opacity-50"
+                  className="inline-flex items-center gap-2 text-black font-semibold  bg-green-500 p-1 rounded-md cursor-pointer transition-colors disabled:opacity-50"
                 >
                   <RefreshCw
                     className={`w-4 h-4 ${loading ? "animate-spin" : ""}`}
@@ -220,7 +220,7 @@ export default function ChangelogTracker() {
             </div>
           ) : (
             // Commit Timeline
-            <div className="relative border-l-2 border-[#444] ml-3 sm:ml-4 space-y-10 py-4">
+            <div className="relative border-l-2 border-green-500 ml-3 sm:ml-4 space-y-10 py-4">
               {commits.map((commit) => {
                 const title = getCommitTitle(commit.commit.message);
                 const body = getCommitBody(commit.commit.message);
@@ -229,7 +229,7 @@ export default function ChangelogTracker() {
                 return (
                   <div key={commit.sha} className="relative pl-6 sm:pl-8 group">
                     {/* Timeline Dot */}
-                    <div className="absolute w-3 h-3 bg-[#313131] border-2 border-[#555] group-hover:border-green-500 rounded-full -left-[7px] top-1.5 transition-colors" />
+                    <div className="absolute w-3 h-3 bg-green-500 border-2 border-black group-hover:border-green-500 rounded-full -left-[7px] top-1.5 transition-colors" />
 
                     <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-2">
                       <div className="flex-1 min-w-0">

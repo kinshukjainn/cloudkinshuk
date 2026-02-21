@@ -82,6 +82,16 @@ const CONFIG = {
       skills: ["Cloud Computing", "AWS Services", "Security", "Pricing Models"],
     },
     {
+      title: "AWS Developer Cloud Associate - DVA-02",
+      organization: "AWS",
+      status: "Preparing",
+      year: "2025",
+      progress: "First Attempt",
+      description:
+        "Certification focused on AWS development and deployment best practices, covering core AWS services, security, and application development concepts",
+      skills: ["Cloud Computing", "AWS Services", "Security", "Pricing Models"],
+    },
+    {
       title: "AWS Serverless Badge",
       organization: "AWS",
       status: "Completed",
@@ -178,7 +188,7 @@ const CONFIG = {
         "AWS Route 53",
       ],
       links: {
-        live: null,
+        live: "https://fdsai.vercel.app",
         repo: "https://github.com/kinshukjainn/fds-project",
       },
       dockerCommand: "Image is not available",
@@ -283,7 +293,7 @@ export default function Home() {
             Check out my projects on{" "}
             <a
               href="https://github.com/kinshukjainn"
-              className="text-green-400 hover:text-green-300 underline underline-offset-4 decoration-green-500/30 hover:decoration-green-400 transition-all font-medium"
+              className="text-green-400 hover:text-green-300 hover:font-bold  underline underline-offset-4 decoration-green-500/30 hover:decoration-green-400 transition-all font-medium"
             >
               GitHub
             </a>
@@ -387,12 +397,12 @@ export default function Home() {
           <SectionHeader title="Experience" icon={Briefcase} />
           <div className="bg-[#282828] border border-[#444] rounded-sm p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-2">
-              <h3 className="text-xl font-medium text-white">UPPTCL</h3>
+              <h3 className="text-xl font-bold text-white">UPPTCL</h3>
               <span className="text-gray-400 text-sm">
                 July 2025 - Aug 2025
               </span>
             </div>
-            <p className="text-green-500 text-sm font-medium mb-5">
+            <p className="text-green-500 text-md font-semibold mb-5">
               Uttar Pradesh Power Transmission Corporation Limited
             </p>
             <div className="text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
@@ -417,7 +427,7 @@ export default function Home() {
               <div className="pt-3">
                 <a
                   href="/home-blog/blogE"
-                  className="inline-flex items-center gap-2 text-green-400 hover:text-green-300 font-medium transition-colors text-sm"
+                  className="inline-flex items-center gap-2 rounded-md text-black bg-green-500 p-3 font-semibold transition-colors text-md"
                 >
                   Read Detailed Experience Log{" "}
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -437,7 +447,7 @@ export default function Home() {
                 className="bg-[#282828] border border-[#444] hover:border-green-500/50 rounded-sm p-6 sm:p-8 transition-colors"
               >
                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-4 gap-2">
-                  <h3 className="text-xl font-medium text-white flex items-center gap-2">
+                  <h3 className="text-2xl font-bold text-white flex items-center gap-2">
                     {project.title}
                     {project.links.live && (
                       <a
@@ -505,7 +515,7 @@ export default function Home() {
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-400 text-black text-sm font-semibold rounded-sm transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-400 text-black text-md font-semibold rounded-md transition-colors"
                     >
                       View Project <ExternalLink className="w-4 h-4" />
                     </a>
@@ -515,7 +525,7 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-[#333] hover:bg-[#444] border border-[#555] text-white text-sm font-medium rounded-sm transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-black  border border-[#444444] text-white text-md font-semibold rounded-md transition-colors"
                     >
                       <Github className="w-4 h-4" /> Source Code
                     </a>
@@ -535,7 +545,7 @@ export default function Home() {
                 key={category}
                 className="bg-[#282828] border border-[#444] rounded-sm p-5 sm:p-6"
               >
-                <h3 className="text-lg font-medium text-white mb-4">
+                <h3 className="text-lg font-semibold text-white mb-4">
                   {category}
                 </h3>
                 <div className="flex flex-wrap gap-2">

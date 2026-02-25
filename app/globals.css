@@ -2,7 +2,7 @@
 
 body {
   background-color: black;
-  font-family: var(--font-pt-sans), sans-serif;
+  font-family: var(--font-work-sans), sans-serif;
 }
 @layer utilities {
   .text-balance {

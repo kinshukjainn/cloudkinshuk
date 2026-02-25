@@ -23,7 +23,6 @@ import {
 const CONFIG = {
   personal: {
     email: "kinshuk25jan04@gmail.com",
-    whatsappNumber: "919172702501",
     location: "Ghaziabad, UP, India",
     bio: [
       "Student first. Builder always.",
@@ -188,8 +187,8 @@ const CONFIG = {
         "AWS Route 53",
       ],
       links: {
-        live: "https://fdsai.vercel.app",
-        repo: "https://github.com/kinshukjainn/fds-project",
+        live: "https://fdsai.cloudkinshuk.in",
+        repo: "https://github.com/kinshukjainn/fds-college",
       },
       dockerCommand: "Image is not available",
     },

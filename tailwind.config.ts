@@ -13,6 +13,7 @@ const config: Config = {
         // Add your custom font here
         inter: "var(--font-inter) , sans-serif",
         ptSans: "var(--font-pt-sans) , sans-serif",
+        workSans: "var(--font-work-sans) , sans-serif",
       },
     },
   },

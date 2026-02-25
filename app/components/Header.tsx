@@ -27,12 +27,12 @@ const Header = () => {
   const navItems: NavItem[] = [
     {
       href: "/home-blog",
-      label: "Blogs",
+      label: " Developer Blogs",
       icon: <FileText className="w-5 h-5 md:w-4 md:h-4" />,
     },
     {
       href: "/setup",
-      label: "Setup",
+      label: "Dev.Setup",
       icon: <Zap className="w-5 h-5 md:w-4 md:h-4" />,
     },
     {
@@ -55,6 +55,10 @@ const Header = () => {
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(href + "/");
 
+  // Find the currently active item to display its label. Fallback to default name.
+  const activeItem = navItems.find((item) => isActive(item.href));
+  const pageTitle = activeItem ? activeItem.label : "cloudkinshuk";
+
   return (
     <>
       {/* Top Header */}
@@ -74,11 +78,12 @@ const Header = () => {
                 className="w-8 h-8 sm:w-9 sm:h-9 object-contain"
                 priority
               />
+              {/* Updated: Display dynamic pageTitle here */}
               <span className="hidden sm:inline text-2xl font-bold tracking-tight">
-                cloudkinshuk
+                {pageTitle}
               </span>
               <span className="sm:hidden font-bold text-2xl tracking-tight">
-                cloudkinshuk
+                {pageTitle}
               </span>
             </Link>
 

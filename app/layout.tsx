@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Alegreya, IBM_Plex_Serif, PT_Sans } from "next/font/google";
+import {
+  Inter,
+  Alegreya,
+  IBM_Plex_Serif,
+  PT_Sans,
+  Work_Sans,
+} from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -17,6 +23,13 @@ const ptSans = PT_Sans({
   style: ["normal", "italic"],
   display: "swap",
   variable: "--font-pt-sans",
+});
+
+const workSans = Work_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-work-sans", // optional (for CSS variables)
+  display: "swap",
 });
 
 const alegreya = Alegreya({
@@ -47,7 +60,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${ptSans.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
+        className={`${inter.variable} ${ptSans.variable} ${workSans.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >
         <Header />
         {children}

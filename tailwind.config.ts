@@ -14,6 +14,7 @@ const config: Config = {
         inter: "var(--font-inter) , sans-serif",
         ptSans: "var(--font-pt-sans) , sans-serif",
         workSans: "var(--font-work-sans) , sans-serif",
+        alegreya: "var(--font-alegreya) , serif",
       },
     },
   },

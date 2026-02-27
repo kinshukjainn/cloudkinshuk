@@ -357,6 +357,12 @@ export default function Home() {
                 View my comprehensive resume showcasing my technical expertise,
                 project experience, and professional achievements.
               </p>
+              <div className=" border-red-500 border-l-4  px-2 py-1  mb-4">
+                <p className="text-red-500 text-sm mb-6 leading-relaxed">
+                  Currently resume is not available to download soon my updated
+                  resume will be available here.
+                </p>
+              </div>
             </div>
             <a
               href="/kinshukfinalresume.pdf"
@@ -368,7 +374,7 @@ export default function Home() {
             </a>
           </div>
 
-          <div className="bg-[#282828] border border-[#444] rounded-sm p-6 sm:p-8 flex flex-col items-start justify-between transition-colors hover:border-[#555]">
+          <div className="bg-[#282828] border border-[#444] rounded-sm p-6 sm:p-8 flex flex-col items-start h-max  justify-between transition-colors hover:border-[#555]">
             <div>
               <div className="flex items-center gap-3 mb-3">
                 <BookOpen className="w-6 h-6 text-green-500" />

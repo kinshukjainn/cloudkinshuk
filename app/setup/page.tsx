@@ -132,8 +132,8 @@ export default function DevToolsCompact() {
   );
 
   return (
-    <div className="min-h-screen bg-[#313131] text-gray-100  selection:bg-green-500 selection:text-black pt-16 md:pt-24">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#313131]  text-gray-100  selection:bg-green-500 selection:text-black pt-16 md:pt-24">
+      <div className="max-w-4xl pt-10 mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <header className="mb-12 md:mb-16 border-b border-[#444] pb-8">
           <motion.div

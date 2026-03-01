@@ -221,14 +221,14 @@ const CopyButton = ({ text }: { text: string }) => {
   return (
     <button
       onClick={handleCopy}
-      className="p-2 cursor-pointer bg-[#333] hover:bg-[#444] border border-[#555] rounded-sm transition-colors flex-shrink-0 group"
+      className={`p-2 cursor-pointer rounded-xl transition-colors flex-shrink-0 group border ${
+        copied
+          ? "bg-white border-white text-black"
+          : "bg-[#1e1e1e] border-[#42414d] hover:border-[#8cb4ff] hover:bg-[#8cb4ff]/10 text-white"
+      }`}
       title="Copy to clipboard"
     >
-      {copied ? (
-        <Check className="w-4 h-4 text-green-500" />
-      ) : (
-        <Copy className="w-4 h-4 text-gray-400 group-hover:text-gray-200" />
-      )}
+      {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
     </button>
   );
 };
@@ -267,7 +267,7 @@ const SectionHeader = ({
   icon: React.ComponentType<{ className: string }>;
 }) => (
   <div className="flex items-center gap-3 mb-6">
-    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-green-500 flex-shrink-0" />
+    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-white flex-shrink-0" />
     <h2 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight">
       {title}
     </h2>
@@ -276,23 +276,23 @@ const SectionHeader = ({
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#313131] pt-10 text-gray-100 selection:bg-green-500 selection:text-black">
+    <div className="min-h-screen bg-[#1b1b1b]  pt-10 text-[#eaeaeb] selection:bg-[#8cb4ff]/30 selection:text-white">
       {/* Hero Header */}
-      <header className="border-b border-[#444] mb-8">
+      <header className="border-b border-[#333] mb-8 pb-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
-          <div className="mb-4 text-4xl sm:text-5xl font-semibold tracking-tight text-white flex items-center">
-            cloudkinshuk<span className="text-green-500">.in</span>
+          <div className="mb-6 text-4xl sm:text-5xl font-semibold tracking-tight text-white flex items-center">
+            cloudkinshuk<span className="text-[#8cb4ff]">_</span>
           </div>
-          <p className="text-lg sm:text-xl text-gray-300 leading-relaxed max-w-3xl">
-            Hi <span className="font-bold text-green-500 ">@everyone</span> ! My
-            name is <span className="font-medium text-white">Kinshuk</span>, and
+          <p className="text-lg sm:text-xl text-[#eaeaeb] leading-relaxed max-w-3xl">
+            Hi @everyone! My name is{" "}
+            <span className="font-semibold text-white">Kinshuk</span>, and
             I&apos;m a student and builder focused on cloud infrastructure and
             distributed systems. I&apos;m pursuing my Bachelor&apos;s in
             Electrical Engineering while exploring modern web technologies.
             Check out my projects on{" "}
             <a
               href="https://github.com/kinshukjainn"
-              className="text-green-400 hover:text-green-300 hover:font-bold  underline underline-offset-4 decoration-green-500/30 hover:decoration-green-400 transition-all font-medium"
+              className="text-white font-semibold border-b-[3px] border-[#8cb4ff] hover:bg-[#8cb4ff]/10 hover:border-b-4 transition-all"
             >
               GitHub
             </a>
@@ -304,7 +304,7 @@ export default function Home() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 space-y-16">
         {/* About & Socials Section */}
         <section className="scroll-mt-20">
-          <p className="text-base sm:text-lg text-gray-300 leading-relaxed mb-6">
+          <p className="text-base sm:text-lg text-[#eaeaeb] leading-relaxed mb-6">
             I am currently learning how systems work, how they fail, and how
             they evolve. Alongside that, I am exploring the cloud, building
             small things that might someday scale, experimenting with
@@ -312,15 +312,15 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            <div className="flex items-center gap-2.5 px-4 py-2.5 bg-[#282828] border border-[#444] rounded-sm w-max">
-              <MapPin className="w-4 h-4 text-gray-400 flex-shrink-0" />
-              <span className="text-gray-200 text-sm font-medium">
+            <div className="flex items-center gap-2.5 px-4 py-2.5 bg-[#1e1e1e] border border-[#42414d] rounded-xl w-max">
+              <MapPin className="w-4 h-4 text-[#eaeaeb] flex-shrink-0" />
+              <span className="text-[#eaeaeb] text-sm font-medium">
                 {CONFIG.personal.location}
               </span>
             </div>
-            <div className="flex items-center gap-2.5 px-4 py-2.5 bg-[#282828] border border-[#444] rounded-sm w-max">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse flex-shrink-0"></div>
-              <span className="text-gray-200 text-sm font-medium">
+            <div className="flex items-center gap-2.5 px-4 py-2.5 bg-[#1e1e1e] border border-[#42414d] rounded-xl w-max">
+              <div className="w-2 h-2 bg-[#8cb4ff] rounded-full animate-pulse flex-shrink-0"></div>
+              <span className="text-[#eaeaeb] text-sm font-medium">
                 {CONFIG.personal.availability}
               </span>
             </div>
@@ -333,13 +333,13 @@ export default function Home() {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 px-4 py-2.5 bg-[#282828] border border-[#444] hover:border-green-500 hover:bg-[#2c2c2c] rounded-sm transition-all duration-200 text-gray-300 hover:text-white group"
+                className="flex items-center gap-2.5 px-4 py-2.5 bg-[#1e1e1e] border border-[#42414d] hover:border-[#8cb4ff] hover:bg-[#32313c] rounded-xl transition-all duration-200 text-[#eaeaeb] hover:text-white group"
               >
-                <div className="text-gray-400 group-hover:text-green-500 transition-colors">
+                <div className="text-[#eaeaeb] group-hover:text-[#8cb4ff] transition-colors">
                   <SocialIcon icon={social.icon} />
                 </div>
                 <span className="text-sm font-medium">{social.handle}</span>
-                <ExternalLink className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 group-hover:text-green-500 transition-all" />
+                <ExternalLink className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 group-hover:text-[#8cb4ff] transition-all" />
               </a>
             ))}
           </div>
@@ -347,18 +347,18 @@ export default function Home() {
 
         {/* Resume & Publications Grid */}
         <section className="grid sm:grid-cols-2 gap-6 scroll-mt-20">
-          <div className="bg-[#282828] border border-[#444] rounded-sm p-6 sm:p-8 flex flex-col items-start justify-between transition-colors hover:border-[#555]">
+          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-xl p-6 sm:p-8 flex flex-col items-start justify-between transition-colors hover:border-[#555]">
             <div>
               <div className="flex items-center gap-3 mb-3">
-                <FileText className="w-6 h-6 text-green-500" />
+                <FileText className="w-6 h-6 text-white" />
                 <h2 className="text-xl font-semibold text-white">Resume</h2>
               </div>
-              <p className="text-gray-400 text-sm mb-6 leading-relaxed">
+              <p className="text-[#eaeaeb] text-sm mb-6 leading-relaxed">
                 View my comprehensive resume showcasing my technical expertise,
                 project experience, and professional achievements.
               </p>
-              <div className=" border-red-500 border-l-4  px-2 py-1  mb-4">
-                <p className="text-red-500 text-sm mb-6 leading-relaxed">
+              <div className="border-[#ff7b72] border-l-4 px-3 py-2 mb-6 bg-[#ff7b72]/10">
+                <p className="text-[#ff7b72] text-sm leading-relaxed">
                   Currently resume is not available to download soon my updated
                   resume will be available here.
                 </p>
@@ -367,29 +367,29 @@ export default function Home() {
             <a
               href="/kinshukfinalresume.pdf"
               download="kinshukfinalresume.pdf"
-              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-5 py-2.5 bg-green-500 hover:bg-green-400 text-black font-semibold rounded-md transition-colors"
+              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-6 py-2.5 bg-transparent border border-white hover:bg-white text-white hover:text-black font-semibold rounded-full transition-colors"
             >
               <Download className="w-4 h-4" />
               Download PDF
             </a>
           </div>
 
-          <div className="bg-[#282828] border border-[#444] rounded-sm p-6 sm:p-8 flex flex-col items-start h-max  justify-between transition-colors hover:border-[#555]">
+          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-xl p-6 sm:p-8 flex flex-col items-start h-full justify-between transition-colors hover:border-[#555]">
             <div>
               <div className="flex items-center gap-3 mb-3">
-                <BookOpen className="w-6 h-6 text-green-500" />
+                <BookOpen className="w-6 h-6 text-white" />
                 <h2 className="text-xl font-semibold text-white">
                   Publications
                 </h2>
               </div>
-              <p className="text-gray-400 text-sm mb-6 leading-relaxed">
+              <p className="text-[#eaeaeb] text-sm mb-6 leading-relaxed">
                 My perspectives and technical insights on cloud infrastructure,
                 systems design, and emerging technologies.
               </p>
             </div>
             <a
               href="/home-blog"
-              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-5 py-2.5 bg-green-500 hover:bg-green-400 text-black font-bold rounded-md transition-colors"
+              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-6 py-2.5 bg-transparent border border-white hover:bg-white text-white hover:text-black font-semibold rounded-full transition-colors mt-auto"
             >
               Read Blogs
               <ExternalLink className="w-4 h-4" />
@@ -400,17 +400,17 @@ export default function Home() {
         {/* Experience Section */}
         <section className="scroll-mt-20">
           <SectionHeader title="Experience" icon={Briefcase} />
-          <div className="bg-[#282828] border border-[#444] rounded-sm p-6 sm:p-8">
+          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-xl p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-2">
-              <h3 className="text-xl font-bold text-white">UPPTCL</h3>
-              <span className="text-gray-400 text-sm">
+              <h3 className="text-xl font-semibold text-white">UPPTCL</h3>
+              <span className="text-[#eaeaeb] text-sm font-medium">
                 July 2025 - Aug 2025
               </span>
             </div>
-            <p className="text-green-500 text-md font-semibold mb-5">
+            <p className="text-[#8cb4ff] text-md font-semibold mb-5">
               Uttar Pradesh Power Transmission Corporation Limited
             </p>
-            <div className="text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+            <div className="text-[#eaeaeb] text-sm sm:text-base leading-relaxed space-y-4">
               <p>
                 Worked with the transmission division to understand the
                 operation, protection, and maintenance of 132kV and 220kV
@@ -432,7 +432,7 @@ export default function Home() {
               <div className="pt-3">
                 <a
                   href="/home-blog/blogE"
-                  className="inline-flex items-center gap-2 rounded-md text-black bg-green-500 p-3 font-semibold transition-colors text-md"
+                  className="inline-flex items-center gap-2 text-white font-semibold border-b-[3px] border-[#8cb4ff] hover:bg-[#8cb4ff]/10 hover:border-b-4 transition-all text-md"
                 >
                   Read Detailed Experience Log{" "}
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -449,43 +449,43 @@ export default function Home() {
             {CONFIG.projects.map((project) => (
               <div
                 key={project.title}
-                className="bg-[#282828] border border-[#444] hover:border-green-500/50 rounded-sm p-6 sm:p-8 transition-colors"
+                className="bg-[#1e1e1e] border border-[#42414d] hover:border-[#555] rounded-xl p-6 sm:p-8 transition-colors"
               >
                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-4 gap-2">
-                  <h3 className="text-2xl font-bold text-white flex items-center gap-2">
+                  <h3 className="text-2xl font-semibold text-white flex items-center gap-2">
                     {project.title}
                     {project.links.live && (
                       <a
                         href={project.links.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-500 hover:text-green-500 transition-colors"
+                        className="text-[#eaeaeb] hover:text-[#8cb4ff] transition-colors"
                       >
                         <ExternalLink className="w-5 h-5" />
                       </a>
                     )}
                   </h3>
-                  <span className="text-gray-400 text-sm flex-shrink-0">
+                  <span className="text-[#eaeaeb] text-sm flex-shrink-0">
                     {project.year}
                   </span>
                 </div>
 
                 <div className="flex flex-wrap gap-2 mb-5">
-                  <span className="px-2.5 py-1 bg-[#333] border border-[#444] text-gray-300 rounded-sm text-xs font-medium">
+                  <span className="px-2.5 py-1 bg-[#1b1b1b] border border-[#42414d] text-[#eaeaeb] rounded-xl text-xs font-medium">
                     {project.type}
                   </span>
                   <span
-                    className={`px-2.5 py-1 border rounded-sm text-xs font-medium ${
+                    className={`px-2.5 py-1 border rounded-xl text-xs font-semibold ${
                       project.status === "Live"
-                        ? "bg-green-500/10 border-green-500/30 text-green-400"
-                        : "bg-[#333] border-[#444] text-gray-400"
+                        ? "bg-[#8cb4ff]/10 border-[#8cb4ff]/30 text-[#8cb4ff]"
+                        : "bg-[#1b1b1b] border-[#42414d] text-[#eaeaeb]"
                     }`}
                   >
                     {project.status}
                   </span>
                 </div>
 
-                <div className="text-gray-300 text-sm sm:text-base leading-relaxed space-y-3 mb-6">
+                <div className="text-[#eaeaeb] text-sm sm:text-base leading-relaxed space-y-3 mb-6">
                   {project.description.map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
@@ -496,7 +496,7 @@ export default function Home() {
                     {project.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2.5 py-1 bg-[#333] text-gray-300 border border-[#444] rounded-sm text-xs"
+                        className="px-2.5 py-1 bg-[#1b1b1b] text-[#eaeaeb] border border-[#42414d] rounded-xl text-xs"
                       >
                         {tech}
                       </span>
@@ -505,22 +505,22 @@ export default function Home() {
                 </div>
 
                 {project.dockerCommand !== "Image is not available" && (
-                  <div className="p-3 mb-6 font-mono text-xs sm:text-sm bg-[#1e1e1e] border border-[#333] rounded-sm flex items-center justify-between gap-3 overflow-hidden">
-                    <code className="text-gray-300 truncate">
-                      <span className="text-green-500/80 mr-2">$</span>
+                  <div className="p-2 mb-6 font-mono text-xs sm:text-sm bg-[#1b1b1b] border border-[#42414d] rounded-xl flex items-center justify-between gap-3 overflow-hidden">
+                    <code className="text-[#eaeaeb] truncate px-2">
+                      <span className="text-[#8cb4ff] mr-2">$</span>
                       {project.dockerCommand}
                     </code>
                     <CopyButton text={project.dockerCommand} />
                   </div>
                 )}
 
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-4">
                   {project.links.live && (
                     <a
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-400 text-black text-md font-semibold rounded-md transition-colors"
+                      className="inline-flex items-center gap-2 px-6 py-2 bg-transparent border border-white text-white hover:bg-white hover:text-black text-sm font-semibold rounded-full transition-colors"
                     >
                       View Project <ExternalLink className="w-4 h-4" />
                     </a>
@@ -530,7 +530,7 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-black  border border-[#444444] text-white text-md font-semibold rounded-md transition-colors"
+                      className="inline-flex items-center gap-2 px-6 py-2 bg-[#1e1e1e] border border-[#42414d] text-white hover:border-[#8cb4ff] text-sm font-semibold rounded-full transition-colors"
                     >
                       <Github className="w-4 h-4" /> Source Code
                     </a>
@@ -548,7 +548,7 @@ export default function Home() {
             {Object.entries(CONFIG.skills).map(([category, skills]) => (
               <div
                 key={category}
-                className="bg-[#282828] border border-[#444] rounded-sm p-5 sm:p-6"
+                className="bg-[#1e1e1e] border border-[#42414d] rounded-xl p-5 sm:p-6"
               >
                 <h3 className="text-lg font-semibold text-white mb-4">
                   {category}
@@ -557,7 +557,7 @@ export default function Home() {
                   {skills.map((skill) => (
                     <span
                       key={skill}
-                      className="px-3 py-1.5 bg-[#333] border border-[#444] text-gray-300 rounded-sm text-xs sm:text-sm font-medium"
+                      className="px-3 py-1.5 bg-[#1b1b1b] border border-[#42414d] text-[#eaeaeb] rounded-xl text-xs sm:text-sm font-medium"
                     >
                       {skill}
                     </span>
@@ -575,17 +575,17 @@ export default function Home() {
             {CONFIG.certifications.map((cert) => (
               <div
                 key={cert.title}
-                className="bg-[#282828] border border-[#444] rounded-sm p-6 flex flex-col justify-between"
+                className="bg-[#1e1e1e] border border-[#42414d] rounded-xl p-6 flex flex-col justify-between hover:border-[#555] transition-colors"
               >
                 <div>
                   <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-3 gap-2">
-                    <h3 className="text-lg font-medium text-white">
+                    <h3 className="text-lg font-semibold text-white">
                       {cert.url ? (
                         <a
                           href={cert.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="hover:text-green-400 transition-colors inline-flex items-center gap-2"
+                          className="text-white hover:text-[#8cb4ff] border-b-2 border-transparent hover:border-[#8cb4ff] transition-colors inline-flex items-center gap-2"
                         >
                           {cert.title}
                           <ExternalLink className="w-3.5 h-3.5" />
@@ -596,11 +596,11 @@ export default function Home() {
                     </h3>
                   </div>
                   <div className="flex items-center gap-2 mb-4 text-sm">
-                    <Award className="w-4 h-4 text-green-500" />
-                    <span className="text-gray-300">{cert.organization}</span>
-                    <span className="text-gray-500 ml-auto">{cert.year}</span>
+                    <Award className="w-4 h-4 text-white" />
+                    <span className="text-[#eaeaeb]">{cert.organization}</span>
+                    <span className="text-gray-400 ml-auto">{cert.year}</span>
                   </div>
-                  <p className="text-gray-400 text-sm leading-relaxed mb-5">
+                  <p className="text-[#eaeaeb] text-sm leading-relaxed mb-5">
                     {cert.description}
                   </p>
                 </div>
@@ -608,7 +608,7 @@ export default function Home() {
                   {cert.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="px-2 py-1 bg-[#333] border border-[#444] text-gray-300 rounded-sm text-xs"
+                      className="px-2.5 py-1 bg-[#1b1b1b] border border-[#42414d] text-[#eaeaeb] rounded-xl text-xs"
                     >
                       {skill}
                     </span>
@@ -622,22 +622,22 @@ export default function Home() {
         {/* Education Section */}
         <section className="scroll-mt-20">
           <SectionHeader title="Education" icon={GraduationCap} />
-          <div className="bg-[#282828] border border-[#444] rounded-sm p-6 sm:p-8">
+          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-xl p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-2">
-              <h3 className="text-xl font-medium text-white">
+              <h3 className="text-xl font-semibold text-white">
                 {CONFIG.education.degree}
               </h3>
-              <span className="text-gray-400 text-sm">
+              <span className="text-[#eaeaeb] text-sm">
                 {CONFIG.education.period}
               </span>
             </div>
-            <p className="text-green-500 font-medium mb-3 text-sm sm:text-base">
+            <p className="text-[#8cb4ff] font-medium mb-3 text-sm sm:text-base">
               {CONFIG.education.field}
             </p>
-            <p className="text-gray-300 text-sm sm:text-base mb-4">
+            <p className="text-[#eaeaeb] text-sm sm:text-base mb-4 font-medium">
               {CONFIG.education.institution}, {CONFIG.education.location}
             </p>
-            <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+            <p className="text-[#eaeaeb] text-sm sm:text-base leading-relaxed">
               {CONFIG.education.description}
             </p>
           </div>
@@ -646,22 +646,22 @@ export default function Home() {
         {/* CLI Tool Section */}
         <section className="scroll-mt-20">
           <SectionHeader title="CLI Tool" icon={Code} />
-          <div className="bg-[#282828] border border-[#444] rounded-sm p-6 sm:p-8">
-            <p className="text-gray-300 text-sm sm:text-base mb-6">
+          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-xl p-6 sm:p-8">
+            <p className="text-[#eaeaeb] text-sm sm:text-base mb-6">
               Interactive command-line portfolio viewer built with Node.js.
               Install it globally via npm.
             </p>
             <div className="space-y-3 font-mono text-sm">
-              <div className="p-3 sm:p-4 bg-[#1e1e1e] border border-[#333] rounded-sm flex items-center justify-between gap-3 overflow-hidden">
-                <div className="truncate text-gray-300">
-                  <span className="text-green-500/80 mr-2">$</span>
+              <div className="p-2 bg-[#1b1b1b] border border-[#42414d] rounded-xl flex items-center justify-between gap-3 overflow-hidden">
+                <div className="truncate text-[#eaeaeb] px-2">
+                  <span className="text-[#8cb4ff] mr-2">$</span>
                   npm install -g hackkinshuk
                 </div>
                 <CopyButton text="npm install -g hackkinshuk" />
               </div>
-              <div className="p-3 sm:p-4 bg-[#1e1e1e] border border-[#333] rounded-sm flex items-center justify-between gap-3 overflow-hidden">
-                <div className="truncate text-gray-300">
-                  <span className="text-green-500/80 mr-2">$</span>
+              <div className="p-2 bg-[#1b1b1b] border border-[#42414d] rounded-xl flex items-center justify-between gap-3 overflow-hidden">
+                <div className="truncate text-[#eaeaeb] px-2">
+                  <span className="text-[#8cb4ff] mr-2">$</span>
                   cloudkinshuk
                 </div>
                 <CopyButton text="cloudkinshuk" />

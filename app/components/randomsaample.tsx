@@ -4,7 +4,7 @@ export default function RandomSample() {
       <h1 className="text-2xl font-bold text-white mb-4">
         Random Sample Component
       </h1>
-      <p className="text-gray-400">
+      <p className="text-gray-200">
         This is a placeholder for a random sample component.
       </p>
     </div>

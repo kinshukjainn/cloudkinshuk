@@ -61,7 +61,7 @@ const navLinks: NavLink[] = [
 
 const Footer = () => {
   return (
-    <footer className="bg-[#313131] border-t border-white/10 relative overflow-hidden">
+    <footer className="bg-[#1b1b1b] border-t border-white/10 relative overflow-hidden">
       {/* Background Accent */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-gray-500 to-transparent opacity-50" />
 
@@ -78,7 +78,7 @@ const Footer = () => {
                 </h2>
               </div>
             </div>
-            <p className="text-sm sm:text-base text-gray-400 max-w-sm mx-auto">
+            <p className="text-sm sm:text-base text-gray-200 max-w-sm mx-auto">
               Building the future, one cloud at a time.
             </p>
           </div>
@@ -111,7 +111,7 @@ const Footer = () => {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-white hover:-translate-y-1 transition-all duration-300 transform"
+                    className="text-gray-200 hover:text-white hover:-translate-y-1 transition-all duration-300 transform"
                     aria-label={link.label}
                   >
                     <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
@@ -123,7 +123,7 @@ const Footer = () => {
 
           {/* Copyright section */}
           <div className="text-center space-y-2 pt-6 border-t border-white/5 w-full max-w-2xl">
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-gray-200">
               © {new Date().getFullYear()} Kinshuk Jain. All rights reserved.
             </p>
             <p className="text-xs text-gray-600 flex items-center justify-center gap-1">

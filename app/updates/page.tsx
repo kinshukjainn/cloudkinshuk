@@ -86,7 +86,7 @@ const NOW_CONFIG = {
 
 export default function CurrentWorkings() {
   return (
-    <div className="min-h-screen pt-16 md:pt-24 bg-[#313131] text-gray-200  selection:bg-green-500 selection:text-black">
+    <div className="min-h-screen pt-16 md:pt-24 bg-[#1b1b1b] text-gray-200  selection:bg-green-500 selection:text-black">
       <div className="max-w-4xl pt-10 mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         {/* Header Block */}
         <header className="mb-12 border-b border-[#444] pb-8">
@@ -96,7 +96,7 @@ export default function CurrentWorkings() {
           <p className="text-lg text-gray-300 font-medium mb-6">
             My focus and progress in real-time
           </p>
-          <div className="text-sm font-mono text-gray-100 inline-block px-3 py-1.5 rounded-sm">
+          <div className="text-sm font-mono text-gray-100 inline-block px-3 py-1.5 rounded-xl">
             Last updated:{" "}
             <span className="text-green-300">{NOW_CONFIG.lastUpdated}</span> |
             Cycle: Every 2 months
@@ -133,7 +133,7 @@ export default function CurrentWorkings() {
                         <Icon className="text-green-500 w-4 h-4" />
                         {project.title}
                       </h3>
-                      <span className="text-xs font-mono font-medium text-black bg-green-500 px-2 py-0.5 rounded-sm w-fit">
+                      <span className="text-xs font-mono font-medium text-black bg-green-500 px-2 py-0.5 rounded-xl w-fit">
                         {project.status}
                       </span>
                     </div>
@@ -148,7 +148,7 @@ export default function CurrentWorkings() {
                         {project.technologies.map((tech, i) => (
                           <span
                             key={i}
-                            className="bg-[#282828] border border-[#555] px-2 py-0.5 rounded-sm text-xs"
+                            className="bg-[#282828] border border-[#555] px-2 py-0.5 rounded-xl text-xs"
                           >
                             {tech}
                           </span>
@@ -192,7 +192,7 @@ export default function CurrentWorkings() {
                     <p className="text-gray-300 text-sm sm:text-base mb-3 leading-relaxed max-w-2xl">
                       {item.description}
                     </p>
-                    <div className="text-sm font-mono text-gray-400">
+                    <div className="text-sm font-mono text-gray-200">
                       &gt; Source:{" "}
                       <span className="text-gray-300 font-sans">
                         {item.resource}
@@ -249,7 +249,7 @@ export default function CurrentWorkings() {
               <span className="text-green-500 font-mono text-lg">5.</span>{" "}
               Reading & Following
             </h2>
-            <div className="grid sm:grid-cols-2 gap-6 bg-[#282828] border border-[#444] p-6 rounded-sm">
+            <div className="grid sm:grid-cols-2 gap-6 bg-[#282828] border border-[#444] p-6 rounded-xl">
               {NOW_CONFIG.consuming.map((item, index) => (
                 <div key={index}>
                   <div className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-1">
@@ -271,7 +271,7 @@ export default function CurrentWorkings() {
                 <span className="text-gray-500 font-mono text-lg">6.</span> Not
                 Doing Right Now
               </h2>
-              <p className="text-sm text-gray-400 mb-6 italic">
+              <p className="text-sm text-gray-200 mb-6 italic">
                 Being intentional about focus means being clear about what to
                 avoid.
               </p>
@@ -279,7 +279,7 @@ export default function CurrentWorkings() {
                 {NOW_CONFIG.notDoing.map((item, index) => (
                   <li
                     key={index}
-                    className="text-gray-400 text-sm sm:text-base flex items-start"
+                    className="text-gray-200 text-sm sm:text-base flex items-start"
                   >
                     <span className="text-gray-600 mr-3 mt-0.5 font-mono">
                       -
@@ -299,7 +299,7 @@ export default function CurrentWorkings() {
               href="https://nownownow.com/about"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white underline underline-offset-4 transition-colors"
+              className="text-gray-200 hover:text-white underline underline-offset-4 transition-colors"
             >
               /now movement
             </a>

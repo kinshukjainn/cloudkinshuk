@@ -95,7 +95,7 @@ const ToolCategory = ({
         <h2 className="text-xl font-medium text-white tracking-tight">
           {section.category}
         </h2>
-        <span className="ml-auto text-xs font-medium text-gray-500 bg-[#282828] px-2 py-0.5 rounded-sm border border-[#444]">
+        <span className="ml-auto text-xs font-medium text-gray-500 bg-[#282828] px-2 py-0.5 rounded-xl border border-[#444]">
           {section.items.length} items
         </span>
       </div>
@@ -113,7 +113,7 @@ const ToolCategory = ({
                 <div className="text-base text-gray-200 font-medium leading-snug group-hover:text-white transition-colors">
                   {item.name}
                 </div>
-                <div className="text-sm text-gray-400 mt-0.5 leading-snug">
+                <div className="text-sm text-gray-200 mt-0.5 leading-snug">
                   {item.spec}
                 </div>
               </div>
@@ -132,7 +132,7 @@ export default function DevToolsCompact() {
   );
 
   return (
-    <div className="min-h-screen bg-[#313131]  text-gray-100  selection:bg-green-500 selection:text-black pt-16 md:pt-24">
+    <div className="min-h-screen bg-[#1b1b1b]  text-gray-100  selection:bg-green-500 selection:text-black pt-16 md:pt-24">
       <div className="max-w-4xl pt-10 mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <header className="mb-12 md:mb-16 border-b border-[#444] pb-8">
@@ -149,7 +149,7 @@ export default function DevToolsCompact() {
               powering my daily workflow and infrastructure.
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 text-sm font-medium text-gray-400">
+            <div className="flex flex-wrap items-center gap-4 text-sm font-medium text-gray-200">
               <div className="flex items-center gap-1.5">
                 <span className="text-green-500">{totalTools}</span> Active
                 Tools

@@ -250,7 +250,7 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
         regex.test(part) ? (
           <mark
             key={i}
-            className="bg-amber-500/20 text-amber-300 font-medium px-1 rounded-sm"
+            className="bg-amber-500/20 text-amber-300 font-medium px-1 rounded-xl"
           >
             {part}
           </mark>
@@ -278,10 +278,10 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
       >
         <Link
           href={`/home-blog/${post.id}`}
-          className="group block p-6 bg-[#282828] border border-[#444] rounded-sm transition-all duration-200 hover:border-[#444444] hover:bg-[#2c2c2c]"
+          className="group block p-6 bg-[#1e1e1e] border border-[#444] rounded-3xl transition-all duration-200 hover:border-[#444444]"
         >
           {/* Title */}
-          <h3 className="text-xl text-white mb-2 font-medium leading-tight transition-colors duration-200 group-hover:text-green-400">
+          <h3 className="text-xl text-white mb-2 font-bold leading-tight transition-colors duration-200 group-hover:text-blue-400">
             {highlightText(post.title, searchQuery)}
           </h3>
 
@@ -300,7 +300,7 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
           </div>
 
           {/* Brief */}
-          <p className="text-gray-400 text-sm mb-5 leading-relaxed line-clamp-2">
+          <p className="text-gray-200 text-sm mb-5 leading-relaxed line-clamp-2">
             {post.brief}
           </p>
 
@@ -309,17 +309,17 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
             {post.tags.slice(0, 4).map((tag) => (
               <span
                 key={tag.id}
-                className="inline-flex items-center justify-center px-2.5 py-1 text-xs font-medium rounded-sm border bg-[#333] border-[#444] text-gray-300 group-hover:border-[#555]"
+                className="inline-flex items-center justify-center px-2.5 py-1 text-xs font-medium rounded-xl border bg-[#333] border-[#444] text-gray-300 group-hover:border-[#555]"
               >
                 {tag.name}
               </span>
             ))}
             {post.tags.length > 4 && (
-              <span className="inline-flex items-center justify-center px-2.5 py-1 text-xs font-medium rounded-sm border bg-[#333] border-[#444] text-gray-400">
+              <span className="inline-flex items-center justify-center px-2.5 py-1 text-xs font-medium rounded-xl border bg-[#333] border-[#444] text-gray-200">
                 +{post.tags.length - 4} more
               </span>
             )}
-            <div className="ml-auto text-green-300 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-sm font-medium">
+            <div className="ml-auto text-white font-mono opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-sm font-semibold">
               Read <ArrowRight className="w-4 h-4" />
             </div>
           </div>
@@ -366,14 +366,14 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     <div className="mb-8">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex md:hidden items-center justify-between w-full px-4 py-3 bg-[#282828] border border-[#444] rounded-sm transition-colors duration-200 mb-4"
+        className="flex md:hidden items-center justify-between w-full px-4 py-3  border-b-2 border-[#444444]  transition-colors duration-200 mb-4"
       >
         <span className="text-sm font-medium text-white">
           Filter by tags {activeFiltersCount > 0 && `(${activeFiltersCount})`}
         </span>
         <ChevronDown
           size={18}
-          className={`text-gray-400 transition-transform duration-200 ${
+          className={`text-gray-200 transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""
           }`}
         />
@@ -386,7 +386,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
             : "max-h-0 md:max-h-none opacity-0 md:opacity-100"
         } md:opacity-100 md:max-h-none`}
       >
-        <div className="border border-[#444] bg-[#282828] rounded-sm p-5">
+        <div className=" p-2">
           <label className="block text-sm font-medium text-white mb-3">
             Available Tags{" "}
             {filters.tags.length > 0 && `(${filters.tags.length} selected)`}
@@ -399,11 +399,11 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                   key={tag}
                   onClick={() => toggleTag(tag)}
                   className={`
-                    inline-flex items-center justify-center px-3 py-1.5 text-xs font-medium rounded-sm border transition-all duration-200
+                    inline-flex items-center justify-center px-3 py-1.5 text-xs font-semibold rounded-full border transition-all duration-200
                     ${
                       isSelected
-                        ? "bg-amber-500/10 border-[#444444] text-amber-400"
-                        : "bg-[#333] border-[#444] text-gray-300 hover:border-gray-400 hover:text-white"
+                        ? "border-blue-500 border-1 text-blue-500 font-bold"
+                        : "bg-[#121212] border-[#444] text-gray-300 hover:border-gray-400 hover:text-white"
                     }
                   `}
                 >
@@ -416,7 +416,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
           {activeFiltersCount > 0 && (
             <button
               onClick={resetFilters}
-              className="mt-5 flex items-center justify-center gap-2 px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors duration-200"
+              className="mt-5 flex items-center justify-center gap-2 px-4 py-2 text-sm text-gray-200 hover:text-white transition-colors duration-200"
             >
               <RotateCcw size={14} />
               Clear selections
@@ -445,7 +445,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     <div className="mb-6 w-full">
       <div className="relative flex items-center w-full">
         <div className="absolute left-4 z-10 flex items-center justify-center pointer-events-none">
-          <Search className="w-5 h-5 text-gray-500" aria-hidden="true" />
+          <Search className="w-5 h-5 text-blue-400" aria-hidden="true" />
         </div>
 
         <input
@@ -453,7 +453,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           placeholder="Search articles, tags, or topics..."
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="w-full bg-[#282828] border border-[#444] text-white placeholder:text-gray-500 focus:border-[#444444] focus:outline-none rounded-sm pl-12 pr-12 py-3.5 text-sm sm:text-base transition-colors duration-200"
+          className="w-full bg-[#1e1e1e] border-b-3 border-gray-400 text-white placeholder:text-gray-500  focus:outline-none rounded-xs pl-12 pr-12 py-3.5 text-sm sm:text-base transition-colors duration-200"
         />
 
         {searchInput && (
@@ -471,7 +471,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         <motion.div
           initial={{ opacity: 0, y: -5 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-3 text-sm text-gray-400 flex items-center gap-2"
+          className="mt-3 text-sm text-gray-200 flex items-center gap-2"
         >
           <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
           Found <span className="text-white font-medium">
@@ -520,7 +520,7 @@ export default function BlogsPage() {
   }, [posts, searchInput, searchEngine, filters]);
 
   return (
-    <div className="min-h-screen bg-[#313131] text-gray-100  selection:bg-green-500 selection:text-white">
+    <div className="min-h-screen bg-[#1b1b1b] text-gray-100  selection:bg-green-500 selection:text-white">
       {/* Header */}
       <header className="border-b border-[#444] mb-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -538,15 +538,17 @@ export default function BlogsPage() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         {/* Feedback Card */}
-        <div className="mb-10 bg-[#282828] rounded-sm p-6 border border-[#444] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div className="mb-10   flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
-              <MessageSquare className="w-5 h-5 text-green-300" />
+              <div className="bg-green-600 p-2 rounded-xl">
+                <MessageSquare className="w-5 h-5 text-white" />
+              </div>
               <h3 className="text-lg font-medium text-white">
-                Share Your Feedback
+                Leave Your Feedback
               </h3>
             </div>
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-200 text-sm">
               Help me improve! Your thoughts and suggestions are invaluable for
               creating better content.
             </p>
@@ -555,7 +557,7 @@ export default function BlogsPage() {
             href="https://fdb.cloudkinshuk.in/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-500 hover:bg-green-700 text-black font-medium rounded-sm transition-colors whitespace-nowrap"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-500 hover:bg-green-700 text-black font-medium rounded-xl transition-colors whitespace-nowrap"
           >
             Leave Feedback
             <ArrowRight className="w-4 h-4" />
@@ -578,11 +580,11 @@ export default function BlogsPage() {
         />
 
         {filteredPosts.length === 0 ? (
-          <div className="text-center py-20 bg-[#282828] border border-[#444] rounded-sm">
+          <div className="text-center py-20 bg-[#1e1e1e] border border-[#444] rounded-xl">
             <h3 className="text-xl font-medium text-white mb-2">
               No articles found
             </h3>
-            <p className="text-gray-400 mb-6">
+            <p className="text-gray-200 mb-6">
               Try adjusting your search terms or clearing your filters.
             </p>
             <button
@@ -591,7 +593,7 @@ export default function BlogsPage() {
                 setFilters({ tags: [] });
                 setFilterOpen(false);
               }}
-              className="px-6 py-2 bg-[#3f3f3f] hover:bg-[#4a4a4a] text-white font-medium rounded-sm transition-colors duration-200"
+              className="px-6 py-2 bg-[#3f3f3f]  text-white font-medium rounded-xl transition-colors duration-200"
             >
               Clear all filters
             </button>

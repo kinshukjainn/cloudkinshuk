@@ -199,7 +199,7 @@ export default function SeoInsights() {
   };
 
   return (
-    <div className="min-h-screen pt-16 md:pt-24 bg-[#313131] text-gray-200  selection:bg-green-500 selection:text-black">
+    <div className="min-h-screen pt-16 md:pt-24 bg-[#1b1b1b] text-gray-200  selection:bg-green-500 selection:text-black">
       <div className="max-w-4xl pt-10 mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         {/* Header Block */}
         <header className="mb-10 border-b border-[#444] pb-6 flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -215,23 +215,23 @@ export default function SeoInsights() {
 
           <div className="flex items-center gap-3">
             {/* Device Toggle */}
-            <div className="flex bg-[#282828] border border-[#444] rounded-md p-1">
+            <div className="flex bg-[#282828] border border-[#444] rounded-xl p-1">
               <button
                 onClick={() => setDevice("mobile")}
-                className={`flex items-center gap-2 px-3 py-1.5 text-sm cursor-pointer font-medium rounded-md transition-colors ${
+                className={`flex items-center gap-2 px-3 py-1.5 text-sm cursor-pointer font-medium rounded-xl transition-colors ${
                   device === "mobile"
                     ? "bg-[#3f3f3f] text-white shadow-sm"
-                    : "text-gray-400 hover:text-gray-200"
+                    : "text-gray-200 hover:text-gray-200"
                 }`}
               >
                 <Smartphone className="w-4 h-4" /> Mobile
               </button>
               <button
                 onClick={() => setDevice("desktop")}
-                className={`flex items-center gap-2 px-3 py-1.5  text-sm cursor-pointer font-medium rounded-md transition-colors ${
+                className={`flex items-center gap-2 px-3 py-1.5  text-sm cursor-pointer font-medium rounded-xl transition-colors ${
                   device === "desktop"
                     ? "bg-[#3f3f3f] text-white shadow-sm"
-                    : "text-gray-400 hover:text-gray-200"
+                    : "text-gray-200 hover:text-gray-200"
                 }`}
               >
                 <Monitor className="w-4 h-4" /> Desktop
@@ -241,7 +241,7 @@ export default function SeoInsights() {
             {/* Export Button */}
             <button
               onClick={handleExport}
-              className="flex items-center gap-2 px-4 py-2 bg-green-500 cursor-pointer hover:bg-green-400 text-black text-sm font-semibold rounded-md transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-green-500 cursor-pointer hover:bg-green-400 text-black text-sm font-semibold rounded-xl transition-colors"
             >
               <Download className="w-4 h-4" /> Export
             </button>
@@ -268,7 +268,7 @@ export default function SeoInsights() {
             {Object.entries(currentData.scores).map(([key, value]) => (
               <div
                 key={key}
-                className="bg-[#282828] border border-[#444] p-5 rounded-sm flex flex-col items-center justify-center text-center"
+                className="bg-[#282828] border border-[#444] p-5 rounded-xl flex flex-col items-center justify-center text-center"
               >
                 <div
                   className={`text-4xl font-mono font-bold mb-2 ${getScoreColor(value)}`}
@@ -289,7 +289,7 @@ export default function SeoInsights() {
             <span className="text-green-500 font-mono text-lg">2.</span> Core
             Web Vitals
           </h2>
-          <div className="bg-[#282828] border border-[#444] rounded-sm overflow-hidden">
+          <div className="bg-[#282828] border border-[#444] rounded-xl overflow-hidden">
             <table className="w-full text-left text-sm whitespace-nowrap">
               <thead className="bg-[#333] border-b border-[#444]">
                 <tr>
@@ -317,7 +317,7 @@ export default function SeoInsights() {
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2 capitalize">
                         {getStatusIcon(metric.status)}
-                        <span className="text-gray-400">{metric.status}</span>
+                        <span className="text-gray-200">{metric.status}</span>
                       </div>
                     </td>
                   </tr>
@@ -349,13 +349,13 @@ export default function SeoInsights() {
                     {item.title}
                   </h3>
                   {item.savings && (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#333] border border-[#555] rounded-sm text-xs font-mono text-amber-400 whitespace-nowrap">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#333] border border-[#555] rounded-xl text-xs font-mono text-amber-400 whitespace-nowrap">
                       <Clock className="w-3.5 h-3.5" /> Est. savings:{" "}
                       {item.savings}
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-gray-400 leading-relaxed ml-7">
+                <p className="text-sm text-gray-200 leading-relaxed ml-7">
                   {item.description}
                 </p>
                 <div className="mt-3 ml-7">

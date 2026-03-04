@@ -221,10 +221,8 @@ const CopyButton = ({ text }: { text: string }) => {
   return (
     <button
       onClick={handleCopy}
-      className={`p-2 cursor-pointer rounded-xl transition-colors flex-shrink-0 group border ${
-        copied
-          ? "bg-white border-white text-black"
-          : "bg-[#1e1e1e] border-[#42414d] hover:border-[#8cb4ff] hover:bg-[#8cb4ff]/10 text-white"
+      className={`p-1 cursor-pointer rounded-md transition-colors flex-shrink-0  ${
+        copied ? "bg-green-500  text-black" : "bg-green-700 text-white"
       }`}
       title="Copy to clipboard"
     >
@@ -292,7 +290,7 @@ export default function Home() {
             Check out my projects on{" "}
             <a
               href="https://github.com/kinshukjainn"
-              className="text-white font-semibold border-b-[3px] border-[#8cb4ff] hover:bg-[#8cb4ff]/10 hover:border-b-4 transition-all"
+              className="text-white font-semibold border-b-[3px] px-2 border-green-300  hover:bg-green-400/10 hover:border-b-4 transition-all"
             >
               GitHub
             </a>
@@ -311,14 +309,14 @@ export default function Home() {
             infrastructure, and understanding how technology connects people.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            <div className="flex items-center gap-2.5 px-4 py-2.5 bg-[#1e1e1e] border border-[#42414d] rounded-xl w-max">
+          <div className="flex flex-col sm:flex-row gap-6 mb-8">
+            <div className="flex items-center gap-2.5 px-2 py-1 bg-[#252525] rounded-md  w-max">
               <MapPin className="w-4 h-4 text-[#eaeaeb] flex-shrink-0" />
               <span className="text-[#eaeaeb] text-sm font-medium">
                 {CONFIG.personal.location}
               </span>
             </div>
-            <div className="flex items-center gap-2.5 px-4 py-2.5 bg-[#1e1e1e] border border-[#42414d] rounded-xl w-max">
+            <div className="flex items-center gap-2.5 px-2 py-1 bg-[#252525]  rounded-md w-max">
               <div className="w-2 h-2 bg-[#8cb4ff] rounded-full animate-pulse flex-shrink-0"></div>
               <span className="text-[#eaeaeb] text-sm font-medium">
                 {CONFIG.personal.availability}
@@ -333,9 +331,9 @@ export default function Home() {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 px-4 py-2.5 bg-[#1e1e1e] border border-[#42414d] hover:border-[#8cb4ff] hover:bg-[#32313c] rounded-xl transition-all duration-200 text-[#eaeaeb] hover:text-white group"
+                className="flex items-center gap-2.5 px-4 py-1.5 bg-[#252525] rounded-sm transition-all duration-200 text-[#eaeaeb] hover:text-white group"
               >
-                <div className="text-[#eaeaeb] group-hover:text-[#8cb4ff] transition-colors">
+                <div className="text-green-500  transition-colors">
                   <SocialIcon icon={social.icon} />
                 </div>
                 <span className="text-sm font-medium">{social.handle}</span>
@@ -347,7 +345,7 @@ export default function Home() {
 
         {/* Resume & Publications Grid */}
         <section className="grid sm:grid-cols-2 gap-6 scroll-mt-20">
-          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-xl p-6 sm:p-8 flex flex-col items-start justify-between transition-colors hover:border-[#555]">
+          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-md p-6 sm:p-8 flex flex-col items-start justify-between transition-colors hover:border-[#555]">
             <div>
               <div className="flex items-center gap-3 mb-3">
                 <FileText className="w-6 h-6 text-white" />
@@ -367,14 +365,14 @@ export default function Home() {
             <a
               href="/kinshukfinalresume.pdf"
               download="kinshukfinalresume.pdf"
-              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-6 py-2.5 bg-transparent border border-white hover:bg-white text-white hover:text-black font-semibold rounded-full transition-colors"
+              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-3 py-1 bg-green-700 font-semibold rounded-md transition-colors"
             >
               <Download className="w-4 h-4" />
-              Download PDF
+              Download
             </a>
           </div>
 
-          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-xl p-6 sm:p-8 flex flex-col items-start h-full justify-between transition-colors hover:border-[#555]">
+          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-md p-6 sm:p-8 flex flex-col items-start h-max justify-between transition-colors hover:border-[#555]">
             <div>
               <div className="flex items-center gap-3 mb-3">
                 <BookOpen className="w-6 h-6 text-white" />
@@ -389,7 +387,7 @@ export default function Home() {
             </div>
             <a
               href="/home-blog"
-              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-6 py-2.5 bg-transparent border border-white hover:bg-white text-white hover:text-black font-semibold rounded-full transition-colors mt-auto"
+              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-3 py-1 bg-green-700 font-semibold rounded-md transition-colors"
             >
               Read Blogs
               <ExternalLink className="w-4 h-4" />
@@ -400,7 +398,7 @@ export default function Home() {
         {/* Experience Section */}
         <section className="scroll-mt-20">
           <SectionHeader title="Experience" icon={Briefcase} />
-          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-xl p-6 sm:p-8">
+          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-md p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-2">
               <h3 className="text-xl font-semibold text-white">UPPTCL</h3>
               <span className="text-[#eaeaeb] text-sm font-medium">
@@ -432,10 +430,9 @@ export default function Home() {
               <div className="pt-3">
                 <a
                   href="/home-blog/blogE"
-                  className="inline-flex items-center gap-2 text-white font-semibold border-b-[3px] border-[#8cb4ff] hover:bg-[#8cb4ff]/10 hover:border-b-4 transition-all text-md"
+                  className="inline-flex items-center gap-2 text-white px-3 py-1 bg-green-700 rounded-sm font-semibold  transition-all text-md"
                 >
-                  Read Detailed Experience Log{" "}
-                  <ExternalLink className="w-3.5 h-3.5" />
+                  Read blog <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </div>
             </div>
@@ -471,14 +468,14 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-wrap gap-2 mb-5">
-                  <span className="px-2.5 py-1 bg-[#1b1b1b] border border-[#42414d] text-[#eaeaeb] rounded-xl text-xs font-medium">
+                  <span className="px-2.5 py-1  text-green-500 text-sm font-bold uppercase">
                     {project.type}
                   </span>
                   <span
-                    className={`px-2.5 py-1 border rounded-xl text-xs font-semibold ${
+                    className={`px-2.5 py-1  rounded-md text-xs font-semibold ${
                       project.status === "Live"
-                        ? "bg-[#8cb4ff]/10 border-[#8cb4ff]/30 text-[#8cb4ff]"
-                        : "bg-[#1b1b1b] border-[#42414d] text-[#eaeaeb]"
+                        ? "bg-[#8cb4ff]/10  text-[#8cb4ff]"
+                        : "bg-[#1b1b1b]  text-[#eaeaeb]"
                     }`}
                   >
                     {project.status}
@@ -496,7 +493,7 @@ export default function Home() {
                     {project.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2.5 py-1 bg-[#1b1b1b] text-[#eaeaeb] border border-[#42414d] rounded-xl text-xs"
+                        className="px-2.5 py-1 bg-[#303030] text-[#eaeaeb] rounded-sm text-xs"
                       >
                         {tech}
                       </span>
@@ -505,7 +502,7 @@ export default function Home() {
                 </div>
 
                 {project.dockerCommand !== "Image is not available" && (
-                  <div className="p-2 mb-6 font-mono text-xs sm:text-sm bg-[#1b1b1b] border border-[#42414d] rounded-xl flex items-center justify-between gap-3 overflow-hidden">
+                  <div className="p-1 mb-6 font-mono text-xs sm:text-sm bg-[#252525] rounded-md flex items-center justify-between gap-3 overflow-hidden">
                     <code className="text-[#eaeaeb] truncate px-2">
                       <span className="text-[#8cb4ff] mr-2">$</span>
                       {project.dockerCommand}
@@ -520,7 +517,7 @@ export default function Home() {
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-2 bg-transparent border border-white text-white hover:bg-white hover:text-black text-sm font-semibold rounded-full transition-colors"
+                      className="inline-flex items-center gap-2 px-3 py-2 bg-blue-800  text-white text-sm font-semibold rounded-md  transition-colors"
                     >
                       View Project <ExternalLink className="w-4 h-4" />
                     </a>
@@ -530,7 +527,7 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-2 bg-[#1e1e1e] border border-[#42414d] text-white hover:border-[#8cb4ff] text-sm font-semibold rounded-full transition-colors"
+                      className="inline-flex items-center gap-2 px-3 py-2 bg-black  text-sm font-semibold rounded-md transition-colors"
                     >
                       <Github className="w-4 h-4" /> Source Code
                     </a>
@@ -548,7 +545,7 @@ export default function Home() {
             {Object.entries(CONFIG.skills).map(([category, skills]) => (
               <div
                 key={category}
-                className="bg-[#1e1e1e] border border-[#42414d] rounded-xl p-5 sm:p-6"
+                className="bg-[#1e1e1e] border border-[#42414d] rounded-md  p-3 sm:p-4"
               >
                 <h3 className="text-lg font-semibold text-white mb-4">
                   {category}
@@ -557,7 +554,7 @@ export default function Home() {
                   {skills.map((skill) => (
                     <span
                       key={skill}
-                      className="px-3 py-1.5 bg-[#1b1b1b] border border-[#42414d] text-[#eaeaeb] rounded-xl text-xs sm:text-sm font-medium"
+                      className="px-2 py-1 bg-[#303030]  text-[#eaeaeb] rounded-md  text-xs sm:text-sm font-medium"
                     >
                       {skill}
                     </span>
@@ -575,7 +572,7 @@ export default function Home() {
             {CONFIG.certifications.map((cert) => (
               <div
                 key={cert.title}
-                className="bg-[#1e1e1e] border border-[#42414d] rounded-xl p-6 flex flex-col justify-between hover:border-[#555] transition-colors"
+                className="bg-[#1e1e1e] border border-[#42414d] rounded-md p-3 flex flex-col justify-between hover:border-[#555] transition-colors"
               >
                 <div>
                   <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-3 gap-2">
@@ -585,7 +582,7 @@ export default function Home() {
                           href={cert.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-white hover:text-[#8cb4ff] border-b-2 border-transparent hover:border-[#8cb4ff] transition-colors inline-flex items-center gap-2"
+                          className="text-white hover:text-green-300   transition-colors inline-flex items-center gap-2"
                         >
                           {cert.title}
                           <ExternalLink className="w-3.5 h-3.5" />
@@ -608,7 +605,7 @@ export default function Home() {
                   {cert.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="px-2.5 py-1 bg-[#1b1b1b] border border-[#42414d] text-[#eaeaeb] rounded-xl text-xs"
+                      className="px-2.5 py-1 font-semibold   text-green-500 rounded-sm text-xs"
                     >
                       {skill}
                     </span>
@@ -622,7 +619,7 @@ export default function Home() {
         {/* Education Section */}
         <section className="scroll-mt-20">
           <SectionHeader title="Education" icon={GraduationCap} />
-          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-xl p-6 sm:p-8">
+          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-md p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-2">
               <h3 className="text-xl font-semibold text-white">
                 {CONFIG.education.degree}
@@ -646,20 +643,20 @@ export default function Home() {
         {/* CLI Tool Section */}
         <section className="scroll-mt-20">
           <SectionHeader title="CLI Tool" icon={Code} />
-          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-xl p-6 sm:p-8">
+          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-md p-6 sm:p-8">
             <p className="text-[#eaeaeb] text-sm sm:text-base mb-6">
               Interactive command-line portfolio viewer built with Node.js.
               Install it globally via npm.
             </p>
             <div className="space-y-3 font-mono text-sm">
-              <div className="p-2 bg-[#1b1b1b] border border-[#42414d] rounded-xl flex items-center justify-between gap-3 overflow-hidden">
+              <div className="p-1 bg-[#1b1b1b] border border-[#42414d] rounded-sm flex items-center justify-between gap-2 overflow-hidden">
                 <div className="truncate text-[#eaeaeb] px-2">
                   <span className="text-[#8cb4ff] mr-2">$</span>
                   npm install -g hackkinshuk
                 </div>
                 <CopyButton text="npm install -g hackkinshuk" />
               </div>
-              <div className="p-2 bg-[#1b1b1b] border border-[#42414d] rounded-xl flex items-center justify-between gap-3 overflow-hidden">
+              <div className="p-1 bg-[#1b1b1b] border border-[#42414d] rounded-sm flex items-center justify-between gap-2 overflow-hidden">
                 <div className="truncate text-[#eaeaeb] px-2">
                   <span className="text-[#8cb4ff] mr-2">$</span>
                   cloudkinshuk

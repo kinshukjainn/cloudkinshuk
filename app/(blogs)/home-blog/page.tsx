@@ -274,14 +274,14 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="mb-4"
+        className="mb-6"
       >
         <Link
           href={`/home-blog/${post.id}`}
-          className="group block p-6 bg-[#1e1e1e] border border-[#444] rounded-3xl transition-all duration-200 hover:border-[#444444]"
+          className="group block p-3    transition-all duration-200 "
         >
           {/* Title */}
-          <h3 className="text-xl text-white mb-2 font-bold leading-tight transition-colors duration-200 group-hover:text-blue-400">
+          <h3 className="text-xl text-white mb-2 font-bold leading-tight transition-colors duration-200 group-hover:text-blue-200">
             {highlightText(post.title, searchQuery)}
           </h3>
 
@@ -309,13 +309,13 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
             {post.tags.slice(0, 4).map((tag) => (
               <span
                 key={tag.id}
-                className="inline-flex items-center justify-center px-2.5 py-1 text-xs font-medium rounded-xl border bg-[#333] border-[#444] text-gray-300 group-hover:border-[#555]"
+                className="inline-flex items-center justify-center px-2.5 py-1 text-xs  text-yellow-200 font-bold group-hover:border-[#555]"
               >
                 {tag.name}
               </span>
             ))}
             {post.tags.length > 4 && (
-              <span className="inline-flex items-center justify-center px-2.5 py-1 text-xs font-medium rounded-xl border bg-[#333] border-[#444] text-gray-200">
+              <span className="inline-flex items-center justify-center px-2.5 py-1 text-xs font-semibold text-yellow-200">
                 +{post.tags.length - 4} more
               </span>
             )}
@@ -366,7 +366,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     <div className="mb-8">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex md:hidden items-center justify-between w-full px-4 py-3  border-b-2 border-[#444444]  transition-colors duration-200 mb-4"
+        className="flex md:hidden items-center justify-between bg-[#252525] rounded-md w-full px-4 py-3  border-2 border-[#444444]  transition-colors duration-200 mb-4"
       >
         <span className="text-sm font-medium text-white">
           Filter by tags {activeFiltersCount > 0 && `(${activeFiltersCount})`}
@@ -399,11 +399,11 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                   key={tag}
                   onClick={() => toggleTag(tag)}
                   className={`
-                    inline-flex items-center justify-center px-3 py-1.5 text-xs font-semibold rounded-full border transition-all duration-200
+                    inline-flex items-center justify-center px-3 py-1.5 text-xs cursor-pointer font-semibold rounded-sm transition-all duration-200
                     ${
                       isSelected
-                        ? "border-blue-500 border-1 text-blue-500 font-bold"
-                        : "bg-[#121212] border-[#444] text-gray-300 hover:border-gray-400 hover:text-white"
+                        ? "bg-green-500 text-black  font-semibold"
+                        : "bg-[#121212]  text-gray-300  hover:text-white"
                     }
                   `}
                 >
@@ -453,7 +453,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           placeholder="Search articles, tags, or topics..."
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="w-full bg-[#1e1e1e] border-b-3 border-gray-400 text-white placeholder:text-gray-500  focus:outline-none rounded-xs pl-12 pr-12 py-3.5 text-sm sm:text-base transition-colors duration-200"
+          className="w-full bg-[#252525] text-white placeholder:text-gray-500  focus:outline-none rounded-sm  pl-12 pr-12 py-2 text-sm sm:text-base transition-colors duration-200"
         />
 
         {searchInput && (
@@ -528,23 +528,27 @@ export default function BlogsPage() {
             Developer Blogs
           </h1>
           <p className="text-lg text-gray-300 leading-relaxed max-w-3xl">
-            Hi there, here I share my learning journey in cloud computing,
-            DevOps, security, and infrastructure engineering. I write about AWS
+            Hi{" "}
+            <span className="text-green-400 font-bold font-mono">
+              {"@"}everyone
+            </span>
+            , here I share my learning journey in cloud computing, DevOps,
+            security, and infrastructure engineering. I write about AWS
             services, serverless systems, CI/CD basics, and Terraform, focusing
             on understanding concepts through hands-on practice.
           </p>
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         {/* Feedback Card */}
         <div className="mb-10   flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
-              <div className="bg-green-600 p-2 rounded-xl">
+              <div className="bg-green-600 p-2 rounded-sm">
                 <MessageSquare className="w-5 h-5 text-white" />
               </div>
-              <h3 className="text-lg font-medium text-white">
+              <h3 className="text-lg font-semibold text-white">
                 Leave Your Feedback
               </h3>
             </div>
@@ -557,7 +561,7 @@ export default function BlogsPage() {
             href="https://fdb.cloudkinshuk.in/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-500 hover:bg-green-700 text-black font-medium rounded-xl transition-colors whitespace-nowrap"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-500  text-black font-bold rounded-lg transition-colors whitespace-nowrap"
           >
             Leave Feedback
             <ArrowRight className="w-4 h-4" />

@@ -9,6 +9,7 @@ import {
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import localFont from "next/font/local";
 
 export const inter = Inter({
   subsets: ["latin"],
@@ -23,6 +24,13 @@ const ptSans = PT_Sans({
   style: ["normal", "italic"],
   display: "swap",
   variable: "--font-pt-sans",
+});
+
+export const lucideSans = localFont({
+  src: "../public/fonts/lucida-sans-unicode.woff2",
+  variable: "--font-lucida",
+  weight: "400",
+  display: "swap",
 });
 
 const workSans = Work_Sans({
@@ -60,7 +68,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${ptSans.variable} ${workSans.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
+        className={`${inter.variable} ${lucideSans.variable} ${ptSans.variable} ${workSans.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >
         <Header />
         {children}

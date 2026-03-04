@@ -15,6 +15,7 @@ const config: Config = {
         ptSans: "var(--font-pt-sans) , sans-serif",
         workSans: "var(--font-work-sans) , sans-serif",
         alegreya: "var(--font-alegreya) , serif",
+        lucidaSans: "var(--font-lucida) , sans-serif",
       },
     },
   },

@@ -215,12 +215,12 @@ export default function SeoInsights() {
 
           <div className="flex items-center gap-3">
             {/* Device Toggle */}
-            <div className="flex bg-[#282828] border border-[#444] rounded-xl p-1">
+            <div className="flex   rounded-sm p-1">
               <button
                 onClick={() => setDevice("mobile")}
-                className={`flex items-center gap-2 px-3 py-1.5 text-sm cursor-pointer font-medium rounded-xl transition-colors ${
+                className={`flex items-center gap-2 px-3 py-1.5 text-sm cursor-pointer font-medium rounded-sm transition-colors ${
                   device === "mobile"
-                    ? "bg-[#3f3f3f] text-white shadow-sm"
+                    ? " text-white shadow-sm"
                     : "text-gray-200 hover:text-gray-200"
                 }`}
               >
@@ -228,9 +228,9 @@ export default function SeoInsights() {
               </button>
               <button
                 onClick={() => setDevice("desktop")}
-                className={`flex items-center gap-2 px-3 py-1.5  text-sm cursor-pointer font-medium rounded-xl transition-colors ${
+                className={`flex items-center gap-2 px-3 py-1.5  text-sm cursor-pointer font-medium rounded-sm transition-colors ${
                   device === "desktop"
-                    ? "bg-[#3f3f3f] text-white shadow-sm"
+                    ? " text-white shadow-sm"
                     : "text-gray-200 hover:text-gray-200"
                 }`}
               >
@@ -241,7 +241,7 @@ export default function SeoInsights() {
             {/* Export Button */}
             <button
               onClick={handleExport}
-              className="flex items-center gap-2 px-4 py-2 bg-green-500 cursor-pointer hover:bg-green-400 text-black text-sm font-semibold rounded-xl transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-green-500 cursor-pointer hover:bg-green-400 text-black text-sm font-semibold rounded-sm transition-colors"
             >
               <Download className="w-4 h-4" /> Export
             </button>
@@ -268,7 +268,7 @@ export default function SeoInsights() {
             {Object.entries(currentData.scores).map(([key, value]) => (
               <div
                 key={key}
-                className="bg-[#282828] border border-[#444] p-5 rounded-xl flex flex-col items-center justify-center text-center"
+                className="  p-5 rounded-sm flex flex-col items-center justify-center text-center"
               >
                 <div
                   className={`text-4xl font-mono font-bold mb-2 ${getScoreColor(value)}`}
@@ -289,7 +289,7 @@ export default function SeoInsights() {
             <span className="text-green-500 font-mono text-lg">2.</span> Core
             Web Vitals
           </h2>
-          <div className="bg-[#282828] border border-[#444] rounded-xl overflow-hidden">
+          <div className="  rounded-sm overflow-hidden">
             <table className="w-full text-left text-sm whitespace-nowrap">
               <thead className="bg-[#333] border-b border-[#444]">
                 <tr>
@@ -337,7 +337,7 @@ export default function SeoInsights() {
             {AUDIT_DATA.insights.map((item, idx) => (
               <div
                 key={idx}
-                className="bg-[#282828] border-l-2 border-l-[#444] hover:border-l-amber-500 border-t border-r border-b border-t-[#444] border-r-[#444] border-b-[#444] p-4 sm:p-5 rounded-r-sm transition-colors"
+                className=" border-l-2 border-l-[#444] hover:border-l-amber-500 border-t border-r border-b border-t-[#444] border-r-[#444] border-b-[#444] p-4 sm:p-5 rounded-r-sm transition-colors"
               >
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-2">
                   <h3 className="text-base font-medium text-white flex items-start gap-2">
@@ -349,7 +349,7 @@ export default function SeoInsights() {
                     {item.title}
                   </h3>
                   {item.savings && (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#333] border border-[#555] rounded-xl text-xs font-mono text-amber-400 whitespace-nowrap">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#333] border border-[#555] rounded-sm text-xs font-mono text-amber-400 whitespace-nowrap">
                       <Clock className="w-3.5 h-3.5" /> Est. savings:{" "}
                       {item.savings}
                     </span>

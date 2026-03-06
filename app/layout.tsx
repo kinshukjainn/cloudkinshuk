@@ -66,7 +66,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-google-analytics-opt-out="">
       <body
         className={`${inter.variable} ${lucideSans.variable} ${ptSans.variable} ${workSans.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >

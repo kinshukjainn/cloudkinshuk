@@ -76,7 +76,7 @@ const Header = () => {
                 href="/"
                 className="flex items-center gap-3 hover:text-white transition-colors"
               >
-                <div className="bg-white p-1 rounded-sm">
+                <div className="bg-white p-1 rounded-full">
                   <Image
                     src="/corelogo.png"
                     alt="Logo"
@@ -86,8 +86,8 @@ const Header = () => {
                     priority
                   />
                 </div>
-                <span className="text-lg font-bold tracking-tight text-white">
-                  cloudkinshuk
+                <span className="text-2xl font-bold tracking-tight text-white">
+                  Cloudkinshuk.in
                 </span>
               </Link>
             </div>
@@ -120,7 +120,7 @@ const Header = () => {
                   href="https://brewrepo.cloudkinshuk.in"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm font-medium hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-sm font-medium text-black p-1 bg-[#ff9100] rounded-full transition-colors"
                 >
                   <Server className="w-4 h-4" />
                   Buy a Server

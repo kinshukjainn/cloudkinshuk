@@ -1,17 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import {
-  GitCommit,
-  Github,
-  GitBranch,
-  ExternalLink,
-  Clock,
-  User,
-  AlertTriangle,
-  RefreshCw,
-} from "lucide-react";
+import Link from "next/link";
+import React, { useState, useEffect, useMemo } from "react";
 
 // ============================================================================
 // Types
@@ -46,37 +36,44 @@ const GITHUB_CONFIG = {
   username: "kinshukjainn",
   repository: "cloudkinshuk",
   branch: "main",
-  perPage: 15,
+  perPage: 100,
+  maxPages: 10,
 };
+
+const COMMIT_TYPES = [
+  { id: "all", label: "All Types" },
+  { id: "feat", label: "Features" },
+  { id: "fix", label: "Bug Fixes" },
+  { id: "chore", label: "Chores" },
+  { id: "docs", label: "Documentation" },
+  { id: "refactor", label: "Refactors" },
+];
 
 // ============================================================================
 // Utility Functions
 // ============================================================================
 
-const formatDateTime = (dateString: string) => {
+const timeAgo = (dateString: string) => {
   const date = new Date(dateString);
+  const now = new Date();
+  const seconds = Math.round((now.getTime() - date.getTime()) / 1000);
+  const minutes = Math.round(seconds / 60);
+  const hours = Math.round(minutes / 60);
+  const days = Math.round(hours / 24);
+
+  if (seconds < 60) return "just now";
+  if (minutes < 60) return `${minutes} mins ago`;
+  if (hours < 24) return `${hours} hours ago`;
+  if (days < 30) return `${days} days ago`;
+
   return new Intl.DateTimeFormat("en-US", {
     month: "short",
-    day: "2-digit",
+    day: "numeric",
     year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: true,
   }).format(date);
 };
 
-// Extract just the first line of the commit message for the title
-const getCommitTitle = (message: string) => {
-  return message.split("\n")[0];
-};
-
-// Extract the rest of the commit message if it exists
-const getCommitBody = (message: string) => {
-  const parts = message.split("\n");
-  if (parts.length <= 1) return null;
-  return parts.slice(1).join("\n").trim();
-};
+const getCommitTitle = (message: string) => message.split("\n")[0];
 
 // ============================================================================
 // Main Component
@@ -86,35 +83,69 @@ export default function ChangelogTracker() {
   const [commits, setCommits] = useState<GithubCommit[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [fetchingProgress, setFetchingProgress] = useState<number>(0);
+
+  // Filter States
+  const [searchQuery, setSearchQuery] = useState("");
+  const [authorFilter, setAuthorFilter] = useState("all");
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [dateRange] = useState({ start: "", end: "" });
+  const [showFilters, setShowFilters] = useState(false);
 
   const fetchCommits = async () => {
     setLoading(true);
     setError(null);
-    try {
-      const response = await fetch(
-        `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}/commits?sha=${GITHUB_CONFIG.branch}&per_page=${GITHUB_CONFIG.perPage}`,
-        {
-          headers: {
-            Accept: "application/vnd.github.v3+json",
-          },
-        },
-      );
+    setFetchingProgress(0);
 
-      if (!response.ok) {
-        if (response.status === 403) {
+    try {
+      let allCommits: GithubCommit[] = [];
+      let page = 1;
+      let shouldFetchMore = true;
+
+      const oneYearAgo = new Date();
+      oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+      while (shouldFetchMore && page <= GITHUB_CONFIG.maxPages) {
+        setFetchingProgress(page);
+
+        const response = await fetch(
+          `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}/commits?sha=${GITHUB_CONFIG.branch}&per_page=${GITHUB_CONFIG.perPage}&page=${page}`,
+          {
+            headers: {
+              Accept: "application/vnd.github.v3+json",
+            },
+          },
+        );
+
+        if (!response.ok) {
+          if (response.status === 403)
+            throw new Error("GitHub API rate limit exceeded.");
+          if (response.status === 404) throw new Error("Repository not found.");
           throw new Error(
-            "GitHub API rate limit exceeded. Please try again later.",
-          );
-        } else if (response.status === 404) {
-          throw new Error(
-            "Repository not found. Check the username and repo name.",
+            `Failed to fetch commits (Status: ${response.status})`,
           );
         }
-        throw new Error(`Failed to fetch commits (Status: ${response.status})`);
+
+        const data: GithubCommit[] = await response.json();
+
+        if (data.length === 0) {
+          break;
+        }
+
+        allCommits = [...allCommits, ...data];
+
+        const oldestDateInBatch = new Date(
+          data[data.length - 1].commit.author.date,
+        );
+
+        if (oldestDateInBatch < oneYearAgo) {
+          shouldFetchMore = false;
+        } else {
+          page++;
+        }
       }
 
-      const data = await response.json();
-      setCommits(data);
+      setCommits(allCommits);
     } catch (err: unknown) {
       setError(
         err instanceof Error ? err.message : "An unknown error occurred",
@@ -128,193 +159,276 @@ export default function ChangelogTracker() {
     fetchCommits();
   }, []);
 
+  // --------------------------------------------------------------------------
+  // Data Processing & Filtering
+  // --------------------------------------------------------------------------
+
+  const uniqueAuthors = useMemo(() => {
+    return Array.from(new Set(commits.map((c) => c.commit.author.name)));
+  }, [commits]);
+
+  const displayCommits = useMemo(() => {
+    return commits.filter((commit) => {
+      const msg = commit.commit.message.toLowerCase();
+      const authorName = commit.commit.author.name;
+      const commitDate = new Date(commit.commit.author.date);
+      const sha = commit.sha.toLowerCase();
+
+      if (
+        searchQuery &&
+        !msg.includes(searchQuery.toLowerCase()) &&
+        !sha.includes(searchQuery.toLowerCase())
+      )
+        return false;
+      if (authorFilter !== "all" && authorName !== authorFilter) return false;
+      if (
+        typeFilter !== "all" &&
+        !(msg.startsWith(`${typeFilter}:`) || msg.startsWith(`${typeFilter}(`))
+      )
+        return false;
+
+      if (dateRange.start) {
+        const startDate = new Date(dateRange.start);
+        startDate.setHours(0, 0, 0, 0);
+        if (commitDate < startDate) return false;
+      }
+      if (dateRange.end) {
+        const endDate = new Date(dateRange.end);
+        endDate.setHours(23, 59, 59, 999);
+        if (commitDate > endDate) return false;
+      }
+      return true;
+    });
+  }, [commits, searchQuery, authorFilter, typeFilter, dateRange]);
+
+  const lastChangeDate =
+    commits.length > 0
+      ? new Date(commits[0].commit.author.date).toUTCString()
+      : "N/A";
+
   return (
-    <div className="min-h-screen pt-16 md:pt-24 bg-[#1b1b1b] text-gray-200 selection:bg-green-500 selection:text-black">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        {/* Header Block */}
-        <header className="mb-10 pt-10 border-b border-[#444] pb-8">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-6">
+    <div className="min-h-screen bg-white text-black  text-[14px] sm:text-[15px] p-2 sm:p-4 selection:bg-[#cceeff]">
+      <div className="max-w-7xl mx-auto">
+        {/* ── TOP HEADER (Breadcrumbs & Links) ── */}
+        <div className="mb-1">
+          <h1 className="text-[20px] sm:text-[24px] font-bold m-0 p-0">
+            <a href="#" className="text-[#0000ee] hover:underline no-underline">
+              Git
+            </a>{" "}
+            /{" "}
+            <a href="#" className="text-[#0000ee] hover:underline no-underline">
+              {GITHUB_CONFIG.repository}.git
+            </a>{" "}
+            / commits
+          </h1>
+        </div>
+
+        <div className="text-[13px] sm:text-[14px] mb-3">
+          summary |{" "}
+          <Link href="/git-track/tree">
+            <span className="text-[#0000ee] px-2 py-0 bg-yellow-200 border border-black  hover:underline cursor-pointer font-bold ">
+              view Tree
+            </span>
+          </Link>
+        </div>
+
+        {/* ── META INFO TABLE ── */}
+        <div className="bg-[#f4f4f4] border-t border-b border-[#cccccc] py-3 px-2 sm:px-4 mb-4">
+          <div className="grid grid-cols-1 sm:grid-cols-[120px_1fr] gap-y-1 sm:gap-x-4 text-[13px] sm:text-[14px]">
+            <div className="text-[#555555]">description</div>
+            <div>{GITHUB_CONFIG.repository} git repo</div>
+
+            <div className="text-[#555555]">last change</div>
+            <div>{lastChangeDate}</div>
+
+            <div className="text-[#555555]">URL</div>
             <div>
-              <h1 className="text-5xl md:text-4xl font-semibold text-white mb-3 tracking-tight">
-                Logs
-              </h1>
-              <p className="text-lg text-gray-300 font-medium">
-                Logs list of changes in project
-              </p>
+              <a
+                href={`https://github.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}`}
+                className="text-black hover:underline break-all"
+              >
+                https://github.com/{GITHUB_CONFIG.username}/
+                {GITHUB_CONFIG.repository}.git
+              </a>
             </div>
 
-            <a
-              href={`https://github.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#282828] border border-[#444] hover:border-green-500 text-white text-sm font-medium rounded-xl transition-colors w-fit"
-            >
-              <Github className="w-4 h-4" />
-              View on GitHub
-              <ExternalLink className="w-3.5 h-3.5 text-gray-500" />
-            </a>
+            {/* Classic-style Filters Toggle */}
+            <div className="text-[#555555] mt-2 sm:mt-0">filters</div>
+            <div className="mt-2 sm:mt-0">
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className="text-[#0000ee] hover:underline bg-transparent border-none p-0 cursor-pointer"
+              >
+                [
+                {showFilters
+                  ? "hide search & filters"
+                  : "show search & filters"}
+                ]
+              </button>
+            </div>
           </div>
+        </div>
 
-          {/* Config Data List */}
-          <dl className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4  text-sm">
-            <div className="flex flex-col gap-1">
-              <dt className="text-white font-mono flex items-center font-bold  gap-1.5">
-                <User className="w-3.5 h-3.5" /> Repository tracked
-              </dt>
-              <dd className="text-green-400 font-mono">
-                {GITHUB_CONFIG.username}/{GITHUB_CONFIG.repository}
-              </dd>
-            </div>
-            <div className="flex flex-col gap-1">
-              <dt className="text-white font-bold font-mono flex items-center gap-1.5">
-                <GitBranch className="w-3.5 h-3.5" /> Branch
-              </dt>
-              <dd className="text-green-400 font-mono">
-                {GITHUB_CONFIG.branch}
-              </dd>
-            </div>
-            <div className="flex flex-col gap-1 sm:items-end">
-              <dt className="text-gray-500 font-mono"></dt>
-              <dd>
-                <button
-                  onClick={fetchCommits}
-                  disabled={loading}
-                  className="inline-flex items-center gap-2 text-black font-semibold  bg-green-500 p-1 rounded-xl cursor-pointer transition-colors disabled:opacity-50"
+        {/* ── FILTERS BLOCK ── */}
+        {showFilters && (
+          <div className="bg-[#ffffee] border border-[#ddddcc] p-3 mb-4 text-[13px]">
+            <div className="flex flex-wrap gap-4 items-end">
+              <label className="flex flex-col gap-1">
+                <span>Search:</span>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="border border-[#999] px-1 py-0.5 w-48"
+                />
+              </label>
+              <label className="flex flex-col gap-1">
+                <span>Author:</span>
+                <select
+                  value={authorFilter}
+                  onChange={(e) => setAuthorFilter(e.target.value)}
+                  className="border border-[#999] px-1 py-0.5"
                 >
-                  <RefreshCw
-                    className={`w-4 h-4 ${loading ? "animate-spin" : ""}`}
-                  />
-                  Sync Latest
-                </button>
-              </dd>
-            </div>
-          </dl>
-        </header>
-
-        {/* Content Area */}
-        <main>
-          {loading ? (
-            // Loading State (Terminal Output Style)
-            <div className="font-mono text-sm text-gray-200 space-y-2 p-6 bg-[#282828] border border-[#444] rounded-xl">
-              <p className="text-green-500">$ fetching commits...</p>
-              <p className="animate-pulse">
-                establishing connection to api.github.com...
-              </p>
-            </div>
-          ) : error ? (
-            // Error State
-            <div className="p-6 bg-red-500/10 border border-red-500/30 rounded-xl flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5" />
-              <div>
-                <h3 className="text-red-400 font-semibold mb-1">
-                  ERR_FETCH_FAILED
-                </h3>
-                <p className="text-gray-300 text-sm">{error}</p>
-                <button
-                  onClick={fetchCommits}
-                  className="mt-4 px-4 py-2 bg-[#282828] border border-[#444] hover:border-red-500 text-gray-300 text-sm font-medium rounded-xl transition-colors"
+                  <option value="all">all</option>
+                  {uniqueAuthors.map((a) => (
+                    <option key={a} value={a}>
+                      {a}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="flex flex-col gap-1">
+                <span>Type:</span>
+                <select
+                  value={typeFilter}
+                  onChange={(e) => setTypeFilter(e.target.value)}
+                  className="border border-[#999] px-1 py-0.5"
                 >
-                  Retry Connection
-                </button>
-              </div>
+                  {COMMIT_TYPES.map((t) => (
+                    <option key={t.id} value={t.id}>
+                      {t.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <button
+                onClick={() => {
+                  setSearchQuery("");
+                  setAuthorFilter("all");
+                  setTypeFilter("all");
+                }}
+                className="bg-[#e0e0e0] border border-[#999] px-2 py-0.5 hover:bg-[#ccc] cursor-pointer"
+              >
+                clear
+              </button>
             </div>
-          ) : (
-            // Commit Timeline
-            <div className="relative border-l-2 border-green-500 ml-3 sm:ml-4 space-y-10 py-4">
-              {commits.map((commit) => {
-                const title = getCommitTitle(commit.commit.message);
-                const body = getCommitBody(commit.commit.message);
-                const shortSha = commit.sha.substring(0, 7);
+          </div>
+        )}
 
-                return (
-                  <div key={commit.sha} className="relative pl-6 sm:pl-8 group">
-                    {/* Timeline Dot */}
-                    <div className="absolute w-3 h-3 bg-green-500 border-2 border-black group-hover:border-green-500 rounded-full -left-[7px] top-1.5 transition-colors" />
+        {/* ── SECTION HEADER ── */}
+        <div className="bg-[#e8e8e8] border-t border-b border-[#cccccc] py-1.5 px-2 font-bold mb-2">
+          shortlog
+        </div>
 
-                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-2">
-                      <div className="flex-1 min-w-0">
-                        {/* Commit Title */}
-                        <h3 className="text-lg font-medium text-white break-words leading-snug mb-2 group-hover:text-green-400 transition-colors">
-                          <a
-                            href={commit.html_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {title}
-                          </a>
-                        </h3>
+        {/* ── ERROR & LOADING STATES ── */}
+        {loading && (
+          <div className="p-4 text-[#555] ">
+            Fetching repository history (page {fetchingProgress})...
+          </div>
+        )}
 
-                        {/* Commit Metadata */}
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500">
-                          <div className="flex items-center gap-2">
-                            {commit.author?.avatar_url ? (
-                              <Image
-                                src={commit.author.avatar_url}
-                                alt={commit.commit.author.name}
-                                width={20}
-                                height={20}
-                                className="rounded-xl object-cover"
-                              />
-                            ) : (
-                              <div className="w-5 h-5 rounded-xl bg-[#444] flex items-center justify-center">
-                                <User className="w-3 h-3 text-gray-300" />
-                              </div>
-                            )}
-                            <span className="font-medium text-gray-300">
-                              {commit.commit.author.name}
-                            </span>
-                          </div>
+        {error && (
+          <div className="p-4 text-[#cc0000] font-bold bg-[#ffdddd] border border-[#cc0000] mb-4">
+            Error: {error}
+            <button
+              onClick={fetchCommits}
+              className="ml-4 underline text-[#0000ee] bg-transparent border-none cursor-pointer"
+            >
+              Retry
+            </button>
+          </div>
+        )}
 
-                          <span className="hidden sm:inline text-[#555]">
-                            •
-                          </span>
+        {!loading && !error && displayCommits.length === 0 && (
+          <div className="p-4 text-[#555] ">
+            No commits found matching the current criteria.
+          </div>
+        )}
 
-                          <div className="flex items-center gap-1.5 font-mono text-xs text-gray-200">
-                            <Clock className="w-3.5 h-3.5" />
-                            {formatDateTime(commit.commit.author.date)}
-                          </div>
-                        </div>
-                      </div>
+        {/* ── LIST ── */}
+        {!loading && !error && displayCommits.length > 0 && (
+          <div className="w-full flex flex-col border-b border-[#eee]">
+            {displayCommits.map((commit, index) => {
+              const title = getCommitTitle(commit.commit.message);
+              // Classic alternating row colors
+              const rowClass = index % 2 === 0 ? "bg-white" : "bg-[#f8f8f8]";
 
-                      {/* SHA Hash Link */}
-                      <a
-                        href={commit.html_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#282828] border border-[#444] hover:border-green-500 text-green-400 hover:text-green-300 font-mono text-sm w-max rounded-xl transition-colors"
-                        title="View commit on GitHub"
-                      >
-                        <GitCommit className="w-3.5 h-3.5" />
-                        {shortSha}
-                      </a>
-                    </div>
+              return (
+                <div
+                  key={commit.sha}
+                  className={`${rowClass} flex flex-col md:flex-row md:items-center py-2 px-2 hover:bg-[#eef3f8] transition-colors gap-1 md:gap-4`}
+                >
+                  {/* Time & Author (Stacked on mobile, row on desktop) */}
+                  <div className="flex flex-row md:flex-row gap-2 md:gap-4 shrink-0 text-[#444]  text-[13px] md:w-[220px]">
+                    <span className="w-[85px] shrink-0">
+                      {timeAgo(commit.commit.author.date)}
+                    </span>
+                    <span className="truncate w-[120px]">
+                      {commit.commit.author.name}
+                    </span>
+                  </div>
 
-                    {/* Extended Commit Body (If it exists) */}
-                    {body && (
-                      <pre className="mt-3 p-3 bg-[#282828] border border-[#444] text-gray-200 text-xs sm:text-sm font-mono rounded-xl whitespace-pre-wrap overflow-x-auto">
-                        {body}
-                      </pre>
+                  {/* Message & Tag */}
+                  <div className="flex-1 min-w-0 font-bold text-black flex items-center flex-wrap gap-2 text-[14px]">
+                    <span className="break-words">{title}</span>
+                    {/* Fake branch tag exactly like the image */}
+                    {index === 0 && (
+                      <span className="bg-[#ccffcc] border border-[#00cc00] text-black text-[11px] font-normal px-1 py-0 leading-tight">
+                        master
+                      </span>
                     )}
                   </div>
-                );
-              })}
-            </div>
-          )}
-        </main>
 
-        {/* Footer */}
-        {!loading && !error && commits.length > 0 && (
-          <footer className="mt-12 pt-6 border-t border-[#444] text-center">
-            <a
-              href={`https://github.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}/commits/${GITHUB_CONFIG.branch}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-gray-200 hover:text-white transition-colors"
-            >
-              View full history on GitHub{" "}
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
-          </footer>
+                  {/* Links */}
+                  <div className="shrink-0 text-[12px] md:text-[13px] text-[#0000ee] mt-1 md:mt-0 md:text-right">
+                    <a
+                      href={commit.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline no-underline"
+                    >
+                      commit
+                    </a>{" "}
+                    |{" "}
+                    <a
+                      href={commit.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline no-underline"
+                    >
+                      commitdiff
+                    </a>{" "}
+                    |{" "}
+                    <a
+                      href={commit.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline no-underline"
+                    >
+                      tree
+                    </a>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Pagination Indicator */}
+        {!loading && !error && displayCommits.length > 0 && (
+          <div className="mt-2 px-2 text-[#0000ee] text-[13px] font-bold cursor-pointer hover:underline">
+            ...
+          </div>
         )}
       </div>
     </div>

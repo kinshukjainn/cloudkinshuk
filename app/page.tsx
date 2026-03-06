@@ -170,7 +170,7 @@ const CONFIG = {
       type: "AI Tool",
       description: [
         "An AI-powered Fault Detection System designed to identify and analyze faults in power transmission lines and transformers. This intelligent system enhances reliability and efficiency in power grid monitoring by leveraging machine learning models to predict equipment failures before they occur.",
-        "Built with Next.js 16 and integrated with Amazon Bedrock's Nova Pro model, FDS processes real-time sensor data and historical patterns to detect anomalies. The system provides actionable insights through an intuitive dashboard with real-time alerts, detailed fault analysis reports, and predictive maintenance recommendations.",
+        "Built with Next.js 16 and integrated with  Open AI OSS Model 120b parameters, FDS processes real-time sensor data and historical patterns to detect anomalies. The system provides actionable insights through an intuitive dashboard with real-time alerts, detailed fault analysis reports, and predictive maintenance recommendations.",
         "Features include multi-parameter fault classification, severity assessment, root cause analysis, and integration with AWS Lambda for serverless scalability. The system monitors voltage fluctuations, temperature patterns, harmonic distortion, and impedance changes to provide comprehensive power system health analysis.",
       ],
       technologies: [
@@ -181,8 +181,9 @@ const CONFIG = {
         "Shadcn UI",
         "Lucide React",
         "Amazon Bedrock",
-        "Amazon Nova Pro Model",
+        "Open AI OSS Bedrock Model 120B",
         "AWS Lambda",
+        "Amazon API Gateway",
         "AWS Amplify",
         "AWS Route 53",
       ],

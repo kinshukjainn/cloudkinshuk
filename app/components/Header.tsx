@@ -102,7 +102,7 @@ const Header = () => {
                     href={item.href}
                     className={`flex items-center gap-2 text-sm font-medium transition-colors hover:text-white ${
                       active
-                        ? "text-white underline decoration-2 underline-offset-4 decoration-green-500"
+                        ? "text-white bg-[#202020] p-1.5 border font-semibold border-[#444444] rounded-xs"
                         : "text-gray-400"
                     }`}
                   >
@@ -167,7 +167,7 @@ const Header = () => {
                     href={item.href}
                     className={`flex items-center gap-2 px-2 py-1 text-base font-medium rounded-sm transition-colors ${
                       active
-                        ? "bg-[#222222] text-white"
+                        ? "bg-[#252525] border border-[#444444] text-white"
                         : "text-gray-400 hover:bg-[#1a1a1a] hover:text-white border-l-4 border-transparent"
                     }`}
                   >

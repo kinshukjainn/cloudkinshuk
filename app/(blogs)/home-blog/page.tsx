@@ -189,6 +189,29 @@ const MOCK_BLOG_POSTS: BlogPost[] = [
     ],
     author: { name: "Kinshuk Jain" },
   },
+  {
+    id: "blogG",
+    title: "Challenges i faced while building my college project m-scada ?",
+    brief: "There were many challanges which i faced while building .....",
+    slug: "Challenges-i-faced-while-building-my-college-project-m-scada",
+    publishedAt: "2026-03-11T10:00:00Z",
+    updatedAt: "2026-03-11T10:00:00Z",
+    readTimeInMinutes: 10,
+    views: 0,
+    reactionCount: 0,
+    tags: [
+      { id: "1", name: "blogs", slug: "blogs" },
+      { id: "2", name: "devlopers", slug: "devlopers" },
+      { id: "3", name: "scada", slug: "scada" },
+      { id: "4", name: "power sytem", slug: "power-system" },
+      { id: "5", name: "aws cloud", slug: "aws-cloud" },
+      { id: "7", name: "aws bedrock", slug: "aws-bedrock" },
+      { id: "8", name: "Amazon API Gateway", slug: "amazon-api-gayeway" },
+      { id: "9", name: "Amazon Route 53", slug: "amazon-api-route-53" },
+      { id: "10", name: "Amazon Lamba", slug: "amazon-lambda" },
+    ],
+    author: { name: "Kinshuk Jain" },
+  },
 ];
 
 class SimpleSearchEngine {

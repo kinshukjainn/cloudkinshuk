@@ -19,7 +19,7 @@ export default function Blogheader() {
       <div className="max-w-6xl mx-auto flex items-center">
         {/* LOGIC A: Home Label with Background */}
         {isHome && (
-          <h1 className="text-base sm:text-lg md:text-xl font-semibold bg-black/20 backdrop-blur-xs px-6 py-2 rounded-full hover:bg-black/10 border border-white/10 text-white shadow-lg">
+          <h1 className="text-base sm:text-lg md:text-xl font-semibold bg-white  px-6 py-2 ">
             Home
           </h1>
         )}
@@ -28,7 +28,7 @@ export default function Blogheader() {
         {isBlogPost && (
           <button
             onClick={() => router.push("/home-blog")}
-            className="flex items-center gap-1 sm:gap-1.5 bg-black/20 backdrop-blur-xs px-4 py-2.5 rounded-full border border-white/10 text-white transition-all duration-200 hover:bg-black/10 active:scale-95 shadow-lg group"
+            className="flex items-center gap-1 sm:gap-1.5 bg-white backdrop-blur-xs px-4 py-2.5 text-black"
             aria-label="Back to home"
           >
             <svg

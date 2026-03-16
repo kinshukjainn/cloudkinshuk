@@ -12,7 +12,6 @@ import {
   Calendar,
 } from "lucide-react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 
 interface BlogPost {
   id: string;
@@ -271,10 +270,7 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
       const parts = text.split(regex);
       return parts.map((part, i) =>
         regex.test(part) ? (
-          <mark
-            key={i}
-            className="bg-amber-500/20 text-amber-300 font-medium px-1 rounded-xl"
-          >
+          <mark key={i} className="bg-[#ffff00] text-[#333333] font-bold px-1">
             {part}
           </mark>
         ) : (
@@ -293,29 +289,21 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
     };
 
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="mb-6"
-      >
-        <Link
-          href={`/home-blog/${post.id}`}
-          className="group block p-3    transition-all duration-200 "
-        >
+      <div className="mb-6 border border-[#cccccc] bg-[#fdfdfd] p-4">
+        <Link href={`/home-blog/${post.id}`} className="group block">
           {/* Title */}
-          <h3 className="text-xl text-white mb-2 font-bold leading-tight transition-colors duration-200 group-hover:text-blue-200">
+          <h3 className="text-xl text-[#006600] mb-2 font-bold leading-tight group-hover:underline">
             {highlightText(post.title, searchQuery)}
           </h3>
 
           {/* Metadata */}
-          <div className="flex items-center gap-4 mb-4 text-xs text-gray-500">
+          <div className="flex items-center gap-4 mb-3 text-[13px] text-[#666666] font-mono bg-[#eeeeee] p-1 border-y border-[#dddddd]">
             <div className="flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5" />
               <span>{formatDate(post.publishedAt)}</span>
             </div>
             {post.readTimeInMinutes && (
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5 border-l border-[#cccccc] pl-4">
                 <Clock className="w-3.5 h-3.5" />
                 <span>{post.readTimeInMinutes} min read</span>
               </div>
@@ -323,31 +311,32 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
           </div>
 
           {/* Brief */}
-          <p className="text-gray-200 text-sm mb-5 leading-relaxed line-clamp-2">
+          <p className="text-[#333333] text-[14px] mb-4 leading-relaxed">
             {post.brief}
           </p>
 
           {/* Tags */}
           <div className="flex flex-wrap items-center gap-2">
+            <strong className="text-[12px] text-[#333333]">Tags:</strong>
             {post.tags.slice(0, 4).map((tag) => (
               <span
                 key={tag.id}
-                className="inline-flex items-center justify-center px-2.5 py-1 text-xs  text-yellow-200 font-bold group-hover:border-[#555]"
+                className="inline-flex items-center justify-center px-1 border border-[#cccccc] bg-[#eeeeee] text-[12px] text-[#444444] font-mono"
               >
                 {tag.name}
               </span>
             ))}
             {post.tags.length > 4 && (
-              <span className="inline-flex items-center justify-center px-2.5 py-1 text-xs font-semibold text-yellow-200">
+              <span className="inline-flex items-center justify-center px-1 border border-[#cccccc] bg-[#eeeeee] text-[12px] text-[#444444] font-mono">
                 +{post.tags.length - 4} more
               </span>
             )}
-            <div className="ml-auto text-white font-mono opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-sm font-semibold">
-              Read <ArrowRight className="w-4 h-4" />
+            <div className="ml-auto text-[#006600] font-bold text-sm group-hover:underline flex items-center gap-1">
+              Read Article ▶
             </div>
           </div>
         </Link>
-      </motion.div>
+      </div>
     );
   },
 );
@@ -386,66 +375,53 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   const activeFiltersCount = filters.tags.length;
 
   return (
-    <div className="mb-8">
+    <div className="mb-8 border border-[#cccccc] bg-[#f9f9f9]">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex md:hidden items-center justify-between bg-[#252525] rounded-md w-full px-4 py-3  border-2 border-[#444444]  transition-colors duration-200 mb-4"
+        className="flex md:hidden items-center justify-between w-full px-4 py-2 bg-[#eeeeee] border-b border-[#cccccc] font-bold text-[#333333]"
       >
-        <span className="text-sm font-medium text-white">
+        <span className="text-sm">
           Filter by tags {activeFiltersCount > 0 && `(${activeFiltersCount})`}
         </span>
-        <ChevronDown
-          size={18}
-          className={`text-gray-200 transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
-          }`}
-        />
+        <ChevronDown size={16} className={`${isOpen ? "rotate-180" : ""}`} />
       </button>
 
-      <div
-        className={`transition-all duration-300 overflow-hidden ${
-          isOpen
-            ? "max-h-96 md:max-h-none opacity-100"
-            : "max-h-0 md:max-h-none opacity-0 md:opacity-100"
-        } md:opacity-100 md:max-h-none`}
-      >
-        <div className=" p-2">
-          <label className="block text-sm font-medium text-white mb-3">
-            Available Tags{" "}
-            {filters.tags.length > 0 && `(${filters.tags.length} selected)`}
-          </label>
-          <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto">
-            {availableTags.map((tag) => {
-              const isSelected = filters.tags.includes(tag);
-              return (
-                <button
-                  key={tag}
-                  onClick={() => toggleTag(tag)}
-                  className={`
-                    inline-flex items-center justify-center px-3 py-1.5 text-xs cursor-pointer font-semibold rounded-sm transition-all duration-200
-                    ${
-                      isSelected
-                        ? "bg-green-500 text-black  font-semibold"
-                        : "bg-[#121212]  text-gray-300  hover:text-white"
-                    }
-                  `}
-                >
-                  {tag}
-                </button>
-              );
-            })}
-          </div>
-
-          {activeFiltersCount > 0 && (
-            <button
-              onClick={resetFilters}
-              className="mt-5 flex items-center justify-center gap-2 px-4 py-2 text-sm text-gray-200 hover:text-white transition-colors duration-200"
-            >
-              <RotateCcw size={14} />
-              Clear selections
-            </button>
-          )}
+      <div className={`${isOpen ? "block" : "hidden md:block"} p-4`}>
+        <label className="block text-sm font-bold text-[#333333] border-b border-[#cccccc] pb-1 mb-3">
+          Available Tags{" "}
+          {filters.tags.length > 0 && `(${filters.tags.length} selected)`}
+        </label>
+        <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto">
+          {availableTags.map((tag) => {
+            const isSelected = filters.tags.includes(tag);
+            return (
+              <button
+                key={tag}
+                onClick={() => toggleTag(tag)}
+                className={`
+                  inline-flex items-center justify-center px-2 py-1 text-[13px] border cursor-pointer 
+                  ${
+                    isSelected
+                      ? "bg-[#006600] text-white border-[#004400] font-bold"
+                      : "bg-white text-[#333333] border-[#cccccc] hover:bg-[#eeeeee]"
+                  }
+                `}
+              >
+                {tag}
+              </button>
+            );
+          })}
         </div>
+
+        {activeFiltersCount > 0 && (
+          <button
+            onClick={resetFilters}
+            className="mt-4 flex items-center justify-center gap-1 px-3 py-1 text-[13px] bg-[#eeeeee] border border-[#cccccc] text-[#333333] hover:bg-[#dddddd] font-bold"
+          >
+            <RotateCcw size={12} />
+            Clear selections
+          </button>
+        )}
       </div>
     </div>
   );
@@ -466,9 +442,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   return (
     <div className="mb-6 w-full">
-      <div className="relative flex items-center w-full">
-        <div className="absolute left-4 z-10 flex items-center justify-center pointer-events-none">
-          <Search className="w-5 h-5 text-blue-400" aria-hidden="true" />
+      <div className="flex items-stretch border border-[#cccccc] bg-white">
+        <div className="flex items-center justify-center px-3 bg-[#eeeeee] border-r border-[#cccccc]">
+          <Search className="w-4 h-4 text-[#666666]" aria-hidden="true" />
         </div>
 
         <input
@@ -476,32 +452,25 @@ const SearchBar: React.FC<SearchBarProps> = ({
           placeholder="Search articles, tags, or topics..."
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="w-full bg-[#252525] text-white placeholder:text-gray-500  focus:outline-none rounded-sm  pl-12 pr-12 py-2 text-sm sm:text-base transition-colors duration-200"
+          className="w-full bg-white text-[#333333] placeholder-[#999999] px-3 py-2 text-[14px]  focus:outline-none focus:bg-[#fafffa]"
         />
 
         {searchInput && (
           <button
             onClick={() => setSearchInput("")}
-            className="absolute right-4 z-10 flex items-center justify-center text-gray-500 hover:text-white transition-colors"
+            className="flex items-center justify-center px-3 bg-[#eeeeee] border-l border-[#cccccc] hover:bg-[#dddddd] text-[#333333]"
             aria-label="Clear search"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         )}
       </div>
 
       {searchInput && (
-        <motion.div
-          initial={{ opacity: 0, y: -5 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-3 text-sm text-gray-200 flex items-center gap-2"
-        >
-          <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-          Found <span className="text-white font-medium">
-            {resultsCount}
-          </span>{" "}
-          of {totalCount} articles
-        </motion.div>
+        <div className="mt-2 text-[13px] text-[#666666] font-mono bg-[#eeeeee] inline-block px-2 py-1 border border-[#cccccc]">
+          Found <strong className="text-[#333333]">{resultsCount}</strong> of{" "}
+          {totalCount} articles
+        </div>
       )}
     </div>
   );
@@ -543,17 +512,21 @@ export default function BlogsPage() {
   }, [posts, searchInput, searchEngine, filters]);
 
   return (
-    <div className="min-h-screen bg-[#1b1b1b] text-gray-100  selection:bg-green-500 selection:text-white">
+    <div className="min-h-screen bg-white text-[#333333]  selection:bg-[#006600] selection:text-white pb-16">
+      {/* Top Green Bar */}
+      <div className="h-2 w-full bg-[#006600]"></div>
+
       {/* Header */}
-      <header className="border-b border-[#444] mb-8">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-          <h1 className="text-4xl sm:text-5xl font-semibold text-white mb-6 tracking-tight">
+      <header className="border-b border-[#cccccc] bg-[#f9f9f9] mb-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <h1 className="text-4xl font-bold text-[#333333] mb-4 flex items-center">
+            <span className="w-3 h-6 bg-[#006600] mr-3 inline-block"></span>
             Developer Blogs
           </h1>
-          <p className="text-lg text-gray-300 leading-relaxed max-w-3xl">
+          <p className="text-[15px] text-[#444444] leading-relaxed max-w-3xl border-l-4 border-[#cccccc] pl-4">
             Hi{" "}
-            <span className="text-green-400 font-bold font-mono">
-              {"@"}everyone
+            <span className="text-[#006600] font-bold font-mono">
+              @everyone
             </span>
             , here I share my learning journey in cloud computing, DevOps,
             security, and infrastructure engineering. I write about AWS
@@ -563,19 +536,17 @@ export default function BlogsPage() {
         </div>
       </header>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Feedback Card */}
-        <div className="mb-10   flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="bg-green-600 p-2 rounded-sm">
-                <MessageSquare className="w-5 h-5 text-white" />
-              </div>
-              <h3 className="text-lg font-semibold text-white">
+        <div className="mb-8 p-4 border border-[#cccccc] bg-[#fdfdfd] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <MessageSquare className="w-4 h-4 text-[#006600]" />
+              <h3 className="text-lg font-bold text-[#333333]">
                 Leave Your Feedback
               </h3>
             </div>
-            <p className="text-gray-200 text-sm">
+            <p className="text-[14px] text-[#666666]">
               Help me improve! Your thoughts and suggestions are invaluable for
               creating better content.
             </p>
@@ -584,34 +555,45 @@ export default function BlogsPage() {
             href="https://fdb.cloudkinshuk.in/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-500  text-black font-bold rounded-lg transition-colors whitespace-nowrap"
+            className="bg-[#006600] text-white font-bold py-2 px-6 border-b-4 border-[#004400] hover:bg-[#008800] active:border-b-0 active:mt-[4px] transition-all whitespace-nowrap text-sm inline-flex items-center gap-2"
           >
             Leave Feedback
             <ArrowRight className="w-4 h-4" />
           </a>
         </div>
 
-        <SearchBar
-          searchInput={searchInput}
-          setSearchInput={setSearchInput}
-          resultsCount={filteredPosts.length}
-          totalCount={posts.length}
-        />
+        {/* Search & Filter Container */}
+        <div className="bg-[#f9f9f9] p-4 border border-[#cccccc] mb-8">
+          <h2 className="text-[14px] font-bold mb-3 border-b border-[#cccccc] pb-1">
+            Search & Filter Directory
+          </h2>
+          <SearchBar
+            searchInput={searchInput}
+            setSearchInput={setSearchInput}
+            resultsCount={filteredPosts.length}
+            totalCount={posts.length}
+          />
+          <FilterPanel
+            filters={filters}
+            setFilters={setFilters}
+            availableTags={availableTags}
+            isOpen={filterOpen}
+            setIsOpen={setFilterOpen}
+          />
+        </div>
 
-        <FilterPanel
-          filters={filters}
-          setFilters={setFilters}
-          availableTags={availableTags}
-          isOpen={filterOpen}
-          setIsOpen={setFilterOpen}
-        />
+        {/* Results */}
+        <h2 className="text-xl font-bold text-[#333333] border-b-2 border-[#cccccc] pb-1 mb-6 flex items-center">
+          <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
+          Published Articles
+        </h2>
 
         {filteredPosts.length === 0 ? (
-          <div className="text-center py-20 bg-[#1e1e1e] border border-[#444] rounded-xl">
-            <h3 className="text-xl font-medium text-white mb-2">
+          <div className="text-center py-12 bg-[#f9f9f9] border border-[#cccccc]">
+            <h3 className="text-lg font-bold text-[#333333] mb-2">
               No articles found
             </h3>
-            <p className="text-gray-200 mb-6">
+            <p className="text-[#666666] text-sm mb-4">
               Try adjusting your search terms or clearing your filters.
             </p>
             <button
@@ -620,7 +602,7 @@ export default function BlogsPage() {
                 setFilters({ tags: [] });
                 setFilterOpen(false);
               }}
-              className="px-6 py-2 bg-[#3f3f3f]  text-white font-medium rounded-xl transition-colors duration-200"
+              className="px-4 py-1 bg-[#eeeeee] border border-[#cccccc] text-[#333333] font-bold hover:bg-[#dddddd]"
             >
               Clear all filters
             </button>

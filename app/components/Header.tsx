@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -16,42 +16,37 @@ import {
 } from "lucide-react";
 import { PiGithubLogoBold } from "react-icons/pi";
 
-interface NavItem {
-  href: string;
-  label: string;
-  icon: React.ReactNode;
-}
-
 const Header = () => {
   const pathname = usePathname();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
-  const navItems: NavItem[] = useMemo(
+  const navItems = useMemo(
     () => [
       {
         href: "/home-blog",
         label: "Blogs",
-        icon: <FileText className="w-4 h-4" />,
+        icon: <FileText className="w-4 h-4 shrink-0" />,
       },
       {
         href: "/setup",
         label: "System",
-        icon: <Zap className="w-4 h-4" />,
+        icon: <Zap className="w-4 h-4 shrink-0" />,
       },
       {
         href: "/updates",
         label: "Workings",
-        icon: <Lightbulb className="w-4 h-4" />,
+        icon: <Lightbulb className="w-4 h-4 shrink-0" />,
       },
       {
         href: "/seo-insights",
         label: "Insights",
-        icon: <SearchCode className="w-4 h-4" />,
+        icon: <SearchCode className="w-4 h-4 shrink-0" />,
       },
       {
         href: "/git-track",
         label: "Commits",
-        icon: <PiGithubLogoBold className="w-4 h-4" />,
+        icon: <PiGithubLogoBold className="w-4 h-4 shrink-0" />,
       },
     ],
     [],
@@ -60,150 +55,176 @@ const Header = () => {
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(href + "/");
 
-  // Close mobile menu when a route changes
-  React.useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
+  // Close menu on outside click
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [isOpen]);
+
+  // Prevent body scroll when mobile menu open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-[100] bg-[#111111] text-gray-300 border-b border-[#333333]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14 sm:h-16">
-            {/* Logo */}
-            <div className="flex-shrink-0">
-              <Link
-                href="/"
-                className="flex items-center gap-3 hover:text-white transition-colors"
-              >
-                <div className="bg-white p-1 rounded-full">
-                  <Image
-                    src="/corelogo.png"
-                    alt="Logo"
-                    width={28}
-                    height={28}
-                    className="object-contain"
-                    priority
-                  />
-                </div>
-                <span className="text-2xl font-bold tracking-tight text-white">
-                  Cloudkinshuk.in
-                </span>
-              </Link>
-            </div>
+      <header
+        ref={menuRef}
+        className="fixed top-0 left-0 right-0 z-50 bg-white text-[#333333] border-b border-[#cccccc] "
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          {/* ── Main bar ── */}
+          <div className="flex items-center justify-between h-14">
+            {/* ── Logo ── */}
+            <Link
+              href="/"
+              className="flex items-center gap-2 hover:underline shrink-0 min-w-0"
+            >
+              <div className="border border-[#cccccc] p-0.5 shrink-0 bg-[#eeeeee]">
+                <Image
+                  src="/corelogo.png"
+                  alt="Cloudkinshuk logo"
+                  width={20}
+                  height={20}
+                  className="sm:w-6 sm:h-6"
+                />
+              </div>
+              <span className="font-bold text-[#006600] leading-none text-lg sm:text-xl">
+                Cloudkinshuk.in
+              </span>
+            </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-6 lg:gap-8">
-              {navItems.map((item) => {
-                const active = isActive(item.href);
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`flex items-center gap-2 text-sm font-medium transition-colors hover:text-white ${
-                      active
-                        ? "text-white bg-[#202020] p-1.5 border font-semibold border-[#444444] rounded-xs"
-                        : "text-gray-400"
-                    }`}
-                  >
-                    {item.icon}
-                    {item.label}
-                  </Link>
-                );
-              })}
+            {/* ── Desktop nav (≥ md) ── */}
+            <nav className="hidden md:flex items-center gap-2">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`
+                    flex items-center gap-1.5 text-sm font-bold px-2 py-1 border
+                    ${
+                      isActive(item.href)
+                        ? "bg-[#006600] text-white border-[#004400]"
+                        : "bg-transparent text-[#333333] border-transparent hover:bg-[#eeeeee] hover:border-[#cccccc]"
+                    }
+                  `}
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+                </Link>
+              ))}
             </nav>
 
-            {/* Desktop Actions & Mobile Toggle */}
-            <div className="flex items-center gap-4">
-              <div className="hidden md:flex items-center gap-4">
-                <a
-                  href="https://brewrepo.cloudkinshuk.in"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm font-medium text-black p-1 bg-[#ff9100] rounded-full transition-colors"
-                >
-                  <Server className="w-4 h-4" />
-                  Buy a Server
-                </a>
-                <span className="text-gray-700">|</span>
-                <a
-                  href="https://github.com/kinshukjainn/cloudkinshuk"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors"
-                  aria-label="GitHub Repository"
-                >
-                  <Github className="w-5 h-5" />
-                </a>
-              </div>
-
-              {/* Hamburger Menu Button */}
-              <button
-                type="button"
-                className="md:hidden inline-flex items-center justify-center p-2 rounded-sm text-gray-400 hover:text-white hover:bg-[#222222] transition-colors"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                aria-expanded={isMobileMenuOpen}
+            {/* ── Right cluster ── */}
+            <div className="flex items-center gap-3 shrink-0">
+              {/* "Buy a Server" — visible ≥ md */}
+              <a
+                href="https://brewrepo.cloudkinshuk.in"
+                className="hidden md:flex items-center gap-1.5 text-sm font-bold text-white px-3 py-1 bg-[#006600] border-b-2 border-[#004400] hover:bg-[#008800] active:border-b-0 active:mt-[2px] whitespace-nowrap"
               >
-                <span className="sr-only">Open main menu</span>
-                {isMobileMenuOpen ? (
-                  <X className="block w-6 h-6" aria-hidden="true" />
+                <Server className="w-4 h-4 shrink-0" />
+                <span>Buy a Server</span>
+              </a>
+
+              {/* GitHub icon — visible ≥ md */}
+              <a
+                href="https://github.com/kinshukjainn/cloudkinshuk"
+                aria-label="GitHub"
+                className="hidden md:flex items-center text-[#333333] hover:text-[#006600] border border-transparent hover:border-[#cccccc] hover:bg-[#eeeeee] p-1"
+              >
+                <Github className="w-5 h-5" />
+              </a>
+
+              {/* Mobile menu toggle (< md) */}
+              <button
+                className="md:hidden flex items-center justify-center p-1 border border-[#cccccc] bg-[#eeeeee] text-[#333333] hover:bg-[#dddddd]"
+                onClick={() => setIsOpen((prev) => !prev)}
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isOpen}
+              >
+                {isOpen ? (
+                  <X className="w-5 h-5" />
                 ) : (
-                  <Menu className="block w-6 h-6" aria-hidden="true" />
+                  <Menu className="w-5 h-5" />
                 )}
               </button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Navigation Dropdown */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-[#333333] bg-[#111111]">
-            <div className="px-4 pt-2 pb-4 space-y-1 sm:px-6">
-              {navItems.map((item) => {
-                const active = isActive(item.href);
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`flex items-center gap-2 px-2 py-1 text-base font-medium rounded-sm transition-colors ${
-                      active
-                        ? "bg-[#252525] border border-[#444444] text-white"
-                        : "text-gray-400 hover:bg-[#1a1a1a] hover:text-white border-l-4 border-transparent"
-                    }`}
-                  >
-                    {item.icon}
-                    {item.label}
-                  </Link>
-                );
-              })}
+        {/* ── Mobile drawer (< md) ── */}
+        <div
+          className={`
+            md:hidden overflow-hidden bg-[#f9f9f9] border-t border-[#cccccc]
+            ${isOpen ? "block" : "hidden"}
+          `}
+        >
+          <div className="px-4 py-3 space-y-2">
+            {/* Nav links */}
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setIsOpen(false)}
+                className={`
+                  flex items-center gap-3 px-3 py-2 border text-sm font-bold
+                  ${
+                    isActive(item.href)
+                      ? "bg-[#006600] text-white border-[#004400]"
+                      : "bg-white text-[#333333] border-[#cccccc] hover:bg-[#eeeeee]"
+                  }
+                `}
+              >
+                {item.icon}
+                {item.label}
+              </Link>
+            ))}
 
-              <div className="mt-4 pt-4 border-t border-[#333333] space-y-1">
-                <a
-                  href="https://brewrepo.cloudkinshuk.in"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-2 py-1 text-base font-medium text-gray-400 hover:bg-[#1a1a1a] hover:text-white rounded-sm transition-colors"
-                >
-                  <Server className="w-5 h-5" />
-                  Buy a Server
-                </a>
-                <a
-                  href="https://github.com/kinshukjainn/cloudkinshuk"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-2 py-1 text-base font-medium text-gray-400 hover:bg-[#1a1a1a] hover:text-white rounded-sm transition-colors"
-                >
-                  <Github className="w-5 h-5" />
-                  View Source on GitHub
-                </a>
-              </div>
+            {/* Divider + action buttons */}
+            <div className="pt-3 mt-3 border-t border-[#cccccc] flex flex-col gap-2">
+              <a
+                href="https://brewrepo.cloudkinshuk.in"
+                className="flex items-center justify-center gap-2 py-2 bg-[#006600] text-white font-bold text-sm border-b-2 border-[#004400] active:border-b-0 active:mt-[2px]"
+              >
+                <Server className="w-4 h-4 shrink-0" />
+                Buy a Server
+              </a>
+              <a
+                href="https://github.com/kinshukjainn/cloudkinshuk"
+                className="flex items-center justify-center gap-2 py-2 bg-[#eeeeee] text-[#333333] font-bold text-sm border border-[#cccccc] hover:bg-[#dddddd]"
+              >
+                <Github className="w-4 h-4 shrink-0" />
+                Source Code
+              </a>
             </div>
           </div>
-        )}
+        </div>
       </header>
 
-      {/* Spacer to prevent content from hiding behind fixed header */}
-      <div className="h-14 sm:h-16" />
+      {/* ── Spacer — matches header height ── */}
+      <div className="h-14" />
+
+      {/* ── Mobile backdrop ── */}
+      {isOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-40 bg-black bg-opacity-50"
+          onClick={() => setIsOpen(false)}
+          aria-hidden="true"
+        />
+      )}
     </>
   );
 };

@@ -1,24 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Github,
-  Linkedin,
-  Mail,
-  MapPin,
-  Copy,
-  Check,
-  Download,
-  ExternalLink,
-  Award,
-  BookOpen,
-  Briefcase,
-  Code,
-  GraduationCap,
-  Star,
-  FileText,
-  Zap,
-} from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 const CONFIG = {
   personal: {
@@ -31,7 +14,6 @@ const CONFIG = {
     availability: "Available for opportunities",
     status:
       "Completed an internship at UPPTCL (Uttar Pradesh Power Transmission Corporation Limited), where I gained hands-on experience in power systems and transmission network operations.",
-    photoUrl: "/profile.jpg",
   },
   social: [
     {
@@ -50,7 +32,7 @@ const CONFIG = {
       platform: "Gmail",
       url: "mailto:kinshuk25jan04@gmail.com",
       icon: "mail",
-      handle: "Mail to",
+      handle: "Email",
     },
     {
       platform: "X",
@@ -75,7 +57,6 @@ const CONFIG = {
       organization: "AWS",
       status: "Preparing",
       year: "2025",
-      progress: "Re-Attempting",
       description:
         "Comprehensive certification covering AWS top 40 best core services of aws",
       skills: ["Cloud Computing", "AWS Services", "Security", "Pricing Models"],
@@ -85,7 +66,6 @@ const CONFIG = {
       organization: "AWS",
       status: "Preparing",
       year: "2025",
-      progress: "First Attempt",
       description:
         "Certification focused on AWS development and deployment best practices, covering core AWS services, security, and application development concepts",
       skills: ["Cloud Computing", "AWS Services", "Security", "Pricing Models"],
@@ -131,13 +111,11 @@ const CONFIG = {
     ],
     "Frontend & Build": [
       "Vite / React",
-      "Nextjs",
+      "Next.js",
       "TypeScript",
       "Tailwind CSS",
-      "React icons",
     ],
-    "Version Control": ["Git Terminal", "GitHub Actions"],
-    "Developer Tools": ["VS Code"],
+    "Version Control & Tools": ["Git Terminal", "GitHub Actions", "VS Code"],
   },
   projects: [
     {
@@ -146,9 +124,8 @@ const CONFIG = {
       status: "Live",
       type: "Security Tool",
       description: [
-        "A modern, secure password generation tool built with React and TypeScript, focusing on creating cryptographically secure passwords with customizable parameters. Zeroleaks leverages the Web Crypto API for true randomness and implements industry-standard security practices.",
-        "Features include multiple generation algorithms (memorable, random, pronounceable), real-time strength analysis with detailed feedback, secure clipboard integration, and password history management. The tool provides visual feedback on password entropy and follows NIST guidelines for password security.",
-        "Deployed with zero-trust security principles, ensuring no passwords are logged or transmitted insecurely. The application works entirely client-side for maximum privacy.",
+        "A modern, secure password generation tool built with React and TypeScript, focusing on creating cryptographically secure passwords with customizable parameters.",
+        "Leverages the Web Crypto API for true randomness and implements industry-standard security practices. Deployed with zero-trust security principles, ensuring no passwords are logged or transmitted insecurely.",
       ],
       technologies: [
         "React",
@@ -169,29 +146,21 @@ const CONFIG = {
       status: "Development Stage",
       type: "AI Tool",
       description: [
-        "An AI-powered Fault Detection System designed to identify and analyze faults in power transmission lines and transformers. This intelligent system enhances reliability and efficiency in power grid monitoring by leveraging machine learning models to predict equipment failures before they occur.",
-        "Built with Next.js 16 and integrated with  Open AI OSS Model 120b parameters, FDS processes real-time sensor data and historical patterns to detect anomalies. The system provides actionable insights through an intuitive dashboard with real-time alerts, detailed fault analysis reports, and predictive maintenance recommendations.",
-        "Features include multi-parameter fault classification, severity assessment, root cause analysis, and integration with AWS Lambda for serverless scalability. The system monitors voltage fluctuations, temperature patterns, harmonic distortion, and impedance changes to provide comprehensive power system health analysis.",
+        "An AI-powered Fault Detection System designed to identify and analyze faults in power transmission lines and transformers. Enhances reliability in power grid monitoring by leveraging machine learning models to predict equipment failures.",
+        "Built with Next.js 16 and integrated with Open AI OSS Model 120b parameters. Processes real-time sensor data and historical patterns to detect anomalies.",
       ],
       technologies: [
         "Next.js 16",
         "TypeScript",
         "Tailwind CSS",
-        "React Icons",
-        "Shadcn UI",
-        "Lucide React",
         "Amazon Bedrock",
-        "Open AI OSS Bedrock Model 120B",
         "AWS Lambda",
-        "Amazon API Gateway",
-        "AWS Amplify",
-        "AWS Route 53",
       ],
       links: {
         live: "https://fdsai.cloudkinshuk.in",
         repo: "https://github.com/kinshukjainn/fds-college",
       },
-      dockerCommand: "Image is not available",
+      dockerCommand: "",
     },
   ],
   education: {
@@ -200,13 +169,12 @@ const CONFIG = {
     institution: "JSS Academy of Technical Education",
     location: "Noida, Uttar Pradesh",
     period: "2022 - 2026",
-    status: "Active",
     description:
       "Pursuing electrical engineering while self-learning cloud technologies and software development. Focusing on the intersection of traditional engineering and modern cloud computing.",
   },
 };
 
-const CopyButton = ({ text }: { text: string }) => {
+const CopyText = ({ text }: { text: string }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -222,12 +190,10 @@ const CopyButton = ({ text }: { text: string }) => {
   return (
     <button
       onClick={handleCopy}
-      className={`p-1 cursor-pointer rounded-md transition-colors flex-shrink-0  ${
-        copied ? "bg-green-500  text-black" : "bg-green-700 text-white"
-      }`}
+      className="text-xs font-bold text-[#006600] hover:text-white hover:bg-[#006600] border border-[#006600] px-1 ml-2 transition-none focus:outline-none"
       title="Copy to clipboard"
     >
-      {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+      {copied ? "[Copied]" : "[Copy]"}
     </button>
   );
 };
@@ -235,17 +201,15 @@ const CopyButton = ({ text }: { text: string }) => {
 const SocialIcon = ({ icon }: { icon: string }) => {
   switch (icon) {
     case "github":
-      return <Github className="w-5 h-5" />;
+      return <Github className="w-4 h-4 mr-1 inline" />;
     case "linkedin":
-      return <Linkedin className="w-5 h-5" />;
+      return <Linkedin className="w-4 h-4 mr-1 inline" />;
     case "mail":
-      return <Mail className="w-5 h-5" />;
-    case "award":
-      return <Award className="w-5 h-5" />;
+      return <Mail className="w-4 h-4 mr-1 inline" />;
     case "x":
       return (
         <svg
-          className="w-5 h-5"
+          className="w-4 h-4 mr-1 inline"
           fill="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
@@ -258,269 +222,189 @@ const SocialIcon = ({ icon }: { icon: string }) => {
   }
 };
 
-const SectionHeader = ({
-  title,
-  icon: Icon,
-}: {
-  title: string;
-  icon: React.ComponentType<{ className: string }>;
-}) => (
-  <div className="flex items-center gap-3 mb-6">
-    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-white flex-shrink-0" />
-    <h2 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight">
-      {title}
-    </h2>
-  </div>
+const SectionHeader = ({ title, id }: { title: string; id?: string }) => (
+  <h2
+    id={id}
+    className="text-xl font-bold text-[#333333] border-b-2 border-[#cccccc] pb-1 mt-8 mb-4 flex items-center"
+  >
+    <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
+    {title}
+  </h2>
 );
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#1b1b1b]  pt-10 text-[#eaeaeb] selection:bg-[#8cb4ff]/30 selection:text-white">
-      {/* Hero Header */}
-      <header className="border-b border-[#333] mb-8 pb-8">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
-          <div className="mb-6 text-4xl sm:text-5xl font-semibold tracking-tight text-white flex items-center">
-            cloudkinshuk<span className="text-[#8cb4ff]">_</span>
-          </div>
-          <p className="text-lg sm:text-xl text-[#eaeaeb] leading-relaxed max-w-3xl">
-            Hi @everyone! My name is{" "}
-            <span className="font-semibold text-white">Kinshuk</span>, and
-            I&apos;m a student and builder focused on cloud infrastructure and
-            distributed systems. I&apos;m pursuing my Bachelor&apos;s in
-            Electrical Engineering while exploring modern web technologies.
-            Check out my projects on{" "}
-            <a
-              href="https://github.com/kinshukjainn"
-              className="text-white font-semibold border-b-[3px] px-2 border-green-300  hover:bg-green-400/10 hover:border-b-4 transition-all"
-            >
-              GitHub
-            </a>
-            .
-          </p>
-        </div>
-      </header>
+    <div className="min-h-screen bg-white text-[#333333]  selection:bg-[#006600] selection:text-white">
+      {/* Top Green Bar - Classic utilitarian styling */}
+      <div className="h-2 w-full bg-[#006600]"></div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 space-y-16">
-        {/* About & Socials Section */}
-        <section className="scroll-mt-20">
-          <p className="text-base sm:text-lg text-[#eaeaeb] leading-relaxed mb-6">
-            I am currently learning how systems work, how they fail, and how
-            they evolve. Alongside that, I am exploring the cloud, building
-            small things that might someday scale, experimenting with
-            infrastructure, and understanding how technology connects people.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-6 mb-8">
-            <div className="flex items-center gap-2.5 px-2 py-1 bg-[#252525] rounded-md  w-max">
-              <MapPin className="w-4 h-4 text-[#eaeaeb] flex-shrink-0" />
-              <span className="text-[#eaeaeb] text-sm font-medium">
-                {CONFIG.personal.location}
-              </span>
-            </div>
-            <div className="flex items-center gap-2.5 px-2 py-1 bg-[#252525]  rounded-md w-max">
-              <div className="w-2 h-2 bg-[#8cb4ff] rounded-full animate-pulse flex-shrink-0"></div>
-              <span className="text-[#eaeaeb] text-sm font-medium">
-                {CONFIG.personal.availability}
-              </span>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            {CONFIG.social.map((social) => (
-              <a
-                key={social.platform}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2.5 px-4 py-1.5 bg-[#252525] rounded-sm transition-all duration-200 text-[#eaeaeb] hover:text-white group"
-              >
-                <div className="text-green-500  transition-colors">
-                  <SocialIcon icon={social.icon} />
-                </div>
-                <span className="text-sm font-medium">{social.handle}</span>
-                <ExternalLink className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 group-hover:text-[#8cb4ff] transition-all" />
-              </a>
-            ))}
-          </div>
-        </section>
-
-        {/* Resume & Publications Grid */}
-        <section className="grid sm:grid-cols-2 gap-6 scroll-mt-20">
-          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-md p-6 sm:p-8 flex flex-col items-start justify-between transition-colors hover:border-[#555]">
-            <div>
-              <div className="flex items-center gap-3 mb-3">
-                <FileText className="w-6 h-6 text-white" />
-                <h2 className="text-xl font-semibold text-white">Resume</h2>
-              </div>
-              <p className="text-[#eaeaeb] text-sm mb-6 leading-relaxed">
-                View my comprehensive resume showcasing my technical expertise,
-                project experience, and professional achievements.
-              </p>
-              <div className="border-[#ff7b72] border-l-4 px-3 py-2 mb-6 bg-[#ff7b72]/10">
-                <p className="text-[#ff7b72] text-sm leading-relaxed">
-                  Currently resume is not available to download soon my updated
-                  resume will be available here.
-                </p>
-              </div>
-            </div>
-            <a
-              href="/kinshukfinalresume.pdf"
-              download="kinshukfinalresume.pdf"
-              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-3 py-1 bg-green-700 font-semibold rounded-md transition-colors"
-            >
-              <Download className="w-4 h-4" />
-              Download
-            </a>
-          </div>
-
-          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-md p-6 sm:p-8 flex flex-col items-start h-max justify-between transition-colors hover:border-[#555]">
-            <div>
-              <div className="flex items-center gap-3 mb-3">
-                <BookOpen className="w-6 h-6 text-white" />
-                <h2 className="text-xl font-semibold text-white">
-                  Publications
-                </h2>
-              </div>
-              <p className="text-[#eaeaeb] text-sm mb-6 leading-relaxed">
-                My perspectives and technical insights on cloud infrastructure,
-                systems design, and emerging technologies.
-              </p>
-            </div>
-            <a
-              href="/home-blog"
-              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 px-3 py-1 bg-green-700 font-semibold rounded-md transition-colors"
-            >
-              Read Blogs
-              <ExternalLink className="w-4 h-4" />
-            </a>
-          </div>
-        </section>
-
-        {/* Experience Section */}
-        <section className="scroll-mt-20">
-          <SectionHeader title="Experience" icon={Briefcase} />
-          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-md p-6 sm:p-8">
-            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-2">
-              <h3 className="text-xl font-semibold text-white">UPPTCL</h3>
-              <span className="text-[#eaeaeb] text-sm font-medium">
-                July 2025 - Aug 2025
-              </span>
-            </div>
-            <p className="text-[#8cb4ff] text-md font-semibold mb-5">
-              Uttar Pradesh Power Transmission Corporation Limited
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col md:flex-row gap-8">
+        {/* Sidebar Navigation */}
+        <aside className="w-full md:w-64 shrink-0 flex flex-col gap-6">
+          {/* Logo Area */}
+          <div>
+            <h1 className="text-4xl font-extrabold tracking-tighter text-[#333333]">
+              <span className="text-[#006600]">cloud</span>kinshuk_
+            </h1>
+            <p className="text-sm text-[#666666] mt-1 border-b border-[#cccccc] pb-4">
+              Student • Builder • Cloud
             </p>
-            <div className="text-[#eaeaeb] text-sm sm:text-base leading-relaxed space-y-4">
-              <p>
-                Worked with the transmission division to understand the
-                operation, protection, and maintenance of 132kV and 220kV
-                substations. Studied working principles of power transformers,
-                circuit breakers, busbars, and protection relays.
-              </p>
-              <p>
-                Observed real-time SCADA dashboards for grid monitoring, load
-                management, and outage reporting. Assisted engineers during
-                shutdown procedures, equipment inspections, and testing of CTs,
-                PTs, and relays.
-              </p>
-              <p>
-                Prepared technical documentation and maintained logs on
-                equipment performance and safety checks. Improved technical
-                workflows by creating well-organized digital reports using cloud
-                and web tools.
-              </p>
-              <div className="pt-3">
-                <a
-                  href="/home-blog/blogE"
-                  className="inline-flex items-center gap-2 text-white px-3 py-1 bg-green-700 rounded-sm font-semibold  transition-all text-md"
-                >
-                  Read blog <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              </div>
-            </div>
           </div>
-        </section>
 
-        {/* Projects Section */}
-        <section className="scroll-mt-20">
-          <SectionHeader title="Selected Projects" icon={Code} />
-          <div className="space-y-6">
-            {CONFIG.projects.map((project) => (
-              <div
-                key={project.title}
-                className="bg-[#1e1e1e] border border-[#42414d] hover:border-[#555] rounded-xl p-6 sm:p-8 transition-colors"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-4 gap-2">
-                  <h3 className="text-2xl font-semibold text-white flex items-center gap-2">
-                    {project.title}
-                    {project.links.live && (
-                      <a
-                        href={project.links.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#eaeaeb] hover:text-[#8cb4ff] transition-colors"
-                      >
-                        <ExternalLink className="w-5 h-5" />
-                      </a>
-                    )}
-                  </h3>
-                  <span className="text-[#eaeaeb] text-sm flex-shrink-0">
-                    {project.year}
-                  </span>
-                </div>
+          {/* Nav Links */}
+          <nav className="hidden md:flex flex-col gap-1 text-sm font-bold">
+            <a
+              href="#about"
+              className="text-[#006600] hover:underline hover:bg-[#f0f0f0] p-1"
+            >
+              About
+            </a>
+            <a
+              href="#projects"
+              className="text-[#006600] hover:underline hover:bg-[#f0f0f0] p-1"
+            >
+              Shipped Stuff
+            </a>
+            <a
+              href="#experience"
+              className="text-[#006600] hover:underline hover:bg-[#f0f0f0] p-1"
+            >
+              Experience
+            </a>
+            <a
+              href="#skills"
+              className="text-[#006600] hover:underline hover:bg-[#f0f0f0] p-1"
+            >
+              Proficiencies
+            </a>
+            <a
+              href="#certifications"
+              className="text-[#006600] hover:underline hover:bg-[#f0f0f0] p-1"
+            >
+              Certifications
+            </a>
+            <a
+              href="#education"
+              className="text-[#006600] hover:underline hover:bg-[#f0f0f0] p-1"
+            >
+              Education
+            </a>
+            <a
+              href="#terminal"
+              className="text-[#006600] hover:underline hover:bg-[#f0f0f0] p-1"
+            >
+              Terminal Access
+            </a>
+          </nav>
 
-                <div className="flex flex-wrap gap-2 mb-5">
-                  <span className="px-2.5 py-1  text-green-500 text-sm font-bold uppercase">
-                    {project.type}
-                  </span>
-                  <span
-                    className={`px-2.5 py-1  rounded-md text-xs font-semibold ${
-                      project.status === "Live"
-                        ? "bg-[#8cb4ff]/10  text-[#8cb4ff]"
-                        : "bg-[#1b1b1b]  text-[#eaeaeb]"
-                    }`}
+          {/* Social Links Box */}
+          <div className="bg-[#f9f9f9] border border-[#cccccc] p-3 text-sm">
+            <h3 className="font-bold mb-2 text-[#333333]">Connect</h3>
+            <ul className="space-y-2">
+              {CONFIG.social.map((social) => (
+                <li key={social.platform}>
+                  <a
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#006600] hover:underline flex items-center"
                   >
-                    {project.status}
+                    <SocialIcon icon={social.icon} />
+                    {social.handle}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
+
+        {/* Main Content Area */}
+        <main className="flex-1 pb-16">
+          {/* Header / Intro */}
+          <section id="about" className="mb-10">
+            <h2 className="text-2xl font-bold mb-4">
+              Welcome to my portfolio.
+            </h2>
+            <div className="text-[15px] leading-relaxed space-y-3">
+              <p>
+                Hi everyone! My name is <strong>Kinshuk</strong>.
+              </p>
+              {CONFIG.personal.bio.map((paragraph, idx) => (
+                <p key={idx}>{paragraph}</p>
+              ))}
+            </div>
+
+            <div className="mt-4 text-sm text-[#666666]">
+              Location: {CONFIG.personal.location} | Status:{" "}
+              {CONFIG.personal.availability}
+            </div>
+
+            {/* FFmpeg-style Big Download Buttons */}
+            <div className="flex flex-wrap gap-4 mt-6">
+              <a
+                href="/kinshukfinalresume.pdf"
+                download="kinshukfinalresume.pdf"
+                className="bg-[#006600] text-white font-bold py-2 px-6 border-b-4 border-[#004400] hover:bg-[#008800] active:border-b-0 active:mt-[4px] transition-all inline-block"
+              >
+                Download Resume
+              </a>
+              <a
+                href="/home-blog"
+                className="bg-[#eeeeee] text-[#333333] font-bold py-2 px-6 border border-[#cccccc] hover:bg-[#dddddd] transition-all inline-block"
+              >
+                Read Blog
+              </a>
+            </div>
+          </section>
+
+          {/* Selected Projects */}
+          <SectionHeader title="Some shipped Stuff" id="projects" />
+          <div className="space-y-8">
+            {CONFIG.projects.map((project, idx) => (
+              <div
+                key={idx}
+                className="border border-[#cccccc] bg-[#fdfdfd] p-4"
+              >
+                <div className="flex flex-col sm:flex-row justify-between mb-2 pb-2 border-b border-[#eeeeee]">
+                  <h3 className="text-lg font-bold text-[#006600]">
+                    {project.title}
+                  </h3>
+                  <span className="text-xs text-[#666666] font-mono mt-1 sm:mt-0">
+                    [ {project.year} | {project.status} | {project.type} ]
                   </span>
                 </div>
 
-                <div className="text-[#eaeaeb] text-sm sm:text-base leading-relaxed space-y-3 mb-6">
+                <div className="text-[14px] space-y-2 mb-4">
                   {project.description.map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
                 </div>
 
-                <div className="mb-6">
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2.5 py-1 bg-[#303030] text-[#eaeaeb] rounded-sm text-xs"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+                <div className="text-[13px] bg-[#f4f4f4] p-2 border border-[#dddddd] mb-3">
+                  <strong>Stack:</strong> {project.technologies.join(", ")}
                 </div>
 
-                {project.dockerCommand !== "Image is not available" && (
-                  <div className="p-1 mb-6 font-mono text-xs sm:text-sm bg-[#252525] rounded-md flex items-center justify-between gap-3 overflow-hidden">
-                    <code className="text-[#eaeaeb] truncate px-2">
-                      <span className="text-[#8cb4ff] mr-2">$</span>
-                      {project.dockerCommand}
-                    </code>
-                    <CopyButton text={project.dockerCommand} />
+                {project.dockerCommand && (
+                  <div className="mb-3">
+                    <strong className="text-[13px]">
+                      Docker Pull Command:
+                    </strong>
+                    <div className="font-mono text-[13px] bg-[#eeeeee] border border-[#cccccc] p-2 mt-1 flex justify-between items-center">
+                      <span>$ {project.dockerCommand}</span>
+                      <CopyText text={project.dockerCommand} />
+                    </div>
                   </div>
                 )}
 
-                <div className="flex flex-wrap gap-4">
+                <div className="text-sm font-bold flex gap-4">
                   {project.links.live && (
                     <a
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-3 py-2 bg-blue-800  text-white text-sm font-semibold rounded-md  transition-colors"
+                      className="text-[#006600] hover:underline"
                     >
-                      View Project <ExternalLink className="w-4 h-4" />
+                      ▶ View Live Web
                     </a>
                   )}
                   {project.links.repo && (
@@ -528,146 +412,131 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-3 py-2 bg-black  text-sm font-semibold rounded-md transition-colors"
+                      className="text-[#006600] hover:underline"
                     >
-                      <Github className="w-4 h-4" /> Source Code
+                      ▶ Source Code
                     </a>
                   )}
                 </div>
               </div>
             ))}
           </div>
-        </section>
 
-        {/* Technical Skills Section */}
-        <section className="scroll-mt-20">
-          <SectionHeader title="Technical Proficiencies" icon={Zap} />
-          <div className="grid sm:grid-cols-2 gap-6">
+          {/* Experience */}
+          <SectionHeader title="Where I worked" id="experience" />
+          <div className="mb-8">
+            <h3 className="font-bold text-lg">UPPTCL</h3>
+            <p className="text-sm text-[#666666] mb-2">
+              Uttar Pradesh Power Transmission Corporation Limited (July 2025 -
+              Aug 2025)
+            </p>
+            <p className="text-[14px] mb-2">
+              Worked with the transmission division to understand the operation,
+              protection, and maintenance of 132kV and 220kV substations.
+              Prepared technical documentation and maintained logs on equipment
+              performance and safety checks.
+            </p>
+            <a
+              href="/home-blog/blogE"
+              className="text-[#006600] text-sm font-bold hover:underline"
+            >
+              ▶ Read Full Experience Log
+            </a>
+          </div>
+
+          {/* Technical Proficiencies */}
+          <SectionHeader title="Crazy Stuff I know" id="skills" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
             {Object.entries(CONFIG.skills).map(([category, skills]) => (
-              <div
-                key={category}
-                className="bg-[#1e1e1e] border border-[#42414d] rounded-md  p-3 sm:p-4"
-              >
-                <h3 className="text-lg font-semibold text-white mb-4">
+              <div key={category} className="border border-[#cccccc] p-3">
+                <h3 className="font-bold text-[#333333] mb-2 bg-[#eeeeee] p-1 border-b border-[#cccccc]">
                   {category}
                 </h3>
-                <div className="flex flex-wrap gap-2">
+                <ul className="list-disc list-inside text-[14px] text-[#444444]">
                   {skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-2 py-1 bg-[#303030]  text-[#eaeaeb] rounded-md  text-xs sm:text-sm font-medium"
-                    >
-                      {skill}
-                    </span>
+                    <li key={skill}>{skill}</li>
                   ))}
-                </div>
+                </ul>
               </div>
             ))}
           </div>
-        </section>
 
-        {/* Certifications Section */}
-        <section className="scroll-mt-20">
-          <SectionHeader title="Certifications" icon={Star} />
-          <div className="grid sm:grid-cols-2 gap-6">
-            {CONFIG.certifications.map((cert) => (
-              <div
-                key={cert.title}
-                className="bg-[#1e1e1e] border border-[#42414d] rounded-md p-3 flex flex-col justify-between hover:border-[#555] transition-colors"
-              >
-                <div>
-                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-3 gap-2">
-                    <h3 className="text-lg font-semibold text-white">
-                      {cert.url ? (
-                        <a
-                          href={cert.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-white hover:text-green-300   transition-colors inline-flex items-center gap-2"
-                        >
-                          {cert.title}
-                          <ExternalLink className="w-3.5 h-3.5" />
-                        </a>
-                      ) : (
-                        cert.title
-                      )}
-                    </h3>
-                  </div>
-                  <div className="flex items-center gap-2 mb-4 text-sm">
-                    <Award className="w-4 h-4 text-white" />
-                    <span className="text-[#eaeaeb]">{cert.organization}</span>
-                    <span className="text-gray-400 ml-auto">{cert.year}</span>
-                  </div>
-                  <p className="text-[#eaeaeb] text-sm leading-relaxed mb-5">
-                    {cert.description}
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {cert.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-2.5 py-1 font-semibold   text-green-500 rounded-sm text-xs"
+          {/* Certifications */}
+          <SectionHeader title="Certifications" id="certifications" />
+          <div className="space-y-4 mb-8">
+            {CONFIG.certifications.map((cert, idx) => (
+              <div key={idx} className="border-l-4 border-[#006600] pl-3 py-1">
+                <h3 className="font-bold">
+                  {cert.url ? (
+                    <a
+                      href={cert.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#006600] hover:underline"
                     >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
+                      {cert.title}
+                    </a>
+                  ) : (
+                    cert.title
+                  )}
+                  <span className="text-sm font-normal text-[#666666] ml-2">
+                    ({cert.year})
+                  </span>
+                </h3>
+                <p className="text-[13px] font-bold text-[#444444]">
+                  {cert.organization} | Status: {cert.status}
+                </p>
+                <p className="text-[14px] mt-1">{cert.description}</p>
+                <p className="text-[12px] text-[#666666] mt-1 font-mono">
+                  Skills: {cert.skills.join(" • ")}
+                </p>
               </div>
             ))}
           </div>
-        </section>
 
-        {/* Education Section */}
-        <section className="scroll-mt-20">
-          <SectionHeader title="Education" icon={GraduationCap} />
-          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-md p-6 sm:p-8">
-            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-2">
-              <h3 className="text-xl font-semibold text-white">
-                {CONFIG.education.degree}
-              </h3>
-              <span className="text-[#eaeaeb] text-sm">
-                {CONFIG.education.period}
-              </span>
-            </div>
-            <p className="text-[#8cb4ff] font-medium mb-3 text-sm sm:text-base">
-              {CONFIG.education.field}
+          {/* Education */}
+          <SectionHeader title="Education" id="education" />
+          <div className="mb-8">
+            <h3 className="font-bold text-lg">
+              {CONFIG.education.institution}
+            </h3>
+            <p className="text-sm text-[#666666] font-mono">
+              {CONFIG.education.location} | {CONFIG.education.period}
             </p>
-            <p className="text-[#eaeaeb] text-sm sm:text-base mb-4 font-medium">
-              {CONFIG.education.institution}, {CONFIG.education.location}
+            <p className="text-[14px] font-bold mt-2">
+              {CONFIG.education.degree} — {CONFIG.education.field}
             </p>
-            <p className="text-[#eaeaeb] text-sm sm:text-base leading-relaxed">
-              {CONFIG.education.description}
-            </p>
+            <p className="text-[14px] mt-1">{CONFIG.education.description}</p>
           </div>
-        </section>
 
-        {/* CLI Tool Section */}
-        <section className="scroll-mt-20">
-          <SectionHeader title="CLI Tool" icon={Code} />
-          <div className="bg-[#1e1e1e] border border-[#42414d] rounded-md p-6 sm:p-8">
-            <p className="text-[#eaeaeb] text-sm sm:text-base mb-6">
+          {/* CLI Tool */}
+          <SectionHeader title="Terminal Access" id="terminal" />
+          <div className="bg-[#f8f8f8] border border-[#cccccc] p-4">
+            <p className="text-[14px] mb-3">
               Interactive command-line portfolio viewer built with Node.js.
               Install it globally via npm.
             </p>
-            <div className="space-y-3 font-mono text-sm">
-              <div className="p-1 bg-[#1b1b1b] border border-[#42414d] rounded-sm flex items-center justify-between gap-2 overflow-hidden">
-                <div className="truncate text-[#eaeaeb] px-2">
-                  <span className="text-[#8cb4ff] mr-2">$</span>
-                  npm install -g hackkinshuk
-                </div>
-                <CopyButton text="npm install -g hackkinshuk" />
+            <div className="font-mono text-[13px] bg-white border border-[#cccccc] p-3 space-y-2">
+              <div className="flex items-center justify-between">
+                <span>$ npm install -g hackkinshuk</span>
+                <CopyText text="npm install -g hackkinshuk" />
               </div>
-              <div className="p-1 bg-[#1b1b1b] border border-[#42414d] rounded-sm flex items-center justify-between gap-2 overflow-hidden">
-                <div className="truncate text-[#eaeaeb] px-2">
-                  <span className="text-[#8cb4ff] mr-2">$</span>
-                  cloudkinshuk
-                </div>
-                <CopyButton text="cloudkinshuk" />
+              <div className="flex items-center justify-between">
+                <span>$ cloudkinshuk</span>
+                <CopyText text="cloudkinshuk" />
               </div>
             </div>
           </div>
-        </section>
+        </main>
       </div>
+
+      {/* Footer */}
+      <footer className="border-t border-[#cccccc] text-center py-6 text-sm text-[#666666] bg-[#f9f9f9]">
+        <p>
+          Copyright © {new Date().getFullYear()} Kinshuk Jain. All rights
+          reserved.
+        </p>
+      </footer>
     </div>
   );
 }

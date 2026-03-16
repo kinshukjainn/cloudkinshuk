@@ -15,7 +15,7 @@ export default function BlogLayout({
   return (
     // Added pt-16 (64px) or pt-20 (80px) to push the content down.
     // Adjust this number to exactly match the height of your main header.
-    <section className="antialiased bg-[#1b1b1b] pt-32 min-h-screen">
+    <section className="antialiased bg-white pt-32 min-h-screen">
       <Blogheader />
       <main>{children}</main>
     </section>

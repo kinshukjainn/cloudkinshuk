@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 import {
   Monitor,
   Settings,
@@ -83,37 +82,37 @@ const ToolCategory = ({
   const CategoryIcon = section.icon;
 
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
-      className="mb-12"
-    >
+    <section className="mb-6 border border-[#cccccc] bg-white">
       {/* Category Header */}
-      <div className="flex items-center gap-3 mb-5 border-b border-[#444] pb-2">
-        <CategoryIcon className="w-5 h-5 text-green-500 flex-shrink-0" />
-        <h2 className="text-xl font-medium text-white tracking-tight">
-          {section.category}
-        </h2>
-        <span className="ml-auto text-xs font-medium text-gray-500 bg-[#282828] px-2 py-0.5 rounded-xl border border-[#444]">
-          {section.items.length} items
+      <div className="flex items-center justify-between bg-[#eeeeee] border-b border-[#cccccc] px-3 py-2">
+        <div className="flex items-center gap-2">
+          <CategoryIcon className="w-4 h-4 text-[#006600] flex-shrink-0" />
+          <h2 className="text-[16px] font-bold text-[#333333]">
+            {section.category}
+          </h2>
+        </div>
+        <span className="text-[12px] font-mono text-[#666666] bg-white border border-[#cccccc] px-1">
+          [{section.items.length} items]
         </span>
       </div>
 
-      {/* Clean List Layout */}
-      <ul className="space-y-4">
+      {/* Clean Boxy List Layout */}
+      <ul className="divide-y divide-[#eeeeee]">
         {section.items.map((item, idx) => {
           const ItemIcon = item.icon;
           return (
-            <li key={idx} className="flex items-start gap-4 group">
-              <div className="mt-0.5 text-gray-500 group-hover:text-green-500 transition-colors">
-                <ItemIcon className="w-5 h-5" />
+            <li
+              key={idx}
+              className="flex items-start gap-3 p-3 hover:bg-[#fafffa] transition-none group"
+            >
+              <div className="mt-0.5 text-[#666666] group-hover:text-[#006600]">
+                <ItemIcon className="w-4 h-4" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-base text-gray-200 font-medium leading-snug group-hover:text-white transition-colors">
+                <div className="text-[14px] font-bold text-[#333333] group-hover:underline">
                   {item.name}
                 </div>
-                <div className="text-sm text-gray-200 mt-0.5 leading-snug">
+                <div className="text-[12px] font-mono text-[#666666] mt-0.5">
                   {item.spec}
                 </div>
               </div>
@@ -121,7 +120,7 @@ const ToolCategory = ({
           );
         })}
       </ul>
-    </motion.section>
+    </section>
   );
 };
 
@@ -132,39 +131,37 @@ export default function DevToolsCompact() {
   );
 
   return (
-    <div className="min-h-screen bg-[#1b1b1b]  text-gray-100  selection:bg-green-500 selection:text-black pt-16 md:pt-24">
-      <div className="max-w-4xl pt-10 mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <header className="mb-12 md:mb-16 border-b border-[#444] pb-8">
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white mb-4 tracking-tight">
-              Development Stack
-            </h1>
-            <p className="text-lg text-gray-300 leading-relaxed max-w-2xl mb-6">
-              A comprehensive overview of the hardware, software, and services
-              powering my daily workflow and infrastructure.
-            </p>
+    <div className="min-h-screen bg-white text-[#333333]  selection:bg-[#006600] selection:text-white pb-16">
+      {/* Top Green Bar */}
+      <div className="h-2 w-full bg-[#006600]"></div>
 
-            <div className="flex flex-wrap items-center gap-4 text-sm font-medium text-gray-200">
-              <div className="flex items-center gap-1.5">
-                <span className="text-green-500">{totalTools}</span> Active
-                Tools
-              </div>
-              <span className="text-gray-600">•</span>
-              <div className="flex items-center gap-1.5">
-                <span className="text-white">{setupData.length}</span>{" "}
-                Categories
-              </div>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12">
+        {/* Header */}
+        <header className="mb-8 border border-[#cccccc] bg-[#f9f9f9] p-5 sm:p-6">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#333333] mb-4 flex items-center">
+            <span className="w-3 h-6 bg-[#006600] mr-3 inline-block"></span>
+            Development Stack
+          </h1>
+          <p className="text-[14px] sm:text-[15px] text-[#444444] leading-relaxed max-w-2xl border-l-4 border-[#cccccc] pl-3 mb-5">
+            A comprehensive overview of the hardware, software, and services
+            powering my daily workflow and infrastructure.
+          </p>
+
+          <div className="inline-flex flex-wrap items-center gap-3 text-[13px] font-mono bg-white border border-[#cccccc] p-2">
+            <div>
+              <strong className="text-[#006600]">{totalTools}</strong> Active
+              Tools
             </div>
-          </motion.div>
+            <span className="text-[#cccccc]">|</span>
+            <div>
+              <strong className="text-[#333333]">{setupData.length}</strong>{" "}
+              Categories
+            </div>
+          </div>
         </header>
 
         {/* Main Content Grid */}
-        <main className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+        <main className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
           {setupData.map((section, index) => (
             <ToolCategory
               key={section.category}
@@ -175,11 +172,12 @@ export default function DevToolsCompact() {
         </main>
 
         {/* Footer */}
-        <footer className="mt-16 pt-8 border-t border-[#444] pb-12">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+        <footer className="mt-12 pt-4 border-t border-[#cccccc] bg-[#f9f9f9] border-b">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-[#666666] font-mono p-4">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              <span>Environment active and up to date</span>
+              {/* Removed the CSS pulse animation for a static, software-like status block */}
+              <div className="w-2 h-2 bg-[#006600] border border-[#004400]"></div>
+              <span>[Status: Environment active and up to date]</span>
             </div>
             <div>Built with Next.js • React • Tailwind</div>
           </div>

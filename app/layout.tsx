@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import {
   Inter,
   Alegreya,
+  Roboto_Serif,
   IBM_Plex_Serif,
+  Roboto_Slab,
   PT_Sans,
+  Rubik,
   Work_Sans,
 } from "next/font/google";
 import "./globals.css";
@@ -40,12 +43,31 @@ const workSans = Work_Sans({
   display: "swap",
 });
 
+export const robotoSerif = Roboto_Serif({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
+  variable: "--font-roboto-serif",
+  display: "swap",
+});
 const alegreya = Alegreya({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
   style: ["normal", "italic"],
   display: "swap",
   variable: "--font-alegreya",
+});
+
+const rubik = Rubik({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-rubik",
+});
+
+export const robotoSlab = Roboto_Slab({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
+  variable: "--font-roboto-slab", // optional for CSS variable usage
 });
 
 const ibmplex_serif = IBM_Plex_Serif({
@@ -68,7 +90,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-google-analytics-opt-out="">
       <body
-        className={`${inter.variable} ${lucideSans.variable} ${ptSans.variable} ${workSans.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
+        className={`${inter.variable} ${rubik.variable} ${robotoSerif.variable} ${lucideSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >
         <Header />
         {children}

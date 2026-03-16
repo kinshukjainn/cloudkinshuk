@@ -86,84 +86,94 @@ const NOW_CONFIG = {
 
 export default function CurrentWorkings() {
   return (
-    <div className="min-h-screen pt-16 md:pt-24 bg-[#1b1b1b] text-gray-200  selection:bg-green-500 selection:text-black">
-      <div className="max-w-4xl pt-10 mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div className="min-h-screen bg-white text-[#333333]  selection:bg-[#006600] selection:text-white pb-16">
+      {/* Top Green Bar */}
+      <div className="h-2 w-full bg-[#006600]"></div>
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12">
         {/* Header Block */}
-        <header className="mb-12 border-b border-[#444] pb-8">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-3 tracking-tight">
+        <header className="mb-10 border border-[#cccccc] bg-[#f9f9f9] p-5 sm:p-6">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#333333] mb-2 flex items-center">
+            <span className="w-3 h-6 bg-[#006600] mr-3 inline-block"></span>
             Current Workings
           </h1>
-          <p className="text-lg text-gray-300 font-medium mb-6">
+          <p className="text-[15px] font-bold text-[#666666] mb-4">
             My focus and progress in real-time
           </p>
-          <div className="text-sm font-mono text-gray-100 inline-block px-3 py-1.5 rounded-xl">
-            Last updated:{" "}
-            <span className="text-green-300">{NOW_CONFIG.lastUpdated}</span> |
-            Cycle: Every 2 months
+          <div className="text-[13px] font-mono text-[#333333] bg-[#eeeeee] border border-[#cccccc] inline-block px-2 py-1 mb-6">
+            <strong>Last updated:</strong> {NOW_CONFIG.lastUpdated} |{" "}
+            <strong>Cycle:</strong> Every 2 months
           </div>
 
-          <div className="mt-8 max-w-3xl">
-            <h2 className="text-xl font-semibold text-white mb-3">
+          <div className="border-t border-[#cccccc] pt-4">
+            <h2 className="text-[16px] font-bold text-[#333333] mb-2">
               {NOW_CONFIG.intro.title}
             </h2>
-            <p className="text-base text-gray-300 leading-relaxed">
+            <p className="text-[14px] text-[#444444] leading-relaxed border-l-4 border-[#cccccc] pl-3">
               {NOW_CONFIG.intro.description}
             </p>
           </div>
         </header>
 
-        <div className="space-y-16">
+        <div className="space-y-10">
           {/* 1. Current Projects */}
           <section>
-            <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
-              <span className="text-green-500 font-mono text-lg">1.</span>{" "}
-              Active Projects
+            <h2 className="text-xl font-bold text-[#333333] mb-4 border-b-2 border-[#cccccc] pb-1 flex items-center gap-2">
+              <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
+              1. Active Projects
             </h2>
 
-            <div className="space-y-8">
+            <div className="space-y-4">
               {NOW_CONFIG.projects.map((project, index) => {
                 const Icon = project.icon;
                 return (
                   <div
                     key={index}
-                    className="pl-4 border-l-2 border-[#444] hover:border-green-500 transition-colors"
+                    className="border border-[#cccccc] bg-[#fdfdfd] p-4"
                   >
-                    <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 mb-2">
-                      <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                        <Icon className="text-green-500 w-4 h-4" />
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-[#eeeeee]">
+                      <h3 className="text-[16px] font-bold text-[#006600] flex items-center gap-2">
+                        <Icon className="w-4 h-4 text-[#333333]" />
                         {project.title}
                       </h3>
-                      <span className="text-xs font-mono font-medium text-black bg-green-500 px-2 py-0.5 rounded-xl w-fit">
-                        {project.status}
+                      <span className="text-[12px] font-mono font-bold text-[#333333] bg-[#eeeeee] border border-[#cccccc] px-1 whitespace-nowrap">
+                        [ {project.status} ]
                       </span>
                     </div>
 
-                    <p className="text-gray-300 text-sm sm:text-base mb-4 leading-relaxed max-w-2xl">
+                    <p className="text-[#333333] text-[14px] mb-4 leading-relaxed">
                       {project.description}
                     </p>
 
-                    <dl className="grid sm:grid-cols-[120px_1fr] gap-x-4 gap-y-2 text-sm">
-                      <dt className="text-gray-500 font-mono">Stack:</dt>
-                      <dd className="text-gray-300 flex flex-wrap gap-2">
-                        {project.technologies.map((tech, i) => (
-                          <span
-                            key={i}
-                            className="bg-[#282828] border border-[#555] px-2 py-0.5 rounded-xl text-xs"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </dd>
-
-                      {project.progress && (
-                        <>
-                          <dt className="text-gray-500 font-mono">Progress:</dt>
-                          <dd className="text-green-400 font-medium">
-                            {project.progress}
-                          </dd>
-                        </>
-                      )}
-                    </dl>
+                    <table className="w-full text-left text-[13px] border-t border-[#eeeeee] pt-2">
+                      <tbody>
+                        <tr>
+                          <th className="py-1 pr-4 font-bold text-[#666666] align-top w-24">
+                            Stack:
+                          </th>
+                          <td className="py-1 text-[#333333] font-mono flex flex-wrap gap-1">
+                            {project.technologies.map((tech, i) => (
+                              <span
+                                key={i}
+                                className="bg-[#eeeeee] border border-[#cccccc] px-1"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </td>
+                        </tr>
+                        {project.progress && (
+                          <tr>
+                            <th className="py-1 pr-4 font-bold text-[#666666] align-top">
+                              Progress:
+                            </th>
+                            <td className="py-1 font-mono font-bold text-[#006600]">
+                              {project.progress}
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
                   </div>
                 );
               })}
@@ -172,31 +182,28 @@ export default function CurrentWorkings() {
 
           {/* 2. Currently Learning */}
           <section>
-            <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
-              <span className="text-green-500 font-mono text-lg">2.</span>{" "}
-              Currently Learning
+            <h2 className="text-xl font-bold text-[#333333] mb-4 border-b-2 border-[#cccccc] pb-1 flex items-center gap-2">
+              <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
+              2. Currently Learning
             </h2>
 
-            <div className="space-y-8">
+            <div className="space-y-4">
               {NOW_CONFIG.learning.map((item, index) => {
                 const Icon = item.icon;
                 return (
                   <div
                     key={index}
-                    className="pl-4 border-l-2 border-[#444] hover:border-green-500 transition-colors"
+                    className="border border-[#cccccc] bg-[#fdfdfd] p-4"
                   >
-                    <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-                      <Icon className="text-green-500 w-4 h-4" />
+                    <h3 className="text-[16px] font-bold text-[#333333] mb-2 flex items-center gap-2 border-b border-[#eeeeee] pb-2">
+                      <Icon className="w-4 h-4 text-[#006600]" />
                       {item.topic}
                     </h3>
-                    <p className="text-gray-300 text-sm sm:text-base mb-3 leading-relaxed max-w-2xl">
+                    <p className="text-[#333333] text-[14px] mb-3 leading-relaxed">
                       {item.description}
                     </p>
-                    <div className="text-sm font-mono text-gray-200">
-                      &gt; Source:{" "}
-                      <span className="text-gray-300 font-sans">
-                        {item.resource}
-                      </span>
+                    <div className="text-[12px] font-mono text-[#666666] bg-[#eeeeee] px-2 py-1 border border-[#cccccc] inline-block">
+                      <strong>Source:</strong> {item.resource}
                     </div>
                   </div>
                 );
@@ -205,19 +212,21 @@ export default function CurrentWorkings() {
           </section>
 
           {/* 3. Interests & Goals Grid */}
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid md:grid-cols-2 gap-8">
             <section>
-              <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
-                <span className="text-green-500 font-mono text-lg">3.</span> Key
-                Interests
+              <h2 className="text-xl font-bold text-[#333333] mb-4 border-b-2 border-[#cccccc] pb-1 flex items-center gap-2">
+                <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
+                3. Key Interests
               </h2>
-              <ul className="space-y-3">
+              <ul className="space-y-2 border border-[#cccccc] bg-[#fdfdfd] p-4">
                 {NOW_CONFIG.interests.map((interest, index) => (
                   <li
                     key={index}
-                    className="text-gray-300 text-sm sm:text-base flex items-start"
+                    className="text-[#333333] text-[14px] flex items-start"
                   >
-                    <span className="text-green-500 mr-3 mt-1 text-xs">■</span>
+                    <span className="text-[#006600] mr-2 font-bold leading-tight">
+                      ■
+                    </span>
                     {interest}
                   </li>
                 ))}
@@ -225,17 +234,19 @@ export default function CurrentWorkings() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
-                <span className="text-green-500 font-mono text-lg">4.</span>{" "}
-                Current Goals
+              <h2 className="text-xl font-bold text-[#333333] mb-4 border-b-2 border-[#cccccc] pb-1 flex items-center gap-2">
+                <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
+                4. Current Goals
               </h2>
-              <ul className="space-y-3">
+              <ul className="space-y-2 border border-[#cccccc] bg-[#fdfdfd] p-4">
                 {NOW_CONFIG.goals.map((goal, index) => (
                   <li
                     key={index}
-                    className="text-gray-300 text-sm sm:text-base flex items-start"
+                    className="text-[#333333] text-[14px] flex items-start"
                   >
-                    <span className="text-green-500 mr-3 mt-1 text-xs">■</span>
+                    <span className="text-[#006600] mr-2 font-bold leading-tight">
+                      ■
+                    </span>
                     {goal}
                   </li>
                 ))}
@@ -245,20 +256,25 @@ export default function CurrentWorkings() {
 
           {/* 5. Reading & Following */}
           <section>
-            <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
-              <span className="text-green-500 font-mono text-lg">5.</span>{" "}
-              Reading & Following
+            <h2 className="text-xl font-bold text-[#333333] mb-4 border-b-2 border-[#cccccc] pb-1 flex items-center gap-2">
+              <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
+              5. Reading & Following
             </h2>
-            <div className="grid sm:grid-cols-2 gap-6 bg-[#282828] border border-[#444] p-6 rounded-xl">
+            <div className="grid sm:grid-cols-2 gap-4">
               {NOW_CONFIG.consuming.map((item, index) => (
-                <div key={index}>
-                  <div className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-1">
+                <div
+                  key={index}
+                  className="border border-[#cccccc] bg-[#fdfdfd] p-4"
+                >
+                  <div className="text-[12px] font-mono text-[#666666] uppercase tracking-wider mb-2 border-b border-[#eeeeee] pb-1">
                     [{item.type}]
                   </div>
-                  <div className="text-white font-medium mb-1">
+                  <div className="text-[#333333] font-bold text-[15px] mb-1">
                     {item.title}
                   </div>
-                  <div className="text-sm text-green-400">{item.author}</div>
+                  <div className="text-[13px] text-[#006600] italic">
+                    {item.author}
+                  </div>
                 </div>
               ))}
             </div>
@@ -267,39 +283,41 @@ export default function CurrentWorkings() {
           {/* 6. Not Doing */}
           {NOW_CONFIG.notDoing && NOW_CONFIG.notDoing.length > 0 && (
             <section>
-              <h2 className="text-xl font-bold text-white mb-4 border-b border-[#444] pb-2 flex items-center gap-2">
-                <span className="text-gray-500 font-mono text-lg">6.</span> Not
-                Doing Right Now
+              <h2 className="text-xl font-bold text-[#333333] mb-4 border-b-2 border-[#cccccc] pb-1 flex items-center gap-2">
+                <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
+                6. Not Doing Right Now
               </h2>
-              <p className="text-sm text-gray-200 mb-6 italic">
-                Being intentional about focus means being clear about what to
-                avoid.
-              </p>
-              <ul className="space-y-3">
-                {NOW_CONFIG.notDoing.map((item, index) => (
-                  <li
-                    key={index}
-                    className="text-gray-200 text-sm sm:text-base flex items-start"
-                  >
-                    <span className="text-gray-600 mr-3 mt-0.5 font-mono">
-                      -
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              <div className="border border-[#cccccc] bg-[#f9f9f9] p-4">
+                <p className="text-[13px] text-[#666666] mb-3 italic">
+                  Being intentional about focus means being clear about what to
+                  avoid.
+                </p>
+                <ul className="space-y-2">
+                  {NOW_CONFIG.notDoing.map((item, index) => (
+                    <li
+                      key={index}
+                      className="text-[#333333] text-[14px] flex items-start"
+                    >
+                      <span className="text-[#cc0000] mr-2 font-mono font-bold">
+                        -
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </section>
           )}
         </div>
 
         {/* Footer Note */}
-        <footer className="mt-20 pt-8 border-t border-[#444]">
-          <p className="text-sm text-gray-500 leading-relaxed font-mono">
+        <footer className="mt-12 pt-6 border-t border-[#cccccc]">
+          <p className="text-[12px] text-[#666666] font-mono">
             <a
               href="https://nownownow.com/about"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-200 hover:text-white underline underline-offset-4 transition-colors"
+              className="text-[#006600] hover:underline hover:bg-[#eeeeee] transition-none"
             >
               /now movement
             </a>

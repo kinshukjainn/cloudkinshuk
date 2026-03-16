@@ -141,22 +141,28 @@ const AUDIT_DATA = {
 // ============================================================================
 
 const getScoreColor = (score: number) => {
-  if (score >= 90) return "text-green-500";
-  if (score >= 50) return "text-amber-500";
-  return "text-red-500";
+  if (score >= 90) return "text-[#006600]";
+  if (score >= 50) return "text-[#b86b00]"; // Dark Amber for light theme
+  return "text-[#cc0000]"; // Classic Red
 };
 
 const getStatusColor = (status: Status) => {
-  if (status === "pass") return "text-green-500";
-  if (status === "average") return "text-amber-500";
-  return "text-red-500";
+  if (status === "pass") return "text-[#006600]";
+  if (status === "average") return "text-[#b86b00]";
+  return "text-[#cc0000]";
+};
+
+const getStatusBorder = (status: Status) => {
+  if (status === "pass") return "border-l-[#006600]";
+  if (status === "average") return "border-l-[#b86b00]";
+  return "border-l-[#cc0000]";
 };
 
 const getStatusIcon = (status: Status) => {
   if (status === "pass")
-    return <CheckCircle2 className="w-4 h-4 text-green-500" />;
-  if (status === "average") return <Info className="w-4 h-4 text-amber-500" />;
-  return <AlertTriangle className="w-4 h-4 text-red-500" />;
+    return <CheckCircle2 className="w-4 h-4 text-[#006600]" />;
+  if (status === "average") return <Info className="w-4 h-4 text-[#b86b00]" />;
+  return <AlertTriangle className="w-4 h-4 text-[#cc0000]" />;
 };
 
 const generateMarkdown = (device: DeviceType) => {
@@ -199,83 +205,98 @@ export default function SeoInsights() {
   };
 
   return (
-    <div className="min-h-screen pt-16 md:pt-24 bg-[#1b1b1b] text-gray-200  selection:bg-green-500 selection:text-black">
-      <div className="max-w-4xl pt-10 mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div className="min-h-screen bg-white text-[#333333]  selection:bg-[#006600] selection:text-white pb-16">
+      {/* Top Green Bar */}
+      <div className="h-2 w-full bg-[#006600]"></div>
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12">
         {/* Header Block */}
-        <header className="mb-10 border-b border-[#444] pb-6 flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <h1 className="text-5xl md:text-5xl font-semibold text-white mb-2 tracking-tight">
-              Lighthouse Intelligence
-            </h1>
-            <div className="text-sm font-mono text-gray-100">
-              Captured: {AUDIT_DATA.meta.capturedAt} | v
-              {AUDIT_DATA.meta.lighthouseVersion}
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            {/* Device Toggle */}
-            <div className="flex   rounded-sm p-1">
-              <button
-                onClick={() => setDevice("mobile")}
-                className={`flex items-center gap-2 px-3 py-1.5 text-sm cursor-pointer font-medium rounded-sm transition-colors ${
-                  device === "mobile"
-                    ? " text-white shadow-sm"
-                    : "text-gray-200 hover:text-gray-200"
-                }`}
-              >
-                <Smartphone className="w-4 h-4" /> Mobile
-              </button>
-              <button
-                onClick={() => setDevice("desktop")}
-                className={`flex items-center gap-2 px-3 py-1.5  text-sm cursor-pointer font-medium rounded-sm transition-colors ${
-                  device === "desktop"
-                    ? " text-white shadow-sm"
-                    : "text-gray-200 hover:text-gray-200"
-                }`}
-              >
-                <Monitor className="w-4 h-4" /> Desktop
-              </button>
+        <header className="mb-8 border border-[#cccccc] bg-[#f9f9f9] p-5">
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-[#333333] mb-4 flex items-center">
+                <span className="w-3 h-6 bg-[#006600] mr-3 inline-block"></span>
+                Lighthouse Intelligence
+              </h1>
+              <div className="text-[13px] font-mono text-[#666666] border border-[#cccccc] bg-white p-2 inline-block">
+                <strong>Captured:</strong> {AUDIT_DATA.meta.capturedAt} |{" "}
+                <strong>v{AUDIT_DATA.meta.lighthouseVersion}</strong>
+              </div>
             </div>
 
-            {/* Export Button */}
-            <button
-              onClick={handleExport}
-              className="flex items-center gap-2 px-4 py-2 bg-green-500 cursor-pointer hover:bg-green-400 text-black text-sm font-semibold rounded-sm transition-colors"
-            >
-              <Download className="w-4 h-4" /> Export
-            </button>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              {/* Device Toggle Tabs */}
+              <div className="flex border border-[#cccccc] bg-[#eeeeee] p-1">
+                <button
+                  onClick={() => setDevice("mobile")}
+                  className={`flex items-center justify-center gap-2 px-4 py-1.5 text-[14px] font-bold border transition-none ${
+                    device === "mobile"
+                      ? "bg-[#006600] text-white border-[#004400]"
+                      : "bg-transparent text-[#333333] border-transparent hover:bg-[#dddddd]"
+                  }`}
+                >
+                  <Smartphone className="w-4 h-4" /> Mobile
+                </button>
+                <button
+                  onClick={() => setDevice("desktop")}
+                  className={`flex items-center justify-center gap-2 px-4 py-1.5 text-[14px] font-bold border transition-none ${
+                    device === "desktop"
+                      ? "bg-[#006600] text-white border-[#004400]"
+                      : "bg-transparent text-[#333333] border-transparent hover:bg-[#dddddd]"
+                  }`}
+                >
+                  <Monitor className="w-4 h-4" /> Desktop
+                </button>
+              </div>
+
+              {/* Export Button */}
+              <button
+                onClick={handleExport}
+                className="flex items-center justify-center gap-2 px-4 py-2 bg-[#eeeeee] text-[#333333] font-bold text-[14px] border border-[#cccccc] hover:bg-[#dddddd] active:bg-[#cccccc] transition-none whitespace-nowrap"
+              >
+                <Download className="w-4 h-4" /> Export Report
+              </button>
+            </div>
           </div>
         </header>
 
         {/* 1. Environment Details */}
-        <section className="mb-10">
-          <dl className="grid sm:grid-cols-[150px_1fr] gap-x-4 gap-y-2 text-sm">
-            <dt className="text-gray-500 font-mono">Target Device:</dt>
-            <dd className="text-gray-300">{currentData.environment}</dd>
-            <dt className="text-gray-500 font-mono">User Agent:</dt>
-            <dd className="text-gray-300">{AUDIT_DATA.meta.browser}</dd>
-          </dl>
+        <section className="mb-8 border border-[#cccccc] bg-white">
+          <h2 className="text-[16px] font-bold text-[#333333] bg-[#eeeeee] border-b border-[#cccccc] px-4 py-2">
+            Environment Data
+          </h2>
+          <div className="p-4">
+            <dl className="grid sm:grid-cols-[150px_1fr] gap-x-4 gap-y-2 text-[14px]">
+              <dt className="text-[#666666] font-bold">Target Device:</dt>
+              <dd className="text-[#333333] font-mono">
+                {currentData.environment}
+              </dd>
+              <dt className="text-[#666666] font-bold">User Agent:</dt>
+              <dd className="text-[#333333] font-mono">
+                {AUDIT_DATA.meta.browser}
+              </dd>
+            </dl>
+          </div>
         </section>
 
         {/* 2. Primary Scores */}
-        <section className="mb-12">
-          <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
-            <span className="text-green-500 font-mono text-lg">1.</span>{" "}
+        <section className="mb-8">
+          <h2 className="text-xl font-bold text-[#333333] mb-4 flex items-center border-b-2 border-[#cccccc] pb-1">
+            <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
             Category Scores
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {Object.entries(currentData.scores).map(([key, value]) => (
               <div
                 key={key}
-                className="  p-5 rounded-sm flex flex-col items-center justify-center text-center"
+                className="border border-[#cccccc] bg-[#fdfdfd] p-4 flex flex-col items-center justify-center text-center shadow-none"
               >
                 <div
                   className={`text-4xl font-mono font-bold mb-2 ${getScoreColor(value)}`}
                 >
                   {value}
                 </div>
-                <div className="text-sm font-medium text-gray-300 uppercase tracking-wider capitalize">
+                <div className="text-[12px] font-bold text-[#666666] uppercase tracking-wider">
                   {key.replace(/([A-Z])/g, " $1").trim()}
                 </div>
               </div>
@@ -284,40 +305,39 @@ export default function SeoInsights() {
         </section>
 
         {/* 3. Core Web Vitals */}
-        <section className="mb-12">
-          <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
-            <span className="text-green-500 font-mono text-lg">2.</span> Core
-            Web Vitals
+        <section className="mb-8">
+          <h2 className="text-xl font-bold text-[#333333] mb-4 flex items-center border-b-2 border-[#cccccc] pb-1">
+            <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
+            Core Web Vitals
           </h2>
-          <div className="  rounded-sm overflow-hidden">
-            <table className="w-full text-left text-sm whitespace-nowrap">
-              <thead className="bg-[#333] border-b border-[#444]">
+          <div className="border border-[#cccccc] bg-white overflow-x-auto">
+            <table className="w-full text-left text-[14px]">
+              <thead className="bg-[#eeeeee] border-b border-[#cccccc]">
                 <tr>
-                  <th className="px-4 py-3 font-medium text-gray-300">
+                  <th className="px-4 py-2 font-bold text-[#333333] border-r border-[#cccccc]">
                     Metric
                   </th>
-                  <th className="px-4 py-3 font-medium text-gray-300">Value</th>
-                  <th className="px-4 py-3 font-medium text-gray-300">
-                    Status
+                  <th className="px-4 py-2 font-bold text-[#333333] border-r border-[#cccccc]">
+                    Value
                   </th>
+                  <th className="px-4 py-2 font-bold text-[#333333]">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#444]">
+              <tbody className="divide-y divide-[#eeeeee]">
                 {currentData.metrics.map((metric, idx) => (
-                  <tr
-                    key={idx}
-                    className="hover:bg-[#333]/50 transition-colors"
-                  >
-                    <td className="px-4 py-3 text-gray-200">{metric.label}</td>
+                  <tr key={idx} className="hover:bg-[#fafffa]">
+                    <td className="px-4 py-2 text-[#333333] border-r border-[#eeeeee]">
+                      {metric.label}
+                    </td>
                     <td
-                      className={`px-4 py-3 font-mono font-medium ${getStatusColor(metric.status)}`}
+                      className={`px-4 py-2 font-mono font-bold border-r border-[#eeeeee] ${getStatusColor(metric.status)}`}
                     >
                       {metric.value}
                     </td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-2 capitalize">
+                    <td className="px-4 py-2">
+                      <div className="flex items-center gap-2 capitalize font-bold text-[#333333]">
                         {getStatusIcon(metric.status)}
-                        <span className="text-gray-200">{metric.status}</span>
+                        <span>{metric.status}</span>
                       </div>
                     </td>
                   </tr>
@@ -328,40 +348,39 @@ export default function SeoInsights() {
         </section>
 
         {/* 4. Diagnostics & Opportunities */}
-        <section className="mb-12">
-          <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
-            <span className="text-green-500 font-mono text-lg">3.</span>{" "}
+        <section className="mb-8">
+          <h2 className="text-xl font-bold text-[#333333] mb-4 flex items-center border-b-2 border-[#cccccc] pb-1">
+            <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
             Diagnostic Opportunities
           </h2>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {AUDIT_DATA.insights.map((item, idx) => (
               <div
                 key={idx}
-                className=" border-l-2 border-l-[#444] hover:border-l-amber-500 border-t border-r border-b border-t-[#444] border-r-[#444] border-b-[#444] p-4 sm:p-5 rounded-r-sm transition-colors"
+                className={`bg-[#fdfdfd] border border-[#cccccc] border-l-4 p-4 ${getStatusBorder(item.status)}`}
               >
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-2">
-                  <h3 className="text-base font-medium text-white flex items-start gap-2">
+                  <h3 className="text-[15px] font-bold text-[#333333] flex items-start gap-2">
                     {item.status === "fail" ? (
-                      <XCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                      <XCircle className="w-5 h-5 text-[#cc0000] flex-shrink-0 mt-0.5" />
                     ) : (
-                      <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                      <AlertTriangle className="w-5 h-5 text-[#b86b00] flex-shrink-0 mt-0.5" />
                     )}
                     {item.title}
                   </h3>
                   {item.savings && (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#333] border border-[#555] rounded-sm text-xs font-mono text-amber-400 whitespace-nowrap">
+                    <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-[#eeeeee] border border-[#cccccc] text-[12px] font-mono text-[#333333] font-bold whitespace-nowrap">
                       <Clock className="w-3.5 h-3.5" /> Est. savings:{" "}
                       {item.savings}
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-gray-200 leading-relaxed ml-7">
+                <p className="text-[14px] text-[#444444] leading-relaxed ml-7">
                   {item.description}
                 </p>
-                <div className="mt-3 ml-7">
-                  <span className="text-xs font-mono text-gray-500 uppercase tracking-wider">
-                    Category:{" "}
-                    <span className="text-gray-300">{item.category}</span>
+                <div className="mt-2 ml-7">
+                  <span className="text-[12px] font-mono text-[#666666] bg-[#eeeeee] px-1 border border-[#cccccc]">
+                    Category: {item.category}
                   </span>
                 </div>
               </div>
@@ -371,17 +390,19 @@ export default function SeoInsights() {
 
         {/* 5. Passed Audits (Summarized) */}
         <section>
-          <h2 className="text-xl font-bold text-white mb-6 border-b border-[#444] pb-2 flex items-center gap-2">
-            <span className="text-green-500 font-mono text-lg">4.</span> Passed
-            Audits
+          <h2 className="text-xl font-bold text-[#333333] mb-4 flex items-center border-b-2 border-[#cccccc] pb-1">
+            <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
+            Passed Audits
           </h2>
-          <div className="grid md:grid-cols-2 gap-x-8 gap-y-3">
-            {AUDIT_DATA.passed.map((item, idx) => (
-              <div key={idx} className="flex items-start gap-3">
-                <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                <span className="text-sm text-gray-300">{item}</span>
-              </div>
-            ))}
+          <div className="border border-[#cccccc] bg-[#f9f9f9] p-4">
+            <div className="grid md:grid-cols-2 gap-x-8 gap-y-3">
+              {AUDIT_DATA.passed.map((item, idx) => (
+                <div key={idx} className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#006600] flex-shrink-0 mt-0.5" />
+                  <span className="text-[14px] text-[#333333]">{item}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       </div>

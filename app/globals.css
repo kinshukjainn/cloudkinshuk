@@ -2,7 +2,7 @@
 
 body {
   background-color: black;
-  font-family: var(--font-roboto), sans-serif;
+  font-family: var(--font-ubuntu-sans), sans-serif;
 }
 
 .desc-font {

@@ -20,6 +20,7 @@ const config: Config = {
         rubik: "var(--font-rubik) sans-serif",
         roboto: "var(--font-roboto) sans-serif",
         lucidaSans: "var(--font-lucida) , sans-serif",
+        ubuntuSans: "var(--font-ubuntu-sans) sans-serif, ",
       },
     },
   },

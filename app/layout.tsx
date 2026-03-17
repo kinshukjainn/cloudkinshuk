@@ -7,6 +7,7 @@ import {
   Roboto_Slab,
   PT_Sans,
   Roboto,
+  Ubuntu_Sans,
   Rubik,
   Work_Sans,
 } from "next/font/google";
@@ -78,6 +79,12 @@ const ibmplex_serif = IBM_Plex_Serif({
   display: "swap",
 });
 
+const ubuntuSans = Ubuntu_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"], // choose what you need
+  variable: "--font-ubuntu-sans", // optional CSS variable
+});
+
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "700"],
@@ -97,7 +104,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-google-analytics-opt-out="">
       <body
-        className={`${inter.variable} ${rubik.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
+        className={`${inter.variable} ${rubik.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >
         <Header />
         {children}

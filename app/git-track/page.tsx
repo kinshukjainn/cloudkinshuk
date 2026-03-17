@@ -37,7 +37,7 @@ const GITHUB_CONFIG = {
   repository: "cloudkinshuk",
   branch: "main",
   perPage: 100,
-  maxPages: 10,
+  maxPages: 20,
 };
 
 const COMMIT_TYPES = [

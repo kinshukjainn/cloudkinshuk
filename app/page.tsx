@@ -135,7 +135,7 @@ const CONFIG = {
         "Web Crypto API",
       ],
       links: {
-        live: "https://zeroleaks.cloudkinshuk.in",
+        live: null,
         repo: "https://github.com/kinshukjainn/zeroleaks",
       },
       dockerCommand: "docker pull kinshukdev/zeroleaksproduct:latest",
@@ -157,8 +157,8 @@ const CONFIG = {
         "AWS Lambda",
       ],
       links: {
-        live: "https://fdsai.cloudkinshuk.in",
-        repo: "https://github.com/kinshukjainn/fds-college",
+        live: "https://mscada.cloudkinshuk.in",
+        repo: "https://github.com/kinshukjainn/m-scada",
       },
       dockerCommand: "",
     },

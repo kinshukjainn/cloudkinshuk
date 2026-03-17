@@ -342,8 +342,8 @@ export default function Home() {
             {/* FFmpeg-style Big Download Buttons */}
             <div className="flex flex-wrap gap-4 mt-6">
               <a
-                href="/kinshukfinalresume.pdf"
-                download="kinshukfinalresume.pdf"
+                href="/myresume.pdf"
+                download="myresume.pdf"
                 className="bg-[#006600] text-white font-bold py-2 px-6 border-b-4 border-[#004400] hover:bg-[#008800] active:border-b-0 active:mt-[4px] transition-all inline-block"
               >
                 Download Resume

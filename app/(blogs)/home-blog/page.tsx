@@ -289,7 +289,7 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
     };
 
     return (
-      <div className="mb-6 border border-[#cccccc] bg-[#fdfdfd] p-4">
+      <div className="mb-6  p-4">
         <Link href={`/home-blog/${post.id}`} className="group block">
           {/* Title */}
           <h3 className="text-xl text-[#006600] mb-2 font-bold leading-tight group-hover:underline">
@@ -297,7 +297,7 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
           </h3>
 
           {/* Metadata */}
-          <div className="flex items-center gap-4 mb-3 text-[13px] text-[#666666] font-mono bg-[#eeeeee] p-1 border-y border-[#dddddd]">
+          <div className="flex items-center gap-4 mb-3 text-[13px] text-black  p-2 ">
             <div className="flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5" />
               <span>{formatDate(post.publishedAt)}</span>
@@ -321,13 +321,13 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
             {post.tags.slice(0, 4).map((tag) => (
               <span
                 key={tag.id}
-                className="inline-flex items-center justify-center px-1 border border-[#cccccc] bg-[#eeeeee] text-[12px] text-[#444444] font-mono"
+                className="inline-flex items-center justify-center px-1 border rounded-sm border-[#cccccc] bg-[#eeeeee] text-[12px] text-[#444444] "
               >
                 {tag.name}
               </span>
             ))}
             {post.tags.length > 4 && (
-              <span className="inline-flex items-center justify-center px-1 border border-[#cccccc] bg-[#eeeeee] text-[12px] text-[#444444] font-mono">
+              <span className="inline-flex items-center justify-center rounded-sm px-1 border border-[#cccccc] bg-[#eeeeee] text-[12px] text-[#444444] ">
                 +{post.tags.length - 4} more
               </span>
             )}
@@ -375,10 +375,10 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   const activeFiltersCount = filters.tags.length;
 
   return (
-    <div className="mb-8 border border-[#cccccc] bg-[#f9f9f9]">
+    <div className="mb-8 border border-[#cccccc] rounded-md bg-[#f9f9f9]">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex md:hidden items-center justify-between w-full px-4 py-2 bg-[#eeeeee] border-b border-[#cccccc] font-bold text-[#333333]"
+        className="flex md:hidden items-center justify-between w-full px-4 py-2 cursor-pointer bg-[#eeeeee] border-b border-[#cccccc] font-bold text-[#333333]"
       >
         <span className="text-sm">
           Filter by tags {activeFiltersCount > 0 && `(${activeFiltersCount})`}
@@ -387,7 +387,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
       </button>
 
       <div className={`${isOpen ? "block" : "hidden md:block"} p-4`}>
-        <label className="block text-sm font-bold text-[#333333] border-b border-[#cccccc] pb-1 mb-3">
+        <label className="block text-sm font-bold text-[#333333] border-b border-[#cccccc]  pb-1 mb-3">
           Available Tags{" "}
           {filters.tags.length > 0 && `(${filters.tags.length} selected)`}
         </label>
@@ -399,7 +399,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                 key={tag}
                 onClick={() => toggleTag(tag)}
                 className={`
-                  inline-flex items-center justify-center px-2 py-1 text-[13px] border cursor-pointer 
+                  inline-flex items-center justify-center px-2 py-1 text-[13px] rounded-sm border cursor-pointer 
                   ${
                     isSelected
                       ? "bg-[#006600] text-white border-[#004400] font-bold"
@@ -442,8 +442,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   return (
     <div className="mb-6 w-full">
-      <div className="flex items-stretch border border-[#cccccc] bg-white">
-        <div className="flex items-center justify-center px-3 bg-[#eeeeee] border-r border-[#cccccc]">
+      <div className="flex items-stretch rounded-sm border border-[#cccccc] bg-white">
+        <div className="flex items-center justify-center px-3 bg-[#eeeeee] border-r rounded-sm border-[#cccccc]">
           <Search className="w-4 h-4 text-[#666666]" aria-hidden="true" />
         </div>
 
@@ -467,7 +467,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
       </div>
 
       {searchInput && (
-        <div className="mt-2 text-[13px] text-[#666666] font-mono bg-[#eeeeee] inline-block px-2 py-1 border border-[#cccccc]">
+        <div className="mt-2 text-[13px] text-[#666666]  bg-[#eeeeee] inline-block px-2 py-1 border border-[#cccccc]">
           Found <strong className="text-[#333333]">{resultsCount}</strong> of{" "}
           {totalCount} articles
         </div>
@@ -524,11 +524,8 @@ export default function BlogsPage() {
             Developer Blogs
           </h1>
           <p className="text-[15px] text-[#444444] leading-relaxed max-w-3xl border-l-4 border-[#cccccc] pl-4">
-            Hi{" "}
-            <span className="text-[#006600] font-bold font-mono">
-              @everyone
-            </span>
-            , here I share my learning journey in cloud computing, DevOps,
+            Hi <span className="text-[#006600] font-bold ">@everyone</span>,
+            here I share my learning journey in cloud computing, DevOps,
             security, and infrastructure engineering. I write about AWS
             services, serverless systems, CI/CD basics, and Terraform, focusing
             on understanding concepts through hands-on practice.
@@ -538,15 +535,15 @@ export default function BlogsPage() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Feedback Card */}
-        <div className="mb-8 p-4 border border-[#cccccc] bg-[#fdfdfd] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="mb-8 p-4 rounded-sm border border-[#cccccc] bg-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <MessageSquare className="w-4 h-4 text-[#006600]" />
-              <h3 className="text-lg font-bold text-[#333333]">
+              <h3 className="text-lg font-bold text-black">
                 Leave Your Feedback
               </h3>
             </div>
-            <p className="text-[14px] text-[#666666]">
+            <p className="text-[14px] text-black">
               Help me improve! Your thoughts and suggestions are invaluable for
               creating better content.
             </p>
@@ -555,7 +552,7 @@ export default function BlogsPage() {
             href="https://fdb.cloudkinshuk.in/"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#006600] text-white font-bold py-2 px-6 border-b-4 border-[#004400] hover:bg-[#008800] active:border-b-0 active:mt-[4px] transition-all whitespace-nowrap text-sm inline-flex items-center gap-2"
+            className="bg-[#006600] text-white font-bold py-2 px-6 border-b-4 border-[#004400] rounded-sm hover:bg-[#008800] active:border-b-0 active:mt-[4px] transition-all whitespace-nowrap text-sm inline-flex items-center gap-2"
           >
             Leave Feedback
             <ArrowRight className="w-4 h-4" />
@@ -563,7 +560,7 @@ export default function BlogsPage() {
         </div>
 
         {/* Search & Filter Container */}
-        <div className="bg-[#f9f9f9] p-4 border border-[#cccccc] mb-8">
+        <div className="mb-8">
           <h2 className="text-[14px] font-bold mb-3 border-b border-[#cccccc] pb-1">
             Search & Filter Directory
           </h2>

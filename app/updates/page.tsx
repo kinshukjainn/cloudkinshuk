@@ -100,7 +100,7 @@ export default function CurrentWorkings() {
           <p className="text-[15px] font-bold text-[#666666] mb-4">
             My focus and progress in real-time
           </p>
-          <div className="text-[13px] font-mono text-[#333333] bg-[#eeeeee] border border-[#cccccc] inline-block px-2 py-1 mb-6">
+          <div className="text-[13px]  text-[#333333] bg-[#eeeeee] border border-[#cccccc] inline-block px-2 py-1 mb-6">
             <strong>Last updated:</strong> {NOW_CONFIG.lastUpdated} |{" "}
             <strong>Cycle:</strong> Every 2 months
           </div>
@@ -136,7 +136,7 @@ export default function CurrentWorkings() {
                         <Icon className="w-4 h-4 text-[#333333]" />
                         {project.title}
                       </h3>
-                      <span className="text-[12px] font-mono font-bold text-[#333333] bg-[#eeeeee] border border-[#cccccc] px-1 whitespace-nowrap">
+                      <span className="text-[12px]  font-bold text-[#333333] bg-[#eeeeee] border border-[#cccccc] px-1 whitespace-nowrap">
                         [ {project.status} ]
                       </span>
                     </div>
@@ -151,7 +151,7 @@ export default function CurrentWorkings() {
                           <th className="py-1 pr-4 font-bold text-[#666666] align-top w-24">
                             Stack:
                           </th>
-                          <td className="py-1 text-[#333333] font-mono flex flex-wrap gap-1">
+                          <td className="py-1 text-[#333333]  flex flex-wrap gap-1">
                             {project.technologies.map((tech, i) => (
                               <span
                                 key={i}
@@ -167,7 +167,7 @@ export default function CurrentWorkings() {
                             <th className="py-1 pr-4 font-bold text-[#666666] align-top">
                               Progress:
                             </th>
-                            <td className="py-1 font-mono font-bold text-[#006600]">
+                            <td className="py-1  font-bold text-[#006600]">
                               {project.progress}
                             </td>
                           </tr>
@@ -202,7 +202,7 @@ export default function CurrentWorkings() {
                     <p className="text-[#333333] text-[14px] mb-3 leading-relaxed">
                       {item.description}
                     </p>
-                    <div className="text-[12px] font-mono text-[#666666] bg-[#eeeeee] px-2 py-1 border border-[#cccccc] inline-block">
+                    <div className="text-[12px]  text-[#666666] bg-[#eeeeee] px-2 py-1 border border-[#cccccc] inline-block">
                       <strong>Source:</strong> {item.resource}
                     </div>
                   </div>
@@ -266,7 +266,7 @@ export default function CurrentWorkings() {
                   key={index}
                   className="border border-[#cccccc] bg-[#fdfdfd] p-4"
                 >
-                  <div className="text-[12px] font-mono text-[#666666] uppercase tracking-wider mb-2 border-b border-[#eeeeee] pb-1">
+                  <div className="text-[12px]  text-[#666666] uppercase tracking-wider mb-2 border-b border-[#eeeeee] pb-1">
                     [{item.type}]
                   </div>
                   <div className="text-[#333333] font-bold text-[15px] mb-1">
@@ -298,9 +298,7 @@ export default function CurrentWorkings() {
                       key={index}
                       className="text-[#333333] text-[14px] flex items-start"
                     >
-                      <span className="text-[#cc0000] mr-2 font-mono font-bold">
-                        -
-                      </span>
+                      <span className="text-[#cc0000] mr-2  font-bold">-</span>
                       {item}
                     </li>
                   ))}
@@ -312,7 +310,7 @@ export default function CurrentWorkings() {
 
         {/* Footer Note */}
         <footer className="mt-12 pt-6 border-t border-[#cccccc]">
-          <p className="text-[12px] text-[#666666] font-mono">
+          <p className="text-[12px] text-[#666666] ">
             <a
               href="https://nownownow.com/about"
               target="_blank"

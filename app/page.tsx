@@ -190,10 +190,10 @@ const CopyText = ({ text }: { text: string }) => {
   return (
     <button
       onClick={handleCopy}
-      className="text-xs font-bold text-[#006600] hover:text-white hover:bg-[#006600] border border-[#006600] px-1 ml-2 transition-none focus:outline-none"
+      className="text-xs font-bold text-white cursor-pointer rounded-sm hover:text-white bg-[#006600] border border-[#006600] px-1 py-1 ml-2 transition-none focus:outline-none"
       title="Copy to clipboard"
     >
-      {copied ? "[Copied]" : "[Copy]"}
+      {copied ? "Copied" : "Copy"}
     </button>
   );
 };
@@ -369,7 +369,7 @@ export default function Home() {
                   <h3 className="text-lg font-bold text-[#006600]">
                     {project.title}
                   </h3>
-                  <span className="text-xs text-[#666666] font-mono mt-1 sm:mt-0">
+                  <span className="text-xs text-[#666666]  mt-1 sm:mt-0">
                     [ {project.year} | {project.status} | {project.type} ]
                   </span>
                 </div>
@@ -389,7 +389,7 @@ export default function Home() {
                     <strong className="text-[13px]">
                       Docker Pull Command:
                     </strong>
-                    <div className="font-mono text-[13px] bg-[#eeeeee] border border-[#cccccc] p-2 mt-1 flex justify-between items-center">
+                    <div className=" text-[13px] bg-[#eeeeee] border border-[#cccccc] p-2 mt-1 flex justify-between items-center">
                       <span>$ {project.dockerCommand}</span>
                       <CopyText text={project.dockerCommand} />
                     </div>
@@ -440,7 +440,7 @@ export default function Home() {
               href="/home-blog/blogE"
               className="text-[#006600] text-sm font-bold hover:underline"
             >
-              ▶ Read Full Experience Log
+              ▶ Read Full Experience Blog
             </a>
           </div>
 
@@ -487,7 +487,7 @@ export default function Home() {
                   {cert.organization} | Status: {cert.status}
                 </p>
                 <p className="text-[14px] mt-1">{cert.description}</p>
-                <p className="text-[12px] text-[#666666] mt-1 font-mono">
+                <p className="text-[12px] text-[#666666] mt-1 ">
                   Skills: {cert.skills.join(" • ")}
                 </p>
               </div>
@@ -500,7 +500,7 @@ export default function Home() {
             <h3 className="font-bold text-lg">
               {CONFIG.education.institution}
             </h3>
-            <p className="text-sm text-[#666666] font-mono">
+            <p className="text-sm text-[#666666] ">
               {CONFIG.education.location} | {CONFIG.education.period}
             </p>
             <p className="text-[14px] font-bold mt-2">
@@ -516,7 +516,7 @@ export default function Home() {
               Interactive command-line portfolio viewer built with Node.js.
               Install it globally via npm.
             </p>
-            <div className="font-mono text-[13px] bg-white border border-[#cccccc] p-3 space-y-2">
+            <div className=" text-[13px] bg-white border border-[#cccccc] p-3 space-y-2">
               <div className="flex items-center justify-between">
                 <span>$ npm install -g hackkinshuk</span>
                 <CopyText text="npm install -g hackkinshuk" />

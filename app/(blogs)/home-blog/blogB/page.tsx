@@ -33,12 +33,12 @@ export default function BlogPost() {
         The Command Line Isn&apos;t Scary, It&apos;s Powerful
       </h2>
       <p className="mb-4">
-        On <span className="font-semibold font-mono">Windows</span>, we often
-        rely on graphical interfaces to get things done. The command line can
-        feel like an afterthought. In Linux, the command line, or shell is the
-        heart of the operating system. When I started using it through WSL2 , I
-        realized it wasn&apos;t just for running an occasional command; it was
-        for controlling everything.
+        On <span className="font-semibold ">Windows</span>, we often rely on
+        graphical interfaces to get things done. The command line can feel like
+        an afterthought. In Linux, the command line, or shell is the heart of
+        the operating system. When I started using it through WSL2 , I realized
+        it wasn&apos;t just for running an occasional command; it was for
+        controlling everything.
       </p>
       <p className="mb-6">
         Simple commands for finding files, managing processes, and connecting to
@@ -63,9 +63,7 @@ export default function BlogPost() {
         Instead of hunting for software, I can just open my terminal and type a
         single command:
       </p>
-      <p className="mb-6 p-2 bg-gray-300 rounded font-mono">
-        sudo apt install nodejs
-      </p>
+      <p className="mb-6 p-2 bg-gray-300 rounded ">sudo apt install nodejs</p>
       <p className="mb-4">
         That&apos;s it. The package manager finds the right version, installs
         it, and sets it up for me. It&apos;s like having an app store for all

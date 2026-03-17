@@ -6,6 +6,7 @@ import {
   IBM_Plex_Serif,
   Roboto_Slab,
   PT_Sans,
+  Roboto,
   Rubik,
   Work_Sans,
 } from "next/font/google";
@@ -77,6 +78,12 @@ const ibmplex_serif = IBM_Plex_Serif({
   display: "swap",
 });
 
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "700"],
+  variable: "--font-roboto",
+});
+
 export const metadata: Metadata = {
   title: "Home | Cloudkinshuk",
   description: "Kinshuk Jain's personal portfolio and blog site.",
@@ -90,7 +97,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-google-analytics-opt-out="">
       <body
-        className={`${inter.variable} ${rubik.variable} ${robotoSerif.variable} ${lucideSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
+        className={`${inter.variable} ${rubik.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >
         <Header />
         {children}

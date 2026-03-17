@@ -72,17 +72,11 @@ const setupData: ToolSection[] = [
   },
 ];
 
-const ToolCategory = ({
-  section,
-  index,
-}: {
-  section: ToolSection;
-  index: number;
-}) => {
+const ToolCategory = ({ section }: { section: ToolSection; index: number }) => {
   const CategoryIcon = section.icon;
 
   return (
-    <section className="mb-6 border border-[#cccccc] bg-white">
+    <section className="mb-6 border rounded-sm border-[#cccccc] bg-white">
       {/* Category Header */}
       <div className="flex items-center justify-between bg-[#eeeeee] border-b border-[#cccccc] px-3 py-2">
         <div className="flex items-center gap-2">
@@ -91,7 +85,7 @@ const ToolCategory = ({
             {section.category}
           </h2>
         </div>
-        <span className="text-[12px] font-mono text-[#666666] bg-white border border-[#cccccc] px-1">
+        <span className="text-[12px]  text-[#666666] bg-white border border-[#cccccc] px-1">
           [{section.items.length} items]
         </span>
       </div>
@@ -112,7 +106,7 @@ const ToolCategory = ({
                 <div className="text-[14px] font-bold text-[#333333] group-hover:underline">
                   {item.name}
                 </div>
-                <div className="text-[12px] font-mono text-[#666666] mt-0.5">
+                <div className="text-[12px]  text-[#666666] mt-0.5">
                   {item.spec}
                 </div>
               </div>
@@ -137,24 +131,23 @@ export default function DevToolsCompact() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12">
         {/* Header */}
-        <header className="mb-8 border border-[#cccccc] bg-[#f9f9f9] p-5 sm:p-6">
+        <header className="mb-8  p-5 sm:p-6">
           <h1 className="text-2xl sm:text-3xl font-bold text-[#333333] mb-4 flex items-center">
             <span className="w-3 h-6 bg-[#006600] mr-3 inline-block"></span>
             Development Stack
           </h1>
-          <p className="text-[14px] sm:text-[15px] text-[#444444] leading-relaxed max-w-2xl border-l-4 border-[#cccccc] pl-3 mb-5">
+          <p className="text-[14px] sm:text-[15px] text-black leading-relaxed max-w-2xl border-l-4 border-[#cccccc] pl-3 mb-5">
             A comprehensive overview of the hardware, software, and services
             powering my daily workflow and infrastructure.
           </p>
 
-          <div className="inline-flex flex-wrap items-center gap-3 text-[13px] font-mono bg-white border border-[#cccccc] p-2">
+          <div className="inline-flex flex-wrap items-center gap-3 text-[13px]  bg-white  p-2">
             <div>
-              <strong className="text-[#006600]">{totalTools}</strong> Active
-              Tools
+              <strong className="text-black">{totalTools}</strong> Active Tools
             </div>
-            <span className="text-[#cccccc]">|</span>
+            <span className="text-black font-bold">|</span>
             <div>
-              <strong className="text-[#333333]">{setupData.length}</strong>{" "}
+              <strong className="text-black">{setupData.length}</strong>{" "}
               Categories
             </div>
           </div>
@@ -173,7 +166,7 @@ export default function DevToolsCompact() {
 
         {/* Footer */}
         <footer className="mt-12 pt-4 border-t border-[#cccccc] bg-[#f9f9f9] border-b">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-[#666666] font-mono p-4">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-[#666666]  p-4">
             <div className="flex items-center gap-2">
               {/* Removed the CSS pulse animation for a static, software-like status block */}
               <div className="w-2 h-2 bg-[#006600] border border-[#004400]"></div>

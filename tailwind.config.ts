@@ -18,6 +18,7 @@ const config: Config = {
         robotserif: "var(--font-roboto-serif), serif",
         robotoSlab: "var(--font-roboto-slab), serif",
         rubik: "var(--font-rubik) sans-serif",
+        roboto: "var(--font-roboto) sans-serif",
         lucidaSans: "var(--font-lucida) , sans-serif",
       },
     },

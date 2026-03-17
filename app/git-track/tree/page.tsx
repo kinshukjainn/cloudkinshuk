@@ -237,12 +237,12 @@ export default function RepositoryViewer() {
         <div className="bg-[#f4f4f4] border-t border-b border-[#cccccc] py-3 px-2 sm:px-4 mb-4">
           <div className="grid grid-cols-1 sm:grid-cols-[120px_1fr] gap-y-1 sm:gap-x-4 text-[13px] sm:text-[14px]">
             <div className="text-[#555555]">repository</div>
-            <div className="font-mono font-bold">
+            <div className=" font-bold">
               {GITHUB_CONFIG.username}/{GITHUB_CONFIG.repository}
             </div>
 
             <div className="text-[#555555]">path</div>
-            <div className="flex flex-wrap items-center gap-1 font-mono">
+            <div className="flex flex-wrap items-center gap-1 ">
               <span
                 onClick={() => jumpToPath("")}
                 className="text-[#0000ee] hover:underline cursor-pointer"
@@ -313,7 +313,7 @@ export default function RepositoryViewer() {
                         className="text-[#0000ee] fill-blue-100"
                       />
                     </div>
-                    <div className="text-[#0000ee] hover:underline font-mono text-[13px] font-bold select-none">
+                    <div className="text-[#0000ee] hover:underline  text-[13px] font-bold select-none">
                       ..
                     </div>
                   </div>
@@ -347,7 +347,7 @@ export default function RepositoryViewer() {
                           {icon}
                         </div>
                         <span
-                          className={`truncate font-mono text-[13px] ${isFolder ? "text-[#0000ee] hover:underline font-bold" : "text-[#333] font-semibold hover:underline"}`}
+                          className={`truncate  text-[13px] ${isFolder ? "text-[#0000ee] hover:underline font-bold" : "text-[#333] font-semibold hover:underline"}`}
                         >
                           {itemName}
                           {isFolder && "/"}
@@ -357,7 +357,7 @@ export default function RepositoryViewer() {
                         <span className="w-[80px] text-left md:text-right">
                           {lang}
                         </span>
-                        <span className="w-[80px] text-left md:text-right font-mono">
+                        <span className="w-[80px] text-left md:text-right ">
                           {isFolder ? "-" : formatBytes(item.size)}
                         </span>
                       </div>
@@ -376,7 +376,7 @@ export default function RepositoryViewer() {
               </div>
             ) : (
               <div className="border border-[#ccc] bg-[#f8f8f8] overflow-x-auto">
-                <pre className="p-4 m-0 text-[13px] font-semibold font-mono leading-snug text-[#333]">
+                <pre className="p-4 m-0 text-[13px] font-semibold  leading-snug text-[#333]">
                   <code>{fileContent}</code>
                 </pre>
               </div>

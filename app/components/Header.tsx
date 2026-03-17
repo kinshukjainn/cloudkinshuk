@@ -117,8 +117,8 @@ const Header = () => {
                     flex items-center gap-1.5 text-sm font-bold px-2 py-1 border
                     ${
                       isActive(item.href)
-                        ? "bg-[#006600] text-white border-[#004400]"
-                        : "bg-transparent text-[#333333] border-transparent hover:bg-[#eeeeee] hover:border-[#cccccc]"
+                        ? "bg-gray-300 text-black rounded-sm border-[#004400]"
+                        : "bg-transparent text-[#333333] border-transparent rounded-sm hover:bg-[#eeeeee] hover:border-[#cccccc]"
                     }
                   `}
                 >
@@ -133,7 +133,7 @@ const Header = () => {
               {/* "Buy a Server" — visible ≥ md */}
               <a
                 href="https://brewrepo.cloudkinshuk.in"
-                className="hidden md:flex items-center gap-1.5 text-sm font-bold text-white px-3 py-1 bg-[#006600] border-b-2 border-[#004400] hover:bg-[#008800] active:border-b-0 active:mt-[2px] whitespace-nowrap"
+                className="hidden md:flex items-center gap-1.5 text-sm font-bold text-white px-3 py-1 bg-[#006600] rounded-sm border-b-2 border-[#004400] hover:bg-[#008800] active:border-b-0 active:mt-[2px] whitespace-nowrap"
               >
                 <Server className="w-4 h-4 shrink-0" />
                 <span>Buy a Server</span>
@@ -143,14 +143,14 @@ const Header = () => {
               <a
                 href="https://github.com/kinshukjainn/cloudkinshuk"
                 aria-label="GitHub"
-                className="hidden md:flex items-center text-[#333333] hover:text-[#006600] border border-transparent hover:border-[#cccccc] hover:bg-[#eeeeee] p-1"
+                className="hidden md:flex items-center text-[#333333] rounded-sm hover:text-[#006600] border border-transparent hover:border-[#cccccc] hover:bg-[#eeeeee] p-1"
               >
                 <Github className="w-5 h-5" />
               </a>
 
               {/* Mobile menu toggle (< md) */}
               <button
-                className="md:hidden flex items-center justify-center p-1 border border-[#cccccc] bg-[#eeeeee] text-[#333333] hover:bg-[#dddddd]"
+                className="md:hidden cursor-pointer flex items-center rounded-sm justify-center p-1 border border-[#cccccc] bg-[#eeeeee] text-[#333333] hover:bg-[#dddddd]"
                 onClick={() => setIsOpen((prev) => !prev)}
                 aria-label={isOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isOpen}
@@ -183,8 +183,8 @@ const Header = () => {
                   flex items-center gap-3 px-3 py-2 border text-sm font-bold
                   ${
                     isActive(item.href)
-                      ? "bg-[#006600] text-white border-[#004400]"
-                      : "bg-white text-[#333333] border-[#cccccc] hover:bg-[#eeeeee]"
+                      ? "bg-[#006600] rounded-sm text-white border-[#004400]"
+                      : "bg-white text-[#333333] rounded-sm border-[#cccccc] hover:bg-[#eeeeee]"
                   }
                 `}
               >
@@ -197,14 +197,14 @@ const Header = () => {
             <div className="pt-3 mt-3 border-t border-[#cccccc] flex flex-col gap-2">
               <a
                 href="https://brewrepo.cloudkinshuk.in"
-                className="flex items-center justify-center gap-2 py-2 bg-[#006600] text-white font-bold text-sm border-b-2 border-[#004400] active:border-b-0 active:mt-[2px]"
+                className="flex items-center justify-center gap-2 py-2 bg-[#006600] text-white rounded-sm font-bold text-sm border-b-2 border-[#004400] active:border-b-0 active:mt-[2px]"
               >
                 <Server className="w-4 h-4 shrink-0" />
                 Buy a Server
               </a>
               <a
                 href="https://github.com/kinshukjainn/cloudkinshuk"
-                className="flex items-center justify-center gap-2 py-2 bg-[#eeeeee] text-[#333333] font-bold text-sm border border-[#cccccc] hover:bg-[#dddddd]"
+                className="flex items-center justify-center gap-2 py-2 bg-gray-200 text-black rounded-sm font-bold text-sm border border-[#cccccc] hover:bg-[#dddddd]"
               >
                 <Github className="w-4 h-4 shrink-0" />
                 Source Code

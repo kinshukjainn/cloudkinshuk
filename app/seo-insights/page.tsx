@@ -211,14 +211,14 @@ export default function SeoInsights() {
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12">
         {/* Header Block */}
-        <header className="mb-8 border border-[#cccccc] bg-[#f9f9f9] p-5">
+        <header className="mb-8  p-5">
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold text-[#333333] mb-4 flex items-center">
                 <span className="w-3 h-6 bg-[#006600] mr-3 inline-block"></span>
                 Lighthouse Intelligence
               </h1>
-              <div className="text-[13px] font-mono text-[#666666] border border-[#cccccc] bg-white p-2 inline-block">
+              <div className="text-[13px]  text-[#666666]   p-2 inline-block">
                 <strong>Captured:</strong> {AUDIT_DATA.meta.capturedAt} |{" "}
                 <strong>v{AUDIT_DATA.meta.lighthouseVersion}</strong>
               </div>
@@ -226,20 +226,20 @@ export default function SeoInsights() {
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               {/* Device Toggle Tabs */}
-              <div className="flex border border-[#cccccc] bg-[#eeeeee] p-1">
+              <div className="flex border rounded-sm border-[#cccccc] bg-[#eeeeee] p-1">
                 <button
                   onClick={() => setDevice("mobile")}
-                  className={`flex items-center justify-center gap-2 px-4 py-1.5 text-[14px] font-bold border transition-none ${
+                  className={`flex items-center justify-center gap-2 px-4 py-1.5 cursor-pointer text-[14px] rounded-sm font-bold border transition-none ${
                     device === "mobile"
                       ? "bg-[#006600] text-white border-[#004400]"
-                      : "bg-transparent text-[#333333] border-transparent hover:bg-[#dddddd]"
+                      : "bg-transparent  text-[#333333] border-transparent hover:bg-[#dddddd]"
                   }`}
                 >
                   <Smartphone className="w-4 h-4" /> Mobile
                 </button>
                 <button
                   onClick={() => setDevice("desktop")}
-                  className={`flex items-center justify-center gap-2 px-4 py-1.5 text-[14px] font-bold border transition-none ${
+                  className={`flex items-center justify-center gap-2 px-4 py-1.5 text-[14px] cursor-pointer font-bold rounded-sm border transition-none ${
                     device === "desktop"
                       ? "bg-[#006600] text-white border-[#004400]"
                       : "bg-transparent text-[#333333] border-transparent hover:bg-[#dddddd]"
@@ -252,7 +252,7 @@ export default function SeoInsights() {
               {/* Export Button */}
               <button
                 onClick={handleExport}
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-[#eeeeee] text-[#333333] font-bold text-[14px] border border-[#cccccc] hover:bg-[#dddddd] active:bg-[#cccccc] transition-none whitespace-nowrap"
+                className="flex items-center justify-center gap-2 px-4 py-2 bg-[#eeeeee] text-[#333333] font-bold text-[14px] rounded-sm cursor-pointer border border-[#cccccc] hover:bg-[#dddddd] active:bg-[#cccccc] transition-none whitespace-nowrap"
               >
                 <Download className="w-4 h-4" /> Export Report
               </button>
@@ -261,20 +261,16 @@ export default function SeoInsights() {
         </header>
 
         {/* 1. Environment Details */}
-        <section className="mb-8 border border-[#cccccc] bg-white">
+        <section className="mb-8 border border-[#cccccc] rounded-sm bg-white">
           <h2 className="text-[16px] font-bold text-[#333333] bg-[#eeeeee] border-b border-[#cccccc] px-4 py-2">
             Environment Data
           </h2>
           <div className="p-4">
             <dl className="grid sm:grid-cols-[150px_1fr] gap-x-4 gap-y-2 text-[14px]">
               <dt className="text-[#666666] font-bold">Target Device:</dt>
-              <dd className="text-[#333333] font-mono">
-                {currentData.environment}
-              </dd>
+              <dd className="text-[#333333] ">{currentData.environment}</dd>
               <dt className="text-[#666666] font-bold">User Agent:</dt>
-              <dd className="text-[#333333] font-mono">
-                {AUDIT_DATA.meta.browser}
-              </dd>
+              <dd className="text-[#333333] ">{AUDIT_DATA.meta.browser}</dd>
             </dl>
           </div>
         </section>
@@ -289,10 +285,10 @@ export default function SeoInsights() {
             {Object.entries(currentData.scores).map(([key, value]) => (
               <div
                 key={key}
-                className="border border-[#cccccc] bg-[#fdfdfd] p-4 flex flex-col items-center justify-center text-center shadow-none"
+                className="border border-[#cccccc] rounded-sm bg-[#fdfdfd] p-4 flex flex-col items-center justify-center text-center shadow-none"
               >
                 <div
-                  className={`text-4xl font-mono font-bold mb-2 ${getScoreColor(value)}`}
+                  className={`text-4xl  font-bold mb-2 ${getScoreColor(value)}`}
                 >
                   {value}
                 </div>
@@ -310,7 +306,7 @@ export default function SeoInsights() {
             <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
             Core Web Vitals
           </h2>
-          <div className="border border-[#cccccc] bg-white overflow-x-auto">
+          <div className="border border-[#cccccc] rounded-sm bg-white overflow-x-auto">
             <table className="w-full text-left text-[14px]">
               <thead className="bg-[#eeeeee] border-b border-[#cccccc]">
                 <tr>
@@ -330,7 +326,7 @@ export default function SeoInsights() {
                       {metric.label}
                     </td>
                     <td
-                      className={`px-4 py-2 font-mono font-bold border-r border-[#eeeeee] ${getStatusColor(metric.status)}`}
+                      className={`px-4 py-2  font-bold border-r border-[#eeeeee] ${getStatusColor(metric.status)}`}
                     >
                       {metric.value}
                     </td>
@@ -357,7 +353,7 @@ export default function SeoInsights() {
             {AUDIT_DATA.insights.map((item, idx) => (
               <div
                 key={idx}
-                className={`bg-[#fdfdfd] border border-[#cccccc] border-l-4 p-4 ${getStatusBorder(item.status)}`}
+                className={`bg-[#fdfdfd] rounded-sm border border-[#cccccc] border-l-4 p-4 ${getStatusBorder(item.status)}`}
               >
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-2">
                   <h3 className="text-[15px] font-bold text-[#333333] flex items-start gap-2">
@@ -369,7 +365,7 @@ export default function SeoInsights() {
                     {item.title}
                   </h3>
                   {item.savings && (
-                    <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-[#eeeeee] border border-[#cccccc] text-[12px] font-mono text-[#333333] font-bold whitespace-nowrap">
+                    <span className="inline-flex items-center gap-1.5 px-2 py-1  text-[12px] rounded-sm  text-[#333333] font-bold whitespace-nowrap">
                       <Clock className="w-3.5 h-3.5" /> Est. savings:{" "}
                       {item.savings}
                     </span>
@@ -379,7 +375,7 @@ export default function SeoInsights() {
                   {item.description}
                 </p>
                 <div className="mt-2 ml-7">
-                  <span className="text-[12px] font-mono text-[#666666] bg-[#eeeeee] px-1 border border-[#cccccc]">
+                  <span className="text-[12px]  text-[#666666] bg-[#eeeeee] px-1 border border-[#cccccc]">
                     Category: {item.category}
                   </span>
                 </div>

@@ -15,6 +15,7 @@ import {
   X,
 } from "lucide-react";
 import { PiGithubLogoBold } from "react-icons/pi";
+import { CiHeart } from "react-icons/ci";
 
 const Header = () => {
   const pathname = usePathname();
@@ -83,7 +84,7 @@ const Header = () => {
     <>
       <header
         ref={menuRef}
-        className="fixed top-0 left-0 right-0 z-50 bg-white text-[#333333] border-b border-[#cccccc] "
+        className="fixed top-0 left-0 right-0 z-50 bg-[#181818] text-white  "
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           {/* ── Main bar ── */}
@@ -93,7 +94,7 @@ const Header = () => {
               href="/"
               className="flex items-center gap-2 hover:underline shrink-0 min-w-0"
             >
-              <div className="border border-[#cccccc] p-0.5 shrink-0 bg-[#eeeeee]">
+              <div className="rounded-full bg-white p-0.5 shrink-0 ">
                 <Image
                   src="/corelogo.png"
                   alt="Cloudkinshuk logo"
@@ -102,7 +103,7 @@ const Header = () => {
                   className="sm:w-6 sm:h-6"
                 />
               </div>
-              <span className="font-bold text-[#006600] leading-none text-lg sm:text-xl">
+              <span className="font-bold text-white leading-none text-lg sm:text-xl">
                 Cloudkinshuk.in
               </span>
             </Link>
@@ -114,11 +115,11 @@ const Header = () => {
                   key={item.href}
                   href={item.href}
                   className={`
-                    flex items-center gap-1.5 text-sm font-bold px-2 py-1 border
+                    flex items-center gap-1.5 text-md font-normal px-1 
                     ${
                       isActive(item.href)
-                        ? "bg-gray-300 text-black rounded-sm border-[#004400]"
-                        : "bg-transparent text-[#333333] border-transparent rounded-sm hover:bg-[#eeeeee] hover:border-[#cccccc]"
+                        ? "text-white underline "
+                        : "text-gray-300 hover:text-white hover:bg-[#252525]"
                     }
                   `}
                 >
@@ -133,24 +134,24 @@ const Header = () => {
               {/* "Buy a Server" — visible ≥ md */}
               <a
                 href="https://brewrepo.cloudkinshuk.in"
-                className="hidden md:flex items-center gap-1.5 text-sm font-bold text-white px-3 py-1 bg-[#006600] rounded-sm border-b-2 border-[#004400] hover:bg-[#008800] active:border-b-0 active:mt-[2px] whitespace-nowrap"
+                className="hidden md:flex items-center gap-1.5 text-sm font-medium text-black px-3 py-1 bg-yellow-200 rounded-md   "
               >
-                <Server className="w-4 h-4 shrink-0" />
-                <span>Buy a Server</span>
+                <CiHeart className="w-4 h-4 shrink-0" />
+                <span>Buy me coffee</span>
               </a>
 
               {/* GitHub icon — visible ≥ md */}
               <a
                 href="https://github.com/kinshukjainn/cloudkinshuk"
                 aria-label="GitHub"
-                className="hidden md:flex items-center text-[#333333] rounded-sm hover:text-[#006600] border border-transparent hover:border-[#cccccc] hover:bg-[#eeeeee] p-1"
+                className="hidden md:flex items-center text-gray-300  p-1"
               >
                 <Github className="w-5 h-5" />
               </a>
 
               {/* Mobile menu toggle (< md) */}
               <button
-                className="md:hidden cursor-pointer flex items-center rounded-sm justify-center p-1 border border-[#cccccc] bg-[#eeeeee] text-[#333333] hover:bg-[#dddddd]"
+                className="md:hidden cursor-pointer flex items-center rounded-full justify-center p-2  bg-[#eeeeee] text-[#333333] hover:bg-[#dddddd]"
                 onClick={() => setIsOpen((prev) => !prev)}
                 aria-label={isOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isOpen}
@@ -168,11 +169,11 @@ const Header = () => {
         {/* ── Mobile drawer (< md) ── */}
         <div
           className={`
-            md:hidden overflow-hidden bg-[#f9f9f9] border-t border-[#cccccc]
+            md:hidden overflow-hidden bg-[#181818] 
             ${isOpen ? "block" : "hidden"}
           `}
         >
-          <div className="px-4 py-3 space-y-2">
+          <div className="px-4 py-1  space-y-1">
             {/* Nav links */}
             {navItems.map((item) => (
               <Link
@@ -180,11 +181,11 @@ const Header = () => {
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 className={`
-                  flex items-center gap-3 px-3 py-2 border text-sm font-bold
+                  flex items-center gap-2 px-3 py-1 text-sm font-normal
                   ${
                     isActive(item.href)
-                      ? "bg-[#006600] rounded-sm text-white border-[#004400]"
-                      : "bg-white text-[#333333] rounded-sm border-[#cccccc] hover:bg-[#eeeeee]"
+                      ? "border-l-2 border-green-500 text-green-500 "
+                      : " text-gray-300  hover:bg-[#252525]"
                   }
                 `}
               >
@@ -197,14 +198,14 @@ const Header = () => {
             <div className="pt-3 mt-3 border-t border-[#cccccc] flex flex-col gap-2">
               <a
                 href="https://brewrepo.cloudkinshuk.in"
-                className="flex items-center justify-center gap-2 py-2 bg-[#006600] text-white rounded-sm font-bold text-sm border-b-2 border-[#004400] active:border-b-0 active:mt-[2px]"
+                className="flex items-center justify-center gap-2 py-2 bg-green-700 text-white rounded-3xl font-bold text-sm "
               >
                 <Server className="w-4 h-4 shrink-0" />
                 Buy a Server
               </a>
               <a
                 href="https://github.com/kinshukjainn/cloudkinshuk"
-                className="flex items-center justify-center gap-2 py-2 bg-gray-200 text-black rounded-sm font-bold text-sm border border-[#cccccc] hover:bg-[#dddddd]"
+                className="flex items-center justify-center gap-2 py-2 bg-black text-white rounded-3xl font-bold text-sm"
               >
                 <Github className="w-4 h-4 shrink-0" />
                 Source Code
@@ -220,7 +221,7 @@ const Header = () => {
       {/* ── Mobile backdrop ── */}
       {isOpen && (
         <div
-          className="md:hidden fixed inset-0 z-40 bg-black bg-opacity-50"
+          className="md:hidden fixed inset-0 z-40 bg-black/20 backdrop-blur-xs"
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
         />

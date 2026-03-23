@@ -61,16 +61,16 @@ const navLinks: NavLink[] = [
 
 const Footer = () => {
   return (
-    <footer className="bg-white border-t border-white/10 relative overflow-hidden">
+    <footer className="bg-[#313131]  relative overflow-hidden">
       {/* Background Accent */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-gray-500 to-transparent opacity-50" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-[#313131]" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 relative z-10">
         <div className="flex flex-col items-center space-y-10">
           {/* Logo and brand section */}
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center gap-4 group">
-              <FaCloud className="w-8 h-8 sm:w-10 sm:h-10 text-white transition-transform duration-300 group-hover:scale-110 group-hover:text-blue-400 group-hover:drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]" />
+              <FaCloud className="w-8 h-8 sm:w-10 sm:h-10 text-white transition-transform duration-300 group-hover:scale-110 " />
 
               <div className="relative flex items-center h-10 sm:h-12">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white flex items-center">

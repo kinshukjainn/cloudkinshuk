@@ -19,7 +19,7 @@ export default function Blogheader() {
       <div className="max-w-6xl mx-auto flex items-center">
         {/* LOGIC A: Home Label with Background */}
         {isHome && (
-          <h1 className="text-base sm:text-lg md:text-xl font-semibold bg-white  px-6 py-2 ">
+          <h1 className="text-base text-white rounded-sm sm:text-lg md:text-xl font-semibold bg-black  px-2 py-1 ">
             Home
           </h1>
         )}
@@ -28,7 +28,7 @@ export default function Blogheader() {
         {isBlogPost && (
           <button
             onClick={() => router.push("/home-blog")}
-            className="flex items-center gap-1 sm:gap-1.5 bg-white backdrop-blur-xs px-4 py-2.5 text-black"
+            className="flex items-center gap-1 sm:gap-1.5 bg-black backdrop-blur-xs px-4 py-2.5 text-white"
             aria-label="Back to home"
           >
             <svg
@@ -45,7 +45,9 @@ export default function Blogheader() {
                 strokeLinejoin="round"
               />
             </svg>
-            <span className="text-sm sm:text-base font-medium pr-1">Back</span>
+            <span className="text-sm sm:text-base text-white font-medium pr-1">
+              Back
+            </span>
           </button>
         )}
       </div>

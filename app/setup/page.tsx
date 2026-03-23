@@ -76,17 +76,17 @@ const ToolCategory = ({ section }: { section: ToolSection; index: number }) => {
   const CategoryIcon = section.icon;
 
   return (
-    <section className="mb-6 border rounded-sm border-[#cccccc] bg-white">
+    <section className="mb-6 border border-[#141414] rounded-md  bg-[#252525]">
       {/* Category Header */}
-      <div className="flex items-center justify-between bg-[#eeeeee] border-b border-[#cccccc] px-3 py-2">
+      <div className="flex items-center justify-between bg-[#181818] rounded-t-md border-b border-[#141414] px-3 py-2">
         <div className="flex items-center gap-2">
-          <CategoryIcon className="w-4 h-4 text-[#006600] flex-shrink-0" />
-          <h2 className="text-[16px] font-bold text-[#333333]">
+          <CategoryIcon className="w-4 h-4 text-green-500 flex-shrink-0" />
+          <h2 className="text-[16px] font-bold text-green-500">
             {section.category}
           </h2>
         </div>
-        <span className="text-[12px]  text-[#666666] bg-white border border-[#cccccc] px-1">
-          [{section.items.length} items]
+        <span className="text-[12px] font-bold text-green-500  px-1">
+          {section.items.length} items
         </span>
       </div>
 
@@ -97,16 +97,16 @@ const ToolCategory = ({ section }: { section: ToolSection; index: number }) => {
           return (
             <li
               key={idx}
-              className="flex items-start gap-3 p-3 hover:bg-[#fafffa] transition-none group"
+              className="flex items-start gap-3 p-3 hover:bg-[#303030] transition-none group"
             >
-              <div className="mt-0.5 text-[#666666] group-hover:text-[#006600]">
+              <div className="mt-0.5 text-gray-200 ">
                 <ItemIcon className="w-4 h-4" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-[14px] font-bold text-[#333333] group-hover:underline">
+                <div className="text-[14px] font-bold text-gray-200 group-hover:underline">
                   {item.name}
                 </div>
-                <div className="text-[12px]  text-[#666666] mt-0.5">
+                <div className="text-[12px]  text-gray-400 mt-0.5">
                   {item.spec}
                 </div>
               </div>
@@ -125,29 +125,29 @@ export default function DevToolsCompact() {
   );
 
   return (
-    <div className="min-h-screen bg-white text-[#333333]  selection:bg-[#006600] selection:text-white pb-16">
+    <div className="min-h-screen bg-[#313131] text-white selection:bg-[#006600] selection:text-white pb-16">
       {/* Top Green Bar */}
-      <div className="h-2 w-full bg-[#006600]"></div>
+      <div className="h-2 w-full bg-[#252525]"></div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12">
         {/* Header */}
         <header className="mb-8  p-5 sm:p-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#333333] mb-4 flex items-center">
-            <span className="w-3 h-6 bg-[#006600] mr-3 inline-block"></span>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-4 flex items-center">
+            <span className="w-3 h-6 bg-green-500 mr-3 inline-block"></span>
             Development Stack
           </h1>
-          <p className="text-[14px] sm:text-[15px] text-black leading-relaxed max-w-2xl border-l-4 border-[#cccccc] pl-3 mb-5">
+          <p className="text-[14px] sm:text-[15px] text-gray-200 leading-relaxed max-w-2xl border-l-4 border-gray-400 pl-3 mb-5">
             A comprehensive overview of the hardware, software, and services
             powering my daily workflow and infrastructure.
           </p>
 
-          <div className="inline-flex flex-wrap items-center gap-3 text-[13px]  bg-white  p-2">
+          <div className="inline-flex flex-wrap rounded-md items-center gap-3 text-[13px]  bg-[#181818]  p-2">
             <div>
-              <strong className="text-black">{totalTools}</strong> Active Tools
+              <strong className="text-white">{totalTools}</strong> Active Tools
             </div>
-            <span className="text-black font-bold">|</span>
+            <span className="text-gray-300 font-bold">|</span>
             <div>
-              <strong className="text-black">{setupData.length}</strong>{" "}
+              <strong className="text-white">{setupData.length}</strong>{" "}
               Categories
             </div>
           </div>
@@ -163,18 +163,6 @@ export default function DevToolsCompact() {
             />
           ))}
         </main>
-
-        {/* Footer */}
-        <footer className="mt-12 pt-4 border-t border-[#cccccc] bg-[#f9f9f9] border-b">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-[#666666]  p-4">
-            <div className="flex items-center gap-2">
-              {/* Removed the CSS pulse animation for a static, software-like status block */}
-              <div className="w-2 h-2 bg-[#006600] border border-[#004400]"></div>
-              <span>[Status: Environment active and up to date]</span>
-            </div>
-            <div>Built with Next.js • React • Tailwind</div>
-          </div>
-        </footer>
       </div>
     </div>
   );

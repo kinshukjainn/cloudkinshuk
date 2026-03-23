@@ -20,25 +20,25 @@ const CONFIG = {
       platform: "GitHub",
       url: "https://github.com/kinshukjainn",
       icon: "github",
-      handle: "Github",
+      handle: "@kinshukjainn",
     },
     {
       platform: "LinkedIn",
       url: "https://linkedin.com/in/kinshukjainn/",
       icon: "linkedin",
-      handle: "LinkedIn",
+      handle: "@kinshukjainn",
     },
     {
       platform: "Gmail",
       url: "mailto:kinshuk25jan04@gmail.com",
       icon: "mail",
-      handle: "Email",
+      handle: "@kinshuk25jan04",
     },
     {
       platform: "X",
       url: "http://x.com/realkinshuk004",
       icon: "x",
-      handle: "X (Twitter)",
+      handle: "@realkinshuk04",
     },
   ],
   certifications: [
@@ -142,7 +142,7 @@ const CONFIG = {
     },
     {
       title: "AI Based FDS (Fault Detection System)",
-      year: "2025",
+      year: "2025-2026",
       status: "Development Stage",
       type: "AI Tool",
       description: [
@@ -190,7 +190,7 @@ const CopyText = ({ text }: { text: string }) => {
   return (
     <button
       onClick={handleCopy}
-      className="text-xs font-bold text-white cursor-pointer rounded-sm hover:text-white bg-[#006600] border border-[#006600] px-1 py-1 ml-2 transition-none focus:outline-none"
+      className="text-sm font-bold text-white cursor-pointer rounded-sm hover:text-white bg-green-700  px-3 py-2 ml-2 transition-none focus:outline-none"
       title="Copy to clipboard"
     >
       {copied ? "Copied" : "Copy"}
@@ -225,81 +225,65 @@ const SocialIcon = ({ icon }: { icon: string }) => {
 const SectionHeader = ({ title, id }: { title: string; id?: string }) => (
   <h2
     id={id}
-    className="text-xl font-bold text-[#333333] border-b-2 border-[#cccccc] pb-1 mt-8 mb-4 flex items-center"
+    className="text-xl font-bold text-gray-100  pb-1 mt-8 mb-4 flex items-center"
   >
-    <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
+    <span className="w-4 h-6 text-2xl mr-2 inline-block">{"#"}</span>
     {title}
   </h2>
 );
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white text-[#333333]  selection:bg-[#006600] selection:text-white">
+    <div className="min-h-screen bg-[#313131] text-[#333333]  selection:bg-blue-300 selection:text-black">
       {/* Top Green Bar - Classic utilitarian styling */}
-      <div className="h-2 w-full bg-[#006600]"></div>
+      <div className="h-2 w-full bg-[#212121]"></div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col md:flex-row gap-8">
         {/* Sidebar Navigation */}
         <aside className="w-full md:w-64 shrink-0 flex flex-col gap-6">
           {/* Logo Area */}
           <div>
-            <h1 className="text-4xl font-extrabold tracking-tighter text-[#333333]">
-              <span className="text-[#006600]">cloud</span>kinshuk_
+            <h1 className="text-4xl font-extrabold tracking-tighter text-gray-300">
+              <span className="text-green-500">cloud</span>kinshuk.in
             </h1>
-            <p className="text-sm text-[#666666] mt-1 border-b border-[#cccccc] pb-4">
+            <p className="text-sm text-gray-300 mt-1 pb-4">
               Student • Builder • Cloud
             </p>
           </div>
 
           {/* Nav Links */}
           <nav className="hidden md:flex flex-col gap-1 text-sm font-bold">
-            <a
-              href="#about"
-              className="text-[#006600] hover:underline hover:bg-[#f0f0f0] p-1"
-            >
-              About
+            <a href="#about" className="text-green-400 hover:underline ">
+              {"- "}About
             </a>
-            <a
-              href="#projects"
-              className="text-[#006600] hover:underline hover:bg-[#f0f0f0] p-1"
-            >
-              Shipped Stuff
+            <a href="#projects" className="text-green-400 hover:underline">
+              {"- "}Shipped Stuff
             </a>
-            <a
-              href="#experience"
-              className="text-[#006600] hover:underline hover:bg-[#f0f0f0] p-1"
-            >
-              Experience
+            <a href="#experience" className="text-green-400 hover:underline">
+              {"- "}Experience
             </a>
-            <a
-              href="#skills"
-              className="text-[#006600] hover:underline hover:bg-[#f0f0f0] p-1"
-            >
-              Proficiencies
+            <a href="#skills" className="text-green-400 hover:underline">
+              {"- "}Proficiencies
             </a>
             <a
               href="#certifications"
-              className="text-[#006600] hover:underline hover:bg-[#f0f0f0] p-1"
+              className="text-green-400 hover:underline"
             >
-              Certifications
+              {"- "}Certifications
             </a>
-            <a
-              href="#education"
-              className="text-[#006600] hover:underline hover:bg-[#f0f0f0] p-1"
-            >
-              Education
+            <a href="#education" className="text-green-400 hover:underline">
+              {"- "}Education
             </a>
-            <a
-              href="#terminal"
-              className="text-[#006600] hover:underline hover:bg-[#f0f0f0] p-1"
-            >
-              Terminal Access
+            <a href="#terminal" className="text-green-400 hover:underline">
+              {"- "}Terminal Access
             </a>
           </nav>
 
           {/* Social Links Box */}
-          <div className="bg-[#f9f9f9] border border-[#cccccc] p-3 text-sm">
-            <h3 className="font-bold mb-2 text-[#333333]">Connect</h3>
+          <div className=" p-3 text-sm">
+            <h3 className="font-bold text-lg mb-2 text-gray-200">
+              {"# "}Connect
+            </h3>
             <ul className="space-y-2">
               {CONFIG.social.map((social) => (
                 <li key={social.platform}>
@@ -307,7 +291,7 @@ export default function Home() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#006600] hover:underline flex items-center"
+                    className="text-white hover:text-green-400  hover:underline flex items-center"
                   >
                     <SocialIcon icon={social.icon} />
                     {social.handle}
@@ -322,19 +306,19 @@ export default function Home() {
         <main className="flex-1 pb-16">
           {/* Header / Intro */}
           <section id="about" className="mb-10">
-            <h2 className="text-2xl font-bold mb-4">
-              Welcome to my portfolio.
-            </h2>
-            <div className="text-[15px] leading-relaxed space-y-3">
-              <p>
-                Hi everyone! My name is <strong>Kinshuk</strong>.
+            <div className="text-[15px] text-white leading-relaxed space-y-3">
+              <p className="text-2xl">
+                Hi everyone! My name is{" "}
+                <strong className="font-bold text-green-400">Kinshuk</strong>.
               </p>
               {CONFIG.personal.bio.map((paragraph, idx) => (
-                <p key={idx}>{paragraph}</p>
+                <p className="" key={idx}>
+                  {paragraph}
+                </p>
               ))}
             </div>
 
-            <div className="mt-4 text-sm text-[#666666]">
+            <div className="mt-4 text-md text-gray-200  ">
               Location: {CONFIG.personal.location} | Status:{" "}
               {CONFIG.personal.availability}
             </div>
@@ -344,13 +328,13 @@ export default function Home() {
               <a
                 href="/myresume.pdf"
                 download="myresume.pdf"
-                className="bg-[#006600] text-white font-bold py-2 px-6 border-b-4 border-[#004400] hover:bg-[#008800] active:border-b-0 active:mt-[4px] transition-all inline-block"
+                className="bg-green-600 text-white font-bold py-4 px-4 rounded-md  active:border-b-0 active:mt-[4px] transition-all inline-block"
               >
                 Download Resume
               </a>
               <a
                 href="/home-blog"
-                className="bg-[#eeeeee] text-[#333333] font-bold py-2 px-6 border border-[#cccccc] hover:bg-[#dddddd] transition-all inline-block"
+                className="bg-blue-700 text-white font-bold rounded-md py-4 px-6  transition-all inline-block"
               >
                 Read Blog
               </a>
@@ -363,34 +347,39 @@ export default function Home() {
             {CONFIG.projects.map((project, idx) => (
               <div
                 key={idx}
-                className="border border-[#cccccc] bg-[#fdfdfd] p-4"
+                className=" bg-[#252525] border-2 border-[#181818] rounded-md p-4"
               >
-                <div className="flex flex-col sm:flex-row justify-between mb-2 pb-2 border-b border-[#eeeeee]">
-                  <h3 className="text-lg font-bold text-[#006600]">
+                <div className="flex flex-col sm:flex-row justify-between mb-2 pb-2">
+                  <h3 className="text-2xl font-bold text-green-400">
                     {project.title}
                   </h3>
-                  <span className="text-xs text-[#666666]  mt-1 sm:mt-0">
-                    [ {project.year} | {project.status} | {project.type} ]
+                  <span className="text-sm font-medium text-gray-300  mt-1 sm:mt-0">
+                    {project.year} | {project.status} | {project.type}
                   </span>
                 </div>
 
-                <div className="text-[14px] space-y-2 mb-4">
+                <div className="text-[14px] text-gray-200  space-y-2 mb-4">
                   {project.description.map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
                 </div>
 
-                <div className="text-[13px] bg-[#f4f4f4] p-2 border border-[#dddddd] mb-3">
-                  <strong>Stack:</strong> {project.technologies.join(", ")}
+                <div className="text-[13px]  text-white p-2  mb-3">
+                  <strong className="text-green-200 font-semibold">
+                    Stack:
+                  </strong>{" "}
+                  {project.technologies.join(", ")}
                 </div>
 
                 {project.dockerCommand && (
                   <div className="mb-3">
-                    <strong className="text-[13px]">
+                    <strong className="text-[13px] text-white">
                       Docker Pull Command:
                     </strong>
-                    <div className=" text-[13px] bg-[#eeeeee] border border-[#cccccc] p-2 mt-1 flex justify-between items-center">
-                      <span>$ {project.dockerCommand}</span>
+                    <div className=" text-[12px]   mt-1 flex justify-between items-center">
+                      <span className="font-mono text-white">
+                        $ {project.dockerCommand}
+                      </span>
                       <CopyText text={project.dockerCommand} />
                     </div>
                   </div>
@@ -402,9 +391,9 @@ export default function Home() {
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#006600] hover:underline"
+                      className="text-white  p-2 bg-green-700 rounded-md"
                     >
-                      ▶ View Live Web
+                      ▶ Live
                     </a>
                   )}
                   {project.links.repo && (
@@ -412,9 +401,9 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#006600] hover:underline"
+                      className="text-white p-2 bg-black rounded-md "
                     >
-                      ▶ Source Code
+                      ▶ git repo
                     </a>
                   )}
                 </div>
@@ -425,12 +414,12 @@ export default function Home() {
           {/* Experience */}
           <SectionHeader title="Where I worked" id="experience" />
           <div className="mb-8">
-            <h3 className="font-bold text-lg">UPPTCL</h3>
-            <p className="text-sm text-[#666666] mb-2">
+            <h3 className="font-bold text-green-400 text-lg">UPPTCL</h3>
+            <p className="text-sm font-semibold text-white mb-2">
               Uttar Pradesh Power Transmission Corporation Limited (July 2025 -
               Aug 2025)
             </p>
-            <p className="text-[14px] mb-2">
+            <p className="text-[14px] text-gray-100  mb-2">
               Worked with the transmission division to understand the operation,
               protection, and maintenance of 132kV and 220kV substations.
               Prepared technical documentation and maintained logs on equipment
@@ -438,9 +427,9 @@ export default function Home() {
             </p>
             <a
               href="/home-blog/blogE"
-              className="text-[#006600] text-sm font-bold hover:underline"
+              className="text-white bg-green-500 p-2 rounded-md text-sm font-semibold "
             >
-              ▶ Read Full Experience Blog
+              ▶ Read
             </a>
           </div>
 
@@ -448,13 +437,11 @@ export default function Home() {
           <SectionHeader title="Crazy Stuff I know" id="skills" />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
             {Object.entries(CONFIG.skills).map(([category, skills]) => (
-              <div key={category} className="border border-[#cccccc] p-3">
-                <h3 className="font-bold text-[#333333] mb-2 bg-[#eeeeee] p-1 border-b border-[#cccccc]">
-                  {category}
-                </h3>
-                <ul className="list-disc list-inside text-[14px] text-[#444444]">
+              <div key={category}>
+                <h3 className="font-bold text-green-400 mb-2 ">{category}</h3>
+                <ul className="list-['-'] list-inside text-[14px]  text-white">
                   {skills.map((skill) => (
-                    <li key={skill}>{skill}</li>
+                    <li key={skill}> {skill}</li>
                   ))}
                 </ul>
               </div>
@@ -465,29 +452,31 @@ export default function Home() {
           <SectionHeader title="Certifications" id="certifications" />
           <div className="space-y-4 mb-8">
             {CONFIG.certifications.map((cert, idx) => (
-              <div key={idx} className="border-l-4 border-[#006600] pl-3 py-1">
+              <div key={idx} className="border-l-4 border-white pl-3 py-1">
                 <h3 className="font-bold">
                   {cert.url ? (
                     <a
                       href={cert.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#006600] hover:underline"
+                      className="text-green-400 hover:underline"
                     >
                       {cert.title}
                     </a>
                   ) : (
-                    cert.title
+                    <span className="text-gray-400">{cert.title}</span>
                   )}
-                  <span className="text-sm font-normal text-[#666666] ml-2">
+                  <span className="text-sm font-normal text-gray-200 ml-2">
                     ({cert.year})
                   </span>
                 </h3>
-                <p className="text-[13px] font-bold text-[#444444]">
+                <p className="text-[13px] font-bold text-gray-300">
                   {cert.organization} | Status: {cert.status}
                 </p>
-                <p className="text-[14px] mt-1">{cert.description}</p>
-                <p className="text-[12px] text-[#666666] mt-1 ">
+                <p className="text-[14px] text-white  mt-1">
+                  {cert.description}
+                </p>
+                <p className="text-[15px] text-gray-200 mt-1 ">
                   Skills: {cert.skills.join(" • ")}
                 </p>
               </div>
@@ -497,32 +486,36 @@ export default function Home() {
           {/* Education */}
           <SectionHeader title="Education" id="education" />
           <div className="mb-8">
-            <h3 className="font-bold text-lg">
+            <h3 className="font-bold text-green-400 text-lg">
               {CONFIG.education.institution}
             </h3>
-            <p className="text-sm text-[#666666] ">
+            <p className="text-sm text-gray-300 ">
               {CONFIG.education.location} | {CONFIG.education.period}
             </p>
-            <p className="text-[14px] font-bold mt-2">
+            <p className="text-[14px] text-white font-bold mt-2">
               {CONFIG.education.degree} — {CONFIG.education.field}
             </p>
-            <p className="text-[14px] mt-1">{CONFIG.education.description}</p>
+            <p className="text-[14px] text-gray-100  mt-1">
+              {CONFIG.education.description}
+            </p>
           </div>
 
           {/* CLI Tool */}
           <SectionHeader title="Terminal Access" id="terminal" />
-          <div className="bg-[#f8f8f8] border border-[#cccccc] p-4">
-            <p className="text-[14px] mb-3">
+          <div className="bg-[#252525] border border-[#181818] rounded-md p-4">
+            <p className="text-[14px] text-white  mb-3">
               Interactive command-line portfolio viewer built with Node.js.
               Install it globally via npm.
             </p>
-            <div className=" text-[13px] bg-white border border-[#cccccc] p-3 space-y-2">
+            <div className=" text-[13px] bg-[#202020] border border-[#141414] rounded-md p-3 space-y-2">
               <div className="flex items-center justify-between">
-                <span>$ npm install -g hackkinshuk</span>
+                <span className="font-mono text-green-400">
+                  $ npm install -g hackkinshuk
+                </span>
                 <CopyText text="npm install -g hackkinshuk" />
               </div>
               <div className="flex items-center justify-between">
-                <span>$ cloudkinshuk</span>
+                <span className="font-mono text-green-400">$ cloudkinshuk</span>
                 <CopyText text="cloudkinshuk" />
               </div>
             </div>

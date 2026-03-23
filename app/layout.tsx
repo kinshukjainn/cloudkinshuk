@@ -33,7 +33,7 @@ const ptSans = PT_Sans({
 
 export const lucideSans = localFont({
   src: "../public/fonts/lucida-sans-unicode.woff2",
-  variable: "--font-lucida",
+  variable: "--font-lucida-sans",
   weight: "400",
   display: "swap",
 });

@@ -270,7 +270,10 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
       const parts = text.split(regex);
       return parts.map((part, i) =>
         regex.test(part) ? (
-          <mark key={i} className="bg-[#ffff00] text-[#333333] font-bold px-1">
+          <mark
+            key={i}
+            className="bg-green-900/60 text-green-400 px-0.5 rounded-sm bg-transparent"
+          >
             {part}
           </mark>
         ) : (
@@ -283,56 +286,55 @@ const BlogItem: React.FC<BlogItemProps> = React.memo(
       const date = new Date(dateString);
       return date.toLocaleDateString("en-US", {
         month: "short",
-        day: "numeric",
+        day: "2-digit",
         year: "numeric",
       });
     };
 
     return (
-      <div className="mb-6  p-4">
+      <div className="mb-4 p-5 border border-[#444444] bg-[#2b2b2b] rounded-sm hover:border-[#666666] transition-colors">
         <Link href={`/home-blog/${post.id}`} className="group block">
           {/* Title */}
-          <h3 className="text-xl text-[#006600] mb-2 font-bold leading-tight group-hover:underline">
+          <h3 className="text-lg text-[#e0e0e0] mb-2 font-medium leading-tight group-hover:text-green-500 transition-colors">
             {highlightText(post.title, searchQuery)}
           </h3>
 
-          {/* Metadata */}
-          <div className="flex items-center gap-4 mb-3 text-[13px] text-black  p-2 ">
+          {/* Metadata - Monospaced for technical feel */}
+          <div className="flex items-center gap-4 mb-4 text-xs text-[#888888] ">
             <div className="flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5" />
               <span>{formatDate(post.publishedAt)}</span>
             </div>
             {post.readTimeInMinutes && (
-              <div className="flex items-center gap-1.5 border-l border-[#cccccc] pl-4">
+              <div className="flex items-center gap-1.5 border-l border-[#555555] pl-4">
                 <Clock className="w-3.5 h-3.5" />
-                <span>{post.readTimeInMinutes} min read</span>
+                <span>{post.readTimeInMinutes}m read</span>
               </div>
             )}
           </div>
 
           {/* Brief */}
-          <p className="text-[#333333] text-[14px] mb-4 leading-relaxed">
+          <p className="text-[#b0b0b0] text-sm mb-5 leading-relaxed">
             {post.brief}
           </p>
 
           {/* Tags */}
           <div className="flex flex-wrap items-center gap-2">
-            <strong className="text-[12px] text-[#333333]">Tags:</strong>
-            {post.tags.slice(0, 4).map((tag) => (
+            {post.tags.slice(0, 5).map((tag) => (
               <span
                 key={tag.id}
-                className="inline-flex items-center justify-center px-1 border rounded-sm border-[#cccccc] bg-[#eeeeee] text-[12px] text-[#444444] "
+                className="inline-flex items-center justify-center px-2 py-0.5 border rounded-sm border-[#555555] bg-[#222222] text-xs text-[#999999]"
               >
                 {tag.name}
               </span>
             ))}
-            {post.tags.length > 4 && (
-              <span className="inline-flex items-center justify-center rounded-sm px-1 border border-[#cccccc] bg-[#eeeeee] text-[12px] text-[#444444] ">
-                +{post.tags.length - 4} more
+            {post.tags.length > 5 && (
+              <span className="inline-flex items-center justify-center px-2 py-0.5 border rounded-sm border-[#555555] bg-[#222222] text-xs text-[#999999]">
+                +{post.tags.length - 5}
               </span>
             )}
-            <div className="ml-auto text-[#006600] font-bold text-sm group-hover:underline flex items-center gap-1">
-              Read Article ▶
+            <div className="ml-auto text-green-500  text-xs opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+              [Read]
             </div>
           </div>
         </Link>
@@ -375,23 +377,37 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   const activeFiltersCount = filters.tags.length;
 
   return (
-    <div className="mb-8 border border-[#cccccc] rounded-md bg-[#f9f9f9]">
+    <div className="mb-8 border border-[#444444] rounded-sm bg-[#2b2b2b]">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex md:hidden items-center justify-between w-full px-4 py-2 cursor-pointer bg-[#eeeeee] border-b border-[#cccccc] font-bold text-[#333333]"
+        className="flex md:hidden items-center justify-between w-full px-4 py-3 cursor-pointer bg-[#222222] border-b border-[#444444] text-[#cccccc]"
       >
-        <span className="text-sm">
-          Filter by tags {activeFiltersCount > 0 && `(${activeFiltersCount})`}
+        <span className="text-sm ">
+          &gt; Filter Tags {activeFiltersCount > 0 && `[${activeFiltersCount}]`}
         </span>
         <ChevronDown size={16} className={`${isOpen ? "rotate-180" : ""}`} />
       </button>
 
-      <div className={`${isOpen ? "block" : "hidden md:block"} p-4`}>
-        <label className="block text-sm font-bold text-[#333333] border-b border-[#cccccc]  pb-1 mb-3">
-          Available Tags{" "}
-          {filters.tags.length > 0 && `(${filters.tags.length} selected)`}
-        </label>
-        <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto">
+      <div className={`${isOpen ? "block" : "hidden md:block"} p-5`}>
+        <div className="flex items-center justify-between border-b border-[#444444] pb-2 mb-4">
+          <label className="block text-sm text-[#cccccc] ">
+            Available_Tags{" "}
+            <span className="text-[#888888]">
+              {filters.tags.length > 0 && `(${filters.tags.length} selected)`}
+            </span>
+          </label>
+          {activeFiltersCount > 0 && (
+            <button
+              onClick={resetFilters}
+              className="flex items-center gap-1 text-xs text-[#999999] hover:text-[#cccccc]"
+            >
+              <RotateCcw size={12} />
+              [Clear]
+            </button>
+          )}
+        </div>
+
+        <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
           {availableTags.map((tag) => {
             const isSelected = filters.tags.includes(tag);
             return (
@@ -399,11 +415,11 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                 key={tag}
                 onClick={() => toggleTag(tag)}
                 className={`
-                  inline-flex items-center justify-center px-2 py-1 text-[13px] rounded-sm border cursor-pointer 
+                  inline-flex items-center justify-center px-2.5 py-1 text-xs rounded-sm border cursor-pointer  transition-colors
                   ${
                     isSelected
-                      ? "bg-[#006600] text-white border-[#004400] font-bold"
-                      : "bg-white text-[#333333] border-[#cccccc] hover:bg-[#eeeeee]"
+                      ? "bg-green-600/20 text-green-400 border-green-600/50"
+                      : "bg-[#222222] text-[#999999] border-[#555555] hover:border-[#777777] hover:text-[#cccccc]"
                   }
                 `}
               >
@@ -412,16 +428,6 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
             );
           })}
         </div>
-
-        {activeFiltersCount > 0 && (
-          <button
-            onClick={resetFilters}
-            className="mt-4 flex items-center justify-center gap-1 px-3 py-1 text-[13px] bg-[#eeeeee] border border-[#cccccc] text-[#333333] hover:bg-[#dddddd] font-bold"
-          >
-            <RotateCcw size={12} />
-            Clear selections
-          </button>
-        )}
       </div>
     </div>
   );
@@ -442,9 +448,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   return (
     <div className="mb-6 w-full">
-      <div className="flex items-stretch rounded-sm border border-[#cccccc] bg-white">
-        <div className="flex items-center justify-center px-3 bg-[#eeeeee] border-r rounded-sm border-[#cccccc]">
-          <Search className="w-4 h-4 text-[#666666]" aria-hidden="true" />
+      <div className="flex items-stretch rounded-sm border border-[#444444] bg-[#222222] focus-within:border-[#666666] transition-colors">
+        <div className="flex items-center justify-center px-3 border-r border-[#444444]">
+          <Search className="w-4 h-4 text-[#888888]" aria-hidden="true" />
         </div>
 
         <input
@@ -452,13 +458,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
           placeholder="Search articles, tags, or topics..."
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="w-full bg-white text-[#333333] placeholder-[#999999] px-3 py-2 text-[14px]  focus:outline-none focus:bg-[#fafffa]"
+          className="w-full bg-transparent text-[#e0e0e0] placeholder-[#666666] px-4 py-2.5 text-sm focus:outline-none"
         />
 
         {searchInput && (
           <button
             onClick={() => setSearchInput("")}
-            className="flex items-center justify-center px-3 bg-[#eeeeee] border-l border-[#cccccc] hover:bg-[#dddddd] text-[#333333]"
+            className="flex items-center justify-center px-4 hover:bg-[#333333] border-l border-[#444444] text-[#888888] hover:text-[#cccccc] transition-colors"
             aria-label="Clear search"
           >
             <X className="w-4 h-4" />
@@ -467,9 +473,10 @@ const SearchBar: React.FC<SearchBarProps> = ({
       </div>
 
       {searchInput && (
-        <div className="mt-2 text-[13px] text-[#666666]  bg-[#eeeeee] inline-block px-2 py-1 border border-[#cccccc]">
-          Found <strong className="text-[#333333]">{resultsCount}</strong> of{" "}
-          {totalCount} articles
+        <div className="mt-2 text-xs text-[#888888]  flex items-center gap-2">
+          <span>&gt; Query execution matched:</span>
+          <strong className="text-green-400 font-normal">{resultsCount}</strong>
+          <span>/ {totalCount} records</span>
         </div>
       )}
     </div>
@@ -502,7 +509,6 @@ export default function BlogsPage() {
       );
     }
 
-    // Sort by newest first
     result = [...result].sort(
       (a, b) =>
         new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
@@ -512,58 +518,51 @@ export default function BlogsPage() {
   }, [posts, searchInput, searchEngine, filters]);
 
   return (
-    <div className="min-h-screen bg-white text-[#333333]  selection:bg-[#006600] selection:text-white pb-16">
-      {/* Top Green Bar */}
-      <div className="h-2 w-full bg-[#006600]"></div>
-
+    <div className="min-h-screen bg-[#313131] text-[#cccccc] selection:bg-green-500/30 selection:text-green-200 pb-16 ">
       {/* Header */}
-      <header className="border-b border-[#cccccc] bg-[#f9f9f9] mb-8">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <h1 className="text-4xl font-bold text-[#333333] mb-4 flex items-center">
-            <span className="w-3 h-6 bg-[#006600] mr-3 inline-block"></span>
-            Developer Blogs
+      <header className="mb-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <h1 className="text-3xl font-medium text-[#e0e0e0] mb-5 flex items-center tracking-tight">
+            <span className="w-1.5 h-6 bg-green-500 mr-4 inline-block"></span>
+            Blogs
           </h1>
-          <p className="text-[15px] text-[#444444] leading-relaxed max-w-3xl border-l-4 border-[#cccccc] pl-4">
-            Hi <span className="text-[#006600] font-bold ">@everyone</span>,
-            here I share my learning journey in cloud computing, DevOps,
-            security, and infrastructure engineering. I write about AWS
-            services, serverless systems, CI/CD basics, and Terraform, focusing
-            on understanding concepts through hands-on practice.
+          <p className="text-sm text-[#a0a0a0] leading-relaxed max-w-3xl border-l border-[#555555] pl-4">
+            <span className="text-green-500 ">@root</span> — Log of learning
+            journeys in cloud computing, DevOps, security, and infrastructure
+            engineering. Executing writes on AWS services, serverless systems,
+            CI/CD, and Terraform via hands-on practice.
           </p>
         </div>
       </header>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Feedback Card */}
-        <div className="mb-8 p-4 rounded-sm border border-[#cccccc] bg-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <MessageSquare className="w-4 h-4 text-[#006600]" />
-              <h3 className="text-lg font-bold text-black">
-                Leave Your Feedback
+        {/* Feedback Component (CLI Notice style) */}
+        <div className="mb-8 p-4 border border-[#444444] rounded-sm bg-[#222222] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <MessageSquare className="w-4 h-4 text-[#888888] mt-0.5" />
+            <div>
+              <h3 className="text-sm font-medium text-[#e0e0e0] mb-0.5">
+                Output Diagnostics & Feedback
               </h3>
+              <p className="text-xs text-[#888888] ">
+                Provide system feedback to improve future documentation writes.
+              </p>
             </div>
-            <p className="text-[14px] text-black">
-              Help me improve! Your thoughts and suggestions are invaluable for
-              creating better content.
-            </p>
           </div>
           <a
             href="https://fdb.cloudkinshuk.in/"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#006600] text-white font-bold py-2 px-6 border-b-4 border-[#004400] rounded-sm hover:bg-[#008800] active:border-b-0 active:mt-[4px] transition-all whitespace-nowrap text-sm inline-flex items-center gap-2"
+            className="border border-[#555555] text-[#cccccc] hover:text-white hover:border-[#888888] bg-[#2b2b2b] py-1.5 px-4 rounded-sm transition-colors whitespace-nowrap text-xs  inline-flex items-center gap-2"
           >
-            Leave Feedback
-            <ArrowRight className="w-4 h-4" />
+            [Execute_Feedback]
+            <ArrowRight className="w-3 h-3" />
           </a>
         </div>
 
-        {/* Search & Filter Container */}
-        <div className="mb-8">
-          <h2 className="text-[14px] font-bold mb-3 border-b border-[#cccccc] pb-1">
-            Search & Filter Directory
-          </h2>
+        {/* Directory Tools */}
+        <div className="mb-10">
+          <h2 className="text-xs  text-[#888888] uppercase tracking-wider mb-3"></h2>
           <SearchBar
             searchInput={searchInput}
             setSearchInput={setSearchInput}
@@ -579,19 +578,15 @@ export default function BlogsPage() {
           />
         </div>
 
-        {/* Results */}
-        <h2 className="text-xl font-bold text-[#333333] border-b-2 border-[#cccccc] pb-1 mb-6 flex items-center">
-          <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
-          Published Articles
-        </h2>
+        {/* Output Stream */}
+        <div className="flex items-center mb-6 border-b border-[#444444] pb-2">
+          <span className="text-xs  text-[#888888] uppercase tracking-wider"></span>
+        </div>
 
         {filteredPosts.length === 0 ? (
-          <div className="text-center py-12 bg-[#f9f9f9] border border-[#cccccc]">
-            <h3 className="text-lg font-bold text-[#333333] mb-2">
-              No articles found
-            </h3>
-            <p className="text-[#666666] text-sm mb-4">
-              Try adjusting your search terms or clearing your filters.
+          <div className="p-10 border border-[#444444] border-dashed rounded-sm bg-[#2b2b2b] text-center">
+            <p className="text-[#888888]  text-sm mb-4">
+              Error 404: No blocks found matching query parameters.
             </p>
             <button
               onClick={() => {
@@ -599,9 +594,9 @@ export default function BlogsPage() {
                 setFilters({ tags: [] });
                 setFilterOpen(false);
               }}
-              className="px-4 py-1 bg-[#eeeeee] border border-[#cccccc] text-[#333333] font-bold hover:bg-[#dddddd]"
+              className="px-4 py-1.5 border border-[#555555] bg-[#222222] text-[#cccccc] text-xs  rounded-sm hover:border-[#888888] hover:text-white transition-colors"
             >
-              Clear all filters
+              [Reset_Parameters]
             </button>
           </div>
         ) : (
@@ -612,6 +607,23 @@ export default function BlogsPage() {
           </div>
         )}
       </div>
+
+      <style jsx global>{`
+        /* Optional Custom Scrollbar for the filter panel to match the boring aesthetic */
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #222222;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #555555;
+          border-radius: 2px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #777777;
+        }
+      `}</style>
     </div>
   );
 }

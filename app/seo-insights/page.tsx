@@ -141,28 +141,27 @@ const AUDIT_DATA = {
 // ============================================================================
 
 const getScoreColor = (score: number) => {
-  if (score >= 90) return "text-[#006600]";
-  if (score >= 50) return "text-[#b86b00]"; // Dark Amber for light theme
+  if (score >= 90) return "text-white";
+  if (score >= 50) return "text-white"; // Dark Amber for light theme
   return "text-[#cc0000]"; // Classic Red
 };
 
 const getStatusColor = (status: Status) => {
-  if (status === "pass") return "text-[#006600]";
-  if (status === "average") return "text-[#b86b00]";
-  return "text-[#cc0000]";
+  if (status === "pass") return "text-white";
+  if (status === "average") return "text-white";
+  return "text-white";
 };
 
 const getStatusBorder = (status: Status) => {
-  if (status === "pass") return "border-l-[#006600]";
-  if (status === "average") return "border-l-[#b86b00]";
-  return "border-l-[#cc0000]";
+  if (status === "pass") return "border-l-[#444444]";
+  if (status === "average") return "border-l-[#444444]";
+  return "border-l-[#444444]";
 };
 
 const getStatusIcon = (status: Status) => {
-  if (status === "pass")
-    return <CheckCircle2 className="w-4 h-4 text-[#006600]" />;
-  if (status === "average") return <Info className="w-4 h-4 text-[#b86b00]" />;
-  return <AlertTriangle className="w-4 h-4 text-[#cc0000]" />;
+  if (status === "pass") return <CheckCircle2 className="w-4 h-4 text-white" />;
+  if (status === "average") return <Info className="w-4 h-4 text-white" />;
+  return <AlertTriangle className="w-4 h-4 text-white" />;
 };
 
 const generateMarkdown = (device: DeviceType) => {
@@ -205,20 +204,20 @@ export default function SeoInsights() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-[#333333]  selection:bg-[#006600] selection:text-white pb-16">
+    <div className="min-h-screen bg-[#313131] text-[#333333]  selection:bg-[#006600] selection:text-white pb-16">
       {/* Top Green Bar */}
-      <div className="h-2 w-full bg-[#006600]"></div>
+      <div className="h-2 w-full bg-black"></div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12">
         {/* Header Block */}
         <header className="mb-8  p-5">
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-[#333333] mb-4 flex items-center">
-                <span className="w-3 h-6 bg-[#006600] mr-3 inline-block"></span>
+              <h1 className="text-2xl sm:text-3xl font-bold text-white mb-4 flex items-center">
+                <span className="w-3 h-6 bg-green-500 mr-3 inline-block"></span>
                 Lighthouse Intelligence
               </h1>
-              <div className="text-[13px]  text-[#666666]   p-2 inline-block">
+              <div className="text-[13px]  text-white   p-2 inline-block">
                 <strong>Captured:</strong> {AUDIT_DATA.meta.capturedAt} |{" "}
                 <strong>v{AUDIT_DATA.meta.lighthouseVersion}</strong>
               </div>
@@ -226,23 +225,23 @@ export default function SeoInsights() {
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               {/* Device Toggle Tabs */}
-              <div className="flex border rounded-sm border-[#cccccc] bg-[#eeeeee] p-1">
+              <div className="flex border w-max rounded-sm bg-[#252525] border border-[#141414] p-1">
                 <button
                   onClick={() => setDevice("mobile")}
-                  className={`flex items-center justify-center gap-2 px-4 py-1.5 cursor-pointer text-[14px] rounded-sm font-bold border transition-none ${
+                  className={`flex items-center justify-center gap-2 px-4 py-1.5 cursor-pointer text-[14px] rounded-sm font-medium transition-none ${
                     device === "mobile"
-                      ? "bg-[#006600] text-white border-[#004400]"
-                      : "bg-transparent  text-[#333333] border-transparent hover:bg-[#dddddd]"
+                      ? "bg-[#141414] text-white border-[#101010]"
+                      : "text-gray-300"
                   }`}
                 >
                   <Smartphone className="w-4 h-4" /> Mobile
                 </button>
                 <button
                   onClick={() => setDevice("desktop")}
-                  className={`flex items-center justify-center gap-2 px-4 py-1.5 text-[14px] cursor-pointer font-bold rounded-sm border transition-none ${
+                  className={`flex items-center justify-center gap-2 px-4 py-1.5 text-[14px] cursor-pointer font-medium  rounded-sm  transition-none ${
                     device === "desktop"
-                      ? "bg-[#006600] text-white border-[#004400]"
-                      : "bg-transparent text-[#333333] border-transparent hover:bg-[#dddddd]"
+                      ? "bg-[#141414] text-white border-[#101010]"
+                      : "text-gray-300"
                   }`}
                 >
                   <Monitor className="w-4 h-4" /> Desktop
@@ -252,7 +251,7 @@ export default function SeoInsights() {
               {/* Export Button */}
               <button
                 onClick={handleExport}
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-[#eeeeee] text-[#333333] font-bold text-[14px] rounded-sm cursor-pointer border border-[#cccccc] hover:bg-[#dddddd] active:bg-[#cccccc] transition-none whitespace-nowrap"
+                className="flex items-center justify-center gap-2 px-4 py-2 bg-green-700 text-white font-bold text-[14px] rounded-md cursor-pointer"
               >
                 <Download className="w-4 h-4" /> Export Report
               </button>
@@ -261,38 +260,38 @@ export default function SeoInsights() {
         </header>
 
         {/* 1. Environment Details */}
-        <section className="mb-8 border border-[#cccccc] rounded-sm bg-white">
-          <h2 className="text-[16px] font-bold text-[#333333] bg-[#eeeeee] border-b border-[#cccccc] px-4 py-2">
+        <section className="mb-8 border border-[#181818] rounded-sm bg-[#252525]">
+          <h2 className="text-[16px] font-bold text-green-400 bg-[#181818] border-b border-[#181818] px-4 py-2">
             Environment Data
           </h2>
           <div className="p-4">
             <dl className="grid sm:grid-cols-[150px_1fr] gap-x-4 gap-y-2 text-[14px]">
-              <dt className="text-[#666666] font-bold">Target Device:</dt>
-              <dd className="text-[#333333] ">{currentData.environment}</dd>
-              <dt className="text-[#666666] font-bold">User Agent:</dt>
-              <dd className="text-[#333333] ">{AUDIT_DATA.meta.browser}</dd>
+              <dt className="text-white font-bold">Target Device:</dt>
+              <dd className="text-gray-300 ">{currentData.environment}</dd>
+              <dt className="text-white font-bold">User Agent:</dt>
+              <dd className="text-gray-300 ">{AUDIT_DATA.meta.browser}</dd>
             </dl>
           </div>
         </section>
 
         {/* 2. Primary Scores */}
         <section className="mb-8">
-          <h2 className="text-xl font-bold text-[#333333] mb-4 flex items-center border-b-2 border-[#cccccc] pb-1">
-            <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
+          <h2 className="text-xl font-bold text-white mb-4 flex items-center  pb-1">
+            <span className="w-2   mr-3 inline-block">{"#"}</span>
             Category Scores
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {Object.entries(currentData.scores).map(([key, value]) => (
               <div
                 key={key}
-                className="border border-[#cccccc] rounded-sm bg-[#fdfdfd] p-4 flex flex-col items-center justify-center text-center shadow-none"
+                className="rounded-sm bg-[#252525] border border-[#181818] p-4 flex flex-col items-center justify-center text-center shadow-none"
               >
                 <div
-                  className={`text-4xl  font-bold mb-2 ${getScoreColor(value)}`}
+                  className={`text-4xl  font-semibold mb-2 ${getScoreColor(value)}`}
                 >
                   {value}
                 </div>
-                <div className="text-[12px] font-bold text-[#666666] uppercase tracking-wider">
+                <div className="text-[12px] font-bold text-white uppercase tracking-wider">
                   {key.replace(/([A-Z])/g, " $1").trim()}
                 </div>
               </div>
@@ -302,36 +301,38 @@ export default function SeoInsights() {
 
         {/* 3. Core Web Vitals */}
         <section className="mb-8">
-          <h2 className="text-xl font-bold text-[#333333] mb-4 flex items-center border-b-2 border-[#cccccc] pb-1">
-            <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
+          <h2 className="text-xl font-bold text-white mb-4 flex items-center  pb-1">
+            <span className="w-2  text-white mr-3 inline-block">{"#"}</span>
             Core Web Vitals
           </h2>
-          <div className="border border-[#cccccc] rounded-sm bg-white overflow-x-auto">
+          <div className="border border-[#181818] rounded-sm bg-[#252525] overflow-x-auto">
             <table className="w-full text-left text-[14px]">
-              <thead className="bg-[#eeeeee] border-b border-[#cccccc]">
+              <thead className="bg-[#181818] border-b border-[#181818]">
                 <tr>
-                  <th className="px-4 py-2 font-bold text-[#333333] border-r border-[#cccccc]">
+                  <th className="px-4 py-2 font-bold text-green-500 border-r border-[#444444]">
                     Metric
                   </th>
-                  <th className="px-4 py-2 font-bold text-[#333333] border-r border-[#cccccc]">
+                  <th className="px-4 py-2 font-bold text-green-500 border-r border-[#444444]">
                     Value
                   </th>
-                  <th className="px-4 py-2 font-bold text-[#333333]">Status</th>
+                  <th className="px-4 py-2 font-bold text-green-500 ">
+                    Status
+                  </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#eeeeee]">
+              <tbody className="divide-y-2 divide-[#4444444]">
                 {currentData.metrics.map((metric, idx) => (
-                  <tr key={idx} className="hover:bg-[#fafffa]">
-                    <td className="px-4 py-2 text-[#333333] border-r border-[#eeeeee]">
+                  <tr key={idx} className="hover:bg-[#303030]">
+                    <td className="px-4 py-1 text-gray-300 border-r-2 border-[#444444]">
                       {metric.label}
                     </td>
                     <td
-                      className={`px-4 py-2  font-bold border-r border-[#eeeeee] ${getStatusColor(metric.status)}`}
+                      className={`px-4 py-1  font-bold border-r-2 border-[#444444] ${getStatusColor(metric.status)}`}
                     >
                       {metric.value}
                     </td>
                     <td className="px-4 py-2">
-                      <div className="flex items-center gap-2 capitalize font-bold text-[#333333]">
+                      <div className="flex items-center gap-2 capitalize font-bold text-gray-300">
                         {getStatusIcon(metric.status)}
                         <span>{metric.status}</span>
                       </div>
@@ -345,37 +346,37 @@ export default function SeoInsights() {
 
         {/* 4. Diagnostics & Opportunities */}
         <section className="mb-8">
-          <h2 className="text-xl font-bold text-[#333333] mb-4 flex items-center border-b-2 border-[#cccccc] pb-1">
-            <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
+          <h2 className="text-xl font-bold text-white mb-4 flex items-center  pb-1">
+            <span className="w-2 mr-3 inline-block">{"#"}</span>
             Diagnostic Opportunities
           </h2>
           <div className="space-y-3">
             {AUDIT_DATA.insights.map((item, idx) => (
               <div
                 key={idx}
-                className={`bg-[#fdfdfd] rounded-sm border border-[#cccccc] border-l-4 p-4 ${getStatusBorder(item.status)}`}
+                className={`bg-[#252525] rounded-sm border border-[#444444] border-l-4 p-4 ${getStatusBorder(item.status)}`}
               >
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-2">
-                  <h3 className="text-[15px] font-bold text-[#333333] flex items-start gap-2">
+                  <h3 className="text-[15px] font-bold text-green-500 flex items-start gap-2">
                     {item.status === "fail" ? (
-                      <XCircle className="w-5 h-5 text-[#cc0000] flex-shrink-0 mt-0.5" />
+                      <XCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
                     ) : (
-                      <AlertTriangle className="w-5 h-5 text-[#b86b00] flex-shrink-0 mt-0.5" />
+                      <AlertTriangle className="w-5 h-5 text-white flex-shrink-0 mt-0.5" />
                     )}
                     {item.title}
                   </h3>
                   {item.savings && (
-                    <span className="inline-flex items-center gap-1.5 px-2 py-1  text-[12px] rounded-sm  text-[#333333] font-bold whitespace-nowrap">
+                    <span className="inline-flex items-center gap-1.5 px-2 py-1  text-[12px] rounded-sm  text-yellow-200 font-bold whitespace-nowrap">
                       <Clock className="w-3.5 h-3.5" /> Est. savings:{" "}
                       {item.savings}
                     </span>
                   )}
                 </div>
-                <p className="text-[14px] text-[#444444] leading-relaxed ml-7">
+                <p className="text-[14px] text-gray-300 leading-relaxed ml-7">
                   {item.description}
                 </p>
                 <div className="mt-2 ml-7">
-                  <span className="text-[12px]  text-[#666666] bg-[#eeeeee] px-1 border border-[#cccccc]">
+                  <span className="text-[12px]  text-white">
                     Category: {item.category}
                   </span>
                 </div>
@@ -386,16 +387,16 @@ export default function SeoInsights() {
 
         {/* 5. Passed Audits (Summarized) */}
         <section>
-          <h2 className="text-xl font-bold text-[#333333] mb-4 flex items-center border-b-2 border-[#cccccc] pb-1">
-            <span className="w-2 h-4 bg-[#006600] mr-2 inline-block"></span>
+          <h2 className="text-xl font-bold text-white mb-4 flex items-center border-b-2 border-[#cccccc] pb-1">
+            <span className="w-2  mr-3 inline-block">{"#"}</span>
             Passed Audits
           </h2>
-          <div className="border border-[#cccccc] bg-[#f9f9f9] p-4">
+          <div className="rounded-md border border-[#181818] bg-[#252525] p-4">
             <div className="grid md:grid-cols-2 gap-x-8 gap-y-3">
               {AUDIT_DATA.passed.map((item, idx) => (
                 <div key={idx} className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#006600] flex-shrink-0 mt-0.5" />
-                  <span className="text-[14px] text-[#333333]">{item}</span>
+                  <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                  <span className="text-[14px] text-gray-300">{item}</span>
                 </div>
               ))}
             </div>

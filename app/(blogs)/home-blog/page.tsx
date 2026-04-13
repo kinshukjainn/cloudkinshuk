@@ -190,24 +190,23 @@ const MOCK_BLOG_POSTS: BlogPost[] = [
   },
   {
     id: "blogG",
-    title: "Challenges i faced while building my college project m-scada ?",
+    title: " I Built My Own Google Drive. Here&apos;s How It Actually Works.",
     brief: "There were many challanges which i faced while building .....",
-    slug: "Challenges-i-faced-while-building-my-college-project-m-scada",
-    publishedAt: "2026-03-11T10:00:00Z",
-    updatedAt: "2026-03-11T10:00:00Z",
+    slug: "i-built-my-own-google-drive-here-s-how-it actually-works",
+    publishedAt: "2026-04-11T10:00:00Z",
+    updatedAt: "2026-04-11T10:00:00Z",
     readTimeInMinutes: 10,
     views: 0,
     reactionCount: 0,
     tags: [
       { id: "1", name: "blogs", slug: "blogs" },
       { id: "2", name: "devlopers", slug: "devlopers" },
-      { id: "3", name: "scada", slug: "scada" },
-      { id: "4", name: "power sytem", slug: "power-system" },
+      { id: "3", name: "Amazon S3", slug: "amazon-s3" },
+      { id: "4", name: "Clerk", slug: "clerk" },
       { id: "5", name: "aws cloud", slug: "aws-cloud" },
-      { id: "7", name: "aws bedrock", slug: "aws-bedrock" },
-      { id: "8", name: "Amazon API Gateway", slug: "amazon-api-gayeway" },
-      { id: "9", name: "Amazon Route 53", slug: "amazon-api-route-53" },
-      { id: "10", name: "Amazon Lamba", slug: "amazon-lambda" },
+      { id: "6", name: "Amazon Route 53", slug: "amazon-api-route-53" },
+      { id: "7", name: "NeonDB", slug: "neondb" },
+      { id: "8", name: "Database", slug: "database" },
     ],
     author: { name: "Kinshuk Jain" },
   },
@@ -377,21 +376,21 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   const activeFiltersCount = filters.tags.length;
 
   return (
-    <div className="mb-8 border border-[#444444] rounded-sm bg-[#2b2b2b]">
+    <div className="mb-8 border border-[#444444] rounded-lg bg-[#2b2b2b]">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex md:hidden items-center justify-between w-full px-4 py-3 cursor-pointer bg-[#222222] border-b border-[#444444] text-[#cccccc]"
+        className="flex md:hidden items-center justify-between w-full rounded-lg px-4 py-3 cursor-pointer bg-[#222222] border-b border-[#444444] text-white"
       >
-        <span className="text-sm ">
-          &gt; Filter Tags {activeFiltersCount > 0 && `[${activeFiltersCount}]`}
+        <span className="text-md font-semibold ">
+          Filter Tags {activeFiltersCount > 0 && `[${activeFiltersCount}]`}
         </span>
         <ChevronDown size={16} className={`${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       <div className={`${isOpen ? "block" : "hidden md:block"} p-5`}>
-        <div className="flex items-center justify-between border-b border-[#444444] pb-2 mb-4">
+        <div className="flex items-center justify-between  border-b border-[#444444] pb-2 mb-4">
           <label className="block text-sm text-[#cccccc] ">
-            Available_Tags{" "}
+            Available Tags{" "}
             <span className="text-[#888888]">
               {filters.tags.length > 0 && `(${filters.tags.length} selected)`}
             </span>
@@ -399,10 +398,10 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
           {activeFiltersCount > 0 && (
             <button
               onClick={resetFilters}
-              className="flex items-center gap-1 text-xs text-[#999999] hover:text-[#cccccc]"
+              className="flex items-center gap-1 text-md font-semibold text-white cursor-pointer"
             >
               <RotateCcw size={12} />
-              [Clear]
+              Clear
             </button>
           )}
         </div>
@@ -415,10 +414,10 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                 key={tag}
                 onClick={() => toggleTag(tag)}
                 className={`
-                  inline-flex items-center justify-center px-2.5 py-1 text-xs rounded-sm border cursor-pointer  transition-colors
+                  inline-flex items-center justify-center px-2.5 py-1 text-xs rounded-md  cursor-pointer  transition-colors
                   ${
                     isSelected
-                      ? "bg-green-600/20 text-green-400 border-green-600/50"
+                      ? "bg-green-700 text-white"
                       : "bg-[#222222] text-[#999999] border-[#555555] hover:border-[#777777] hover:text-[#cccccc]"
                   }
                 `}
@@ -522,15 +521,15 @@ export default function BlogsPage() {
       {/* Header */}
       <header className="mb-4">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <h1 className="text-3xl font-medium text-[#e0e0e0] mb-5 flex items-center tracking-tight">
-            <span className="w-1.5 h-6 bg-green-500 mr-4 inline-block"></span>
+          <h1 className="text-6xl font-medium text-green-500 mb-5 flex items-center tracking-tight">
+            <span className="w-1.5 h-19 bg-green-500 mr-4 inline-block"></span>
             Blogs
           </h1>
-          <p className="text-sm text-[#a0a0a0] leading-relaxed max-w-3xl border-l border-[#555555] pl-4">
-            <span className="text-green-500 ">@root</span> — Log of learning
-            journeys in cloud computing, DevOps, security, and infrastructure
-            engineering. Executing writes on AWS services, serverless systems,
-            CI/CD, and Terraform via hands-on practice.
+          <p className="text-md text-white leading-relaxed max-w-3xl border-l-2 border-green-500 pl-4">
+            <span className="text-green-500 ">Hi @everyone</span> Blogs of
+            learning journeys in cloud computing, DevOps, security, and
+            infrastructure engineering. Executing writes on AWS services,
+            serverless systems, CI/CD, and Terraform via hands-on practice.
           </p>
         </div>
       </header>
@@ -541,10 +540,10 @@ export default function BlogsPage() {
           <div className="flex items-start gap-3">
             <MessageSquare className="w-4 h-4 text-[#888888] mt-0.5" />
             <div>
-              <h3 className="text-sm font-medium text-[#e0e0e0] mb-0.5">
-                Output Diagnostics & Feedback
+              <h3 className="text-lg font-semibold text-[#e0e0e0] mb-0.5">
+                Feedback
               </h3>
-              <p className="text-xs text-[#888888] ">
+              <p className="text-md text-[#888888] ">
                 Provide system feedback to improve future documentation writes.
               </p>
             </div>
@@ -553,9 +552,9 @@ export default function BlogsPage() {
             href="https://fdb.cloudkinshuk.in/"
             target="_blank"
             rel="noopener noreferrer"
-            className="border border-[#555555] text-[#cccccc] hover:text-white hover:border-[#888888] bg-[#2b2b2b] py-1.5 px-4 rounded-sm transition-colors whitespace-nowrap text-xs  inline-flex items-center gap-2"
+            className="text-white bg-green-700 py-3 px-5 rounded-lg cursor-pointer transition-colors whitespace-nowrap text-md  inline-flex items-center gap-2"
           >
-            [Execute_Feedback]
+            Leave Feedback
             <ArrowRight className="w-3 h-3" />
           </a>
         </div>
@@ -586,7 +585,8 @@ export default function BlogsPage() {
         {filteredPosts.length === 0 ? (
           <div className="p-10 border border-[#444444] border-dashed rounded-sm bg-[#2b2b2b] text-center">
             <p className="text-[#888888]  text-sm mb-4">
-              Error 404: No blocks found matching query parameters.
+              No matching results found for your query and filters. Try
+              adjusting your search terms or clearing filters to see more posts.
             </p>
             <button
               onClick={() => {
@@ -594,9 +594,9 @@ export default function BlogsPage() {
                 setFilters({ tags: [] });
                 setFilterOpen(false);
               }}
-              className="px-4 py-1.5 border border-[#555555] bg-[#222222] text-[#cccccc] text-xs  rounded-sm hover:border-[#888888] hover:text-white transition-colors"
+              className="px-5 py-3  bg-green-700 text-white font-medium cursor-pointer text-md rounded-lg transition-colors"
             >
-              [Reset_Parameters]
+              Reset filters and search
             </button>
           </div>
         ) : (

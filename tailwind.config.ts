@@ -11,7 +11,6 @@ const config: Config = {
     extend: {
       fontFamily: {
         // Add your custom font here
-        inter: "var(--font-inter) , sans-serif",
         ptSans: "var(--font-pt-sans) , sans-serif",
         workSans: "var(--font-work-sans) , sans-serif",
         alegreya: "var(--font-alegreya) , serif",
@@ -20,6 +19,8 @@ const config: Config = {
         rubik: "var(--font-rubik) sans-serif",
         roboto: "var(--font-roboto) sans-serif",
         ubuntuSans: "var(--font-ubuntu-sans) sans-serif, ",
+        geistMono: "var(--font-geist-mono) , monospace",
+        inter: "var(--font-inter) , sans-serif",
         lucidaSans: "var(--font-lucida-sans) , sans-serif",
       },
     },

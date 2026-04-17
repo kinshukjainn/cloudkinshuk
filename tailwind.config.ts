@@ -21,6 +21,7 @@ const config: Config = {
         ubuntuSans: "var(--font-ubuntu-sans) sans-serif, ",
         geistMono: "var(--font-geist-mono) , monospace",
         inter: "var(--font-inter) , sans-serif",
+        verdana: "var(--font-verdana) , sans-serif",
         lucidaSans: "var(--font-lucida-sans) , sans-serif",
       },
     },

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
 import {
   Search,
   X,
@@ -10,8 +10,14 @@ import {
   MessageSquare,
   Clock,
   Calendar,
+  User,
+  Mail,
+  Github,
+  Loader2,
+  CheckCircle2,
 } from "lucide-react";
 import Link from "next/link";
+import { getFeedbacksAction } from "../../db-api-call/blogs-feedback";
 
 interface BlogPost {
   id: string;
@@ -36,6 +42,19 @@ interface BlogPost {
     profilePicture?: string;
   };
   url?: string;
+}
+
+// Updated interface to match DB Schema
+interface FeedbackItem {
+  id: string;
+  name: string;
+  email: string;
+  github_id: string | null;
+  category: "Blogs" | "Projects" | "Portfolio Website";
+  feedback: string;
+  created_at: string;
+  status: "pending" | "approved" | "rejected";
+  reviewed_at: string | null;
 }
 
 interface Filters {
@@ -253,96 +272,195 @@ class SimpleSearchEngine {
   }
 }
 
+// ─── Blog Item ───
+
 interface BlogItemProps {
   post: BlogPost;
   searchQuery?: string;
 }
 
-const BlogItem: React.FC<BlogItemProps> = React.memo(
-  ({ post, searchQuery }) => {
-    const highlightText = useCallback((text: string, query?: string) => {
-      if (!query || !query.trim()) return text;
-      const regex = new RegExp(
-        `(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
-        "gi",
-      );
-      const parts = text.split(regex);
-      return parts.map((part, i) =>
-        regex.test(part) ? (
-          <mark
-            key={i}
-            className="bg-green-900/60 text-green-400 px-0.5 rounded-sm bg-transparent"
-          >
-            {part}
-          </mark>
-        ) : (
-          part
-        ),
-      );
-    }, []);
-
-    const formatDate = (dateString: string) => {
-      const date = new Date(dateString);
-      return date.toLocaleDateString("en-US", {
-        month: "short",
-        day: "2-digit",
-        year: "numeric",
-      });
-    };
-
-    return (
-      <div className="mb-4 p-5 border border-[#444444] bg-[#2b2b2b] rounded-sm hover:border-[#666666] transition-colors">
-        <Link href={`/home-blog/${post.id}`} className="group block">
-          {/* Title */}
-          <h3 className="text-lg text-[#e0e0e0] mb-2 font-medium leading-tight group-hover:text-green-500 transition-colors">
-            {highlightText(post.title, searchQuery)}
-          </h3>
-
-          {/* Metadata - Monospaced for technical feel */}
-          <div className="flex items-center gap-4 mb-4 text-xs text-[#888888] ">
-            <div className="flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5" />
-              <span>{formatDate(post.publishedAt)}</span>
-            </div>
-            {post.readTimeInMinutes && (
-              <div className="flex items-center gap-1.5 border-l border-[#555555] pl-4">
-                <Clock className="w-3.5 h-3.5" />
-                <span>{post.readTimeInMinutes}m read</span>
-              </div>
-            )}
-          </div>
-
-          {/* Brief */}
-          <p className="text-[#b0b0b0] text-sm mb-5 leading-relaxed">
-            {post.brief}
-          </p>
-
-          {/* Tags */}
-          <div className="flex flex-wrap items-center gap-2">
-            {post.tags.slice(0, 5).map((tag) => (
-              <span
-                key={tag.id}
-                className="inline-flex items-center justify-center px-2 py-0.5 border rounded-sm border-[#555555] bg-[#222222] text-xs text-[#999999]"
-              >
-                {tag.name}
-              </span>
-            ))}
-            {post.tags.length > 5 && (
-              <span className="inline-flex items-center justify-center px-2 py-0.5 border rounded-sm border-[#555555] bg-[#222222] text-xs text-[#999999]">
-                +{post.tags.length - 5}
-              </span>
-            )}
-            <div className="ml-auto text-green-500  text-xs opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-              [Read]
-            </div>
-          </div>
-        </Link>
-      </div>
+const BlogItem = React.memo(function BlogItem({
+  post,
+  searchQuery,
+}: BlogItemProps) {
+  const highlightText = useCallback((text: string, query?: string) => {
+    if (!query || !query.trim()) return text;
+    const regex = new RegExp(
+      `(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+      "gi",
     );
-  },
-);
+    const parts = text.split(regex);
+    return parts.map((part, i) =>
+      regex.test(part) ? (
+        <mark
+          key={i}
+          className="bg-green-900/60 text-green-400 px-0.5 rounded-sm bg-transparent"
+        >
+          {part}
+        </mark>
+      ) : (
+        part
+      ),
+    );
+  }, []);
 
-BlogItem.displayName = "BlogItem";
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    });
+  };
+
+  return (
+    <div className="mb-4 p-5 border border-[#444444] bg-[#2b2b2b] rounded-sm hover:border-[#666666] transition-colors">
+      <Link href={`/home-blog/${post.id}`} className="group block">
+        <h3 className="text-lg text-[#e0e0e0] mb-2 font-medium leading-tight group-hover:text-green-500 transition-colors">
+          {highlightText(post.title, searchQuery)}
+        </h3>
+
+        <div className="flex items-center gap-4 mb-4 text-xs text-[#888888]">
+          <div className="flex items-center gap-1.5">
+            <Calendar className="w-3.5 h-3.5" />
+            <span>{formatDate(post.publishedAt)}</span>
+          </div>
+          {post.readTimeInMinutes && (
+            <div className="flex items-center gap-1.5 border-l border-[#555555] pl-4">
+              <Clock className="w-3.5 h-3.5" />
+              <span>{post.readTimeInMinutes}m read</span>
+            </div>
+          )}
+        </div>
+
+        <p className="text-[#b0b0b0] text-sm mb-5 leading-relaxed">
+          {post.brief}
+        </p>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {post.tags.slice(0, 5).map((tag) => (
+            <span
+              key={tag.id}
+              className="inline-flex items-center justify-center px-2 py-0.5 border rounded-sm border-[#555555] bg-[#222222] text-xs text-[#999999]"
+            >
+              {tag.name}
+            </span>
+          ))}
+          {post.tags.length > 5 && (
+            <span className="inline-flex items-center justify-center px-2 py-0.5 border rounded-sm border-[#555555] bg-[#222222] text-xs text-[#999999]">
+              +{post.tags.length - 5}
+            </span>
+          )}
+          <div className="ml-auto text-green-500 text-xs opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+            [Read]
+          </div>
+        </div>
+      </Link>
+    </div>
+  );
+});
+
+// ─── Feedback Card ───
+
+interface FeedbackCardProps {
+  feedback: FeedbackItem;
+  index: number;
+}
+
+const FeedbackCard = React.memo(function FeedbackCard({
+  feedback,
+  index,
+}: FeedbackCardProps) {
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    });
+  };
+
+  const formatTime = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
+
+  return (
+    <div className="p-4 sm:p-5 border border-[#444444] bg-[#2b2b2b] rounded-sm hover:border-[#666666] transition-colors">
+      {/* Header row */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+        <div className="flex items-center gap-2">
+          <span className="text-green-500 text-xs font-medium">
+            #{index + 1}
+          </span>
+          <span className="w-1 h-1 rounded-full bg-[#555555] hidden sm:block" />
+          <span className="text-xs text-[#888888]">
+            {formatDate(feedback.created_at)}
+          </span>
+          <span className="w-1 h-1 rounded-full bg-[#555555] hidden sm:block" />
+          <span className="text-xs text-[#888888] hidden sm:inline">
+            {formatTime(feedback.created_at)}
+          </span>
+        </div>
+
+        {/* Category & Status Badges */}
+        <div className="flex items-center gap-2">
+          {feedback.status === "approved" && (
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-sm bg-green-900/40 border border-green-500/30 text-green-400 text-[10px] font-bold uppercase tracking-wider w-fit">
+              <CheckCircle2 size={10} /> {feedback.status}
+            </span>
+          )}
+          <span className="inline-flex items-center px-2 py-0.5 rounded-sm bg-green-700/20 text-green-400 text-xs w-fit">
+            {feedback.category}
+          </span>
+        </div>
+      </div>
+
+      {/* Metadata grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mb-4 text-sm">
+        <div className="flex items-center gap-2 min-w-0">
+          <User className="w-3.5 h-3.5 text-[#666666] shrink-0" />
+          <span className="text-[#888888] shrink-0">Name</span>
+          <span className="text-[#e0e0e0] truncate">{feedback.name}</span>
+        </div>
+        <div className="flex items-center gap-2 min-w-0">
+          <Mail className="w-3.5 h-3.5 text-[#666666] shrink-0" />
+          <span className="text-[#888888] shrink-0">Email</span>
+          <span className="text-[#e0e0e0] truncate">{feedback.email}</span>
+        </div>
+        {feedback.github_id && (
+          <div className="flex items-center gap-2 min-w-0 sm:col-span-2">
+            <Github className="w-3.5 h-3.5 text-[#666666] shrink-0" />
+            <span className="text-[#888888] shrink-0">GitHub</span>
+            <a
+              href={`https://github.com/${feedback.github_id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-green-500 hover:text-green-400 truncate transition-colors"
+            >
+              {feedback.github_id}
+            </a>
+          </div>
+        )}
+      </div>
+
+      {/* Divider */}
+      <div className="border-t border-[#444444] my-3" />
+
+      {/* Feedback content */}
+      <div
+        className="text-[#b0b0b0] text-sm leading-relaxed prose-invert max-w-none break-words [&_a]:text-green-500 [&_a:hover]:text-green-400 [&_strong]:text-[#e0e0e0] [&_em]:text-[#cccccc] [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-2 [&_li]:mb-1"
+        dangerouslySetInnerHTML={{ __html: feedback.feedback }}
+      />
+    </div>
+  );
+});
+
+// ─── Filter Panel ───
 
 interface FilterPanelProps {
   filters: Filters;
@@ -352,13 +470,13 @@ interface FilterPanelProps {
   setIsOpen: (open: boolean) => void;
 }
 
-const FilterPanel: React.FC<FilterPanelProps> = ({
+function FilterPanel({
   filters,
   setFilters,
   availableTags,
   isOpen,
   setIsOpen,
-}) => {
+}: FilterPanelProps) {
   const toggleTag = (tag: string) => {
     setFilters({
       tags: filters.tags.includes(tag)
@@ -381,15 +499,15 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
         onClick={() => setIsOpen(!isOpen)}
         className="flex md:hidden items-center justify-between w-full rounded-lg px-4 py-3 cursor-pointer bg-[#222222] border-b border-[#444444] text-white"
       >
-        <span className="text-md font-semibold ">
+        <span className="text-md font-semibold">
           Filter Tags {activeFiltersCount > 0 && `[${activeFiltersCount}]`}
         </span>
         <ChevronDown size={16} className={`${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       <div className={`${isOpen ? "block" : "hidden md:block"} p-5`}>
-        <div className="flex items-center justify-between  border-b border-[#444444] pb-2 mb-4">
-          <label className="block text-sm text-[#cccccc] ">
+        <div className="flex items-center justify-between border-b border-[#444444] pb-2 mb-4">
+          <label className="block text-sm text-[#cccccc]">
             Available Tags{" "}
             <span className="text-[#888888]">
               {filters.tags.length > 0 && `(${filters.tags.length} selected)`}
@@ -413,14 +531,11 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
               <button
                 key={tag}
                 onClick={() => toggleTag(tag)}
-                className={`
-                  inline-flex items-center justify-center px-2.5 py-1 text-xs rounded-md  cursor-pointer  transition-colors
-                  ${
-                    isSelected
-                      ? "bg-green-700 text-white"
-                      : "bg-[#222222] text-[#999999] border-[#555555] hover:border-[#777777] hover:text-[#cccccc]"
-                  }
-                `}
+                className={`inline-flex items-center justify-center px-2.5 py-1 text-xs rounded-md cursor-pointer transition-colors ${
+                  isSelected
+                    ? "bg-green-700 text-white"
+                    : "bg-[#222222] text-[#999999] border-[#555555] hover:border-[#777777] hover:text-[#cccccc]"
+                }`}
               >
                 {tag}
               </button>
@@ -430,7 +545,9 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
       </div>
     </div>
   );
-};
+}
+
+// ─── Search Bar ───
 
 interface SearchBarProps {
   searchInput: string;
@@ -439,12 +556,12 @@ interface SearchBarProps {
   totalCount: number;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({
+function SearchBar({
   searchInput,
   setSearchInput,
   resultsCount,
   totalCount,
-}) => {
+}: SearchBarProps) {
   return (
     <div className="mb-6 w-full">
       <div className="flex items-stretch rounded-sm border border-[#444444] bg-[#222222] focus-within:border-[#666666] transition-colors">
@@ -472,15 +589,17 @@ const SearchBar: React.FC<SearchBarProps> = ({
       </div>
 
       {searchInput && (
-        <div className="mt-2 text-xs text-[#888888]  flex items-center gap-2">
-          <span>&gt; Query execution matched:</span>
+        <div className="mt-2 text-xs text-[#888888] flex items-center gap-2">
+          <span>{">"} Query execution matched:</span>
           <strong className="text-green-400 font-normal">{resultsCount}</strong>
           <span>/ {totalCount} records</span>
         </div>
       )}
     </div>
   );
-};
+}
+
+// ─── Main Page ───
 
 export default function BlogsPage() {
   const [searchInput, setSearchInput] = useState("");
@@ -490,6 +609,31 @@ export default function BlogsPage() {
   const [filters, setFilters] = useState<Filters>({
     tags: [],
   });
+
+  // Feedback state
+  const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>([]);
+  const [feedbackLoading, setFeedbackLoading] = useState(true);
+  const [feedbackError, setFeedbackError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function loadFeedbacks() {
+      try {
+        setFeedbackLoading(true);
+        const result = await getFeedbacksAction();
+        // Server already guarantees these are both 'Blogs' and 'approved'
+        if (result.success && result.data) {
+          setFeedbacks(result.data as FeedbackItem[]);
+        } else {
+          setFeedbackError(result.error || "Failed to load feedbacks.");
+        }
+      } catch {
+        setFeedbackError("Failed to load feedbacks.");
+      } finally {
+        setFeedbackLoading(false);
+      }
+    }
+    loadFeedbacks();
+  }, []);
 
   const availableTags = useMemo(() => {
     const tagsSet = new Set<string>();
@@ -517,7 +661,7 @@ export default function BlogsPage() {
   }, [posts, searchInput, searchEngine, filters]);
 
   return (
-    <div className="min-h-screen bg-[#313131] text-[#cccccc] selection:bg-green-500/30 selection:text-green-200 pb-16 ">
+    <div className="min-h-screen bg-[#313131] text-[#cccccc] selection:bg-green-500/30 selection:text-green-200 pb-16">
       {/* Header */}
       <header className="mb-4">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -526,7 +670,7 @@ export default function BlogsPage() {
             Blogs
           </h1>
           <p className="text-md text-white leading-relaxed max-w-3xl border-l-2 border-green-500 pl-4">
-            <span className="text-green-500 ">Hi @everyone</span> Blogs of
+            <span className="text-green-500">Hi @everyone</span> Blogs of
             learning journeys in cloud computing, DevOps, security, and
             infrastructure engineering. Executing writes on AWS services,
             serverless systems, CI/CD, and Terraform via hands-on practice.
@@ -535,7 +679,7 @@ export default function BlogsPage() {
       </header>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Feedback Component (CLI Notice style) */}
+        {/* Feedback CTA */}
         <div className="mb-8 p-4 border border-[#444444] rounded-sm bg-[#222222] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
             <MessageSquare className="w-4 h-4 text-[#888888] mt-0.5" />
@@ -543,25 +687,66 @@ export default function BlogsPage() {
               <h3 className="text-lg font-semibold text-[#e0e0e0] mb-0.5">
                 Feedback
               </h3>
-              <p className="text-md text-[#888888] ">
+              <p className="text-md text-[#888888]">
                 Provide system feedback to improve future documentation writes.
               </p>
             </div>
           </div>
           <a
-            href="https://fdb.cloudkinshuk.in/"
+            href="https://clkfeedbacks.cloudkinshuk.in/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white bg-green-700 py-3 px-5 rounded-lg cursor-pointer transition-colors whitespace-nowrap text-md  inline-flex items-center gap-2"
+            className="text-white bg-green-700 py-3 px-5 rounded-lg cursor-pointer transition-colors whitespace-nowrap text-md inline-flex items-center gap-2"
           >
             Leave Feedback
             <ArrowRight className="w-3 h-3" />
           </a>
         </div>
 
+        {/* ─── Feedbacks Section ─── */}
+        <div className="mb-10">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <span className="w-1 h-5 bg-green-500 inline-block rounded-sm" />
+              <h2 className="text-lg font-medium text-[#e0e0e0]">
+                Community Feedback
+              </h2>
+              {!feedbackLoading && (
+                <span className="text-xs text-[#888888] bg-[#222222] px-2 py-0.5 rounded-sm border border-[#444444]">
+                  {feedbacks.length} received
+                </span>
+              )}
+            </div>
+          </div>
+
+          {feedbackLoading ? (
+            <div className="p-10 border border-[#444444] border-dashed rounded-sm bg-[#2b2b2b] flex items-center justify-center gap-3">
+              <Loader2 className="w-4 h-4 text-green-500 animate-spin" />
+              <span className="text-sm text-[#888888]">
+                Loading feedbacks...
+              </span>
+            </div>
+          ) : feedbackError ? (
+            <div className="p-6 border border-red-900/50 rounded-sm bg-red-950/20 text-center">
+              <p className="text-red-400 text-sm">{feedbackError}</p>
+            </div>
+          ) : feedbacks.length === 0 ? (
+            <div className="p-10 border border-[#444444] border-dashed rounded-sm bg-[#2b2b2b] text-center">
+              <p className="text-[#888888] text-sm">
+                No feedback received yet. Be the first to share your thoughts!
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+              {feedbacks.map((fb, i) => (
+                <FeedbackCard key={fb.id} feedback={fb} index={i} />
+              ))}
+            </div>
+          )}
+        </div>
+
         {/* Directory Tools */}
         <div className="mb-10">
-          <h2 className="text-xs  text-[#888888] uppercase tracking-wider mb-3"></h2>
           <SearchBar
             searchInput={searchInput}
             setSearchInput={setSearchInput}
@@ -579,12 +764,12 @@ export default function BlogsPage() {
 
         {/* Output Stream */}
         <div className="flex items-center mb-6 border-b border-[#444444] pb-2">
-          <span className="text-xs  text-[#888888] uppercase tracking-wider"></span>
+          <span className="text-xs text-[#888888] uppercase tracking-wider"></span>
         </div>
 
         {filteredPosts.length === 0 ? (
           <div className="p-10 border border-[#444444] border-dashed rounded-sm bg-[#2b2b2b] text-center">
-            <p className="text-[#888888]  text-sm mb-4">
+            <p className="text-[#888888] text-sm mb-4">
               No matching results found for your query and filters. Try
               adjusting your search terms or clearing filters to see more posts.
             </p>
@@ -594,7 +779,7 @@ export default function BlogsPage() {
                 setFilters({ tags: [] });
                 setFilterOpen(false);
               }}
-              className="px-5 py-3  bg-green-700 text-white font-medium cursor-pointer text-md rounded-lg transition-colors"
+              className="px-5 py-3 bg-green-700 text-white font-medium cursor-pointer text-md rounded-lg transition-colors"
             >
               Reset filters and search
             </button>
@@ -609,7 +794,6 @@ export default function BlogsPage() {
       </div>
 
       <style jsx global>{`
-        /* Optional Custom Scrollbar for the filter panel to match the boring aesthetic */
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
         }

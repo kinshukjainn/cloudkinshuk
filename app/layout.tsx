@@ -44,6 +44,14 @@ export const lucideSans = localFont({
   display: "swap",
 });
 
+export const verdana = localFont({
+  src: "../public/fonts/Verdana.woff2",
+  variable: "--font-verdana",
+  weight: "400",
+  style: "normal",
+  display: "swap",
+});
+
 const workSans = Work_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
@@ -110,7 +118,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-google-analytics-opt-out="">
       <body
-        className={`${inter.variable} ${rubik.variable} ${geistMono.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
+        className={`${inter.variable} ${rubik.variable} ${verdana.variable} ${geistMono.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >
         <Header />
         {children}

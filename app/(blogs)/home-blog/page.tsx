@@ -314,9 +314,9 @@ const BlogItem = React.memo(function BlogItem({
   };
 
   return (
-    <div className="mb-4 p-5 border border-[#444444] bg-[#2b2b2b] rounded-sm hover:border-[#666666] transition-colors">
+    <div className="mb-4 p-5 rounded-sm hover:border-[#666666] transition-colors">
       <Link href={`/home-blog/${post.id}`} className="group block">
-        <h3 className="text-lg text-[#e0e0e0] mb-2 font-medium leading-tight group-hover:text-green-500 transition-colors">
+        <h3 className="text-lg text-[#e0e0e0] mb-2 font-bold leading-tight group-hover:text-green-500 transition-colors">
           {highlightText(post.title, searchQuery)}
         </h3>
 
@@ -341,18 +341,18 @@ const BlogItem = React.memo(function BlogItem({
           {post.tags.slice(0, 5).map((tag) => (
             <span
               key={tag.id}
-              className="inline-flex items-center justify-center px-2 py-0.5 border rounded-sm border-[#555555] bg-[#222222] text-xs text-[#999999]"
+              className="inline-flex items-center justify-center px-1  text-sm text-green-500"
             >
               {tag.name}
             </span>
           ))}
           {post.tags.length > 5 && (
-            <span className="inline-flex items-center justify-center px-2 py-0.5 border rounded-sm border-[#555555] bg-[#222222] text-xs text-[#999999]">
+            <span className="inline-flex items-center justify-center px-2 py-0.5 border rounded-sm font-bold  border-green-500 bg-[#222222] text-xs text-green-500">
               +{post.tags.length - 5}
             </span>
           )}
-          <div className="ml-auto text-green-500 text-xs opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-            [Read]
+          <div className="ml-auto text-green-500 text-md font-bold  transition-opacity flex items-center gap-1">
+            Read
           </div>
         </div>
       </Link>
@@ -564,9 +564,9 @@ function SearchBar({
 }: SearchBarProps) {
   return (
     <div className="mb-6 w-full">
-      <div className="flex items-stretch rounded-sm border border-[#444444] bg-[#222222] focus-within:border-[#666666] transition-colors">
-        <div className="flex items-center justify-center px-3 border-r border-[#444444]">
-          <Search className="w-4 h-4 text-[#888888]" aria-hidden="true" />
+      <div className="flex items-stretch rounded-full border border-[#444444] bg-[#222222] focus-within:border-[#666666] transition-colors">
+        <div className="flex items-center justify-center  px-3 border-r border-[#444444]">
+          <Search className="w-4 h-4 text-green-500" aria-hidden="true" />
         </div>
 
         <input
@@ -589,9 +589,11 @@ function SearchBar({
       </div>
 
       {searchInput && (
-        <div className="mt-2 text-xs text-[#888888] flex items-center gap-2">
-          <span>{">"} Query execution matched:</span>
-          <strong className="text-green-400 font-normal">{resultsCount}</strong>
+        <div className="mt-2 text-sm text-white flex items-center font-bold gap-2">
+          <span>Query matched:</span>
+          <strong className="text-green-400 font-semibold">
+            {resultsCount}
+          </strong>
           <span>/ {totalCount} records</span>
         </div>
       )}
@@ -661,7 +663,7 @@ export default function BlogsPage() {
   }, [posts, searchInput, searchEngine, filters]);
 
   return (
-    <div className="min-h-screen bg-[#313131] text-[#cccccc] selection:bg-green-500/30 selection:text-green-200 pb-16">
+    <div className="min-h-screen bg-[#1e1e1e] text-[#cccccc] selection:bg-green-500/30 selection:text-green-200 pb-16">
       {/* Header */}
       <header className="mb-4">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -707,12 +709,12 @@ export default function BlogsPage() {
         <div className="mb-10">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <span className="w-1 h-5 bg-green-500 inline-block rounded-sm" />
+              <span className="w-1 h-5 bg-green-500 inline-block rounded-xl" />
               <h2 className="text-lg font-medium text-[#e0e0e0]">
                 Community Feedback
               </h2>
               {!feedbackLoading && (
-                <span className="text-xs text-[#888888] bg-[#222222] px-2 py-0.5 rounded-sm border border-[#444444]">
+                <span className="text-xs text-[#888888] bg-[#222222] px-2 py-0.5 rounded-xl border border-[#444444]">
                   {feedbacks.length} received
                 </span>
               )}
@@ -720,7 +722,7 @@ export default function BlogsPage() {
           </div>
 
           {feedbackLoading ? (
-            <div className="p-10 border border-[#444444] border-dashed rounded-sm bg-[#2b2b2b] flex items-center justify-center gap-3">
+            <div className="p-10 border border-[#444444] border-dashed rounded-xl bg-[#2b2b2b] flex items-center justify-center gap-3">
               <Loader2 className="w-4 h-4 text-green-500 animate-spin" />
               <span className="text-sm text-[#888888]">
                 Loading feedbacks...
@@ -731,8 +733,8 @@ export default function BlogsPage() {
               <p className="text-red-400 text-sm">{feedbackError}</p>
             </div>
           ) : feedbacks.length === 0 ? (
-            <div className="p-10 border border-[#444444] border-dashed rounded-sm bg-[#2b2b2b] text-center">
-              <p className="text-[#888888] text-sm">
+            <div className="p-10 border border-[#444444] border-dashed rounded-xl bg-[#2b2b2b] text-center">
+              <p className="text-white  text-sm">
                 No feedback received yet. Be the first to share your thoughts!
               </p>
             </div>

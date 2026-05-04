@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
+import { FiChevronLeft, FiHome } from "react-icons/fi";
 
 export default function Blogheader() {
   const pathname = usePathname();
@@ -14,38 +15,27 @@ export default function Blogheader() {
     pathname.startsWith("/home-blog/") && pathname !== "/home-blog";
 
   return (
-    // Added 'fixed top-0 left-0' and 'backdrop-blur-sm' for a modern feel
-    <header className="fixed top-16 left-0 w-full px-3 sm:px-4 md:px-6 py-2 z-40">
+    <header className="fixed top-16 left-0 w-full px-4 sm:px-6 md:px-8 py-3 z-40 pointer-events-none">
       <div className="max-w-6xl mx-auto flex items-center">
         {/* LOGIC A: Home Label with Background */}
         {isHome && (
-          <h1 className="text-base text-white rounded-sm sm:text-lg md:text-xl font-semibold bg-black  px-2 py-1 ">
-            Home
-          </h1>
+          <div className="pointer-events-auto flex items-center gap-2 rounded-full bg-black/40 backdrop-blur-md px-4 py-2 sm:px-5 sm:py-2.5 shadow-sm border border-white/10 select-none">
+            <FiHome className="text-white w-4 h-4 sm:w-5 sm:h-5" />
+            <h1 className="text-sm sm:text-base text-white font-medium pr-1 tracking-wide">
+              Blog Home
+            </h1>
+          </div>
         )}
 
         {/* LOGIC B: Back Button with Background */}
         {isBlogPost && (
           <button
             onClick={() => router.push("/home-blog")}
-            className="flex items-center gap-1 sm:gap-1.5 bg-black backdrop-blur-xs px-4 py-2.5 text-white"
+            className="pointer-events-auto group flex items-center gap-1.5 rounded-full bg-black/40 hover:bg-black/60 transition-all duration-300 backdrop-blur-md px-3 sm:px-4 py-2 sm:py-2.5 shadow-sm border border-white/10 text-white cursor-pointer"
             aria-label="Back to home"
           >
-            <svg
-              className="w-5 h-5 sm:w-6 sm:h-6 transition-transform group-hover:-translate-x-1"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M15 18L9 12L15 6"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className="text-sm sm:text-base text-white font-medium pr-1">
+            <FiChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 group-hover:-translate-x-1" />
+            <span className="text-sm sm:text-base font-medium pr-1 tracking-wide">
               Back
             </span>
           </button>

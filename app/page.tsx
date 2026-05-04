@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Github, Linkedin, Mail } from "lucide-react";
-
+import { FaLocationPin } from "react-icons/fa6";
 const CONFIG = {
   personal: {
     email: "kinshuk25jan04@gmail.com",
@@ -11,7 +11,6 @@ const CONFIG = {
       "Student first. Builder always.",
       "I am currently pursuing my Bachelor's in Electrical Engineering learning how systems work, how they fail, and how they evolve. Alongside that, I am exploring the cloud, building small things that might someday scale, experimenting with infrastructure, and understanding how technology connects people.",
     ],
-    availability: "Available for opportunities",
     status:
       "Completed an internship at UPPTCL (Uttar Pradesh Power Transmission Corporation Limited), where I gained hands-on experience in power systems and transmission network operations.",
   },
@@ -98,7 +97,7 @@ const CONFIG = {
   ],
   skills: {
     "Cloud & DevOps": [
-      "AWS",
+      "AWS (Amazon Web Services)",
       "AWS Amplify",
       "Amazon S3",
       "Amazon Lambda",
@@ -116,14 +115,9 @@ const CONFIG = {
       "Lucide React ",
       "React Router DOM",
     ],
-    "Database & Authentication": [
-      "NeonDB",
-      "Postgress SQL",
-      "Supabase",
-      "Clerk Auth",
-    ],
+    "Database & Authentication": ["NeonDB", "Supabase", "Clerk"],
     "AI Tools I use": ["Gemini", "Claude", "Chat GPT"],
-    "Version Control & Tools": ["Git Terminal", "GitHub Actions", "VS Code"],
+    "Version Control & Tools": ["Git Terminal", "VS Code"],
   },
   projects: [
     {
@@ -146,13 +140,14 @@ const CONFIG = {
         "Clerk Auth",
       ],
       links: {
-        live: "https://fsspvt.cloudkinshuk.in",
+        live: "https://kosha.cloudkinshuk.in",
         repo: "https://github.com/kinshukjainn/pvtcldstrg",
       },
       dockerCommand: null,
     },
     {
-      title: "AI Based FDS (Fault Detection System)",
+      title:
+        "Mscada : AI-Powered Fault Detection System for Power Transmission",
       year: "2025-2026",
       status: "Development Stage",
       type: "AI Tool",
@@ -249,7 +244,7 @@ const SectionHeader = ({ title, id }: { title: string; id?: string }) => (
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#313131] text-[#333333]  selection:bg-blue-300 selection:text-black">
+    <div className="min-h-screen bg-[#1e1e1e] text-[#333333]  selection:bg-blue-300 selection:text-black">
       {/* Top Green Bar - Classic utilitarian styling */}
       <div className="h-2 w-full bg-[#212121]"></div>
 
@@ -334,8 +329,11 @@ export default function Home() {
             </div>
 
             <div className="mt-4 text-md text-gray-200  ">
-              Location: {CONFIG.personal.location} | Status:{" "}
-              {CONFIG.personal.availability}
+              <span className="font-bold text-green-500">
+                <FaLocationPin className="inline mr-1 text-green-500" />
+                Location:{" "}
+              </span>
+              {CONFIG.personal.location}
             </div>
 
             {/* FFmpeg-style Big Download Buttons */}
@@ -343,13 +341,13 @@ export default function Home() {
               <a
                 href="/myresume.pdf"
                 download="myresume.pdf"
-                className="bg-green-600 text-white font-bold py-4 px-4 rounded-md  active:border-b-0 active:mt-[4px] transition-all inline-block"
+                className="bg-green-600 text-white font-bold py-4 px-4 rounded-full  active:border-b-0 active:mt-[4px] transition-all inline-block"
               >
                 Download Resume
               </a>
               <a
                 href="/home-blog"
-                className="bg-blue-700 text-white font-bold rounded-md py-4 px-6  transition-all inline-block"
+                className="bg-blue-700 text-white font-bold rounded-full py-4 px-3  transition-all inline-block"
               >
                 Read Blog
               </a>
@@ -408,7 +406,7 @@ export default function Home() {
                       rel="noopener noreferrer"
                       className="text-white  p-2 bg-green-700 rounded-md"
                     >
-                      ▶ Live
+                      ▶ Checkout live
                     </a>
                   )}
                   {project.links.repo && (
@@ -418,7 +416,7 @@ export default function Home() {
                       rel="noopener noreferrer"
                       className="text-white p-2 bg-black rounded-md "
                     >
-                      ▶ git repo
+                      ▶ Github repository
                     </a>
                   )}
                 </div>
@@ -442,9 +440,9 @@ export default function Home() {
             </p>
             <a
               href="/home-blog/blogE"
-              className="text-white bg-green-500 p-2 rounded-md text-sm font-semibold "
+              className="text-white bg-green-600 p-2 rounded-md text-sm font-semibold "
             >
-              ▶ Read
+              ▶ Read article
             </a>
           </div>
 

@@ -49,7 +49,11 @@ const setupData: ToolSection[] = [
       { name: "VS Code", spec: "Primary editor", icon: FileCode },
       { name: "Git & GitHub", spec: "Version control", icon: Github },
       { name: "WSL2 Ubuntu", spec: "Linux environment", icon: Terminal },
-      { name: "AWS (EC2, RDS)", spec: "Cloud infrastructure", icon: Cloud },
+      {
+        name: "AWS (amplify , route53 , neondb)",
+        spec: "Cloud infrastructure",
+        icon: Cloud,
+      },
       { name: "Docker", spec: "Containerization", icon: Box },
     ],
   },
@@ -125,7 +129,7 @@ export default function DevToolsCompact() {
   );
 
   return (
-    <div className="min-h-screen bg-[#313131] text-white selection:bg-[#006600] selection:text-white pb-16">
+    <div className="min-h-screen bg-[#1e1e1e] text-white selection:bg-[#006600] selection:text-white pb-16">
       {/* Top Green Bar */}
       <div className="h-2 w-full bg-[#252525]"></div>
 

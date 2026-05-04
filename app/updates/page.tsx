@@ -86,7 +86,7 @@ const NOW_CONFIG = {
 
 export default function CurrentWorkings() {
   return (
-    <div className="min-h-screen bg-[#313131] text-[#333333]  selection:bg-[#006600] selection:text-white pb-16">
+    <div className="min-h-screen bg-[#1e1e1e] text-[#333333]  selection:bg-[#006600] selection:text-white pb-16">
       {/* Top Green Bar */}
       <div className="h-2 w-full bg-[#252525]"></div>
 

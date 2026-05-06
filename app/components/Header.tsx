@@ -10,12 +10,11 @@ import {
   Lightbulb,
   SearchCode,
   Github,
-  Server,
   Menu,
   X,
 } from "lucide-react";
 import { PiGithubLogoBold } from "react-icons/pi";
-import { CiHeart } from "react-icons/ci";
+import { GiCoffeeMug } from "react-icons/gi";
 
 const Header = () => {
   const pathname = usePathname();
@@ -134,10 +133,10 @@ const Header = () => {
               {/* "Buy a Server" — visible ≥ md */}
               <a
                 href="https://brewrepo.cloudkinshuk.in"
-                className="hidden md:flex items-center gap-1.5 text-sm font-medium text-black px-3 py-1 bg-yellow-200 rounded-md   "
+                className="hidden md:flex items-center gap-1.5 text-md font-medium text-black px-3 py-1 bg-yellow-200 rounded-full  "
               >
-                <CiHeart className="w-4 h-4 shrink-0" />
-                <span>Buy me coffee</span>
+                <GiCoffeeMug className="w-6 h-6 shrink-0" />
+                <span>Sponsor me</span>
               </a>
 
               {/* GitHub icon — visible ≥ md */}
@@ -198,17 +197,17 @@ const Header = () => {
             <div className="pt-3 mt-3 border-t border-[#cccccc] flex flex-col gap-2">
               <a
                 href="https://brewrepo.cloudkinshuk.in"
-                className="flex items-center justify-center gap-2 py-2 bg-green-700 text-white rounded-3xl font-bold text-sm "
+                className="flex items-center justify-center gap-2 py-2 bg-yellow-200 text-black rounded-3xl font-bold text-sm"
               >
-                <Server className="w-4 h-4 shrink-0" />
-                Buy a Server
+                <GiCoffeeMug className="w-6 h-6 shrink-0" />
+                @cloudkinshuk/sponsor
               </a>
               <a
                 href="https://github.com/kinshukjainn/cloudkinshuk"
                 className="flex items-center justify-center gap-2 py-2 bg-black text-white rounded-3xl font-bold text-sm"
               >
-                <Github className="w-4 h-4 shrink-0" />
-                Source Code
+                <Github className="w-6 h-6 shrink-0" />
+                @kinshukjainn/cloudkinshuk
               </a>
             </div>
           </div>

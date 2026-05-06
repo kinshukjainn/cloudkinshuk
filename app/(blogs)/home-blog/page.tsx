@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { getFeedbacksAction } from "../../db-api-call/blogs-feedback";
+import { LuMessageSquareQuote } from "react-icons/lu";
+import { FaBookReader } from "react-icons/fa";
 
 interface BlogPost {
   id: string;
@@ -352,7 +354,7 @@ const BlogItem = React.memo(function BlogItem({
             </span>
           )}
           <div className="ml-auto text-green-500 text-md font-bold  transition-opacity flex items-center gap-1">
-            Read
+            <FaBookReader className="w-4 h-4" /> Read
           </div>
         </div>
       </Link>
@@ -494,10 +496,10 @@ function FilterPanel({
   const activeFiltersCount = filters.tags.length;
 
   return (
-    <div className="mb-8 border border-[#444444] rounded-lg bg-[#2b2b2b]">
+    <div className="mb-8 border border-[#444444] rounded-2xl bg-[#2b2b2b]">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex md:hidden items-center justify-between w-full rounded-lg px-4 py-3 cursor-pointer bg-[#222222] border-b border-[#444444] text-white"
+        className="flex md:hidden items-center justify-between w-full rounded-2xl px-4 py-3 cursor-pointer bg-[#222222] border-b border-[#444444] text-white"
       >
         <span className="text-md font-semibold">
           Filter Tags {activeFiltersCount > 0 && `[${activeFiltersCount}]`}
@@ -531,10 +533,10 @@ function FilterPanel({
               <button
                 key={tag}
                 onClick={() => toggleTag(tag)}
-                className={`inline-flex items-center justify-center px-2.5 py-1 text-xs rounded-md cursor-pointer transition-colors ${
+                className={`inline-flex items-center justify-center px-2.5 py-1 text-sm rounded-full cursor-pointer transition-colors ${
                   isSelected
-                    ? "bg-green-700 text-white"
-                    : "bg-[#222222] text-[#999999] border-[#555555] hover:border-[#777777] hover:text-[#cccccc]"
+                    ? "bg-green-700 text-black"
+                    : "bg-[#222222] text-white border-[#444444] border-2 "
                 }`}
               >
                 {tag}
@@ -574,7 +576,7 @@ function SearchBar({
           placeholder="Search articles, tags, or topics..."
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="w-full bg-transparent text-[#e0e0e0] placeholder-[#666666] px-4 py-2.5 text-sm focus:outline-none"
+          className="w-full bg-transparent text-[#e0e0e0] placeholder-[#666666] px-4 py-3 text-lg focus:outline-none"
         />
 
         {searchInput && (
@@ -672,10 +674,12 @@ export default function BlogsPage() {
             Blogs
           </h1>
           <p className="text-md text-white leading-relaxed max-w-3xl border-l-2 border-green-500 pl-4">
-            <span className="text-green-500">Hi @everyone</span> Blogs of
-            learning journeys in cloud computing, DevOps, security, and
-            infrastructure engineering. Executing writes on AWS services,
-            serverless systems, CI/CD, and Terraform via hands-on practice.
+            Hi{" "}
+            <span className="text-green-500 font-bold italic">@everyone</span>{" "}
+            This blog documents my learning journey in cloud computing, DevOps,
+            security, and infrastructure engineering. I share hands-on
+            experiences working with AWS services, serverless architectures and
+            CI/CD pipelines.
           </p>
         </div>
       </header>
@@ -714,7 +718,8 @@ export default function BlogsPage() {
                 Community Feedback
               </h2>
               {!feedbackLoading && (
-                <span className="text-xs text-[#888888] bg-[#222222] px-2 py-0.5 rounded-xl border border-[#444444]">
+                <span className="text-sm text-green-500 px-2 py-0.5 rounded-full bg-[#222222] border border-[#444444] inline-flex items-center gap-1">
+                  <LuMessageSquareQuote className="w-4 h-4 inline-block mr-1" />
                   {feedbacks.length} received
                 </span>
               )}

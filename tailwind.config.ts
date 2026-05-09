@@ -22,6 +22,7 @@ const config: Config = {
         geistMono: "var(--font-geist-mono) , monospace",
         inter: "var(--font-inter) , sans-serif",
         verdana: "var(--font-verdana) , sans-serif",
+        publicsans: ["var(--font-public-sans)", "sans-serif"],
         lucidaSans: "var(--font-lucida-sans) , sans-serif",
       },
     },

@@ -200,7 +200,7 @@ const CopyText = ({ text }: { text: string }) => {
   return (
     <button
       onClick={handleCopy}
-      className="text-sm font-bold text-white cursor-pointer rounded-sm hover:text-white bg-green-700  px-3 py-2 ml-2 transition-none focus:outline-none"
+      className="text-sm font-bold text-white cursor-pointer rounded-2xl hover:text-white bg-green-700  px-3 py-2 ml-2 transition-none focus:outline-none"
       title="Copy to clipboard"
     >
       {copied ? "Copied" : "Copy"}
@@ -254,7 +254,7 @@ export default function Home() {
           {/* Logo Area */}
           <div>
             <h1 className="text-4xl font-extrabold tracking-tighter text-gray-300">
-              <span className="text-green-500">cloud</span>kinshuk.in
+              <span className="text-white">cloud</span>kinshuk.in
             </h1>
             <p className="text-sm text-gray-300 mt-1 pb-4">
               Student • Builder • Cloud
@@ -329,8 +329,8 @@ export default function Home() {
             </div>
 
             <div className="mt-4 text-md text-gray-200  ">
-              <span className="font-bold text-green-500">
-                <FaLocationPin className="inline mr-1 text-green-500" />
+              <span className="font-bold text-white">
+                <FaLocationPin className="inline mr-1 text-white" />
                 Location:{" "}
               </span>
               {CONFIG.personal.location}
@@ -360,7 +360,7 @@ export default function Home() {
             {CONFIG.projects.map((project, idx) => (
               <div
                 key={idx}
-                className=" bg-[#252525] border-2 border-[#181818] rounded-md p-4"
+                className=" bg-[#252525] border-2 border-[#181818] rounded-2xl p-4"
               >
                 <div className="flex flex-col sm:flex-row justify-between mb-2 pb-2">
                   <h3 className="text-2xl font-bold text-green-400">
@@ -404,7 +404,7 @@ export default function Home() {
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-white  p-2 bg-green-700 rounded-md"
+                      className="text-white  p-2 bg-green-700 rounded-2xl"
                     >
                       ▶ Checkout live
                     </a>
@@ -414,7 +414,7 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-white p-2 bg-black rounded-md "
+                      className="text-white p-2 bg-black rounded-2xl "
                     >
                       ▶ Github repository
                     </a>
@@ -440,7 +440,7 @@ export default function Home() {
             </p>
             <a
               href="/home-blog/blogE"
-              className="text-white bg-green-600 p-2 rounded-md text-sm font-semibold "
+              className="text-white bg-green-600 p-2 rounded-2xl text-sm font-semibold "
             >
               ▶ Read article
             </a>
@@ -515,12 +515,12 @@ export default function Home() {
 
           {/* CLI Tool */}
           <SectionHeader title="Terminal Access" id="terminal" />
-          <div className="bg-[#252525] border border-[#181818] rounded-md p-4">
+          <div className="bg-[#252525] border border-[#181818] rounded-2xl p-4">
             <p className="text-[14px] text-white  mb-3">
               Interactive command-line portfolio viewer built with Node.js.
               Install it globally via npm.
             </p>
-            <div className=" text-[13px] bg-[#202020] border border-[#141414] rounded-md p-3 space-y-2">
+            <div className=" text-[13px] bg-[#202020] border border-[#141414] rounded-2xl p-3 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-green-400">
                   $ npm install -g hackkinshuk

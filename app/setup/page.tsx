@@ -80,16 +80,16 @@ const ToolCategory = ({ section }: { section: ToolSection; index: number }) => {
   const CategoryIcon = section.icon;
 
   return (
-    <section className="mb-6 border border-[#141414] rounded-md  bg-[#252525]">
+    <section className="mb-6 border border-[#141414] rounded-2xl  bg-[#252525]">
       {/* Category Header */}
       <div className="flex items-center justify-between bg-[#181818] rounded-t-md border-b border-[#141414] px-3 py-2">
         <div className="flex items-center gap-2">
-          <CategoryIcon className="w-4 h-4 text-green-500 flex-shrink-0" />
-          <h2 className="text-[16px] font-bold text-green-500">
+          <CategoryIcon className="w-4 h-4 text-white flex-shrink-0" />
+          <h2 className="text-[16px] font-bold text-white">
             {section.category}
           </h2>
         </div>
-        <span className="text-[12px] font-bold text-green-500  px-1">
+        <span className="text-[12px] font-bold text-white  px-1">
           {section.items.length} items
         </span>
       </div>
@@ -145,7 +145,7 @@ export default function DevToolsCompact() {
             powering my daily workflow and infrastructure.
           </p>
 
-          <div className="inline-flex flex-wrap rounded-md items-center gap-3 text-[13px]  bg-[#181818]  p-2">
+          <div className="inline-flex flex-wrap rounded-2xl items-center gap-3 text-[13px]  bg-[#181818]  p-2">
             <div>
               <strong className="text-white">{totalTools}</strong> Active Tools
             </div>

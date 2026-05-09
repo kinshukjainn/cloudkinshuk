@@ -9,6 +9,7 @@ import {
   Geist_Mono,
   Roboto,
   Ubuntu_Sans,
+  Public_Sans,
   Rubik,
   Work_Sans,
 } from "next/font/google";
@@ -29,6 +30,11 @@ export const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
+const publicSans = Public_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-public-sans",
+});
 const ptSans = PT_Sans({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -118,7 +124,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-google-analytics-opt-out="">
       <body
-        className={`${inter.variable} ${rubik.variable} ${verdana.variable} ${geistMono.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
+        className={`${inter.variable} ${rubik.variable} ${verdana.variable} ${publicSans.variable} ${geistMono.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >
         <Header />
         {children}

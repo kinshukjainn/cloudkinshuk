@@ -296,7 +296,7 @@ const BlogItem = React.memo(function BlogItem({
       regex.test(part) ? (
         <mark
           key={i}
-          className="bg-green-900/60 text-green-400 px-0.5 rounded-sm bg-transparent"
+          className="bg-green-900/60 text-green-400 px-0.5 rounded-2xl bg-transparent"
         >
           {part}
         </mark>
@@ -316,9 +316,9 @@ const BlogItem = React.memo(function BlogItem({
   };
 
   return (
-    <div className="mb-4 p-5 rounded-sm hover:border-[#666666] transition-colors">
+    <div className="mb-4 p-5 rounded-2xl hover:border-[#666666] transition-colors">
       <Link href={`/home-blog/${post.id}`} className="group block">
-        <h3 className="text-lg text-[#e0e0e0] mb-2 font-bold leading-tight group-hover:text-green-500 transition-colors">
+        <h3 className="text-lg text-[#e0e0e0] mb-2 font-bold leading-tight group-hover:text-blue-400 transition-colors">
           {highlightText(post.title, searchQuery)}
         </h3>
 
@@ -343,17 +343,17 @@ const BlogItem = React.memo(function BlogItem({
           {post.tags.slice(0, 5).map((tag) => (
             <span
               key={tag.id}
-              className="inline-flex items-center justify-center px-1  text-sm text-green-500"
+              className="inline-flex items-center justify-center px-1  text-sm text-blue-400 bg-[#222222] rounded-full border border-blue-400"
             >
               {tag.name}
             </span>
           ))}
           {post.tags.length > 5 && (
-            <span className="inline-flex items-center justify-center px-2 py-0.5 border rounded-sm font-bold  border-green-500 bg-[#222222] text-xs text-green-500">
+            <span className="inline-flex items-center justify-center px-2 py-0.5 border rounded-2xl font-bold  border-blue-400 bg-[#222222] text-xs text-blue-400">
               +{post.tags.length - 5}
             </span>
           )}
-          <div className="ml-auto text-green-500 text-md font-bold  transition-opacity flex items-center gap-1">
+          <div className="ml-auto text-blue-400 text-md font-bold  transition-opacity flex items-center gap-1">
             <FaBookReader className="w-4 h-4" /> Read
           </div>
         </div>
@@ -392,13 +392,11 @@ const FeedbackCard = React.memo(function FeedbackCard({
   };
 
   return (
-    <div className="p-4 sm:p-5 border border-[#444444] bg-[#2b2b2b] rounded-sm hover:border-[#666666] transition-colors">
+    <div className="p-4 sm:p-5 border border-[#444444] bg-[#181818] rounded-4xl hover:border-2  hover:border-blue-500 transition-colors">
       {/* Header row */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
         <div className="flex items-center gap-2">
-          <span className="text-green-500 text-xs font-medium">
-            #{index + 1}
-          </span>
+          <span className="text-blue-400 text-md  font-bold">#{index + 1}</span>
           <span className="w-1 h-1 rounded-full bg-[#555555] hidden sm:block" />
           <span className="text-xs text-[#888888]">
             {formatDate(feedback.created_at)}
@@ -412,11 +410,11 @@ const FeedbackCard = React.memo(function FeedbackCard({
         {/* Category & Status Badges */}
         <div className="flex items-center gap-2">
           {feedback.status === "approved" && (
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-sm bg-green-900/40 border border-green-500/30 text-green-400 text-[10px] font-bold uppercase tracking-wider w-fit">
-              <CheckCircle2 size={10} /> {feedback.status}
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-800  border border-blue-400/30 text-white text-[10px] font-bold uppercase tracking-wider w-fit">
+              <CheckCircle2 size={13} /> {feedback.status}
             </span>
           )}
-          <span className="inline-flex items-center px-2 py-0.5 rounded-sm bg-green-700/20 text-green-400 text-xs w-fit">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-blue-800 text-white text-sm w-fit">
             {feedback.category}
           </span>
         </div>
@@ -425,24 +423,24 @@ const FeedbackCard = React.memo(function FeedbackCard({
       {/* Metadata grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mb-4 text-sm">
         <div className="flex items-center gap-2 min-w-0">
-          <User className="w-3.5 h-3.5 text-[#666666] shrink-0" />
-          <span className="text-[#888888] shrink-0">Name</span>
+          <User className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+          <span className="text-white font-bold shrink-0">Name</span>
           <span className="text-[#e0e0e0] truncate">{feedback.name}</span>
         </div>
         <div className="flex items-center gap-2 min-w-0">
-          <Mail className="w-3.5 h-3.5 text-[#666666] shrink-0" />
-          <span className="text-[#888888] shrink-0">Email</span>
+          <Mail className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+          <span className="text-white font-bold  shrink-0">Email</span>
           <span className="text-[#e0e0e0] truncate">{feedback.email}</span>
         </div>
         {feedback.github_id && (
           <div className="flex items-center gap-2 min-w-0 sm:col-span-2">
-            <Github className="w-3.5 h-3.5 text-[#666666] shrink-0" />
-            <span className="text-[#888888] shrink-0">GitHub</span>
+            <Github className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+            <span className="text-white font-bold shrink-0">GitHub</span>
             <a
               href={`https://github.com/${feedback.github_id}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-green-500 hover:text-green-400 truncate transition-colors"
+              className="text-white hover:text-green-400 truncate transition-colors"
             >
               {feedback.github_id}
             </a>
@@ -455,7 +453,7 @@ const FeedbackCard = React.memo(function FeedbackCard({
 
       {/* Feedback content */}
       <div
-        className="text-[#b0b0b0] text-sm leading-relaxed prose-invert max-w-none break-words [&_a]:text-green-500 [&_a:hover]:text-green-400 [&_strong]:text-[#e0e0e0] [&_em]:text-[#cccccc] [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-2 [&_li]:mb-1"
+        className="text-white  text-md leading-relaxed prose-invert max-w-none break-words [&_a]:text-white [&_a:hover]:text-green-400 [&_strong]:text-[#e0e0e0] [&_em]:text-[#cccccc] [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-2 [&_li]:mb-1"
         dangerouslySetInnerHTML={{ __html: feedback.feedback }}
       />
     </div>
@@ -496,23 +494,23 @@ function FilterPanel({
   const activeFiltersCount = filters.tags.length;
 
   return (
-    <div className="mb-8 border border-[#444444] rounded-2xl bg-[#2b2b2b]">
+    <div className="mb-8 border border-[#444444] rounded-2xl bg-[#181818]">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex md:hidden items-center justify-between w-full rounded-2xl px-4 py-3 cursor-pointer bg-[#222222] border-b border-[#444444] text-white"
+        className="flex md:hidden items-center justify-between w-full rounded-2xl px-4 py-3 cursor-pointer bg-[#181818] border-b border-[#444444] text-white"
       >
         <span className="text-md font-semibold">
-          Filter Tags {activeFiltersCount > 0 && `[${activeFiltersCount}]`}
+          Filter Tags {activeFiltersCount > 0 && `${activeFiltersCount}`}
         </span>
         <ChevronDown size={16} className={`${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       <div className={`${isOpen ? "block" : "hidden md:block"} p-5`}>
         <div className="flex items-center justify-between border-b border-[#444444] pb-2 mb-4">
-          <label className="block text-sm text-[#cccccc]">
+          <label className="block text-sm text-white font-bold">
             Available Tags{" "}
-            <span className="text-[#888888]">
-              {filters.tags.length > 0 && `(${filters.tags.length} selected)`}
+            <span className="text-blue-400 border-2  hover:border-blue-500  bg-[#222222] px-2 py-1 rounded-full  text-xs ml-2">
+              {filters.tags.length > 0 && `${filters.tags.length} selected`}
             </span>
           </label>
           {activeFiltersCount > 0 && (
@@ -533,10 +531,10 @@ function FilterPanel({
               <button
                 key={tag}
                 onClick={() => toggleTag(tag)}
-                className={`inline-flex items-center justify-center px-2.5 py-1 text-sm rounded-full cursor-pointer transition-colors ${
+                className={`inline-flex items-center justify-center px-3 py-1 text-sm rounded-full cursor-pointer transition-colors ${
                   isSelected
-                    ? "bg-green-700 text-black"
-                    : "bg-[#222222] text-white border-[#444444] border-2 "
+                    ? "bg-blue-400 text-black font-semibold border-blue-500 border-2"
+                    : "bg-[#222222] text-white hover:border-blue-500 border-[#444444] border-2 "
                 }`}
               >
                 {tag}
@@ -568,7 +566,7 @@ function SearchBar({
     <div className="mb-6 w-full">
       <div className="flex items-stretch rounded-full border border-[#444444] bg-[#222222] focus-within:border-[#666666] transition-colors">
         <div className="flex items-center justify-center  px-3 border-r border-[#444444]">
-          <Search className="w-4 h-4 text-green-500" aria-hidden="true" />
+          <Search className="w-4 h-4 text-white" aria-hidden="true" />
         </div>
 
         <input
@@ -669,13 +667,12 @@ export default function BlogsPage() {
       {/* Header */}
       <header className="mb-4">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <h1 className="text-6xl font-medium text-green-500 mb-5 flex items-center tracking-tight">
-            <span className="w-1.5 h-19 bg-green-500 mr-4 inline-block"></span>
+          <h1 className="text-6xl font-bold  text-white  mb-5 flex items-center tracking-tight">
+            <span className="w-1.5 h-19 bg-blue-400 rounded-xl  mr-4 inline-block"></span>
             Blogs
           </h1>
-          <p className="text-md text-white leading-relaxed max-w-3xl border-l-2 border-green-500 pl-4">
-            Hi{" "}
-            <span className="text-green-500 font-bold italic">@everyone</span>{" "}
+          <p className="text-md text-white leading-relaxed max-w-3xl border-l-4 border-blue-500 pl-4">
+            Hi <span className="text-white font-bold italic">@everyone</span>{" "}
             This blog documents my learning journey in cloud computing, DevOps,
             security, and infrastructure engineering. I share hands-on
             experiences working with AWS services, serverless architectures and
@@ -686,9 +683,9 @@ export default function BlogsPage() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Feedback CTA */}
-        <div className="mb-8 p-4 border border-[#444444] rounded-sm bg-[#222222] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="mb-8 p-4 border border-[#444444] rounded-2xl bg-[#181818] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
-            <MessageSquare className="w-4 h-4 text-[#888888] mt-0.5" />
+            <MessageSquare className="w-4 h-4 text-blue-500  mt-0.5" />
             <div>
               <h3 className="text-lg font-semibold text-[#e0e0e0] mb-0.5">
                 Feedback
@@ -702,7 +699,7 @@ export default function BlogsPage() {
             href="https://clkfeedbacks.cloudkinshuk.in/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white bg-green-700 py-3 px-5 rounded-lg cursor-pointer transition-colors whitespace-nowrap text-md inline-flex items-center gap-2"
+            className="text-white bg-blue-700 py-2 px-3 rounded-full cursor-pointer font-semibold  transition-colors whitespace-nowrap text-md inline-flex items-center gap-2"
           >
             Leave Feedback
             <ArrowRight className="w-3 h-3" />
@@ -713,12 +710,12 @@ export default function BlogsPage() {
         <div className="mb-10">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <span className="w-1 h-5 bg-green-500 inline-block rounded-xl" />
+              <span className="w-1 h-5 bg-blue-500 inline-block rounded-xl" />
               <h2 className="text-lg font-medium text-[#e0e0e0]">
                 Community Feedback
               </h2>
               {!feedbackLoading && (
-                <span className="text-sm text-green-500 px-2 py-0.5 rounded-full bg-[#222222] border border-[#444444] inline-flex items-center gap-1">
+                <span className="text-sm text-blue-500 px-2 py-0.5 rounded-full bg-[#222222] border border-[#444444] inline-flex items-center gap-1">
                   <LuMessageSquareQuote className="w-4 h-4 inline-block mr-1" />
                   {feedbacks.length} received
                 </span>
@@ -728,17 +725,17 @@ export default function BlogsPage() {
 
           {feedbackLoading ? (
             <div className="p-10 border border-[#444444] border-dashed rounded-xl bg-[#2b2b2b] flex items-center justify-center gap-3">
-              <Loader2 className="w-4 h-4 text-green-500 animate-spin" />
+              <Loader2 className="w-4 h-4 text-blue-500 animate-spin" />
               <span className="text-sm text-[#888888]">
                 Loading feedbacks...
               </span>
             </div>
           ) : feedbackError ? (
-            <div className="p-6 border border-red-900/50 rounded-sm bg-red-950/20 text-center">
+            <div className="p-6 border border-red-900/50 rounded-2xl bg-red-950/20 text-center">
               <p className="text-red-400 text-sm">{feedbackError}</p>
             </div>
           ) : feedbacks.length === 0 ? (
-            <div className="p-10 border border-[#444444] border-dashed rounded-xl bg-[#2b2b2b] text-center">
+            <div className="p-10 border border-[#444444] border-dashed rounded-4xl bg-[#2b2b2b] text-center">
               <p className="text-white  text-sm">
                 No feedback received yet. Be the first to share your thoughts!
               </p>
@@ -775,7 +772,7 @@ export default function BlogsPage() {
         </div>
 
         {filteredPosts.length === 0 ? (
-          <div className="p-10 border border-[#444444] border-dashed rounded-sm bg-[#2b2b2b] text-center">
+          <div className="p-10 border border-[#444444] border-dashed rounded-2xl bg-[#2b2b2b] text-center">
             <p className="text-[#888888] text-sm mb-4">
               No matching results found for your query and filters. Try
               adjusting your search terms or clearing filters to see more posts.

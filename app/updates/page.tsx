@@ -13,22 +13,43 @@ const NOW_CONFIG = {
 
   projects: [
     {
-      title: "AI-Powered Fault Detection System",
-      status: "In Development",
+      title:
+        "Mscada : AI-Powered Fault Detection System for Power Transmission",
+      status: "Completed",
       description:
         "Building an intelligent system to identify and analyze faults in power transmission infrastructure using AWS Bedrock and Nova Pro models.",
-      technologies: ["Next.js 16", "AWS Bedrock", "TypeScript"],
+      technologies: [
+        "Next.js 16",
+        "AWS Bedrock",
+        "TypeScript",
+        "OpenAI OSS 120B model",
+        "AWS Lambda",
+        "AWS Api Gateway",
+        "Tailwind CSS",
+        "React icons",
+        "Axios",
+      ],
       icon: FaRocket,
-      progress: "70%",
+      progress: "MVP Completed, Exploring advanced features",
     },
     {
-      title: "Automation Tools for Cloud Infrastructure",
-      status: "Learning",
+      title: "Kosha : A Personal cloud storage system",
+      status: "Completed",
       description:
-        "Deepening my understanding of Terraform and Kubernetes for scalable cloud infrastructure deployment and management.",
-      technologies: ["Terraform", "Kubernetes"],
+        "Kosha is a personal cloud storage platform built with React, TypeScript, Tailwind CSS, and Nextjs as the framework, and NeonDB, AWS S3 , Clerk Auth on the backend. It allows users to upload, manage, and organize their files in a secure and user-friendly interface.",
+      technologies: [
+        "Next.js 16",
+        "TypeScript",
+        "Tailwind CSS",
+        "NeonDB",
+        "AWS S3",
+        "AWS Amplify",
+        "React icons",
+        "Axios",
+        "Clerk Auth",
+      ],
       icon: FaCode,
-      progress: "Completing",
+      progress: "Completed",
     },
   ],
 
@@ -64,7 +85,7 @@ const NOW_CONFIG = {
     },
     {
       type: "Following",
-      title: "Google IO 2026 and AWS re:Invent 2026",
+      title: "GitHub Universe 2026 and AWS re:Invent 2026",
       author:
         "Just keeping an eye on the latest announcements and trends in cloud computing",
     },
@@ -129,14 +150,14 @@ export default function CurrentWorkings() {
                 return (
                   <div
                     key={index}
-                    className="border-2 border-[#444444] bg-[#252525] rounded-md p-4"
+                    className="border-2 border-[#444444] bg-[#252525] rounded-2xl p-4"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 ">
-                      <h3 className="text-[16px] font-bold text-green-500 flex items-center gap-2">
-                        <Icon className="w-4 h-4 text-green-500" />
+                      <h3 className="text-[16px] font-bold text-white flex items-center gap-2">
+                        <Icon className="w-4 h-4 text-blue-200" />
                         {project.title}
                       </h3>
-                      <span className="text-[12px]  font-semibold text-black rounded-sm bg-[#ff9100]  px-2 py-1 whitespace-nowrap">
+                      <span className="text-[12px]  font-semibold text-black rounded-2xl bg-blue-400  w-max  px-2 py-1 whitespace-nowrap">
                         {project.status}
                       </span>
                     </div>
@@ -151,11 +172,11 @@ export default function CurrentWorkings() {
                           <th className="py-1 pr-4 font-bold text-white align-top w-24">
                             Stack:
                           </th>
-                          <td className="py-1 text-white  flex flex-wrap gap-1">
+                          <td className="py-1  text-white  flex flex-wrap gap-1">
                             {project.technologies.map((tech, i) => (
                               <span
                                 key={i}
-                                className="bg-[#181818] rounded-sm px-1 py-1"
+                                className="bg-[#181818] rounded-2xl px-3 py-1"
                               >
                                 {tech}
                               </span>
@@ -193,10 +214,10 @@ export default function CurrentWorkings() {
                 return (
                   <div
                     key={index}
-                    className="border-2 rounded-md border-[#444444] bg-[#252525] p-4"
+                    className="border-2 rounded-2xl border-[#444444] bg-[#252525] p-4"
                   >
-                    <h3 className="text-[16px] font-bold text-green-500 mb-2 flex items-center gap-2  pb-2">
-                      <Icon className="w-4 h-4 text-green-500" />
+                    <h3 className="text-[16px] font-bold text-white  mb-2 flex items-center gap-2  pb-2">
+                      <Icon className="w-7 h-7 text-blue-400" />
                       {item.topic}
                     </h3>
                     <p className="text-gray-300 text-[14px] mb-3 leading-relaxed">
@@ -218,13 +239,13 @@ export default function CurrentWorkings() {
                 <span className="w-2 h-4 bg-green-500 mr-2 inline-block"></span>
                 3. Key Interests
               </h2>
-              <ul className="space-y-2 border-2 border-[#444444] bg-[#252525] rounded-md p-4">
+              <ul className="space-y-2 border-2 border-[#444444] bg-[#252525] rounded-2xl p-4">
                 {NOW_CONFIG.interests.map((interest, index) => (
                   <li
                     key={index}
                     className="text-gray-200 text-[14px] flex items-start"
                   >
-                    <span className="text-green-500 mr-2 font-bold leading-tight">
+                    <span className="text-white mr-2 font-bold leading-tight">
                       ■
                     </span>
                     {interest}
@@ -238,13 +259,13 @@ export default function CurrentWorkings() {
                 <span className="w-2 h-4 bg-green-500 mr-2 inline-block"></span>
                 4. Current Goals
               </h2>
-              <ul className="space-y-2 border-2 rounded-md border-[#444444] bg-[#252525] p-4">
+              <ul className="space-y-2 border-2 rounded-2xl border-[#444444] bg-[#252525] p-4">
                 {NOW_CONFIG.goals.map((goal, index) => (
                   <li
                     key={index}
                     className="text-gray-200 text-[14px] flex items-start"
                   >
-                    <span className="text-green-500 mr-2 font-bold leading-tight">
+                    <span className="text-white mr-2 font-bold leading-tight">
                       ■
                     </span>
                     {goal}
@@ -264,7 +285,7 @@ export default function CurrentWorkings() {
               {NOW_CONFIG.consuming.map((item, index) => (
                 <div
                   key={index}
-                  className="border-2 rounded-md border-[#444444] bg-[#252525] p-4"
+                  className="border-2 rounded-2xl border-[#444444] bg-[#252525] p-4"
                 >
                   <div className="text-[12px]  text-white uppercase font-semibold tracking-wider mb-2 pb-1">
                     {item.type}
@@ -287,7 +308,7 @@ export default function CurrentWorkings() {
                 <span className="w-2 h-4 bg-green-500 mr-2 inline-block"></span>
                 6. Not Doing Right Now
               </h2>
-              <div className="border-2 rounded-md border-[#444444] bg-[#252525] p-4">
+              <div className="border-2 rounded-2xl border-[#444444] bg-[#252525] p-4">
                 <p className="text-[13px] text-gray-300 mb-3 italic">
                   Being intentional about focus means being clear about what to
                   avoid.

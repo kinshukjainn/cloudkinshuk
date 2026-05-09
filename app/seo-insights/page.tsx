@@ -225,12 +225,12 @@ export default function SeoInsights() {
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               {/* Device Toggle Tabs */}
-              <div className="flex border w-max rounded-sm bg-[#252525] border border-[#141414] p-1">
+              <div className="flex border w-max rounded-full bg-[#252525] border border-[#141414] p-1">
                 <button
                   onClick={() => setDevice("mobile")}
-                  className={`flex items-center justify-center gap-2 px-4 py-1.5 cursor-pointer text-[14px] rounded-sm font-medium transition-none ${
+                  className={`flex items-center justify-center gap-2 px-4 py-1.5 cursor-pointer text-[14px] rounded-full font-medium transition-none ${
                     device === "mobile"
-                      ? "bg-[#141414] text-white border-[#101010]"
+                      ? "bg-[#141414] text-[#ff9100] border-[#101010]"
                       : "text-gray-300"
                   }`}
                 >
@@ -238,9 +238,9 @@ export default function SeoInsights() {
                 </button>
                 <button
                   onClick={() => setDevice("desktop")}
-                  className={`flex items-center justify-center gap-2 px-4 py-1.5 text-[14px] cursor-pointer font-medium  rounded-sm  transition-none ${
+                  className={`flex items-center justify-center gap-2 px-4 py-1.5 text-[14px] cursor-pointer font-medium  rounded-full  transition-none ${
                     device === "desktop"
-                      ? "bg-[#141414] text-white border-[#101010]"
+                      ? "bg-[#141414] text-[#ff9100] border-[#101010]"
                       : "text-gray-300"
                   }`}
                 >
@@ -251,7 +251,7 @@ export default function SeoInsights() {
               {/* Export Button */}
               <button
                 onClick={handleExport}
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-green-700 text-white font-bold text-[14px] rounded-md cursor-pointer"
+                className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-700 text-white w-max font-bold text-[14px] rounded-full cursor-pointer"
               >
                 <Download className="w-4 h-4" /> Export Report
               </button>
@@ -260,7 +260,7 @@ export default function SeoInsights() {
         </header>
 
         {/* 1. Environment Details */}
-        <section className="mb-8 border border-[#181818] rounded-sm bg-[#252525]">
+        <section className="mb-8 border border-[#181818] rounded-2xl bg-[#252525]">
           <h2 className="text-[16px] font-bold text-green-400 bg-[#181818] border-b border-[#181818] px-4 py-2">
             Environment Data
           </h2>
@@ -284,7 +284,7 @@ export default function SeoInsights() {
             {Object.entries(currentData.scores).map(([key, value]) => (
               <div
                 key={key}
-                className="rounded-sm bg-[#252525] border border-[#181818] p-4 flex flex-col items-center justify-center text-center shadow-none"
+                className="rounded-2xl bg-[#252525] border border-[#181818] p-4 flex flex-col items-center justify-center text-center shadow-none"
               >
                 <div
                   className={`text-4xl  font-semibold mb-2 ${getScoreColor(value)}`}
@@ -305,19 +305,17 @@ export default function SeoInsights() {
             <span className="w-2  text-white mr-3 inline-block">{"#"}</span>
             Core Web Vitals
           </h2>
-          <div className="border border-[#181818] rounded-sm bg-[#252525] overflow-x-auto">
+          <div className="border border-[#181818] rounded-2xl bg-[#252525] overflow-x-auto">
             <table className="w-full text-left text-[14px]">
               <thead className="bg-[#181818] border-b border-[#181818]">
                 <tr>
-                  <th className="px-4 py-2 font-bold text-green-500 border-r border-[#444444]">
+                  <th className="px-4 py-2 font-bold text-white border-r border-[#444444]">
                     Metric
                   </th>
-                  <th className="px-4 py-2 font-bold text-green-500 border-r border-[#444444]">
+                  <th className="px-4 py-2 font-bold text-white border-r border-[#444444]">
                     Value
                   </th>
-                  <th className="px-4 py-2 font-bold text-green-500 ">
-                    Status
-                  </th>
+                  <th className="px-4 py-2 font-bold text-white ">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y-2 divide-[#4444444]">
@@ -354,19 +352,19 @@ export default function SeoInsights() {
             {AUDIT_DATA.insights.map((item, idx) => (
               <div
                 key={idx}
-                className={`bg-[#252525] rounded-sm border border-[#444444] border-l-4 p-4 ${getStatusBorder(item.status)}`}
+                className={`bg-[#252525] rounded-2xl border border-[#444444] border-l-4 p-4 ${getStatusBorder(item.status)}`}
               >
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-2">
-                  <h3 className="text-[15px] font-bold text-green-500 flex items-start gap-2">
+                  <h3 className="text-[15px] font-bold text-white flex items-start gap-2">
                     {item.status === "fail" ? (
-                      <XCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <XCircle className="w-5 h-5 text-white flex-shrink-0 mt-0.5" />
                     ) : (
                       <AlertTriangle className="w-5 h-5 text-white flex-shrink-0 mt-0.5" />
                     )}
                     {item.title}
                   </h3>
                   {item.savings && (
-                    <span className="inline-flex items-center gap-1.5 px-2 py-1  text-[12px] rounded-sm  text-yellow-200 font-bold whitespace-nowrap">
+                    <span className="inline-flex items-center gap-1.5 px-2 py-1  text-[12px] rounded-2xl  text-yellow-200 font-bold whitespace-nowrap">
                       <Clock className="w-3.5 h-3.5" /> Est. savings:{" "}
                       {item.savings}
                     </span>
@@ -391,11 +389,11 @@ export default function SeoInsights() {
             <span className="w-2  mr-3 inline-block">{"#"}</span>
             Passed Audits
           </h2>
-          <div className="rounded-md border border-[#181818] bg-[#252525] p-4">
+          <div className="rounded-2xl border border-[#181818] bg-[#252525] p-4">
             <div className="grid md:grid-cols-2 gap-x-8 gap-y-3">
               {AUDIT_DATA.passed.map((item, idx) => (
                 <div key={idx} className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-white flex-shrink-0 mt-0.5" />
                   <span className="text-[14px] text-gray-300">{item}</span>
                 </div>
               ))}

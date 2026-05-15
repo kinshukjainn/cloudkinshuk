@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { FaLocationPin } from "react-icons/fa6";
+
 const CONFIG = {
   personal: {
     email: "kinshuk25jan04@gmail.com",
@@ -112,7 +113,7 @@ const CONFIG = {
       "TypeScript",
       "Tailwind CSS",
       "React Icons",
-      "Lucide React ",
+      "Lucide React",
       "React Router DOM",
     ],
     "Database & Authentication": ["NeonDB", "Supabase", "Clerk"],
@@ -200,10 +201,10 @@ const CopyText = ({ text }: { text: string }) => {
   return (
     <button
       onClick={handleCopy}
-      className="text-sm font-bold text-white cursor-pointer rounded-2xl hover:text-white bg-green-700  px-3 py-2 ml-2 transition-none focus:outline-none"
+      className="text-xs font-bold text-emerald-400 cursor-pointer rounded-lg hover:text-emerald-300 hover:bg-emerald-400/10 px-3 py-1.5 transition-colors focus:outline-none border border-emerald-500/20"
       title="Copy to clipboard"
     >
-      {copied ? "Copied" : "Copy"}
+      {copied ? "Copied!" : "Copy"}
     </button>
   );
 };
@@ -211,15 +212,15 @@ const CopyText = ({ text }: { text: string }) => {
 const SocialIcon = ({ icon }: { icon: string }) => {
   switch (icon) {
     case "github":
-      return <Github className="w-4 h-4 mr-1 inline" />;
+      return <Github className="w-4 h-4 mr-2 inline" />;
     case "linkedin":
-      return <Linkedin className="w-4 h-4 mr-1 inline" />;
+      return <Linkedin className="w-4 h-4 mr-2 inline" />;
     case "mail":
-      return <Mail className="w-4 h-4 mr-1 inline" />;
+      return <Mail className="w-4 h-4 mr-2 inline" />;
     case "x":
       return (
         <svg
-          className="w-4 h-4 mr-1 inline"
+          className="w-4 h-4 mr-2 inline"
           fill="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
@@ -235,75 +236,114 @@ const SocialIcon = ({ icon }: { icon: string }) => {
 const SectionHeader = ({ title, id }: { title: string; id?: string }) => (
   <h2
     id={id}
-    className="text-xl font-bold text-gray-100  pb-1 mt-8 mb-4 flex items-center"
+    className="text-2xl font-bold text-gray-100 pb-2 mt-12 mb-6 flex items-center border-b border-zinc-800"
   >
-    <span className="w-4 h-6 text-2xl mr-2 inline-block">{"#"}</span>
+    <span className="text-emerald-500 mr-3 text-xl">#</span>
     {title}
   </h2>
 );
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#1e1e1e] text-[#333333]  selection:bg-blue-300 selection:text-black">
-      {/* Top Green Bar - Classic utilitarian styling */}
-      <div className="h-2 w-full bg-[#212121]"></div>
+    <div className="relative min-h-screen bg-[#09090b] text-gray-300 selection:bg-emerald-500/30 selection:text-white  overflow-hidden">
+      {/* GLOBAL STYLES & BACKGROUND ANIMATIONS */}
+      <style>{`
+        @keyframes scroll-grid {
+          0% { background-position: 0px 0px; }
+          100% { background-position: 40px 40px; }
+        }
+        @keyframes fade-up {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .stagger > * { animation: fade-up 0.8s cubic-bezier(.16,1,.3,1) backwards; }
+        .stagger > *:nth-child(1) { animation-delay: 0.1s; }
+        .stagger > *:nth-child(2) { animation-delay: 0.2s; }
+        .stagger > *:nth-child(3) { animation-delay: 0.3s; }
+        .stagger > *:nth-child(4) { animation-delay: 0.4s; }
+        .stagger > *:nth-child(5) { animation-delay: 0.5s; }
+        .stagger > *:nth-child(6) { animation-delay: 0.6s; }
+      `}</style>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col md:flex-row gap-8">
-        {/* Sidebar Navigation */}
-        <aside className="w-full md:w-64 shrink-0 flex flex-col gap-6">
-          {/* Logo Area */}
+      {/* AMBIENT BACKGROUND - MOVING GRID */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
+        <div
+          className="absolute inset-[-100%]"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px)
+            `,
+            backgroundSize: "40px 40px",
+            animation: "scroll-grid 20s linear infinite",
+            WebkitMaskImage:
+              "radial-gradient(ellipse at center, black 30%, transparent 70%)",
+            maskImage:
+              "radial-gradient(ellipse at center, black 30%, transparent 70%)",
+          }}
+        />
+        {/* subtle grain texture */}
+        <div
+          className="absolute inset-0 opacity-[0.05] mix-blend-overlay"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+          }}
+        />
+      </div>
+
+      {/* TOP ACCENT BAR */}
+      <div className="h-1.5 w-full bg-gradient-to-r from-emerald-600 via-emerald-400 to-teal-500 relative z-10" />
+
+      <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 py-12 flex flex-col lg:flex-row gap-12 lg:gap-16 stagger">
+        {/* SIDEBAR NAVIGATION */}
+        <aside className="w-full lg:w-64 shrink-0 flex flex-col gap-8">
           <div>
-            <h1 className="text-4xl font-extrabold tracking-tighter text-gray-300">
-              <span className="text-white">cloud</span>kinshuk.in
+            <h1 className="text-3xl font-extrabold tracking-tight text-white mb-2">
+              cloud<span className="text-red-600">kinshuk</span>.in
             </h1>
-            <p className="text-sm text-gray-300 mt-1 pb-4">
+            <p className="text-sm font-medium text-green-400 uppercase tracking-wider">
               Student • Builder • Cloud
             </p>
           </div>
 
-          {/* Nav Links */}
-          <nav className="hidden md:flex flex-col gap-1 text-sm font-bold">
-            <a href="#about" className="text-green-400 hover:underline ">
-              {"- "}About
-            </a>
-            <a href="#projects" className="text-green-400 hover:underline">
-              {"- "}Shipped Stuff
-            </a>
-            <a href="#experience" className="text-green-400 hover:underline">
-              {"- "}Experience
-            </a>
-            <a href="#skills" className="text-green-400 hover:underline">
-              {"- "}Proficiencies
-            </a>
-            <a
-              href="#certifications"
-              className="text-green-400 hover:underline"
-            >
-              {"- "}Certifications
-            </a>
-            <a href="#education" className="text-green-400 hover:underline">
-              {"- "}Education
-            </a>
-            <a href="#terminal" className="text-green-400 hover:underline">
-              {"- "}Terminal Access
-            </a>
+          <nav className="hidden lg:flex flex-col gap-3 text-sm font-medium">
+            {[
+              { id: "about", label: "About" },
+              { id: "projects", label: "Shipped Stuff" },
+              { id: "experience", label: "Experience" },
+              { id: "skills", label: "Proficiencies" },
+              { id: "certifications", label: "Certifications" },
+              { id: "education", label: "Education" },
+              { id: "terminal", label: "Terminal Access" },
+            ].map((link) => (
+              <a
+                key={link.id}
+                href={`#${link.id}`}
+                className="text-zinc-200 hover:text-blue-300 transition-colors flex items-center group"
+              >
+                <span className="w-4 h-px bg-zinc-100 group-hover:bg-blue-300  mr-3 transition-colors" />
+                {link.label}
+              </a>
+            ))}
           </nav>
 
-          {/* Social Links Box */}
-          <div className=" p-3 text-sm">
-            <h3 className="font-bold text-lg mb-2 text-gray-200">
-              {"# "}Connect
+          <div className="p-5 ">
+            <h3 className="font-bold text-sm uppercase tracking-wider text-green-500 mb-4">
+              Connect
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               {CONFIG.social.map((social) => (
                 <li key={social.platform}>
                   <a
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white hover:text-green-400  hover:underline flex items-center"
+                    className="text-zinc-300 hover:text-blue-400 transition-colors flex items-center text-sm font-medium group"
                   >
-                    <SocialIcon icon={social.icon} />
+                    <span className="text-zinc-500 group-hover:text-blue-400 transition-colors">
+                      <SocialIcon icon={social.icon} />
+                    </span>
                     {social.handle}
                   </a>
                 </li>
@@ -312,101 +352,105 @@ export default function Home() {
           </div>
         </aside>
 
-        {/* Main Content Area */}
+        {/* MAIN CONTENT AREA */}
         <main className="flex-1 pb-16">
-          {/* Header / Intro */}
-          <section id="about" className="mb-10">
-            <div className="text-[15px] text-white leading-relaxed space-y-3">
-              <p className="text-2xl">
+          {/* HEADER / INTRO */}
+          <section id="about" className="mb-16">
+            <div className="text-base text-zinc-300 leading-relaxed space-y-5">
+              <p className="text-3xl font-light text-white mb-6">
                 Hi everyone! My name is{" "}
-                <strong className="font-bold text-green-400">Kinshuk</strong>.
+                <strong className="font-bold text-emerald-400">Kinshuk</strong>.
               </p>
               {CONFIG.personal.bio.map((paragraph, idx) => (
-                <p className="" key={idx}>
-                  {paragraph}
-                </p>
+                <p key={idx}>{paragraph}</p>
               ))}
             </div>
 
-            <div className="mt-4 text-md text-gray-200  ">
-              <span className="font-bold text-white">
-                <FaLocationPin className="inline mr-1 text-white" />
-                Location:{" "}
-              </span>
+            <div className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-zinc-400 bg-zinc-900/50 border border-zinc-800 px-4 py-2 rounded-full">
+              <FaLocationPin className="text-emerald-500" />
               {CONFIG.personal.location}
             </div>
 
-            {/* FFmpeg-style Big Download Buttons */}
-            <div className="flex flex-wrap gap-4 mt-6">
+            <div className="flex flex-wrap gap-4 mt-8">
               <a
                 href="/myresume.pdf"
                 download="myresume.pdf"
-                className="bg-green-600 text-white font-bold py-4 px-4 rounded-full  active:border-b-0 active:mt-[4px] transition-all inline-block"
+                className="bg-white text-black hover:bg-emerald-400 hover:text-black font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg shadow-black/20"
               >
                 Download Resume
               </a>
               <a
                 href="/home-blog"
-                className="bg-blue-700 text-white font-bold rounded-full py-4 px-3  transition-all inline-block"
+                className="bg-zinc-800 text-white hover:bg-zinc-700 font-semibold py-3 px-6 rounded-xl border border-zinc-700 hover:border-zinc-500 transition-all duration-300"
               >
                 Read Blog
               </a>
             </div>
           </section>
 
-          {/* Selected Projects */}
-          <SectionHeader title="Some shipped Stuff" id="projects" />
-          <div className="space-y-8">
+          {/* PROJECTS */}
+          <SectionHeader title="Shipped Stuff" id="projects" />
+          <div className="space-y-6 mb-16">
             {CONFIG.projects.map((project, idx) => (
               <div
                 key={idx}
-                className=" bg-[#252525] border-2 border-[#181818] rounded-2xl p-4"
+                className="bg-zinc-900 border border-zinc-800 hover:border-emerald-500/30 rounded-3xl p-6 sm:p-8 transition-colors duration-300"
               >
-                <div className="flex flex-col sm:flex-row justify-between mb-2 pb-2">
-                  <h3 className="text-2xl font-bold text-green-400">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
+                  <h3 className="text-xl font-bold text-white">
                     {project.title}
                   </h3>
-                  <span className="text-sm font-medium text-gray-300  mt-1 sm:mt-0">
-                    {project.year} | {project.status} | {project.type}
-                  </span>
+                  <div className="flex gap-2 text-xs font-semibold">
+                    <span className="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 rounded-full border border-emerald-500/20">
+                      {project.status}
+                    </span>
+                    <span className="px-2.5 py-1 bg-zinc-800 text-zinc-300 rounded-full border border-zinc-700">
+                      {project.year}
+                    </span>
+                  </div>
                 </div>
 
-                <div className="text-[14px] text-gray-200  space-y-2 mb-4">
+                <div className="text-sm text-zinc-400 space-y-3 mb-6">
                   {project.description.map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
                 </div>
 
-                <div className="text-[13px]  text-white p-2  mb-3">
-                  <strong className="text-green-200 font-semibold">
-                    Stack:
-                  </strong>{" "}
-                  {project.technologies.join(", ")}
+                <div className="mb-6">
+                  <h4 className="text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-3">
+                    Tech Stack
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1 bg-zinc-800/50 border border-zinc-700/50 rounded-lg text-xs font-medium text-zinc-300"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
                 {project.dockerCommand && (
-                  <div className="mb-3">
-                    <strong className="text-[13px] text-white">
-                      Docker Pull Command:
-                    </strong>
-                    <div className=" text-[12px]   mt-1 flex justify-between items-center">
-                      <span className="font-mono text-white">
-                        $ {project.dockerCommand}
-                      </span>
-                      <CopyText text={project.dockerCommand} />
-                    </div>
+                  <div className="mb-6 bg-black border border-zinc-800 rounded-xl p-3 flex justify-between items-center group">
+                    <code className="text-xs font-mono text-zinc-300 pl-2">
+                      <span className="text-emerald-500 mr-2">$</span>
+                      {project.dockerCommand}
+                    </code>
+                    <CopyText text={project.dockerCommand} />
                   </div>
                 )}
 
-                <div className="text-sm font-bold flex gap-4">
+                <div className="flex flex-wrap gap-3 mt-4">
                   {project.links.live && (
                     <a
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-white  p-2 bg-green-700 rounded-2xl"
+                      className="text-sm font-semibold text-black bg-emerald-500 hover:bg-emerald-400 px-5 py-2.5 rounded-xl transition-colors flex items-center gap-2"
                     >
-                      ▶ Checkout live
+                      View Live Project
                     </a>
                   )}
                   {project.links.repo && (
@@ -414,9 +458,9 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-white p-2 bg-black rounded-2xl "
+                      className="text-sm font-semibold text-white bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 px-5 py-2.5 rounded-xl transition-colors flex items-center gap-2"
                     >
-                      ▶ Github repository
+                      <Github className="w-4 h-4" /> Repository
                     </a>
                   )}
                 </div>
@@ -424,15 +468,19 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Experience */}
-          <SectionHeader title="Where I worked" id="experience" />
-          <div className="mb-8">
-            <h3 className="font-bold text-green-400 text-lg">UPPTCL</h3>
-            <p className="text-sm font-semibold text-white mb-2">
-              Uttar Pradesh Power Transmission Corporation Limited (July 2025 -
-              Aug 2025)
+          {/* EXPERIENCE */}
+          <SectionHeader title="Where I Worked" id="experience" />
+          <div className="mb-16 bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-3">
+              <h3 className="font-bold text-xl text-white">UPPTCL</h3>
+              <span className="text-sm font-medium text-emerald-400 mt-1 sm:mt-0">
+                July 2025 - Aug 2025
+              </span>
+            </div>
+            <p className="text-sm font-medium text-zinc-400 mb-4">
+              Uttar Pradesh Power Transmission Corporation Limited
             </p>
-            <p className="text-[14px] text-gray-100  mb-2">
+            <p className="text-sm text-zinc-300 leading-relaxed mb-6">
               Worked with the transmission division to understand the operation,
               protection, and maintenance of 132kV and 220kV substations.
               Prepared technical documentation and maintained logs on equipment
@@ -440,95 +488,130 @@ export default function Home() {
             </p>
             <a
               href="/home-blog/blogE"
-              className="text-white bg-green-600 p-2 rounded-2xl text-sm font-semibold "
+              className="inline-flex items-center text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors group"
             >
-              ▶ Read article
+              Read article{" "}
+              <span className="ml-2 transform group-hover:translate-x-1 transition-transform">
+                →
+              </span>
             </a>
           </div>
 
-          {/* Technical Proficiencies */}
-          <SectionHeader title="Crazy Stuff I know" id="skills" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          {/* SKILLS */}
+          <SectionHeader title="Proficiencies" id="skills" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
             {Object.entries(CONFIG.skills).map(([category, skills]) => (
-              <div key={category}>
-                <h3 className="font-bold text-green-400 mb-2 ">{category}</h3>
-                <ul className="list-['-'] list-inside text-[14px]  text-white">
+              <div
+                key={category}
+                className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-5"
+              >
+                <h3 className="font-semibold text-white mb-4">{category}</h3>
+                <div className="flex flex-wrap gap-2">
                   {skills.map((skill) => (
-                    <li key={skill}> {skill}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          {/* Certifications */}
-          <SectionHeader title="Certifications" id="certifications" />
-          <div className="space-y-4 mb-8">
-            {CONFIG.certifications.map((cert, idx) => (
-              <div key={idx} className="border-l-4 border-white pl-3 py-1">
-                <h3 className="font-bold">
-                  {cert.url ? (
-                    <a
-                      href={cert.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-green-400 hover:underline"
+                    <span
+                      key={skill}
+                      className="px-3 py-1.5 bg-zinc-800/80 border border-zinc-700 rounded-lg text-xs font-medium text-zinc-300"
                     >
-                      {cert.title}
-                    </a>
-                  ) : (
-                    <span className="text-gray-400">{cert.title}</span>
-                  )}
-                  <span className="text-sm font-normal text-gray-200 ml-2">
-                    ({cert.year})
-                  </span>
-                </h3>
-                <p className="text-[13px] font-bold text-gray-300">
-                  {cert.organization} | Status: {cert.status}
-                </p>
-                <p className="text-[14px] text-white  mt-1">
-                  {cert.description}
-                </p>
-                <p className="text-[15px] text-gray-200 mt-1 ">
-                  Skills: {cert.skills.join(" • ")}
-                </p>
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
 
-          {/* Education */}
+          {/* CERTIFICATIONS */}
+          <SectionHeader title="Certifications" id="certifications" />
+          <div className="space-y-4 mb-16">
+            {CONFIG.certifications.map((cert, idx) => (
+              <div
+                key={idx}
+                className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 sm:p-6 relative overflow-hidden"
+              >
+                {/* Left accent line */}
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-zinc-700" />
+
+                <div className="flex flex-col sm:flex-row justify-between sm:items-start gap-2 mb-2">
+                  <h3 className="font-bold text-white text-lg leading-tight">
+                    {cert.url ? (
+                      <a
+                        href={cert.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-emerald-400 transition-colors"
+                      >
+                        {cert.title}
+                      </a>
+                    ) : (
+                      cert.title
+                    )}
+                  </h3>
+                  <span className="shrink-0 text-xs font-semibold px-2.5 py-1 bg-zinc-800 rounded-full text-zinc-400">
+                    {cert.year}
+                  </span>
+                </div>
+
+                <div className="text-xs font-medium text-emerald-400 mb-3">
+                  {cert.organization} • {cert.status}
+                </div>
+
+                <p className="text-sm text-zinc-400 mb-4">{cert.description}</p>
+
+                <div className="flex flex-wrap gap-2">
+                  {cert.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="text-xs text-zinc-500 font-medium"
+                    >
+                      #{skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* EDUCATION */}
           <SectionHeader title="Education" id="education" />
-          <div className="mb-8">
-            <h3 className="font-bold text-green-400 text-lg">
-              {CONFIG.education.institution}
-            </h3>
-            <p className="text-sm text-gray-300 ">
-              {CONFIG.education.location} | {CONFIG.education.period}
+          <div className="mb-16 bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-2">
+              <h3 className="font-bold text-xl text-white">
+                {CONFIG.education.institution}
+              </h3>
+              <span className="text-sm font-medium text-emerald-400 mt-1 sm:mt-0">
+                {CONFIG.education.period}
+              </span>
+            </div>
+            <p className="text-sm font-medium text-zinc-400 mb-4">
+              {CONFIG.education.location}
             </p>
-            <p className="text-[14px] text-white font-bold mt-2">
-              {CONFIG.education.degree} — {CONFIG.education.field}
+            <p className="text-base text-zinc-200 font-semibold mb-3">
+              {CONFIG.education.degree} in {CONFIG.education.field}
             </p>
-            <p className="text-[14px] text-gray-100  mt-1">
+            <p className="text-sm text-zinc-400 leading-relaxed">
               {CONFIG.education.description}
             </p>
           </div>
 
-          {/* CLI Tool */}
+          {/* CLI TOOL */}
           <SectionHeader title="Terminal Access" id="terminal" />
-          <div className="bg-[#252525] border border-[#181818] rounded-2xl p-4">
-            <p className="text-[14px] text-white  mb-3">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8">
+            <p className="text-sm text-zinc-300 mb-5">
               Interactive command-line portfolio viewer built with Node.js.
               Install it globally via npm.
             </p>
-            <div className=" text-[13px] bg-[#202020] border border-[#141414] rounded-2xl p-3 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-green-400">
-                  $ npm install -g hackkinshuk
-                </span>
+            <div className="bg-black border border-zinc-800 rounded-2xl p-2 space-y-1">
+              <div className="flex items-center justify-between p-2 hover:bg-zinc-900/50 rounded-xl transition-colors">
+                <code className="text-sm font-mono text-emerald-400 pl-2">
+                  <span className="text-zinc-600 mr-2">$</span>npm install -g
+                  hackkinshuk
+                </code>
                 <CopyText text="npm install -g hackkinshuk" />
               </div>
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-green-400">$ cloudkinshuk</span>
+              <div className="flex items-center justify-between p-2 hover:bg-zinc-900/50 rounded-xl transition-colors">
+                <code className="text-sm font-mono text-emerald-400 pl-2">
+                  <span className="text-zinc-600 mr-2">$</span>cloudkinshuk
+                </code>
                 <CopyText text="cloudkinshuk" />
               </div>
             </div>
@@ -536,11 +619,10 @@ export default function Home() {
         </main>
       </div>
 
-      {/* Footer */}
-      <footer className="border-t border-[#cccccc] text-center py-6 text-sm text-[#666666] bg-[#f9f9f9]">
-        <p>
-          Copyright © {new Date().getFullYear()} Kinshuk Jain. All rights
-          reserved.
+      {/* FOOTER */}
+      <footer className="border-t border-zinc-800 bg-[#09090b] relative z-10 text-center py-8 px-4">
+        <p className="text-sm text-zinc-500 font-medium">
+          © {new Date().getFullYear()} Kinshuk Jain. All rights reserved.
         </p>
       </footer>
     </div>

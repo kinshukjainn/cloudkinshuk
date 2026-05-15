@@ -103,7 +103,7 @@ const Header = () => {
     <>
       <header
         ref={menuRef}
-        className="fixed top-0 left-0 right-0 z-50 bg-[#181818] text-white border-b border-[#2a2a2a]"
+        className="fixed top-0 left-0 right-0 z-50 bg-black text-white "
       >
         {/* Scaled padding: px-4 (phones) -> sm:px-6 (tablets) -> lg:px-8 (laptops) */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
@@ -122,8 +122,8 @@ const Header = () => {
                   className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
                 />
               </div>
-              <span className="font-bold text-white leading-none text-base sm:text-lg lg:text-xl truncate">
-                Cloudkinshuk.in
+              <span className="font-bold title-font text-white leading-none text-base sm:text-2xl lg:text-3xl truncate">
+                Cloudkinshuk <span className="text-yellow-500">.in</span>
               </span>
             </Link>
 
@@ -139,8 +139,8 @@ const Header = () => {
                     md:text-sm lg:text-base font-medium
                     ${
                       isActive(item.href)
-                        ? "text-white bg-[#252525]"
-                        : "text-gray-400 hover:text-white hover:bg-[#252525]"
+                        ? "text-white bg-blue-800 "
+                        : "text-gray-200 hover:text-white hover:bg-[#252525]"
                     }
                   `}
                 >
@@ -155,7 +155,7 @@ const Header = () => {
               {/* Sponsor Button: text hidden on smaller tablets to save space, visible on laptops (lg) */}
               <a
                 href="https://brewrepo.cloudkinshuk.in"
-                className="hidden md:flex items-center gap-1.5 font-medium text-black px-3 py-1.5 lg:px-4 bg-yellow-200 hover:bg-yellow-300 transition-colors rounded-full text-sm shrink-0"
+                className="hidden md:flex items-center gap-1.5 font-bold text-black px-3 py-1.5 lg:px-4 bg-yellow-200 hover:bg-yellow-300 transition-colors rounded-full text-sm shrink-0"
               >
                 <GiCoffeeMug className="w-5 h-5 lg:w-6 lg:h-6 shrink-0" />
                 <span className="hidden lg:inline-block">Sponsor me</span>
@@ -191,7 +191,7 @@ const Header = () => {
         {/* ── Mobile Drawer (< md) ── */}
         <div
           id="mobile-menu"
-          className="md:hidden overflow-hidden bg-[#181818] border-b border-[#2a2a2a] transition-[max-height] duration-300 ease-in-out absolute w-full top-14 left-0 z-40 shadow-2xl"
+          className="md:hidden overflow-hidden bg-black transition-[max-height] duration-300 ease-in-out absolute w-full top-14 left-0 z-40 shadow-2xl"
           style={{ maxHeight: isOpen ? `${drawerHeight}px` : "0px" }}
           aria-hidden={!isOpen}
         >

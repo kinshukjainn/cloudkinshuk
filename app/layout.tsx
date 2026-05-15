@@ -8,6 +8,7 @@ import {
   PT_Sans,
   Geist_Mono,
   Roboto,
+  Cabin_Sketch,
   Ubuntu_Sans,
   Public_Sans,
   Rubik,
@@ -28,6 +29,12 @@ export const inter = Inter({
 export const geistMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-geist-mono",
+});
+
+const cabinSketch = Cabin_Sketch({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-cabin-sketch", // optional
 });
 
 const publicSans = Public_Sans({
@@ -124,7 +131,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-google-analytics-opt-out="">
       <body
-        className={`${inter.variable} ${rubik.variable} ${verdana.variable} ${publicSans.variable} ${geistMono.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
+        className={`${inter.variable} ${rubik.variable} ${verdana.variable} ${cabinSketch.variable} ${publicSans.variable} ${geistMono.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >
         <Header />
         {children}

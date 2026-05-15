@@ -2,11 +2,15 @@
 
 body {
   background-color: black;
-  font-family: var(--font-public-sans), sans-serif;
+  font-family: var(--font-geist-mono), monospace;
 }
 
 .desc-font {
   font-family: var(--font-rubik), sans-serif;
+}
+
+.title-font {
+  font-family: var(--font-cabin-sketch), cursive;
 }
 
 @layer utilities {

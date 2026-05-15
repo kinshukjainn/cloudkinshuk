@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { FaLocationPin } from "react-icons/fa6";
+import AmbientBackground from "./components/Backgroundcomp";
 
 const CONFIG = {
   personal: {
@@ -10,7 +11,7 @@ const CONFIG = {
     location: "Ghaziabad, UP, India",
     bio: [
       "Student first. Builder always.",
-      "I am currently pursuing my Bachelor's in Electrical Engineering learning how systems work, how they fail, and how they evolve. Alongside that, I am exploring the cloud, building small things that might someday scale, experimenting with infrastructure, and understanding how technology connects people.",
+      "I have completed my graduation in Electrical Engineering, where I learned how systems work, how they fail, and how they evolve. Alongside that, I have been exploring cloud technologies, building small projects that could someday scale, experimenting with infrastructure, and understanding how technology connects people.",
     ],
     status:
       "Completed an internship at UPPTCL (Uttar Pradesh Power Transmission Corporation Limited), where I gained hands-on experience in power systems and transmission network operations.",
@@ -149,8 +150,8 @@ const CONFIG = {
     {
       title:
         "Mscada : AI-Powered Fault Detection System for Power Transmission",
-      year: "2025-2026",
-      status: "Development Stage",
+      year: "2025-26",
+      status: "Completed",
       type: "AI Tool",
       description: [
         "An AI-powered Fault Detection System designed to identify and analyze faults in power transmission lines and transformers. Enhances reliability in power grid monitoring by leveraging machine learning models to predict equipment failures.",
@@ -236,71 +237,41 @@ const SocialIcon = ({ icon }: { icon: string }) => {
 const SectionHeader = ({ title, id }: { title: string; id?: string }) => (
   <h2
     id={id}
-    className="text-2xl font-bold text-gray-100 pb-2 mt-12 mb-6 flex items-center border-b border-zinc-800"
+    className="text-3xl font-bold title-font text-gray-100 pb-2 mt-12 mb-6 flex items-center border-b border-zinc-800"
   >
-    <span className="text-emerald-500 mr-3 text-xl">#</span>
+    <span className="text-emerald-500 mr-3 text-3xl">#</span>
     {title}
   </h2>
 );
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-[#09090b] text-gray-300 selection:bg-emerald-500/30 selection:text-white  overflow-hidden">
+    <div className="relative min-h-screen bg-black text-gray-300 selection:bg-yellow-200 selection:text-black overflow-hidden">
       {/* GLOBAL STYLES & BACKGROUND ANIMATIONS */}
       <style>{`
-        @keyframes scroll-grid {
-          0% { background-position: 0px 0px; }
-          100% { background-position: 40px 40px; }
-        }
-        @keyframes fade-up {
-          from { opacity: 0; transform: translateY(20px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        .stagger > * { animation: fade-up 0.8s cubic-bezier(.16,1,.3,1) backwards; }
-        .stagger > *:nth-child(1) { animation-delay: 0.1s; }
-        .stagger > *:nth-child(2) { animation-delay: 0.2s; }
-        .stagger > *:nth-child(3) { animation-delay: 0.3s; }
-        .stagger > *:nth-child(4) { animation-delay: 0.4s; }
-        .stagger > *:nth-child(5) { animation-delay: 0.5s; }
-        .stagger > *:nth-child(6) { animation-delay: 0.6s; }
-      `}</style>
-
-      {/* AMBIENT BACKGROUND - MOVING GRID */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
-        <div
-          className="absolute inset-[-100%]"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px)
-            `,
-            backgroundSize: "40px 40px",
-            animation: "scroll-grid 20s linear infinite",
-            WebkitMaskImage:
-              "radial-gradient(ellipse at center, black 30%, transparent 70%)",
-            maskImage:
-              "radial-gradient(ellipse at center, black 30%, transparent 70%)",
-          }}
-        />
-        {/* subtle grain texture */}
-        <div
-          className="absolute inset-0 opacity-[0.05] mix-blend-overlay"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-          }}
-        />
-      </div>
-
-      {/* TOP ACCENT BAR */}
-      <div className="h-1.5 w-full bg-gradient-to-r from-emerald-600 via-emerald-400 to-teal-500 relative z-10" />
-
+          @keyframes scroll-grid {
+            0% { background-position: 0px 0px; }
+            100% { background-position: 40px 40px; }
+          }
+          @keyframes fade-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+          .stagger > * { animation: fade-up 0.8s cubic-bezier(.16,1,.3,1) backwards; }
+          .stagger > *:nth-child(1) { animation-delay: 0.1s; }
+          .stagger > *:nth-child(2) { animation-delay: 0.2s; }
+          .stagger > *:nth-child(3) { animation-delay: 0.3s; }
+          .stagger > *:nth-child(4) { animation-delay: 0.4s; }
+          .stagger > *:nth-child(5) { animation-delay: 0.5s; }
+          .stagger > *:nth-child(6) { animation-delay: 0.6s; }
+        `}</style>
+      <AmbientBackground />
       <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 py-12 flex flex-col lg:flex-row gap-12 lg:gap-16 stagger">
         {/* SIDEBAR NAVIGATION */}
         <aside className="w-full lg:w-64 shrink-0 flex flex-col gap-8">
           <div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-white mb-2">
-              cloud<span className="text-red-600">kinshuk</span>.in
+            <h1 className="text-4xl  title-font font-extrabold tracking-tight text-white mb-2">
+              cloud<span className="text-yellow-600">kinshuk</span>.in
             </h1>
             <p className="text-sm font-medium text-green-400 uppercase tracking-wider">
               Student • Builder • Cloud
@@ -339,9 +310,9 @@ export default function Home() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-zinc-300 hover:text-blue-400 transition-colors flex items-center text-sm font-medium group"
+                    className="text-zinc-100 hover:text-blue-400 underline transition-colors flex items-center text-sm font-medium group"
                   >
-                    <span className="text-zinc-500 group-hover:text-blue-400 transition-colors">
+                    <span className="text-zinc-100  group-hover:text-blue-400 transition-colors">
                       <SocialIcon icon={social.icon} />
                     </span>
                     {social.handle}
@@ -359,15 +330,18 @@ export default function Home() {
             <div className="text-base text-zinc-300 leading-relaxed space-y-5">
               <p className="text-3xl font-light text-white mb-6">
                 Hi everyone! My name is{" "}
-                <strong className="font-bold text-emerald-400">Kinshuk</strong>.
+                <strong className="font-bold text-yellow-500 title-font">
+                  Kinshuk
+                </strong>
+                .
               </p>
               {CONFIG.personal.bio.map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
               ))}
             </div>
 
-            <div className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-zinc-400 bg-zinc-900/50 border border-zinc-800 px-4 py-2 rounded-full">
-              <FaLocationPin className="text-emerald-500" />
+            <div className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-zinc-100 border border-blue-400 px-4 py-2 rounded-full">
+              <FaLocationPin className="text-blue-500" />
               {CONFIG.personal.location}
             </div>
 
@@ -375,13 +349,13 @@ export default function Home() {
               <a
                 href="/myresume.pdf"
                 download="myresume.pdf"
-                className="bg-white text-black hover:bg-emerald-400 hover:text-black font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg shadow-black/20"
+                className="inline-flex items-center justify-center rounded-full border border-yellow-400/50 bg-yellow-500 px-4 py-1 text-md font-bold text-black transition hover:bg-yellow-400"
               >
                 Download Resume
               </a>
               <a
                 href="/home-blog"
-                className="bg-zinc-800 text-white hover:bg-zinc-700 font-semibold py-3 px-6 rounded-xl border border-zinc-700 hover:border-zinc-500 transition-all duration-300"
+                className="inline-flex items-center justify-center rounded-full  bg-green-500 px-4 py-1 text-md font-bold text-black transition hover:bg-green-400"
               >
                 Read Blog
               </a>
@@ -394,37 +368,37 @@ export default function Home() {
             {CONFIG.projects.map((project, idx) => (
               <div
                 key={idx}
-                className="bg-zinc-900 border border-zinc-800 hover:border-emerald-500/30 rounded-3xl p-6 sm:p-8 transition-colors duration-300"
+                className=" border border-zinc-600 hover:border-zinc-500 rounded-3xl p-6 sm:p-8 transition-colors duration-300"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
-                  <h3 className="text-xl font-bold text-white">
+                  <h3 className="text-xl font-bold text-green-500">
                     {project.title}
                   </h3>
-                  <div className="flex gap-2 text-xs font-semibold">
-                    <span className="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 rounded-full border border-emerald-500/20">
+                  <div className="flex gap-1 text-xs font-semibold">
+                    <span className="px-3 py-2 bg-red-700 text-white rounded-md border border-emerald-500/20">
                       {project.status}
                     </span>
-                    <span className="px-2.5 py-1 bg-zinc-800 text-zinc-300 rounded-full border border-zinc-700">
+                    <span className="px-6 py-2 bg-blue-700 text-white rounded-md ">
                       {project.year}
                     </span>
                   </div>
                 </div>
 
-                <div className="text-sm text-zinc-400 space-y-3 mb-6">
+                <div className="text-sm text-zinc-100 space-y-3 mb-6">
                   {project.description.map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
                 </div>
 
                 <div className="mb-6">
-                  <h4 className="text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-3">
+                  <h4 className="text-xs uppercase tracking-wider text-green-500 font-bold mb-3">
                     Tech Stack
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {project.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="px-3 py-1 bg-zinc-800/50 border border-zinc-700/50 rounded-lg text-xs font-medium text-zinc-300"
+                        className="px-3 py-1 border-2 border-blue-800 rounded-lg text-xs font-medium text-zinc-300"
                       >
                         {tech}
                       </span>
@@ -448,7 +422,7 @@ export default function Home() {
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-semibold text-black bg-emerald-500 hover:bg-emerald-400 px-5 py-2.5 rounded-xl transition-colors flex items-center gap-2"
+                      className="text-sm font-bold text-black  bg-yellow-600  px-5 py-1 rounded-full transition-colors flex items-center gap-2"
                     >
                       View Live Project
                     </a>
@@ -458,7 +432,7 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-semibold text-white bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 px-5 py-2.5 rounded-xl transition-colors flex items-center gap-2"
+                      className="text-sm font-bold text-white bg-black  px-5 py-1 rounded-full transition-colors flex items-center gap-2"
                     >
                       <Github className="w-4 h-4" /> Repository
                     </a>
@@ -470,17 +444,17 @@ export default function Home() {
 
           {/* EXPERIENCE */}
           <SectionHeader title="Where I Worked" id="experience" />
-          <div className="mb-16 bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8">
+          <div className="mb-16  border border-zinc-600 rounded-xl p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-3">
-              <h3 className="font-bold text-xl text-white">UPPTCL</h3>
-              <span className="text-sm font-medium text-emerald-400 mt-1 sm:mt-0">
+              <h3 className="font-bold text-3xl text-green-500">UPPTCL</h3>
+              <span className="text-sm font-medium text-white px-4 py-1 w-max border border-blue-400 rounded-full mt-1 sm:mt-0">
                 July 2025 - Aug 2025
               </span>
             </div>
-            <p className="text-sm font-medium text-zinc-400 mb-4">
+            <p className="text-sm font-medium text-zinc-200 mb-4">
               Uttar Pradesh Power Transmission Corporation Limited
             </p>
-            <p className="text-sm text-zinc-300 leading-relaxed mb-6">
+            <p className="text-sm text-zinc-100 leading-relaxed mb-6">
               Worked with the transmission division to understand the operation,
               protection, and maintenance of 132kV and 220kV substations.
               Prepared technical documentation and maintained logs on equipment
@@ -488,7 +462,7 @@ export default function Home() {
             </p>
             <a
               href="/home-blog/blogE"
-              className="inline-flex items-center text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors group"
+              className="inline-flex items-center text-sm font-bold bg-green-600 px-4 py-2 rounded-full text-black  transition-colors group"
             >
               Read article{" "}
               <span className="ml-2 transform group-hover:translate-x-1 transition-transform">
@@ -498,19 +472,21 @@ export default function Home() {
           </div>
 
           {/* SKILLS */}
-          <SectionHeader title="Proficiencies" id="skills" />
+          <SectionHeader title=" crazy stuff i use" id="skills" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
             {Object.entries(CONFIG.skills).map(([category, skills]) => (
               <div
                 key={category}
-                className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-5"
+                className=" border border-[#444444] rounded-xl p-5"
               >
-                <h3 className="font-semibold text-white mb-4">{category}</h3>
+                <h3 className="font-semibold text-green-500 mb-4">
+                  {category}
+                </h3>
                 <div className="flex flex-wrap gap-2">
                   {skills.map((skill) => (
                     <span
                       key={skill}
-                      className="px-3 py-1.5 bg-zinc-800/80 border border-zinc-700 rounded-lg text-xs font-medium text-zinc-300"
+                      className="px-3 py-1.5  border-3 border-zinc-700 rounded-lg text-xs font-medium text-zinc-100"
                     >
                       {skill}
                     </span>
@@ -521,24 +497,24 @@ export default function Home() {
           </div>
 
           {/* CERTIFICATIONS */}
-          <SectionHeader title="Certifications" id="certifications" />
+          <SectionHeader title="Certifications i did..." id="certifications" />
           <div className="space-y-4 mb-16">
             {CONFIG.certifications.map((cert, idx) => (
               <div
                 key={idx}
-                className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 sm:p-6 relative overflow-hidden"
+                className=" border border-[#444444] rounded-2xl p-5 sm:p-6 relative overflow-hidden"
               >
                 {/* Left accent line */}
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-zinc-700" />
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-yellow-500" />
 
                 <div className="flex flex-col sm:flex-row justify-between sm:items-start gap-2 mb-2">
-                  <h3 className="font-bold text-white text-lg leading-tight">
+                  <h3 className="font-bold text-green-500 text-lg leading-tight">
                     {cert.url ? (
                       <a
                         href={cert.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-emerald-400 transition-colors"
+                        className="transition-colors"
                       >
                         {cert.title}
                       </a>
@@ -546,22 +522,22 @@ export default function Home() {
                       cert.title
                     )}
                   </h3>
-                  <span className="shrink-0 text-xs font-semibold px-2.5 py-1 bg-zinc-800 rounded-full text-zinc-400">
+                  <span className="shrink-0 text-xs font-semibold px-2.5 py-1 border border-blue-400 rounded-full text-white ">
                     {cert.year}
                   </span>
                 </div>
 
-                <div className="text-xs font-medium text-emerald-400 mb-3">
+                <div className="text-xs font-medium text-white mb-3">
                   {cert.organization} • {cert.status}
                 </div>
 
-                <p className="text-sm text-zinc-400 mb-4">{cert.description}</p>
+                <p className="text-sm text-gray-100 mb-4">{cert.description}</p>
 
                 <div className="flex flex-wrap gap-2">
                   {cert.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="text-xs text-zinc-500 font-medium"
+                      className="text-xs text-white font-medium"
                     >
                       #{skill}
                     </span>
@@ -573,42 +549,42 @@ export default function Home() {
 
           {/* EDUCATION */}
           <SectionHeader title="Education" id="education" />
-          <div className="mb-16 bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8">
+          <div className="mb-16 border border-[#444444] rounded-3xl p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-2">
-              <h3 className="font-bold text-xl text-white">
+              <h3 className="font-bold text-xl text-green-500">
                 {CONFIG.education.institution}
               </h3>
-              <span className="text-sm font-medium text-emerald-400 mt-1 sm:mt-0">
+              <span className="text-sm font-medium text-white px-4 py-1 border border-blue-400 rounded-full mt-1 sm:mt-0">
                 {CONFIG.education.period}
               </span>
             </div>
-            <p className="text-sm font-medium text-zinc-400 mb-4">
+            <p className="text-sm font-medium text-white  mb-4">
               {CONFIG.education.location}
             </p>
             <p className="text-base text-zinc-200 font-semibold mb-3">
               {CONFIG.education.degree} in {CONFIG.education.field}
             </p>
-            <p className="text-sm text-zinc-400 leading-relaxed">
+            <p className="text-sm text-zinc-200 leading-relaxed">
               {CONFIG.education.description}
             </p>
           </div>
 
           {/* CLI TOOL */}
           <SectionHeader title="Terminal Access" id="terminal" />
-          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8">
-            <p className="text-sm text-zinc-300 mb-5">
+          <div className=" border border-[#444444] rounded-3xl p-6 sm:p-8">
+            <p className="text-sm text-zinc-100 mb-5">
               Interactive command-line portfolio viewer built with Node.js.
               Install it globally via npm.
             </p>
             <div className="bg-black border border-zinc-800 rounded-2xl p-2 space-y-1">
-              <div className="flex items-center justify-between p-2 hover:bg-zinc-900/50 rounded-xl transition-colors">
+              <div className="flex items-center justify-between p-2  rounded-xl transition-colors">
                 <code className="text-sm font-mono text-emerald-400 pl-2">
                   <span className="text-zinc-600 mr-2">$</span>npm install -g
                   hackkinshuk
                 </code>
                 <CopyText text="npm install -g hackkinshuk" />
               </div>
-              <div className="flex items-center justify-between p-2 hover:bg-zinc-900/50 rounded-xl transition-colors">
+              <div className="flex items-center justify-between p-2  rounded-xl transition-colors">
                 <code className="text-sm font-mono text-emerald-400 pl-2">
                   <span className="text-zinc-600 mr-2">$</span>cloudkinshuk
                 </code>

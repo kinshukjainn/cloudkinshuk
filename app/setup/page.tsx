@@ -18,6 +18,7 @@ import {
   Box,
   LucideIcon,
 } from "lucide-react";
+import AmbientBackground from "../components/Backgroundcomp";
 
 interface ToolItem {
   name: string;
@@ -80,37 +81,37 @@ const ToolCategory = ({ section }: { section: ToolSection; index: number }) => {
   const CategoryIcon = section.icon;
 
   return (
-    <section className="mb-6 border border-[#141414] rounded-2xl  bg-[#252525]">
+    <section className="mb-6 border border-[#444444] rounded-2xl bg-black overflow-hidden">
       {/* Category Header */}
-      <div className="flex items-center justify-between bg-[#181818] rounded-t-md border-b border-[#141414] px-3 py-2">
+      <div className="flex items-center justify-between bg-[#181818] border-b border-[#444444] px-4 py-3">
         <div className="flex items-center gap-2">
           <CategoryIcon className="w-4 h-4 text-white flex-shrink-0" />
           <h2 className="text-[16px] font-bold text-white">
             {section.category}
           </h2>
         </div>
-        <span className="text-[12px] font-bold text-white  px-1">
+        <span className="text-[12px] font-bold text-blue-400 border border-blue-500/30 bg-[#222222] px-2 py-0.5 rounded-full">
           {section.items.length} items
         </span>
       </div>
 
       {/* Clean Boxy List Layout */}
-      <ul className="divide-y divide-[#eeeeee]">
+      <ul className="divide-y divide-[#444444]">
         {section.items.map((item, idx) => {
           const ItemIcon = item.icon;
           return (
             <li
               key={idx}
-              className="flex items-start gap-3 p-3 hover:bg-[#303030] transition-none group"
+              className="flex items-start gap-3 p-4 hover:bg-[#181818] transition-colors group"
             >
-              <div className="mt-0.5 text-gray-200 ">
+              <div className="mt-0.5 text-[#888888] group-hover:text-blue-400 transition-colors">
                 <ItemIcon className="w-4 h-4" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-[14px] font-bold text-gray-200 group-hover:underline">
+                <div className="text-[14px] font-bold text-[#e0e0e0] group-hover:text-white transition-colors">
                   {item.name}
                 </div>
-                <div className="text-[12px]  text-gray-400 mt-0.5">
+                <div className="text-[12px] text-[#888888] mt-0.5">
                   {item.spec}
                 </div>
               </div>
@@ -129,44 +130,50 @@ export default function DevToolsCompact() {
   );
 
   return (
-    <div className="min-h-screen bg-[#1e1e1e] text-white selection:bg-[#006600] selection:text-white pb-16">
-      {/* Top Green Bar */}
-      <div className="h-2 w-full bg-[#252525]"></div>
+    <div className="relative min-h-screen bg-black text-[#cccccc] selection:bg-green-500/30 selection:text-green-200 overflow-hidden">
+      {/* Background Component */}
+      <AmbientBackground />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12">
-        {/* Header */}
-        <header className="mb-8  p-5 sm:p-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-4 flex items-center">
-            <span className="w-3 h-6 bg-green-500 mr-3 inline-block"></span>
-            Development Stack
-          </h1>
-          <p className="text-[14px] sm:text-[15px] text-gray-200 leading-relaxed max-w-2xl border-l-4 border-gray-400 pl-3 mb-5">
-            A comprehensive overview of the hardware, software, and services
-            powering my daily workflow and infrastructure.
-          </p>
+      {/* Content Wrapper */}
+      <div className="relative z-10 pb-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12">
+          {/* Header */}
+          <header className="mb-10 p-2 sm:p-6">
+            <h1 className="text-[130px] sm:text-[100px] font-bold text-white mb-5 title-font flex items-center tracking-tight">
+              <span className="text-green-500">Setup</span>
+              <span className="ml-2">i use</span>
+            </h1>
+            <p className="text-[15px] sm:text-md text-[#cccccc] leading-relaxed max-w-2xl pl-4 mb-6">
+              A comprehensive overview of the hardware, software, and services
+              powering my daily workflow and infrastructure.
+            </p>
 
-          <div className="inline-flex flex-wrap rounded-2xl items-center gap-3 text-[13px]  bg-[#181818]  p-2">
-            <div>
-              <strong className="text-white">{totalTools}</strong> Active Tools
+            <div className="inline-flex flex-wrap rounded-xl items-center gap-3 text-[13px] border border-[#444444]  px-4 py-2">
+              <div>
+                <strong className="text-white text-sm">{totalTools}</strong>{" "}
+                Active Tools
+              </div>
+              <span className="text-[#555555] font-bold">|</span>
+              <div>
+                <strong className="text-white text-sm">
+                  {setupData.length}
+                </strong>{" "}
+                Categories
+              </div>
             </div>
-            <span className="text-gray-300 font-bold">|</span>
-            <div>
-              <strong className="text-white">{setupData.length}</strong>{" "}
-              Categories
-            </div>
-          </div>
-        </header>
+          </header>
 
-        {/* Main Content Grid */}
-        <main className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
-          {setupData.map((section, index) => (
-            <ToolCategory
-              key={section.category}
-              section={section}
-              index={index}
-            />
-          ))}
-        </main>
+          {/* Main Content Grid */}
+          <main className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+            {setupData.map((section, index) => (
+              <ToolCategory
+                key={section.category}
+                section={section}
+                index={index}
+              />
+            ))}
+          </main>
+        </div>
       </div>
     </div>
   );

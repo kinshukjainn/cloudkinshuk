@@ -4,15 +4,7 @@ import React, { useMemo, useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import {
-  FileText,
-  Zap,
-  Lightbulb,
-  SearchCode,
-  Github,
-  Menu,
-  X,
-} from "lucide-react";
+import { FileText, Zap, Github, Menu, X } from "lucide-react";
 import { PiGithubLogoBold } from "react-icons/pi";
 import { GiCoffeeMug } from "react-icons/gi";
 
@@ -34,16 +26,6 @@ const Header = () => {
         href: "/setup",
         label: "System",
         icon: <Zap className="w-4 h-4 shrink-0" />,
-      },
-      {
-        href: "/updates",
-        label: "Workings",
-        icon: <Lightbulb className="w-4 h-4 shrink-0" />,
-      },
-      {
-        href: "/seo-insights",
-        label: "Insights",
-        icon: <SearchCode className="w-4 h-4 shrink-0" />,
       },
       {
         href: "/git-track",

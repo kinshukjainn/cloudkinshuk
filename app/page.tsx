@@ -328,7 +328,7 @@ export default function Home() {
           {/* HEADER / INTRO */}
           <section id="about" className="mb-16">
             <div className="text-base text-zinc-300 leading-relaxed space-y-5">
-              <p className="text-3xl font-light text-white mb-6">
+              <p className="text-3xl font-bold text-white mb-6">
                 Hi everyone! My name is{" "}
                 <strong className="font-bold text-yellow-500 title-font">
                   Kinshuk

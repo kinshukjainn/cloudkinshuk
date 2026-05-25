@@ -1,6 +1,6 @@
 // tailwind.config.ts
 import type { Config } from "tailwindcss";
-
+import typography from "@tailwindcss/typography";
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -16,7 +16,6 @@ const config: Config = {
         alegreya: "var(--font-alegreya) , serif",
         robotserif: "var(--font-roboto-serif), serif",
         robotoSlab: "var(--font-roboto-slab), serif",
-        rubik: "var(--font-rubik) sans-serif",
         roboto: "var(--font-roboto) sans-serif",
         ubuntuSans: "var(--font-ubuntu-sans) sans-serif, ",
         inter: "var(--font-inter) , sans-serif",
@@ -24,10 +23,11 @@ const config: Config = {
         publicsans: ["var(--font-public-sans)", "sans-serif"],
         cabinSketch: "var(--font-cabin-sketch) , cursive",
         geistMono: "var(--font-geist-mono) , monospace",
+        rubik: "var(--font-rubik) sans-serif",
         lucidaSans: "var(--font-lucida-sans) , sans-serif",
       },
     },
   },
-  plugins: [],
+  plugins: [typography],
 };
 export default config;

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { FaLocationPin } from "react-icons/fa6";
-import AmbientBackground from "./components/Backgroundcomp";
 
 const CONFIG = {
   personal: {
@@ -262,7 +261,7 @@ const SocialIcon = ({ icon }: { icon: string }) => {
 const SectionHeader = ({ title, id }: { title: string; id?: string }) => (
   <h2
     id={id}
-    className="text-3xl font-bold title-font text-gray-100 pb-2 mt-12 mb-6 flex items-center border-b border-zinc-800"
+    className="text-3xl font-bold  text-gray-100 pb-2 mt-12 mb-6 flex items-center border-b border-zinc-800"
   >
     <span className="text-emerald-500 mr-3 text-3xl">#</span>
     {title}
@@ -271,31 +270,12 @@ const SectionHeader = ({ title, id }: { title: string; id?: string }) => (
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-black text-gray-300 selection:bg-yellow-200 selection:text-black overflow-hidden">
-      {/* GLOBAL STYLES & BACKGROUND ANIMATIONS */}
-      <style>{`
-          @keyframes scroll-grid {
-            0% { background-position: 0px 0px; }
-            100% { background-position: 40px 40px; }
-          }
-          @keyframes fade-up {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
-          }
-          .stagger > * { animation: fade-up 0.8s cubic-bezier(.16,1,.3,1) backwards; }
-          .stagger > *:nth-child(1) { animation-delay: 0.1s; }
-          .stagger > *:nth-child(2) { animation-delay: 0.2s; }
-          .stagger > *:nth-child(3) { animation-delay: 0.3s; }
-          .stagger > *:nth-child(4) { animation-delay: 0.4s; }
-          .stagger > *:nth-child(5) { animation-delay: 0.5s; }
-          .stagger > *:nth-child(6) { animation-delay: 0.6s; }
-        `}</style>
-      <AmbientBackground />
+    <div className="relative min-h-screen bg-[#1e1e1e] text-gray-300 selection:bg-yellow-200 selection:text-black overflow-hidden">
       <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 py-12 flex flex-col lg:flex-row gap-12 lg:gap-16 stagger">
         {/* SIDEBAR NAVIGATION */}
         <aside className="w-full lg:w-64 shrink-0 flex flex-col gap-8">
           <div>
-            <h1 className="text-4xl  title-font font-extrabold tracking-tight text-white mb-2">
+            <h1 className="text-4xl   font-extrabold tracking-tight text-white mb-2">
               cloud<span className="text-yellow-600">kinshuk</span>.in
             </h1>
             <p className="text-sm font-medium text-green-400 uppercase tracking-wider">
@@ -348,17 +328,13 @@ export default function Home() {
           </div>
         </aside>
 
-        {/* MAIN CONTENT AREA */}
         <main className="flex-1 pb-16">
           {/* HEADER / INTRO */}
           <section id="about" className="mb-16">
             <div className="text-base text-zinc-300 leading-relaxed space-y-5">
               <p className="text-3xl font-bold text-white mb-6">
                 Hi everyone! My name is{" "}
-                <strong className="font-bold text-yellow-500 title-font">
-                  Kinshuk
-                </strong>
-                .
+                <strong className="font-bold text-yellow-500 ">Kinshuk</strong>.
               </p>
               {CONFIG.personal.bio.map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
@@ -393,7 +369,7 @@ export default function Home() {
             {CONFIG.projects.map((project, idx) => (
               <div
                 key={idx}
-                className=" border border-zinc-600 hover:border-zinc-500 rounded-3xl p-6 sm:p-8 transition-colors duration-300"
+                className=" border border-[#444444]  rounded-md p-6 sm:p-8 transition-colors duration-300"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
                   <h3 className="text-xl font-bold text-green-500">

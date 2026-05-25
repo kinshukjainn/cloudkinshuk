@@ -4,7 +4,7 @@ import React, { useMemo, useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { FileText, Zap, Github, Menu, X } from "lucide-react";
+import { FileText, Github, Menu, X } from "lucide-react";
 import { PiGithubLogoBold } from "react-icons/pi";
 import { GiCoffeeMug } from "react-icons/gi";
 
@@ -18,15 +18,11 @@ const Header = () => {
   const navItems = useMemo(
     () => [
       {
-        href: "/home-blog",
+        href: "/blogs",
         label: "Blogs",
         icon: <FileText className="w-4 h-4 shrink-0" />,
       },
-      {
-        href: "/setup",
-        label: "System",
-        icon: <Zap className="w-4 h-4 shrink-0" />,
-      },
+
       {
         href: "/git-track",
         label: "Commits",
@@ -85,9 +81,8 @@ const Header = () => {
     <>
       <header
         ref={menuRef}
-        className="fixed top-0 left-0 right-0 z-50 bg-black text-white "
+        className="fixed top-0 left-0 right-0 z-50 bg-[#121212] text-white "
       >
-        {/* Scaled padding: px-4 (phones) -> sm:px-6 (tablets) -> lg:px-8 (laptops) */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
           <div className="flex items-center h-14 gap-2 md:gap-4 lg:gap-8">
             {/* ── Logo Section ── */}
@@ -104,7 +99,7 @@ const Header = () => {
                   className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
                 />
               </div>
-              <span className="font-bold title-font text-white leading-none text-base sm:text-2xl lg:text-3xl truncate">
+              <span className="font-bold  text-white leading-none text-base sm:text-2xl lg:text-3xl truncate">
                 Cloudkinshuk <span className="text-yellow-500">.in</span>
               </span>
             </Link>

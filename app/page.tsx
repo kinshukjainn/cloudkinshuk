@@ -226,7 +226,7 @@ const CopyText = ({ text }: { text: string }) => {
   return (
     <button
       onClick={handleCopy}
-      className="text-xs font-bold text-emerald-400 cursor-pointer rounded-lg hover:text-emerald-300 hover:bg-emerald-400/10 px-3 py-1.5 transition-colors focus:outline-none border border-emerald-500/20"
+      className="text-xs font-semibold text-emerald-400 cursor-pointer rounded-lg hover:text-emerald-300 hover:bg-emerald-400/10 px-3 py-1.5 transition-colors focus:outline-none border border-emerald-500/20"
       title="Copy to clipboard"
     >
       {copied ? "Copied!" : "Copy"}
@@ -261,7 +261,7 @@ const SocialIcon = ({ icon }: { icon: string }) => {
 const SectionHeader = ({ title, id }: { title: string; id?: string }) => (
   <h2
     id={id}
-    className="text-3xl font-bold  text-gray-100 pb-2 mt-12 mb-6 flex items-center border-b border-zinc-800"
+    className="text-3xl font-semibold  text-gray-100 pb-2 mt-12 mb-6 flex items-center border-b border-zinc-800"
   >
     <span className="text-emerald-500 mr-3 text-3xl">#</span>
     {title}
@@ -305,7 +305,7 @@ export default function Home() {
           </nav>
 
           <div className="p-5 ">
-            <h3 className="font-bold text-sm uppercase tracking-wider text-green-500 mb-4">
+            <h3 className="font-semibold text-sm uppercase tracking-wider text-green-500 mb-4">
               Connect
             </h3>
             <ul className="space-y-3">
@@ -332,9 +332,12 @@ export default function Home() {
           {/* HEADER / INTRO */}
           <section id="about" className="mb-16">
             <div className="text-base text-zinc-300 leading-relaxed space-y-5">
-              <p className="text-3xl font-bold text-white mb-6">
+              <p className="text-3xl font-semibold text-white mb-6">
                 Hi everyone! My name is{" "}
-                <strong className="font-bold text-yellow-500 ">Kinshuk</strong>.
+                <strong className="font-semibold text-yellow-500 ">
+                  Kinshuk
+                </strong>
+                .
               </p>
               {CONFIG.personal.bio.map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
@@ -350,13 +353,13 @@ export default function Home() {
               <a
                 href="/myresume.pdf"
                 download="myresume.pdf"
-                className="inline-flex items-center justify-center rounded-full border border-yellow-400/50 bg-yellow-500 px-4 py-1 text-md font-bold text-black transition hover:bg-yellow-400"
+                className="inline-flex items-center justify-center rounded-full border border-yellow-400/50 bg-yellow-500 px-4 py-1 text-md font-semibold text-black transition hover:bg-yellow-400"
               >
                 Download Resume
               </a>
               <a
                 href="/home-blog"
-                className="inline-flex items-center justify-center rounded-full  bg-green-500 px-4 py-1 text-md font-bold text-black transition hover:bg-green-400"
+                className="inline-flex items-center justify-center rounded-full  bg-green-500 px-4 py-1 text-md font-semibold text-black transition hover:bg-green-400"
               >
                 Read Blog
               </a>
@@ -372,7 +375,7 @@ export default function Home() {
                 className=" border border-[#444444]  rounded-md p-6 sm:p-8 transition-colors duration-300"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
-                  <h3 className="text-xl font-bold text-green-500">
+                  <h3 className="text-xl font-semibold text-green-500">
                     {project.title}
                   </h3>
                   <div className="flex gap-1 text-xs font-semibold">
@@ -392,7 +395,7 @@ export default function Home() {
                 </div>
 
                 <div className="mb-6">
-                  <h4 className="text-xs uppercase tracking-wider text-green-500 font-bold mb-3">
+                  <h4 className="text-xs uppercase tracking-wider text-green-500 font-semibold mb-3">
                     Tech Stack
                   </h4>
                   <div className="flex flex-wrap gap-2">
@@ -423,7 +426,7 @@ export default function Home() {
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-bold text-black  bg-yellow-600  px-5 py-1 rounded-full transition-colors flex items-center gap-2"
+                      className="text-sm font-semibold text-black  bg-yellow-600  px-5 py-1 rounded-full transition-colors flex items-center gap-2"
                     >
                       View Live Project
                     </a>
@@ -433,7 +436,7 @@ export default function Home() {
                       href={project.links.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-bold text-white bg-black  px-5 py-1 rounded-full transition-colors flex items-center gap-2"
+                      className="text-sm font-semibold text-white bg-black  px-5 py-1 rounded-full transition-colors flex items-center gap-2"
                     >
                       <Github className="w-4 h-4" /> Repository
                     </a>
@@ -447,7 +450,7 @@ export default function Home() {
           <SectionHeader title="Where I Worked" id="experience" />
           <div className="mb-16  border border-zinc-600 rounded-xl p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-3">
-              <h3 className="font-bold text-3xl text-green-500">UPPTCL</h3>
+              <h3 className="font-semibold text-3xl text-green-500">UPPTCL</h3>
               <span className="text-sm font-medium text-white px-4 py-1 w-max border border-blue-400 rounded-full mt-1 sm:mt-0">
                 July 2025 - Aug 2025
               </span>
@@ -463,7 +466,7 @@ export default function Home() {
             </p>
             <a
               href="/home-blog/blogE"
-              className="inline-flex items-center text-sm font-bold bg-green-600 px-4 py-2 rounded-full text-black  transition-colors group"
+              className="inline-flex items-center text-sm font-semibold bg-green-600 px-4 py-2 rounded-full text-black  transition-colors group"
             >
               Read article{" "}
               <span className="ml-2 transform group-hover:translate-x-1 transition-transform">
@@ -509,7 +512,7 @@ export default function Home() {
                 <div className="absolute left-0 top-0 bottom-0 w-1 bg-yellow-500" />
 
                 <div className="flex flex-col sm:flex-row justify-between sm:items-start gap-2 mb-2">
-                  <h3 className="font-bold text-green-500 text-lg leading-tight">
+                  <h3 className="font-semibold text-green-500 text-lg leading-tight">
                     {cert.url ? (
                       <a
                         href={cert.url}
@@ -552,7 +555,7 @@ export default function Home() {
           <SectionHeader title="Education" id="education" />
           <div className="mb-16 border border-[#444444] rounded-3xl p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-2">
-              <h3 className="font-bold text-xl text-green-500">
+              <h3 className="font-semibold text-xl text-green-500">
                 {CONFIG.education.institution}
               </h3>
               <span className="text-sm font-medium text-white px-4 py-1 border border-blue-400 rounded-full mt-1 sm:mt-0">

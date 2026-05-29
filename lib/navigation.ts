@@ -34,6 +34,13 @@ export const navigation: NavSection[] = [
   },
   {
     title: "Project Documentation",
-    items: [{ title: "Welcome to the Project Documentation", slug: "welcome" }],
+    items: [
+      { title: "Welcome to the Project Documentation", slug: "welcome" },
+      { title: "Kosha : Your Person Cloud Storage System", slug: "kosha" },
+      {
+        title: "EndVault : Your personal password manager",
+        slug: "endvault",
+      },
+    ],
   },
 ];

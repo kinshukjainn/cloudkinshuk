@@ -64,7 +64,7 @@ second. Each of these needs a different storage strategy.
 ## The Role of Microservices
 
 As Instagram expanded, the engineering team moved from a monolithic system to a
-microservices architecture. Each major feature — like feed, stories, search,
+microservices architecture. Each major feature  like feed, stories, search,
 messaging, notifications, or ads — works as a separate service.
 
 This allows teams to build, deploy, and scale each service independently. If the

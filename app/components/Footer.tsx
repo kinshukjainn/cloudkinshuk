@@ -66,7 +66,7 @@ const Footer = () => {
               <FaCloud className="w-8 h-8 sm:w-10 sm:h-10 text-white transition-transform duration-300 group-hover:scale-110" />
 
               <div className="relative flex items-center h-10 sm:h-12">
-                <h2 className="text-5xl  sm:text-5xl lg:text-6xl font-bold text-yellow-500 flex items-center">
+                <h2 className="text-5xl  sm:text-5xl lg:text-6xl font-semibold text-yellow-500 flex items-center">
                   CloudKinshuk
                 </h2>
               </div>

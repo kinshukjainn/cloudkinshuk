@@ -6,7 +6,7 @@ description: This blogs is about my idea and thoughts about how i built my own g
 ---
 
 
-I got tired of depending on someone else's cloud. So I built my own — a full cloud
+I got tired of depending on someone else's cloud. So I built my own  a full cloud
 storage app where I can upload files, preview images and videos, download anything, and
 manage storage, all on infrastructure I control. No Google. No Dropbox. Just me, some
 code, and a few clever services stitched together. Let me walk you through exactly how I
@@ -16,7 +16,7 @@ did it, piece by piece.
 
 Before I get into the code, let me tell you what the app does from a user's perspective.
 You sign up, you land on a clean dark dashboard, and you see an upload button. You drag
-in your files — images, videos, PDFs, spreadsheets, whatever — and they show up in a
+in your files  images, videos, PDFs, spreadsheets, whatever  and they show up in a
 grid or list view. You can preview images and videos right in the browser, search through
 your files, download them, or delete them. There's a storage bar that shows how much
 space you've used out of your plan limit.
@@ -82,7 +82,7 @@ The first version had storage limits hardcoded directly on the user row. That wo
 I realized I'd have to update every single user row if I ever changed the free plan limits.
 Terrible idea.
 
-So I created a separate `plans` table. It has two rows right now — "free" and "pro." The
+So I created a separate `plans` table. It has two rows right now  "free" and "pro." The
 free plan gets 2 GB of storage and 25 files. The pro plan gets 50 GB and practically
 unlimited files. Every user has a `plan_id` column that points to one of these plans. If I
 ever want to change the free tier to 5 GB, I update one row in the `plans` table and every
@@ -111,7 +111,7 @@ them. These are called **orphaned files**, and at scale they can silently eat yo
 The fix was simple once I understood the problem. Before deleting the user from the
 database, my webhook handler now lists every file under that user's S3 prefix and deletes
 them all in batches. Only after S3 is completely clean does it delete the user row from
-NeonDB. Order matters here — if I deleted the database row first, I'd lose the references I
+NeonDB. Order matters here  if I deleted the database row first, I'd lose the references I
 need to find the S3 files.
 
 For regular file deletions through the app UI, this was never a problem. My delete function
@@ -128,14 +128,14 @@ kebab menu on each file with download and delete options, and a full-screen file
 for images, videos, and PDFs.
 
 One thing I'm proud of: the delete flow. When you hit delete, you get a confirmation modal
-(because accidental deletes are painful). But I also did optimistic updates — the file
+(because accidental deletes are painful). But I also did optimistic updates  the file
 disappears from the UI instantly before the server confirms the deletion. If the server
 call fails, the file list refreshes to restore it. This makes the app feel snappy even
 though there's a network round-trip happening in the background.
 
 Uploads support multiple files at once. You select a batch, they all upload in parallel
 using `Promise.all`, and when they're all done, the file list refreshes and the storage
-counter updates. If any single upload in the batch fails — say you hit your storage limit
+counter updates. If any single upload in the batch fails  say you hit your storage limit
 halfway through — the error surfaces clearly and the successful uploads still go through.
 
 ## 7. Security — The Stuff You Don't See
@@ -161,18 +161,18 @@ This is a real, working app. But if I were to keep building, here's what I'd add
 
 - **A garbage collector script.** A cron job that runs weekly, lists every object in the S3
   bucket, checks if each one still has a matching database record, and deletes any orphans.
-  This is a safety net for edge cases — maybe a server action crashed halfway through, or a
+  This is a safety net for edge cases  maybe a server action crashed halfway through, or a
   webhook got dropped. The garbage collector catches whatever falls through the cracks.
 - **Folders and organization.** Right now every file lives in a flat list. Adding virtual
   folders would just mean adding a "folder" column to the `files` table and filtering by it.
-  S3 doesn't actually have folders — it's all just key prefixes — so the folder structure
+  S3 doesn't actually have folders  it's all just key prefixes  so the folder structure
   would live entirely in the database.
 - **Stripe integration for the Pro plan.** The `plans` table is already there, the limits are
   already enforced. All that's missing is a payment flow that flips the user's `plan_id` from
   "free" to "pro" after a successful checkout.
 - **File sharing with signed links.** Generate a time-limited URL that anyone can use to
   download a specific file, even without an account. The infrastructure already supports this
-  — I just need a UI for it.
+   I just need a UI for it.
 
 > **The bottom line:** You don't need to be a cloud architect to build your own cloud storage.
 > You need a file bucket, a database, an auth provider, and the patience to figure out how they

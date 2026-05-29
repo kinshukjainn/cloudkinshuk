@@ -8,12 +8,12 @@ description: introduction
 
 
 
-Hi, I'm **Kinshuk Jain** — a student and developer documenting my learning
+Hi, I'm **Kinshuk Jain**  a student and developer documenting my learning
 journey in public. This is **Dev.Blogs**, where I write about the things I'm
 building, breaking, and figuring out along the way.
 
 Most of what you'll find here lives at the intersection of **cloud computing,
-DevOps, security, and infrastructure engineering** — hands-on experiences with
+DevOps, security, and infrastructure engineering**  hands-on experiences with
 AWS services, serverless architectures, and CI/CD pipelines, written from the
 perspective of someone still actively learning rather than someone claiming to
 have it all figured out.
@@ -26,8 +26,8 @@ building full-stack projects with **React, TypeScript, and TailwindCSS**, and
 digging into how large systems actually work under the hood.
 
 I learn best by building real things. One example: I built my own **Google
-Drive clone** end to end — wiring together Amazon S3 for storage, Clerk for
-auth, NeonDB for the database, and Route 53 for DNS — and wrote about the
+Drive clone** end to end  wiring together Amazon S3 for storage, Clerk for
+auth, NeonDB for the database, and Route 53 for DNS  and wrote about the
 challenges along the way.
 
 ## What I write about
@@ -57,7 +57,7 @@ Here's everything on the blog to date, newest first:
 ## Why I write
 
 In a world overflowing with information, I think good writing is one of the best
-ways to actually *learn* something — not just consume it. Blogging forces
+ways to actually *learn* something  not just consume it. Blogging forces
 clarity: if I can't explain it simply, I probably don't understand it yet. So
 this space is as much for me as it is for you.
 

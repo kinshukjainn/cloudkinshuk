@@ -211,7 +211,7 @@ export default function ChangelogTracker() {
       <div className="max-w-7xl mx-auto">
         {/* ── TOP HEADER (Breadcrumbs & Links) ── */}
         <div className="mb-1">
-          <h1 className="text-[20px] sm:text-[24px] font-bold m-0 p-0">
+          <h1 className="text-[20px] sm:text-[24px] font-semibold m-0 p-0">
             <a href="#" className="text-[#0000ee] hover:underline no-underline">
               Git
             </a>{" "}
@@ -226,7 +226,7 @@ export default function ChangelogTracker() {
         <div className="text-[13px] sm:text-[14px] mb-3">
           summary |{" "}
           <Link href="/git-track/tree">
-            <span className="text-[#0000ee] px-2 py-0 bg-yellow-200 border border-black  hover:underline cursor-pointer font-bold ">
+            <span className="text-[#0000ee] px-2 py-0 bg-yellow-200 border border-black  hover:underline cursor-pointer font-semibold ">
               view Tree
             </span>
           </Link>
@@ -326,7 +326,7 @@ export default function ChangelogTracker() {
         )}
 
         {/* ── SECTION HEADER ── */}
-        <div className="bg-[#e8e8e8] border-t border-b border-[#cccccc] py-1.5 px-2 font-bold mb-2">
+        <div className="bg-[#e8e8e8] border-t border-b border-[#cccccc] py-1.5 px-2 font-semibold mb-2">
           shortlog
         </div>
 
@@ -338,7 +338,7 @@ export default function ChangelogTracker() {
         )}
 
         {error && (
-          <div className="p-4 text-[#cc0000] font-bold bg-[#ffdddd] border border-[#cc0000] mb-4">
+          <div className="p-4 text-[#cc0000] font-semibold bg-[#ffdddd] border border-[#cc0000] mb-4">
             Error: {error}
             <button
               onClick={fetchCommits}
@@ -379,7 +379,7 @@ export default function ChangelogTracker() {
                   </div>
 
                   {/* Message & Tag */}
-                  <div className="flex-1 min-w-0 font-bold text-black flex items-center flex-wrap gap-2 text-[14px]">
+                  <div className="flex-1 min-w-0 font-semibold text-black flex items-center flex-wrap gap-2 text-[14px]">
                     <span className="break-words">{title}</span>
                     {/* Fake branch tag exactly like the image */}
                     {index === 0 && (
@@ -426,7 +426,7 @@ export default function ChangelogTracker() {
 
         {/* Pagination Indicator */}
         {!loading && !error && displayCommits.length > 0 && (
-          <div className="mt-2 px-2 text-[#0000ee] text-[13px] font-bold cursor-pointer hover:underline">
+          <div className="mt-2 px-2 text-[#0000ee] text-[13px] font-semibold cursor-pointer hover:underline">
             ...
           </div>
         )}

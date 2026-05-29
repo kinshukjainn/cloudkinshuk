@@ -2,7 +2,7 @@
 
 body {
   background-color: black;
-  font-family: var(--font-inter), monospace;
+  font-family: var(--font-roboto), sans-serif;
 }
 
 .desc-font {

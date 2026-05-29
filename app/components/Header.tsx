@@ -99,7 +99,7 @@ const Header = () => {
                   className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
                 />
               </div>
-              <span className="font-bold  text-white leading-none text-base sm:text-2xl lg:text-3xl truncate">
+              <span className="font-semibold  text-white leading-none text-base sm:text-2xl lg:text-3xl truncate">
                 Cloudkinshuk <span className="text-yellow-500">.in</span>
               </span>
             </Link>
@@ -132,7 +132,7 @@ const Header = () => {
               {/* Sponsor Button: text hidden on smaller tablets to save space, visible on laptops (lg) */}
               <a
                 href="https://brewrepo.cloudkinshuk.in"
-                className="hidden md:flex items-center gap-1.5 font-bold text-black px-3 py-1.5 lg:px-4 bg-yellow-200 hover:bg-yellow-300 transition-colors rounded-full text-sm shrink-0"
+                className="hidden md:flex items-center gap-1.5 font-semibold text-black px-3 py-1.5 lg:px-4 bg-yellow-200 hover:bg-yellow-300 transition-colors rounded-full text-sm shrink-0"
               >
                 <GiCoffeeMug className="w-5 h-5 lg:w-6 lg:h-6 shrink-0" />
                 <span className="hidden lg:inline-block">Sponsor me</span>
@@ -201,7 +201,7 @@ const Header = () => {
             <div className="pt-4 mt-4 border-t border-[#333333] flex flex-col gap-3 pb-2">
               <a
                 href="https://brewrepo.cloudkinshuk.in"
-                className="flex items-center justify-center gap-2 py-3 bg-yellow-200 hover:bg-yellow-300 text-black rounded-full font-bold text-sm transition-colors"
+                className="flex items-center justify-center gap-2 py-3 bg-yellow-200 hover:bg-yellow-300 text-black rounded-full font-semibold text-sm transition-colors"
                 tabIndex={isOpen ? 0 : -1}
               >
                 <GiCoffeeMug className="w-5 h-5 shrink-0" />
@@ -209,7 +209,7 @@ const Header = () => {
               </a>
               <a
                 href="https://github.com/kinshukjainn/cloudkinshuk"
-                className="flex items-center justify-center gap-2 py-3 bg-[#252525] hover:bg-[#333333] text-white rounded-full font-bold text-sm transition-colors border border-[#444]"
+                className="flex items-center justify-center gap-2 py-3 bg-[#252525] hover:bg-[#333333] text-white rounded-full font-semibold text-sm transition-colors border border-[#444]"
                 tabIndex={isOpen ? 0 : -1}
               >
                 <Github className="w-5 h-5 shrink-0" />

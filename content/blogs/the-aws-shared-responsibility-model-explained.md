@@ -67,7 +67,7 @@ every employee — it creates unnecessary security exposure.
 ### 3. Operating System and Application Maintenance
 
 When running EC2 instances (virtual servers), you own the operating system layer. AWS
-does not perform automatic system updates or security patches on your behalf — this
+does not perform automatic system updates or security patches on your behalf  this
 falls under your operational responsibility.
 
 - **OS Maintenance:** You must implement regular security patches and system updates

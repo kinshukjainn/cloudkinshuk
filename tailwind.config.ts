@@ -14,6 +14,7 @@ const config: Config = {
         ptSans: "var(--font-pt-sans) , sans-serif",
         workSans: "var(--font-work-sans) , sans-serif",
         alegreya: "var(--font-alegreya) , serif",
+        dmSans: "var(--font-dm-sans) , serif",
         robotserif: "var(--font-roboto-serif), serif",
         robotoSlab: "var(--font-roboto-slab), serif",
         inter: "var(--font-inter) , sans-serif",

@@ -8,6 +8,7 @@ import {
   PT_Sans,
   Geist_Mono,
   Roboto,
+  DM_Sans,
   Cabin_Sketch,
   Ubuntu_Sans,
   Public_Sans,
@@ -118,6 +119,13 @@ const roboto = Roboto({
   variable: "--font-roboto",
 });
 
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-dm-sans",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Home | Cloudkinshuk",
   description: "Kinshuk Jain's personal portfolio and blog site.",
@@ -131,7 +139,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-google-analytics-opt-out="">
       <body
-        className={`${inter.variable} ${rubik.variable} ${verdana.variable} ${cabinSketch.variable} ${publicSans.variable} ${geistMono.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
+        className={`${inter.variable} ${rubik.variable} ${dmSans.variable} ${verdana.variable} ${cabinSketch.variable} ${publicSans.variable} ${geistMono.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >
         <Header />
         {children}

@@ -103,9 +103,9 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                           href={`/blogs/${item.slug}`}
                           aria-current={active ? "page" : undefined}
                           onClick={onNavigate}
-                          className={`block w-full rounded-md px-2 py-1 text-[14px] transition-all duration-200 ${
+                          className={`block w-full rounded-xl px-3 py-1 text-[14px] transition-all duration-200 ${
                             active
-                              ? "bg-[#004A77] font-semibold text-[#C2E7FF]"
+                              ? "bg-blue-800 font-semibold text-white"
                               : "text-[#C4C6CA] hover:bg-[#1E1F22] hover:text-[#E2E2E6]"
                           }`}
                         >

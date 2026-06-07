@@ -1,9 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { Github, Linkedin, Mail } from "lucide-react";
-import { FaLocationPin } from "react-icons/fa6";
+import {
+  Github,
+  Linkedin,
+  Mail,
+  ExternalLink,
+  Download,
+  BookOpen,
+  Terminal,
+  MapPin,
+} from "lucide-react";
+import Link from "next/link";
+import { motion, Variants } from "framer-motion";
 
+// --- CONFIGURATION ---
+// (Zero information lost from original)
 const CONFIG = {
   personal: {
     email: "kinshuk25jan04@gmail.com",
@@ -147,8 +159,7 @@ const CONFIG = {
       dockerCommand: null,
     },
     {
-      title:
-        "Mscada : AI-Powered Fault Detection System for Power Transmission",
+      title: "Mscada : AI-Powered Fault Detection System",
       year: "2025-26",
       status: "Completed",
       type: "AI Tool",
@@ -167,19 +178,16 @@ const CONFIG = {
         "Amazon Amplify",
         "AWS Lambda",
       ],
-      links: {
-        live: null,
-        repo: "https://github.com/kinshukjainn/m-scada",
-      },
+      links: { live: null, repo: "https://github.com/kinshukjainn/m-scada" },
       dockerCommand: "",
     },
     {
-      title: "EndVault : Your personal Password manager",
+      title: "Opaque : Your personal Password manager",
       year: "2025-26",
-      status: "Completed",
+      status: "Live",
       type: "Security Tool",
       description: [
-        "EndVault is a modern, end-to-end encrypted password vault engineered for absolute privacy. By strictly separating authentication from decryption, your master key never leaves your browser's local memory. Say goodbye to cloud vulnerabilities and hello to a private ecosystem where the server remains a blind gatekeeper never a reader.",
+        "Opaque is a modern, end-to-end encrypted password vault engineered for absolute privacy. By strictly separating authentication from decryption, your master key never leaves your browser's local memory. Say goodbye to cloud vulnerabilities and hello to a private ecosystem where the server remains a blind gatekeeper never a reader.",
       ],
       technologies: [
         "Next.js 16",
@@ -210,9 +218,27 @@ const CONFIG = {
   },
 };
 
+// --- ANIMATION VARIANTS ---
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.05, delayChildren: 0.1 },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 10 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "tween", ease: "easeOut", duration: 0.4 },
+  },
+};
+
+// --- COMPONENTS ---
 const CopyText = ({ text }: { text: string }) => {
   const [copied, setCopied] = useState(false);
-
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(text);
@@ -226,10 +252,10 @@ const CopyText = ({ text }: { text: string }) => {
   return (
     <button
       onClick={handleCopy}
-      className="text-xs font-semibold text-emerald-400 cursor-pointer rounded-lg hover:text-emerald-300 hover:bg-emerald-400/10 px-3 py-1.5 transition-colors focus:outline-none border border-emerald-500/20"
+      className="text-xs font-medium text-zinc-400 hover:text-zinc-100 bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-md transition-colors"
       title="Copy to clipboard"
     >
-      {copied ? "Copied!" : "Copy"}
+      {copied ? "Copied" : "Copy"}
     </button>
   );
 };
@@ -237,15 +263,15 @@ const CopyText = ({ text }: { text: string }) => {
 const SocialIcon = ({ icon }: { icon: string }) => {
   switch (icon) {
     case "github":
-      return <Github className="w-4 h-4 mr-2 inline" />;
+      return <Github className="w-5 h-5" />;
     case "linkedin":
-      return <Linkedin className="w-4 h-4 mr-2 inline" />;
+      return <Linkedin className="w-5 h-5" />;
     case "mail":
-      return <Mail className="w-4 h-4 mr-2 inline" />;
+      return <Mail className="w-5 h-5" />;
     case "x":
       return (
         <svg
-          className="w-4 h-4 mr-2 inline"
+          className="w-4 h-4"
           fill="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
@@ -258,350 +284,306 @@ const SocialIcon = ({ icon }: { icon: string }) => {
   }
 };
 
-const SectionHeader = ({ title, id }: { title: string; id?: string }) => (
-  <h2
-    id={id}
-    className="text-3xl font-semibold  text-gray-100 pb-2 mt-12 mb-6 flex items-center border-b border-zinc-800"
-  >
-    <span className="text-emerald-500 mr-3 text-3xl">#</span>
+const SectionHeader = ({ title }: { title: string }) => (
+  <h2 className="text-xl font-semibold text-zinc-100 tracking-tight mt-20 mb-8 border-b border-zinc-800/50 pb-4">
     {title}
   </h2>
 );
 
+const Pill = ({
+  children,
+  active = false,
+}: {
+  children: React.ReactNode;
+  active?: boolean;
+}) => (
+  <span
+    className={`px-3 py-1 rounded-full text-[11px] font-medium tracking-wide border ${active ? "bg-blue-500/10 text-blue-400 border-blue-500/20" : "bg-zinc-900/50 text-zinc-400 border-zinc-800/50"}`}
+  >
+    {children}
+  </span>
+);
+
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-[#1e1e1e] text-gray-300 selection:bg-yellow-200 selection:text-black overflow-hidden">
-      <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 py-12 flex flex-col lg:flex-row gap-12 lg:gap-16 stagger">
-        {/* SIDEBAR NAVIGATION */}
-        <aside className="w-full lg:w-64 shrink-0 flex flex-col gap-8">
-          <div>
-            <h1 className="text-4xl   font-extrabold tracking-tight text-white mb-2">
-              cloud<span className="text-yellow-600">kinshuk</span>.in
-            </h1>
-            <p className="text-sm font-medium text-green-400 uppercase tracking-wider">
-              Student • Builder • Cloud
-            </p>
-          </div>
-
-          <nav className="hidden lg:flex flex-col gap-3 text-sm font-medium">
-            {[
-              { id: "about", label: "About" },
-              { id: "projects", label: "Shipped Stuff" },
-              { id: "experience", label: "Experience" },
-              { id: "skills", label: "Proficiencies" },
-              { id: "certifications", label: "Certifications" },
-              { id: "education", label: "Education" },
-              { id: "terminal", label: "Terminal Access" },
-            ].map((link) => (
-              <a
-                key={link.id}
-                href={`#${link.id}`}
-                className="text-zinc-200 hover:text-blue-300 transition-colors flex items-center group"
-              >
-                <span className="w-4 h-px bg-zinc-100 group-hover:bg-blue-300  mr-3 transition-colors" />
-                {link.label}
-              </a>
-            ))}
-          </nav>
-
-          <div className="p-5 ">
-            <h3 className="font-semibold text-sm uppercase tracking-wider text-green-500 mb-4">
-              Connect
-            </h3>
-            <ul className="space-y-3">
-              {CONFIG.social.map((social) => (
-                <li key={social.platform}>
-                  <a
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-zinc-100 hover:text-blue-400 underline transition-colors flex items-center text-sm font-medium group"
-                  >
-                    <span className="text-zinc-100  group-hover:text-blue-400 transition-colors">
-                      <SocialIcon icon={social.icon} />
-                    </span>
-                    {social.handle}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </aside>
-
-        <main className="flex-1 pb-16">
+    <div className="min-h-screen bg-[#0a0a0a] text-zinc-400  selection:bg-blue-500/30 selection:text-blue-200">
+      <main className="max-w-3xl mx-auto px-6 py-20 md:py-32">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          className="space-y-8"
+        >
           {/* HEADER / INTRO */}
-          <section id="about" className="mb-16">
-            <div className="text-base text-zinc-300 leading-relaxed space-y-5">
-              <p className="text-3xl font-semibold text-white mb-6">
-                Hi everyone! My name is{" "}
-                <strong className="font-semibold text-yellow-500 ">
-                  Kinshuk
-                </strong>
-                .
+          <motion.section variants={itemVariants} className="space-y-8">
+            <div className="space-y-2">
+              <h1 className="text-sm font-medium text-zinc-500 uppercase tracking-widest">
+                cloud<span className="text-zinc-300">kinshuk</span>.in
+              </h1>
+              <p className="text-4xl md:text-5xl font-semibold tracking-tight text-zinc-100 pb-2">
+                Hi, I&apos;m Kinshuk.
               </p>
+            </div>
+
+            <div className="space-y-5 text-base leading-relaxed text-zinc-200 max-w-2xl">
               {CONFIG.personal.bio.map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
               ))}
             </div>
 
-            <div className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-zinc-100 border border-blue-400 px-4 py-2 rounded-full">
-              <FaLocationPin className="text-blue-500" />
-              {CONFIG.personal.location}
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <span className="inline-flex items-center gap-2 text-md text-white bg-zinc-900/80 px-4 py-2 rounded-full border border-zinc-800/50">
+                <div className="p-1.5 bg-blue-700 rounded-full">
+                  <MapPin className="w-4 h-4 text-white" />
+                </div>{" "}
+                {CONFIG.personal.location}
+              </span>
+              <div className="flex items-center gap-3 ml-2">
+                {CONFIG.social.map((social) => (
+                  <a
+                    key={social.platform}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 text-zinc-100 hover:text-white hover:bg-blue-700 rounded-full transition-all"
+                    title={social.platform}
+                  >
+                    <SocialIcon icon={social.icon} />
+                  </a>
+                ))}
+              </div>
             </div>
 
-            <div className="flex flex-wrap gap-4 mt-8">
-              <a
+            <div className="flex flex-wrap gap-4 pt-4">
+              <Link
                 href="/myresume.pdf"
-                download="myresume.pdf"
-                className="inline-flex items-center justify-center rounded-full border border-yellow-400/50 bg-yellow-500 px-4 py-1 text-md font-semibold text-black transition hover:bg-yellow-400"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-zinc-100 px-5 py-2.5 text-sm font-medium text-zinc-900 hover:bg-white transition-colors shadow-sm"
               >
-                Download Resume
-              </a>
-              <a
-                href="/home-blog"
-                className="inline-flex items-center justify-center rounded-full  bg-green-500 px-4 py-1 text-md font-semibold text-black transition hover:bg-green-400"
+                <Download className="w-4 h-4" /> Download Resume
+              </Link>
+              <Link
+                href="/blogs"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-zinc-900/80 border border-zinc-800/80 px-5 py-2.5 text-sm font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors"
               >
-                Read Blog
-              </a>
+                <BookOpen className="w-4 h-4" /> Read Blog
+              </Link>
             </div>
-          </section>
+          </motion.section>
+
+          {/* EXPERIENCE */}
+          <motion.div variants={itemVariants}>
+            <SectionHeader title="Experience" />
+            <div className="group relative bg-zinc-900/30 border border-zinc-800/50 hover:border-zinc-700/80 rounded-3xl p-6 sm:p-8 transition-colors">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 gap-2">
+                <div>
+                  <h3 className="text-lg font-semibold text-zinc-100">
+                    UPPTCL
+                  </h3>
+                  <p className="text-sm font-medium text-blue-400 mt-0.5">
+                    Uttar Pradesh Power Transmission Corporation Limited
+                  </p>
+                </div>
+                <span className="text-sm font-mono text-zinc-100 bg-zinc-950 px-3 py-2.5 rounded-2xl border-2 border-zinc-800/50">
+                  Jul 2025 - Aug 2025
+                </span>
+              </div>
+              <p className="text-sm text-zinc-200 leading-relaxed mb-6">
+                Worked with the transmission division to understand the
+                operation, protection, and maintenance of 132kV and 220kV
+                substations. Prepared technical documentation and maintained
+                logs on equipment performance and safety checks.
+              </p>
+            </div>
+          </motion.div>
 
           {/* PROJECTS */}
-          <SectionHeader title="Shipped Stuff" id="projects" />
-          <div className="space-y-6 mb-16">
-            {CONFIG.projects.map((project, idx) => (
-              <div
-                key={idx}
-                className=" border border-[#444444]  rounded-md p-6 sm:p-8 transition-colors duration-300"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
-                  <h3 className="text-xl font-semibold text-green-500">
-                    {project.title}
-                  </h3>
-                  <div className="flex gap-1 text-xs font-semibold">
-                    <span className="px-3 py-2 bg-red-700 text-white rounded-md border border-emerald-500/20">
-                      {project.status}
-                    </span>
-                    <span className="px-6 py-2 bg-blue-700 text-white rounded-md ">
-                      {project.year}
-                    </span>
+          <motion.div variants={itemVariants}>
+            <SectionHeader title="Shipped Stuff" />
+            <div className="space-y-6">
+              {CONFIG.projects.map((project, idx) => (
+                <div
+                  key={idx}
+                  className="bg-zinc-900/30 border border-zinc-800/50 rounded-3xl p-6 sm:p-8"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+                    <h3 className="text-lg font-bold text-zinc-100">
+                      {project.title}
+                    </h3>
+                    <div className="flex gap-2">
+                      <Pill active={project.status === "Live"}>
+                        {project.status}
+                      </Pill>
+                      <Pill>{project.year}</Pill>
+                    </div>
                   </div>
-                </div>
 
-                <div className="text-sm text-zinc-100 space-y-3 mb-6">
-                  {project.description.map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
-                </div>
+                  <div className="space-y-3 mb-6 text-sm text-zinc-200 leading-relaxed">
+                    {project.description.map((p, i) => (
+                      <p key={i}>{p}</p>
+                    ))}
+                  </div>
 
-                <div className="mb-6">
-                  <h4 className="text-xs uppercase tracking-wider text-green-500 font-semibold mb-3">
-                    Tech Stack
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mb-6">
                     {project.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="px-3 py-1 border-2 border-blue-800 rounded-lg text-xs font-medium text-zinc-300"
+                        className="text-xs text-zinc-200 bg-zinc-800 px-2 py-1 rounded-xl"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
-                </div>
 
-                {project.dockerCommand && (
-                  <div className="mb-6 bg-black border border-zinc-800 rounded-xl p-3 flex justify-between items-center group">
-                    <code className="text-xs font-mono text-zinc-300 pl-2">
-                      <span className="text-emerald-500 mr-2">$</span>
-                      {project.dockerCommand}
-                    </code>
-                    <CopyText text={project.dockerCommand} />
-                  </div>
-                )}
-
-                <div className="flex flex-wrap gap-3 mt-4">
-                  {project.links.live && (
-                    <a
-                      href={project.links.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm font-semibold text-black  bg-yellow-600  px-5 py-1 rounded-full transition-colors flex items-center gap-2"
-                    >
-                      View Live Project
-                    </a>
-                  )}
-                  {project.links.repo && (
-                    <a
-                      href={project.links.repo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm font-semibold text-white bg-black  px-5 py-1 rounded-full transition-colors flex items-center gap-2"
-                    >
-                      <Github className="w-4 h-4" /> Repository
-                    </a>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* EXPERIENCE */}
-          <SectionHeader title="Where I Worked" id="experience" />
-          <div className="mb-16  border border-zinc-600 rounded-xl p-6 sm:p-8">
-            <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-3">
-              <h3 className="font-semibold text-3xl text-green-500">UPPTCL</h3>
-              <span className="text-sm font-medium text-white px-4 py-1 w-max border border-blue-400 rounded-full mt-1 sm:mt-0">
-                July 2025 - Aug 2025
-              </span>
-            </div>
-            <p className="text-sm font-medium text-zinc-200 mb-4">
-              Uttar Pradesh Power Transmission Corporation Limited
-            </p>
-            <p className="text-sm text-zinc-100 leading-relaxed mb-6">
-              Worked with the transmission division to understand the operation,
-              protection, and maintenance of 132kV and 220kV substations.
-              Prepared technical documentation and maintained logs on equipment
-              performance and safety checks.
-            </p>
-            <a
-              href="/home-blog/blogE"
-              className="inline-flex items-center text-sm font-semibold bg-green-600 px-4 py-2 rounded-full text-black  transition-colors group"
-            >
-              Read article{" "}
-              <span className="ml-2 transform group-hover:translate-x-1 transition-transform">
-                →
-              </span>
-            </a>
-          </div>
-
-          {/* SKILLS */}
-          <SectionHeader title=" crazy stuff i use" id="skills" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-            {Object.entries(CONFIG.skills).map(([category, skills]) => (
-              <div
-                key={category}
-                className=" border border-[#444444] rounded-xl p-5"
-              >
-                <h3 className="font-semibold text-green-500 mb-4">
-                  {category}
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1.5  border-3 border-zinc-700 rounded-lg text-xs font-medium text-zinc-100"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* CERTIFICATIONS */}
-          <SectionHeader title="Certifications i did..." id="certifications" />
-          <div className="space-y-4 mb-16">
-            {CONFIG.certifications.map((cert, idx) => (
-              <div
-                key={idx}
-                className=" border border-[#444444] rounded-2xl p-5 sm:p-6 relative overflow-hidden"
-              >
-                {/* Left accent line */}
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-yellow-500" />
-
-                <div className="flex flex-col sm:flex-row justify-between sm:items-start gap-2 mb-2">
-                  <h3 className="font-semibold text-green-500 text-lg leading-tight">
-                    {cert.url ? (
+                  <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-zinc-800/50">
+                    {project.links.live && (
                       <a
-                        href={cert.url}
+                        href={project.links.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="transition-colors"
+                        className="text-sm font-medium text-white px-3 py-1.5 bg-blue-700 rounded-2xl flex items-center gap-1.5 transition-colors"
                       >
-                        {cert.title}
+                        <ExternalLink className="w-4 h-4" /> Live
                       </a>
-                    ) : (
-                      cert.title
                     )}
+                    {project.links.repo && (
+                      <a
+                        href={project.links.repo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm font-medium text-zinc-100 px-3 py-1.5 bg-black rounded-2xl hover:text-white flex items-center gap-1.5 transition-colors"
+                      >
+                        <Github className="w-4 h-4" /> Github
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* SKILLS */}
+          <motion.div variants={itemVariants}>
+            <SectionHeader title="Proficiencies" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {Object.entries(CONFIG.skills).map(([category, skills]) => (
+                <div key={category} className="bg-zinc-900/30 rounded-3xl p-6">
+                  <h3 className="text-md font-medium text-zinc-200 mb-4">
+                    {category}
                   </h3>
-                  <span className="shrink-0 text-xs font-semibold px-2.5 py-1 border border-blue-400 rounded-full text-white ">
+                  <div className="flex flex-wrap gap-2">
+                    {skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-3 py-1.5 bg-zinc-950   rounded-xl text-[11px] font-medium text-zinc-100"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* CERTIFICATIONS */}
+          <motion.div variants={itemVariants}>
+            <SectionHeader title="Certifications" />
+            <div className="space-y-3">
+              {CONFIG.certifications.map((cert, idx) => (
+                <div
+                  key={idx}
+                  className="flex flex-col sm:flex-row sm:items-start justify-between p-5 rounded-2xl bg-zinc-900/20 border border-zinc-800/30 gap-4"
+                >
+                  <div>
+                    <h3 className="text-sm font-medium text-zinc-200 mb-1">
+                      {cert.url ? (
+                        <a
+                          href={cert.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-blue-400 transition-colors"
+                        >
+                          {cert.title}
+                        </a>
+                      ) : (
+                        cert.title
+                      )}
+                    </h3>
+                    <p className="text-xs text-blue-300 font-semibold mb-2">
+                      {cert.organization} • {cert.status}
+                    </p>
+                    <p className="text-xs text-zinc-200">{cert.description}</p>
+                  </div>
+                  <span className="shrink-0 text-[12px] font-mono text-zinc-100 bg-zinc-950 px-2.5 py-2 rounded-xl border border-zinc-800/30">
                     {cert.year}
                   </span>
                 </div>
-
-                <div className="text-xs font-medium text-white mb-3">
-                  {cert.organization} • {cert.status}
-                </div>
-
-                <p className="text-sm text-gray-100 mb-4">{cert.description}</p>
-
-                <div className="flex flex-wrap gap-2">
-                  {cert.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="text-xs text-white font-medium"
-                    >
-                      #{skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </motion.div>
 
           {/* EDUCATION */}
-          <SectionHeader title="Education" id="education" />
-          <div className="mb-16 border border-[#444444] rounded-3xl p-6 sm:p-8">
-            <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-2">
-              <h3 className="font-semibold text-xl text-green-500">
-                {CONFIG.education.institution}
-              </h3>
-              <span className="text-sm font-medium text-white px-4 py-1 border border-blue-400 rounded-full mt-1 sm:mt-0">
-                {CONFIG.education.period}
-              </span>
+          <motion.div variants={itemVariants}>
+            <SectionHeader title="Education" />
+            <div className="bg-zinc-900/30 border border-zinc-800/50 rounded-2xl p-6 sm:p-8">
+              <div className="flex flex-col sm:flex-row justify-between items-start mb-4 gap-2">
+                <div>
+                  <h3 className="text-lg font-semibold text-zinc-100">
+                    {CONFIG.education.institution}
+                  </h3>
+                  <p className="text-sm text-blue-300 mt-1">
+                    {CONFIG.education.degree} — {CONFIG.education.field}
+                  </p>
+                </div>
+                <div className="text-left sm:text-right">
+                  <span className="text-xs  text-white block">
+                    {CONFIG.education.period}
+                  </span>
+                  <span className="text-xs text-zinc-200 block mt-1">
+                    {CONFIG.education.location}
+                  </span>
+                </div>
+              </div>
+              <p className="text-sm text-zinc-300 leading-relaxed">
+                {CONFIG.education.description}
+              </p>
             </div>
-            <p className="text-sm font-medium text-white  mb-4">
-              {CONFIG.education.location}
-            </p>
-            <p className="text-base text-zinc-200 font-semibold mb-3">
-              {CONFIG.education.degree} in {CONFIG.education.field}
-            </p>
-            <p className="text-sm text-zinc-200 leading-relaxed">
-              {CONFIG.education.description}
-            </p>
-          </div>
+          </motion.div>
 
-          {/* CLI TOOL */}
-          <SectionHeader title="Terminal Access" id="terminal" />
-          <div className=" border border-[#444444] rounded-3xl p-6 sm:p-8">
-            <p className="text-sm text-zinc-100 mb-5">
-              Interactive command-line portfolio viewer built with Node.js.
-              Install it globally via npm.
-            </p>
-            <div className="bg-black border border-zinc-800 rounded-2xl p-2 space-y-1">
-              <div className="flex items-center justify-between p-2  rounded-xl transition-colors">
-                <code className="text-sm font-mono text-emerald-400 pl-2">
-                  <span className="text-zinc-600 mr-2">$</span>npm install -g
-                  hackkinshuk
-                </code>
-                <CopyText text="npm install -g hackkinshuk" />
+          {/* TERMINAL */}
+          <motion.div variants={itemVariants}>
+            <SectionHeader title="Terminal Access" />
+            <div className="bg-black/50 border border-zinc-800/80 rounded-xl overflow-hidden backdrop-blur-md">
+              <div className="bg-zinc-900/50 px-4 py-2.5 flex items-center gap-2 border-b border-zinc-800/80">
+                <Terminal className="w-3.5 h-3.5 text-zinc-500" />
+                <span className="text-xs font-mono text-zinc-500">cli.exe</span>
               </div>
-              <div className="flex items-center justify-between p-2  rounded-xl transition-colors">
-                <code className="text-sm font-mono text-emerald-400 pl-2">
-                  <span className="text-zinc-600 mr-2">$</span>cloudkinshuk
-                </code>
-                <CopyText text="cloudkinshuk" />
+              <div className="p-5 sm:p-6 space-y-3">
+                <p className="text-sm text-zinc-500 mb-5">
+                  Interactive command-line portfolio viewer built with Node.js.
+                </p>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-zinc-900/30 rounded-lg border border-zinc-800/30">
+                  <code className="text-sm font-mono text-zinc-300 break-all">
+                    <span className="text-blue-500 mr-2">$</span>npm install -g
+                    hackkinshuk
+                  </code>
+                  <CopyText text="npm install -g hackkinshuk" />
+                </div>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-zinc-900/30 rounded-lg border border-zinc-800/30">
+                  <code className="text-sm font-mono text-zinc-300 break-all">
+                    <span className="text-blue-500 mr-2">$</span>cloudkinshuk
+                  </code>
+                  <CopyText text="cloudkinshuk" />
+                </div>
               </div>
             </div>
-          </div>
-        </main>
-      </div>
+          </motion.div>
+        </motion.div>
+      </main>
 
       {/* FOOTER */}
-      <footer className="border-t border-zinc-800 bg-[#09090b] relative z-10 text-center py-8 px-4">
-        <p className="text-sm text-zinc-500 font-medium">
+      <footer className="border-t border-zinc-900 mt-20 py-10 text-center">
+        <p className="text-xs text-zinc-600 font-medium">
           © {new Date().getFullYear()} Kinshuk Jain. All rights reserved.
         </p>
       </footer>

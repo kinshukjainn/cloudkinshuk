@@ -81,7 +81,7 @@ const Header = () => {
     <>
       <header
         ref={menuRef}
-        className="fixed top-0 left-0 right-0 z-50 bg-[#1e1e1e] text-white "
+        className="fixed top-0 left-0 right-0 z-50 bg-[#121212] text-white "
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
           <div className="flex items-center h-14 gap-2 md:gap-4 lg:gap-8">

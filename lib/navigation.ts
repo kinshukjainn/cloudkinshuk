@@ -38,8 +38,8 @@ export const navigation: NavSection[] = [
       { title: "Welcome to the Project Documentation", slug: "welcome" },
       { title: "Kosha : Your Person Cloud Storage System", slug: "kosha" },
       {
-        title: "EndVault : Your personal password manager",
-        slug: "endvault",
+        title: "opaque : Your personal password manager",
+        slug: "opaque",
       },
       {
         title: "My custom terminal theme called kijauk",

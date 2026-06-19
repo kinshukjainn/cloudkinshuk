@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
+import Recommendation from "./components/Recommendation";
 
 // --- CONFIGURATION ---
 const CONFIG = {
@@ -200,8 +201,8 @@ const CONFIG = {
         "Amazon Amplify",
       ],
       links: {
-        live: "https://endvault.cloudkinshuk.in",
-        repo: "https://github.com/kinshukjainn/endvault",
+        live: "https://opaque.cloudkinshuk.in",
+        repo: "https://github.com/kinshukjainn/opaque",
       },
       dockerCommand: "",
     },
@@ -369,6 +370,10 @@ export default function Home() {
                 <BookOpen className="w-4 h-4" /> Read Blog
               </Link>
             </div>
+          </motion.section>
+
+          <motion.section variants={itemVariants} className="space-y-6">
+            <Recommendation />
           </motion.section>
 
           {/* EXPERIENCE */}

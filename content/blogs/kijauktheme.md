@@ -1,16 +1,21 @@
 ---
-title: My Own Terminal Theme Named Kijauk
+title: Kijauk A terminal theme
 slug: kijauktheme
 description: A modern developer-focused Oh My Posh theme designed for clean workflows, Git awareness, and runtime visibility.
 ---
 
-# Kijauk Terminal Theme
+# About 
 
 Kijauk is a handcrafted **Oh My Posh terminal theme** built for developers who want a terminal that is both visually appealing and highly functional.
 
 The theme focuses on providing essential development context without overwhelming the terminal with unnecessary visual clutter. It combines a modern segmented layout, Git awareness, runtime visibility, and clean typography to create a productive command-line experience.
 
 Whether you're working on web applications, cloud infrastructure, automation scripts, or open-source projects, Kijauk is designed to keep important information visible while maintaining a clean and distraction-free workflow.
+
+
+## Repository Link 
+
+[kijauk-theme-githubrepo-click-here](https://github.com/kinshukjainn/kijauktheme)
 
 ---
 

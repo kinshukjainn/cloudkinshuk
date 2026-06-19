@@ -39,17 +39,27 @@ challenges along the way.
 - **Developer experience** — the OS, tools, and workflows that make building better
 - **Personal notes** — internships, lessons learned, and why I write at all
 
-## Published so far
+## Blogs published so far
 
 Here's everything on the blog to date, newest first:
 
-- **I Built My Own Google Drive — Here's How It Actually Works** *(Apr 2026)* — the real challenges of building a Drive-style app with S3, Clerk, NeonDB, and Route 53.
-- **Why Did I Start Blogging?** *(Feb 2026)* — on intentional writing as a commitment to clarity, growth, and community.
-- **My Experience with the UPPTCL Internship Program** *(Feb 2026)* — insights from interning at Uttar Pradesh Power Transmission Corporation Limited during my final year.
-- **Let's Understand the AWS Shared Responsibility Model** *(Jan 2026)* — where AWS's job ends and yours begins when securing the cloud.
-- **How AWS Lambda Scales Seamlessly** *(Dec 2025)* — the architecture and mechanisms behind serverless auto-scaling.
-- **Linux Is My Go-To OS for Development** *(Nov 2025)* — moving from a lifelong Windows setup to Linux for real dev work.
-- **How Instagram Is Engineered Under the Hood** *(Jun 2025)* — a high-level design tour of how Instagram scales.
+- [**I Built My Own Google Drive — Here's How It Actually Works**](https://cloudkinshuk.in/blogs/google-drive)  — the real challenges of building a Drive-style app with S3, Clerk, NeonDB, and Route 53.
+- [**Linux is go to OS for development**](https://cloudkinshuk.in/blogs/linux-is-go-to-os-for-development)  — This blog is about how linux is very good os for development and production
+- [**The AWS shared responsiblity model explained**](https://cloudkinshuk.in/blogs/the-aws-shared-responsibility-model-explained) — This blogs is about my thoughts and clear explaination of how the AWS shared responsiblity model works
+- [**How AWS Lambda Scales Seamlessly**](https://cloudkinshuk.in/blogs/how-aws-lambda-scales-seamlessly) — the architecture and mechanisms behind serverless auto-scaling.
+- [**How instagram is engineered under the hood**](https://cloudkinshuk.in/blogs/how-instagram-is-engineered-under-the-hood)  — This blogs is about my idea and thoughts about how instrgram is engineered under the hood
+- [**The Power of Blogging Why I'm Committed to Sharing Knowledge**](https://cloudkinshuk.in/blogs/the-power-of-blogging-why-im-committed-to-sharing-knowledge)  — This blogs is about my idea and thoughts about why i strated blogging
+
+
+
+## Product documentation published so far
+
+Here's everything on the blog to date, newest first:
+
+- [**Kosha — Your Personal Cloud Storage**](https://cloudkinshuk.in/blogs/kosha)  — A real cloud storage platform where your files never touch my server.
+Not a tutorial clone. Not a Firebase wrapper. A from-scratch reverse-engineering of the architecture behind Dropbox and Google Drive built by a student to actually understand how the real thing works.
+- [**opaque Your personal password manager**](https://cloudkinshuk.in/blogs/opaque)  — A zero-knowledge, end-to-end encrypted password vault built on Next.js, Clerk, and Neon.
+- [**My Own Terminal Theme Named Kijauk**](https://cloudkinshuk.in/blogs/kijauktheme) — Kijauk is a handcrafted **Oh My Posh terminal theme** built for developers who want a terminal that is both visually appealing and highly functional.
 
 > New posts land here as I keep learning — check back, or browse the full
 > directory to filter by topic and tag.
@@ -66,13 +76,13 @@ hear about it.
 
 ## Let's connect
 
-> Replace the placeholders below with your real handles.
 
-- **GitHub** — <https://github.com/your-username>
-- **LinkedIn** — <https://linkedin.com/in/your-handle>
-- **X (Twitter)** — <https://x.com/your-handle>
+
+- **GitHub** — <https://github.com/kinshukjainn>
+- **LinkedIn** — <https://linkedin.com/in/kinshukjainn>
+- **X (Twitter)** — <https://x.com/@realkinshuk04>
 - **Website** — <https://cloudkinshuk.in>
-- **Email** — <you@example.com>
+- **Email** — <kinshuk25jan04@gmail.com>
 - **Leave feedback** — <https://clkfeedbacks.cloudkinshuk.in/>
 
 Thanks for reading.

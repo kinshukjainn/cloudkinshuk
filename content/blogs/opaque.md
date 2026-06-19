@@ -1,14 +1,13 @@
 ---
-title: EndVault Your personal password manager
-slug: endvault
-description: This is the deep project documentation of endvault
+title: opaque Your personal password manager
+slug: opaque
+description: This is the deep project documentation of opaque
 ---
 
-# EndVault
 
 A zero-knowledge, end-to-end encrypted password vault built on Next.js, Clerk, and Neon.
 
-EndVault is built around one simple promise: **the server never sees your secrets.** Titles, usernames, passwords, URLs, notes  even the name of the service  get encrypted in your browser before they ever leave it. The backend only ever stores opaque ciphertext and IV blobs that it cannot read.
+opaque is built around one simple promise: **the server never sees your secrets.** Titles, usernames, passwords, URLs, notes even the name of the service get encrypted in your browser before they ever leave it. The backend only ever stores opaque ciphertext and IV blobs that it cannot read.
 
 If the database got dumped tomorrow, an attacker would walk away with nothing but noise.
 
@@ -18,7 +17,7 @@ If the database got dumped tomorrow, an attacker would walk away with nothing bu
 
 **Zero-knowledge.** Encryption and decryption both happen client-side. The API only ever touches ciphertext, so there's no code path where the server can read a plaintext secret.
 
-**Recoverable.** Your Vault Key gets wrapped twice: once by a key derived from your master password, and once by a key derived from a recovery phrase. Lose the password and you can still recover with the phrase  the server never holds either one.
+**Recoverable.** Your Vault Key gets wrapped twice: once by a key derived from your master password, and once by a key derived from a recovery phrase. Lose the password and you can still recover with the phrase the server never holds either one.
 
 **Fast.** The dashboard decrypts everything once when you unlock, then search, filtering, and favorites all run locally. The network only gets touched when you create, update, or delete an item.
 
@@ -30,12 +29,12 @@ If the database got dumped tomorrow, an attacker would walk away with nothing bu
 
 Each user has one vault holding typed items:
 
-| Type       | What it stores                              |
-| ---------- | ------------------------------------------- |
-| `login`    | Username / email, password, website         |
-| `note`     | Free-form secure note                       |
-| `card`     | Payment card details                        |
-| `identity` | Personal identity information               |
+| Type       | What it stores                      |
+| ---------- | ----------------------------------- |
+| `login`    | Username / email, password, website |
+| `note`     | Free-form secure note               |
+| `card`     | Payment card details                |
+| `identity` | Personal identity information       |
 
 Items can be favorited, sorted into folders, and searched instantly all against the decrypted copy that only ever exists in your browser.
 
@@ -43,28 +42,32 @@ Items can be favorited, sorted into folders, and searched instantly all against 
 
 ## Tech Stack
 
-| Layer      | Package / Version                                                    |
-| ---------- | -------------------------------------------------------------------- |
-| Framework  | `next` 16.2.6 · `react` 19.2.4 · `react-dom` 19.2.4                 |
-| Auth       | `@clerk/nextjs` ^7.4.0 · `svix` ^1.94.0 (webhook verification)      |
-| Database   | `@neondatabase/serverless` ^1.1.0 (Postgres)                         |
-| Crypto     | Web Crypto API · `@scure/bip39` ^2.2.0 (BIP39 recovery phrases)     |
-| Search     | `fuse.js` ^7.3.0 (client-side fuzzy search)                          |
-| UI         | `tailwindcss` ^4 · `framer-motion` ^12.39.0 · `lucide-react` ^1.16.0 · `react-icons` ^5.6.0 |
-| Content    | `react-markdown` ^10.1.0 · `remark-gfm` ^4.0.1 · `rehype-highlight` ^7.0.2 |
-| Tooling    | TypeScript ^5 · ESLint ^9 · `@tailwindcss/typography` ^0.5.19       |
+| Layer     | Package / Version                                                                           |
+| --------- | ------------------------------------------------------------------------------------------- |
+| Framework | `next` 16.2.6 · `react` 19.2.4 · `react-dom` 19.2.4                                         |
+| Auth      | `@clerk/nextjs` ^7.4.0 · `svix` ^1.94.0 (webhook verification)                              |
+| Database  | `@neondatabase/serverless` ^1.1.0 (Postgres)                                                |
+| Crypto    | Web Crypto API · `@scure/bip39` ^2.2.0 (BIP39 recovery phrases)                             |
+| Search    | `fuse.js` ^7.3.0 (client-side fuzzy search)                                                 |
+| UI        | `tailwindcss` ^4 · `framer-motion` ^12.39.0 · `lucide-react` ^1.16.0 · `react-icons` ^5.6.0 |
+| Content   | `react-markdown` ^10.1.0 · `remark-gfm` ^4.0.1 · `rehype-highlight` ^7.0.2                  |
+| Tooling   | TypeScript ^5 · ESLint ^9 · `@tailwindcss/typography` ^0.5.19                               |
 
 ---
 
 ## The Crypto Model
 
-The server stores wrapped keys and KDF parameters  never the keys themselves. Unlocking the vault on the client looks like this:
+The server stores wrapped keys and KDF parameters never the keys themselves. Unlocking the vault on the client looks like this:
 
 ```js
 // Derive a key from the master password using the stored salt + params,
 // then unwrap the Vault Key, entirely in the browser.
 const passwordKey = await deriveKey(masterPassword, kdf_salt, kdf_params);
-const vaultKey = await unwrap(wrapped_vault_key, wrapped_vault_key_iv, passwordKey);
+const vaultKey = await unwrap(
+  wrapped_vault_key,
+  wrapped_vault_key_iv,
+  passwordKey,
+);
 
 // Every item is decrypted locally with the Vault Key.
 const secret = await decrypt(item.ciphertext, item.iv, vaultKey);
@@ -80,11 +83,11 @@ The API routes (`/api/vault/init` and `/api/vault/items`) only persist and retur
 
 ### 1. Vault Initialization
 
-The browser generates a 256-bit Vault Key, derives a KEK from the master password (Argon2id + salt), and generates a BIP39 recovery phrase. The Vault Key is wrapped twice  once with the password KEK, once with a recovery KEK. Only the wrapped blobs and salt get sent to the server.
+The browser generates a 256-bit Vault Key, derives a KEK from the master password (Argon2id + salt), and generates a BIP39 recovery phrase. The Vault Key is wrapped twice once with the password KEK, once with a recovery KEK. Only the wrapped blobs and salt get sent to the server.
 
 ### 2. Unlock
 
-Fetch the `wrapped_vault_key` and salt, re-derive the KEK from the typed password, and unwrap the key locally. The AES-GCM auth tag means a wrong password simply fails to unwrap  no hashes are stored or compared server-side.
+Fetch the `wrapped_vault_key` and salt, re-derive the KEK from the typed password, and unwrap the key locally. The AES-GCM auth tag means a wrong password simply fails to unwrap no hashes are stored or compared server-side.
 
 ### 3. Add / Edit Item
 
@@ -96,7 +99,7 @@ The server returns raw ciphertext rows. The browser decrypts them into memory, a
 
 ### 5. Forgot Master Password
 
-Enter the 12-word recovery phrase, derive the recovery key, unwrap the Vault Key via `recovery_wrapped_key`, then immediately set a new master password  which re-wraps the Vault Key. All existing entries stay untouched.
+Enter the 12-word recovery phrase, derive the recovery key, unwrap the Vault Key via `recovery_wrapped_key`, then immediately set a new master password which re-wraps the Vault Key. All existing entries stay untouched.
 
 ### 6. Account Deletion
 
@@ -115,8 +118,8 @@ The Clerk `user.deleted` webhook deletes the user row, and Postgres `ON DELETE C
 ### Install
 
 ```bash
-git clone https://github.com/your-username/endvault.git
-cd endvault
+git clone https://github.com/your-username/opaque.git
+cd opaque
 npm install
 ```
 
@@ -151,7 +154,7 @@ Point a Clerk webhook at `/api/webhooks/clerk` and subscribe to the `user.delete
 
 ## Security Note
 
-EndVault leans entirely on client-side cryptography. The master password and recovery phrase never reach the server, so they **cannot be reset for you**. If you lose both, your data is genuinely unrecoverable. That's the tradeoff that makes zero-knowledge actually mean something.
+opaque leans entirely on client-side cryptography. The master password and recovery phrase never reach the server, so they **cannot be reset for you**. If you lose both, your data is genuinely unrecoverable. That's the tradeoff that makes zero-knowledge actually mean something.
 
 ---
 

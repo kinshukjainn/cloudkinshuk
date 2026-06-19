@@ -54,7 +54,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search docs..."
+          placeholder="Search docs/blogs"
           className="w-full rounded-md border border-[#444444] bg-[#313131] py-2 pl-10 pr-3 text-md text-white placeholder:text-zinc-500 outline-none transition-colors"
         />
       </div>

@@ -41,6 +41,10 @@ export const navigation: NavSection[] = [
         title: "EndVault : Your personal password manager",
         slug: "endvault",
       },
+      {
+        title: "My custom terminal theme called kijauk",
+        slug: "kijauktheme",
+      },
     ],
   },
 ];

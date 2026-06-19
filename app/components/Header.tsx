@@ -81,7 +81,7 @@ const Header = () => {
     <>
       <header
         ref={menuRef}
-        className="fixed top-0 left-0 right-0 z-50 bg-[#121212] text-white "
+        className="fixed top-0 left-0 right-0 z-50 bg-[#1e1e1e] text-white "
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
           <div className="flex items-center h-14 gap-2 md:gap-4 lg:gap-8">
@@ -112,11 +112,11 @@ const Header = () => {
                   key={item.href}
                   href={item.href}
                   className={`
-                    flex items-center gap-1.5 md:px-2 lg:px-3 py-1.5 rounded-2xl whitespace-nowrap transition-colors
+                    flex items-center gap-1.5 md:px-3 lg:px-5 py-1 rounded-md whitespace-nowrap transition-colors
                     md:text-sm lg:text-base font-medium
                     ${
                       isActive(item.href)
-                        ? "text-white bg-blue-800 "
+                        ? "text-black bg-green-400 "
                         : "text-gray-200 hover:text-white hover:bg-[#252525]"
                     }
                   `}
@@ -186,7 +186,7 @@ const Header = () => {
                   flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium transition-colors
                   ${
                     isActive(item.href)
-                      ? "bg-green-500/10 text-green-400"
+                      ? "bg-green-400 text-black"
                       : "text-gray-300 hover:bg-[#252525] hover:text-white"
                   }
                 `}

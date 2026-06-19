@@ -1,16 +1,21 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useDeferredValue } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navigation } from "@/lib/navigation";
 
 export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
+
+  // State for immediate input feedback
   const [query, setQuery] = useState("");
+  // Deferred value for heavy filtering without blocking the main thread (makes typing faster)
+  const deferredQuery = useDeferredValue(query);
+
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
 
-  const q = query.trim().toLowerCase();
+  const q = deferredQuery.trim().toLowerCase();
 
   const sections = useMemo(() => {
     if (!q) return navigation;
@@ -34,11 +39,11 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
 
   return (
     <nav className="flex flex-col gap-6 text-sm">
-      {/* Search - Material 3 Deep Pill Shape */}
-      <div className="relative group px-2 md:px-0">
+      {/* Search - Pragmatic and sharp */}
+      <div className="relative px-1 md:px-0">
         <svg
           viewBox="0 0 24 24"
-          className="pointer-events-none absolute left-6 md:left-4 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-[#C4C6CA] transition-colors group-focus-within:text-[#A8C7FA]"
+          className="pointer-events-none absolute left-4 md:left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-green-500"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
@@ -50,7 +55,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search docs..."
-          className="w-full rounded-full bg-[#1E1F22] py-3.5 pl-12 pr-4 text-[15px] text-[#E2E2E6] placeholder:text-[#8C8E91] outline-none transition-all focus:bg-[#282A2E] focus:ring-2 focus:ring-[#A8C7FA] shadow-sm"
+          className="w-full rounded-md border border-[#444444] bg-[#313131] py-2 pl-10 pr-3 text-md text-white placeholder:text-zinc-500 outline-none transition-colors"
         />
       </div>
 
@@ -61,23 +66,23 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
           return (
             <div
               key={section.title}
-              className="flex flex-col gap-1 px-2 md:px-0"
+              className="flex flex-col gap-1 px-1 md:px-0"
             >
               <button
                 onClick={() => toggle(section.title)}
-                className="group flex w-full items-center justify-between px-4 py-2.5 text-[14px] font-medium tracking-wide text-[#E2E2E6] transition-colors hover:text-[#A8C7FA] active:bg-[#1E1F22] rounded-full"
+                className="group flex w-full items-center justify-between rounded-md px-2 py-1.5 text-sm font-bold text-green-500 transition-colors "
               >
                 {section.title}
                 <svg
                   viewBox="0 0 24 24"
-                  className={`h-[18px] w-[18px] transition-transform duration-300 ease-in-out ${
+                  className={`h-5 w-5 transition-transform duration-200 ${
                     open
-                      ? "rotate-0 text-[#A8C7FA]"
-                      : "-rotate-90 text-[#8C8E91] group-hover:text-[#A8C7FA]"
+                      ? "rotate-0 cursor-pointer text-green-400"
+                      : "-rotate-90 cursor-pointer text-green-600 group-hover:text-green-400"
                   }`}
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
+                  strokeWidth="2.5"
                 >
                   <path
                     d="m6 9 6 6 6-6"
@@ -88,25 +93,25 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
               </button>
 
               <div
-                className={`grid transition-all duration-300 ease-in-out ${
+                className={`grid transition-all duration-200 ease-in-out ${
                   open
                     ? "grid-rows-[1fr] opacity-100"
                     : "grid-rows-[0fr] opacity-0"
                 }`}
               >
-                <ul className="flex flex-col overflow-hidden">
+                <ul className="flex flex-col overflow-hidden pl-2">
                   {section.items.map((item) => {
                     const active = isActive(item.slug);
                     return (
-                      <li key={item.slug} className="mt-1">
+                      <li key={item.slug} className="mt-0.5">
                         <Link
                           href={`/blogs/${item.slug}`}
                           aria-current={active ? "page" : undefined}
                           onClick={onNavigate}
-                          className={`block w-full rounded-xl px-3 py-1 text-[14px] transition-all duration-200 ${
+                          className={`block w-full rounded-md px-3 py-1.5 text-sm transition-colors ${
                             active
-                              ? "bg-blue-800 font-semibold text-white"
-                              : "text-[#C4C6CA] hover:bg-[#1E1F22] hover:text-[#E2E2E6]"
+                              ? "bg-green-300 font-medium text-black"
+                              : "text-zinc-300 hover:bg-zinc-800 hover:text-zinc-200"
                           }`}
                         >
                           {item.title}
@@ -121,8 +126,8 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         })}
 
         {sections.length === 0 && (
-          <div className="mx-2 rounded-2xl bg-[#1E1F22] p-5 text-center md:mx-0">
-            <p className="text-[14px] text-[#C4C6CA]">No results found.</p>
+          <div className="mx-1 rounded-md border border-zinc-800 bg-zinc-900/50 p-4 text-center md:mx-0">
+            <p className="text-sm text-zinc-400">No results found.</p>
           </div>
         )}
       </div>

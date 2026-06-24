@@ -8,12 +8,14 @@ import {
   PT_Sans,
   Geist_Mono,
   Roboto,
+  IBM_Plex_Sans,
   DM_Sans,
   Cabin_Sketch,
   Ubuntu_Sans,
   Public_Sans,
   Rubik,
   Work_Sans,
+  Open_Sans,
 } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
@@ -38,6 +40,13 @@ const cabinSketch = Cabin_Sketch({
   variable: "--font-cabin-sketch", // optional
 });
 
+export const ibmPlexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-ibm-plex-sans",
+});
+
 const publicSans = Public_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
@@ -57,7 +66,12 @@ export const lucideSans = localFont({
   weight: "400",
   display: "swap",
 });
-
+export const openSans = Open_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-open-sans",
+});
 export const verdana = localFont({
   src: "../public/fonts/Verdana.woff2",
   variable: "--font-verdana",
@@ -139,7 +153,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-google-analytics-opt-out="">
       <body
-        className={`${inter.variable} ${rubik.variable} ${dmSans.variable} ${verdana.variable} ${cabinSketch.variable} ${publicSans.variable} ${geistMono.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
+        className={`${inter.variable} ${openSans.variable} ${ibmPlexSans.variable} ${rubik.variable} ${dmSans.variable} ${verdana.variable} ${cabinSketch.variable} ${publicSans.variable} ${geistMono.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >
         <Header />
         {children}

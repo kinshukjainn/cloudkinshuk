@@ -12,7 +12,6 @@ import {
   MapPin,
 } from "lucide-react";
 import Link from "next/link";
-import { motion, Variants } from "framer-motion";
 import Recommendation from "./components/Recommendation";
 
 // --- CONFIGURATION ---
@@ -218,24 +217,6 @@ const CONFIG = {
   },
 };
 
-// --- ANIMATION VARIANTS ---
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.05, delayChildren: 0.1 },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 10 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { type: "tween", ease: "easeOut", duration: 0.4 },
-  },
-};
-
 // --- COMPONENTS ---
 const CopyText = ({ text }: { text: string }) => {
   const [copied, setCopied] = useState(false);
@@ -310,16 +291,11 @@ const Pill = ({
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#1e1e1e] text-zinc-300 selection:bg-green-700/30 selection:text-green-200">
+    <div className="min-h-screen bg-[#161923] text-zinc-300 selection:bg-green-700/30 selection:text-green-200">
       <main className="max-w-3xl mx-auto px-6 py-16 md:py-24">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
-          className="space-y-10"
-        >
+        <div className="space-y-10">
           {/* HEADER / INTRO */}
-          <motion.section variants={itemVariants} className="space-y-6">
+          <section className="space-y-6">
             <div className="space-y-1">
               <h1 className="text-xs font-bold text-zinc-500 uppercase tracking-widest">
                 cloud<span className="text-zinc-300">kinshuk</span>.in
@@ -336,7 +312,7 @@ export default function Home() {
             </div>
 
             <div className="flex flex-wrap items-center gap-4 pt-2">
-              <span className="inline-flex items-center gap-2 text-sm text-zinc-200 bg-[#252526] px-3 py-1.5 rounded-md border border-zinc-700">
+              <span className="inline-flex items-center gap-2 text-sm text-zinc-200 bg-[#1b1f2b] px-3 py-1.5 rounded-md border border-zinc-800">
                 <MapPin className="w-4 h-4 text-zinc-400" />
                 {CONFIG.personal.location}
               </span>
@@ -347,7 +323,7 @@ export default function Home() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 text-zinc-400 hover:text-white hover:bg-zinc-700 rounded-md transition-colors border border-transparent hover:border-zinc-600"
+                    className="p-2 text-zinc-400 hover:text-white hover:bg-[#1b1f2b] rounded-md transition-colors border border-transparent hover:border-zinc-800"
                     title={social.platform}
                   >
                     <SocialIcon icon={social.icon} />
@@ -365,21 +341,21 @@ export default function Home() {
               </Link>
               <Link
                 href="/blogs"
-                className="inline-flex items-center justify-center gap-2 rounded-md bg-[#252526] border border-zinc-600 px-5 py-2.5 text-sm font-bold text-zinc-200 hover:bg-zinc-700 hover:text-white transition-colors"
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-green-700 px-5 py-2.5 text-sm font-bold text-white hover:bg-green-600 transition-colors shadow-sm"
               >
                 <BookOpen className="w-4 h-4" /> Read Blog
               </Link>
             </div>
-          </motion.section>
+          </section>
 
-          <motion.section variants={itemVariants} className="space-y-6">
+          <section className="space-y-6">
             <Recommendation />
-          </motion.section>
+          </section>
 
           {/* EXPERIENCE */}
-          <motion.div variants={itemVariants}>
+          <div>
             <SectionHeader title="Experience" />
-            <div className="bg-[#252526] border border-zinc-700 rounded-md p-6">
+            <div className="bg-[#1b1f2b] border border-zinc-800 rounded-md p-6">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 gap-2">
                 <div>
                   <h3 className="text-lg font-bold text-white">UPPTCL</h3>
@@ -387,7 +363,7 @@ export default function Home() {
                     Uttar Pradesh Power Transmission Corporation Limited
                   </p>
                 </div>
-                <span className="text-xs font-mono text-zinc-300 bg-[#1e1e1e] px-2.5 py-1 rounded-md border border-zinc-700">
+                <span className="text-xs font-mono text-zinc-300 bg-[#161923] px-2.5 py-1 rounded-md border border-zinc-800">
                   Jul 2025 - Aug 2025
                 </span>
               </div>
@@ -398,16 +374,16 @@ export default function Home() {
                 logs on equipment performance and safety checks.
               </p>
             </div>
-          </motion.div>
+          </div>
 
           {/* PROJECTS */}
-          <motion.div variants={itemVariants}>
+          <div>
             <SectionHeader title="Shipped Stuff" />
             <div className="space-y-6">
               {CONFIG.projects.map((project, idx) => (
                 <div
                   key={idx}
-                  className="bg-[#252526] border border-zinc-700 rounded-md p-6"
+                  className="bg-[#1b1f2b] border border-zinc-800 rounded-md p-6"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
                     <h3 className="text-lg font-bold text-white">
@@ -431,14 +407,14 @@ export default function Home() {
                     {project.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="text-xs font-medium text-zinc-300 bg-[#1e1e1e] border border-zinc-700 px-2.5 py-1 rounded-md"
+                        className="text-xs font-medium text-zinc-300 bg-[#161923] border border-zinc-800 px-2.5 py-1 rounded-md"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-zinc-700">
+                  <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-zinc-800/50">
                     {project.links.live && (
                       <a
                         href={project.links.live}
@@ -454,7 +430,7 @@ export default function Home() {
                         href={project.links.repo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm font-bold text-zinc-200 px-3 py-1.5 bg-[#1e1e1e] border border-zinc-600 rounded-md hover:bg-zinc-700 hover:text-white flex items-center gap-1.5 transition-colors"
+                        className="text-sm font-bold text-zinc-200 px-3 py-1.5 bg-black border border-zinc-800 rounded-md hover:bg-zinc-900 hover:text-white flex items-center gap-1.5 transition-colors"
                       >
                         <Github className="w-4 h-4" /> Github
                       </a>
@@ -463,16 +439,16 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* SKILLS */}
-          <motion.div variants={itemVariants}>
+          <div>
             <SectionHeader title="Proficiencies" />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {Object.entries(CONFIG.skills).map(([category, skills]) => (
                 <div
                   key={category}
-                  className="bg-[#252526] border border-zinc-700 rounded-md p-5"
+                  className="bg-[#1b1f2b] border border-zinc-800 rounded-md p-5"
                 >
                   <h3 className="text-sm font-bold text-white mb-3">
                     {category}
@@ -481,7 +457,7 @@ export default function Home() {
                     {skills.map((skill) => (
                       <span
                         key={skill}
-                        className="px-2.5 py-1 bg-[#1e1e1e] border border-zinc-700 rounded-md text-sm font-medium text-zinc-300"
+                        className="px-2.5 py-1 bg-[#161923] border border-zinc-800 rounded-md text-sm font-medium text-zinc-300"
                       >
                         {skill}
                       </span>
@@ -490,16 +466,16 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* CERTIFICATIONS */}
-          <motion.div variants={itemVariants}>
+          <div>
             <SectionHeader title="Certifications" />
             <div className="space-y-3">
               {CONFIG.certifications.map((cert, idx) => (
                 <div
                   key={idx}
-                  className="flex flex-col sm:flex-row sm:items-start justify-between p-5 rounded-md bg-[#252526] border border-zinc-700 gap-4"
+                  className="flex flex-col sm:flex-row sm:items-start justify-between p-5 rounded-md bg-[#1b1f2b] border border-zinc-800 gap-4"
                 >
                   <div>
                     <h3 className="text-sm font-bold text-white mb-1">
@@ -521,18 +497,18 @@ export default function Home() {
                     </p>
                     <p className="text-sm text-zinc-300">{cert.description}</p>
                   </div>
-                  <span className="shrink-0 text-xs font-mono text-zinc-300 bg-[#1e1e1e] px-2.5 py-1 rounded-md border border-zinc-700">
+                  <span className="shrink-0 text-xs font-mono text-zinc-300 bg-[#161923] px-2.5 py-1 rounded-md border border-zinc-800">
                     {cert.year}
                   </span>
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* EDUCATION */}
-          <motion.div variants={itemVariants}>
+          <div>
             <SectionHeader title="Education" />
-            <div className="bg-[#252526] border border-zinc-700 rounded-md p-6">
+            <div className="bg-[#1b1f2b] border border-zinc-800 rounded-md p-6">
               <div className="flex flex-col sm:flex-row justify-between items-start mb-4 gap-2">
                 <div>
                   <h3 className="text-lg font-bold text-white">
@@ -543,7 +519,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="text-left sm:text-right">
-                  <span className="text-xs font-bold text-zinc-300 bg-[#1e1e1e] px-2.5 py-1 rounded-md border border-zinc-700 inline-block">
+                  <span className="text-xs font-bold text-zinc-300 bg-[#161923] px-2.5 py-1 rounded-md border border-zinc-800 inline-block">
                     {CONFIG.education.period}
                   </span>
                   <span className="text-xs text-zinc-400 block mt-2">
@@ -555,13 +531,13 @@ export default function Home() {
                 {CONFIG.education.description}
               </p>
             </div>
-          </motion.div>
+          </div>
 
           {/* TERMINAL */}
-          <motion.div variants={itemVariants}>
+          <div>
             <SectionHeader title="Terminal Access" />
-            <div className="bg-black border border-zinc-700 rounded-md overflow-hidden">
-              <div className="bg-[#1e1e1e] px-4 py-2 flex items-center gap-2 border-b border-zinc-700">
+            <div className="bg-black border border-zinc-800 rounded-md overflow-hidden">
+              <div className="bg-[#161923] px-4 py-2 flex items-center gap-2 border-b border-zinc-800">
                 <Terminal className="w-4 h-4 text-zinc-400" />
                 <span className="text-xs font-mono font-bold text-zinc-400">
                   cli.sh
@@ -571,14 +547,14 @@ export default function Home() {
                 <p className="text-sm text-zinc-400">
                   Interactive command-line portfolio viewer built with Node.js.
                 </p>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-[#1e1e1e] rounded-md border border-zinc-800">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-[#1b1f2b] rounded-md border border-zinc-800/50">
                   <code className="text-sm font-mono text-zinc-300 break-all">
                     <span className="text-green-500 mr-2">$</span>npm install -g
                     hackkinshuk
                   </code>
                   <CopyText text="npm install -g hackkinshuk" />
                 </div>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-[#1e1e1e] rounded-md border border-zinc-800">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-[#1b1f2b] rounded-md border border-zinc-800/50">
                   <code className="text-sm font-mono text-zinc-300 break-all">
                     <span className="text-green-500 mr-2">$</span>cloudkinshuk
                   </code>
@@ -586,12 +562,12 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </main>
 
       {/* FOOTER */}
-      <footer className="border-t border-zinc-800 mt-16 py-8 text-center">
+      <footer className="border-t border-zinc-800/50 mt-16 py-8 text-center">
         <p className="text-xs text-zinc-500 font-medium">
           © {new Date().getFullYear()} Kinshuk Jain. All rights reserved.
         </p>

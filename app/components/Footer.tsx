@@ -57,7 +57,7 @@ const navLinks: NavLink[] = [
 
 const Footer = () => {
   return (
-    <footer className="bg-[#1e1e1e] rounded-t-4xl border-t border-[#444444] relative overflow-hidden">
+    <footer className="bg-[#161923] rounded-t-4xl border-t border-[#444444] relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 relative z-10">
         <div className="flex flex-col items-center space-y-10">
           {/* Logo and brand section */}

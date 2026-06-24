@@ -79,7 +79,7 @@ const components: Components = {
   hr: () => <hr className="my-8 border-t border-zinc-700" />,
   pre: (p) => (
     <pre
-      className="mt-6 mb-6 max-w-full overflow-x-auto rounded-md border border-zinc-700 bg-[#1e1e1e] p-4 text-sm leading-normal text-zinc-200 scrollbar-thin scrollbar-track-zinc-800 scrollbar-thumb-zinc-500"
+      className="mt-6 mb-6 max-w-full overflow-x-auto rounded-md border border-zinc-700 bg-[#161923] p-4 text-sm leading-normal text-zinc-200 scrollbar-thin scrollbar-track-zinc-800 scrollbar-thumb-zinc-500"
       {...omitNode(p)}
     />
   ),

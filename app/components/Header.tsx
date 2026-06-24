@@ -81,7 +81,7 @@ const Header = () => {
     <>
       <header
         ref={menuRef}
-        className="fixed top-0 left-0 right-0 z-50 bg-[#121212] text-white "
+        className="fixed top-0 left-0 right-0 z-50 bg-[#161923] text-white "
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
           <div className="flex items-center h-14 gap-2 md:gap-4 lg:gap-8">
@@ -99,8 +99,9 @@ const Header = () => {
                   className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
                 />
               </div>
-              <span className="font-semibold  text-white leading-none text-base sm:text-2xl lg:text-3xl truncate">
-                Cloudkinshuk <span className="text-yellow-500">.in</span>
+              <span className="font-thin  text-gray-400 leading-none text-base sm:text-3xl lg:text-4xl truncate">
+                Cloudkinshuk{" "}
+                <span className="text-yellow-500 font-normal">.in</span>
               </span>
             </Link>
 
@@ -112,11 +113,11 @@ const Header = () => {
                   key={item.href}
                   href={item.href}
                   className={`
-                    flex items-center gap-1.5 md:px-3 lg:px-5 py-1 rounded-md whitespace-nowrap transition-colors
+                    flex items-center gap-1.5 md:px-3 lg:px-5 py-1  whitespace-nowrap transition-colors
                     md:text-sm lg:text-base font-medium
                     ${
                       isActive(item.href)
-                        ? "text-black bg-green-400 "
+                        ? "text-white border-b-2 border-blue-400 "
                         : "text-gray-200 hover:text-white hover:bg-[#252525]"
                     }
                   `}
@@ -149,7 +150,7 @@ const Header = () => {
 
               {/* Mobile Menu Toggle (Visible below md) */}
               <button
-                className="md:hidden cursor-pointer flex items-center rounded-full justify-center p-2 bg-[#eeeeee] text-[#333333] hover:bg-[#dddddd] active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-white/20"
+                className="md:hidden cursor-pointer flex items-center rounded-full justify-center p-2  text-white  active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-white/20"
                 onClick={() => setIsOpen((prev) => !prev)}
                 aria-label={isOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isOpen}
@@ -168,7 +169,7 @@ const Header = () => {
         {/* ── Mobile Drawer (< md) ── */}
         <div
           id="mobile-menu"
-          className="md:hidden overflow-hidden bg-black transition-[max-height] duration-300 ease-in-out absolute w-full top-14 left-0 z-40 shadow-2xl"
+          className="md:hidden overflow-hidden bg-[#161923] transition-[max-height] duration-300 ease-in-out absolute w-full top-14 left-0 z-40 shadow-2xl"
           style={{ maxHeight: isOpen ? `${drawerHeight}px` : "0px" }}
           aria-hidden={!isOpen}
         >
@@ -186,8 +187,8 @@ const Header = () => {
                   flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium transition-colors
                   ${
                     isActive(item.href)
-                      ? "bg-green-400 text-black"
-                      : "text-gray-300 hover:bg-[#252525] hover:text-white"
+                      ? "text-yellow-300"
+                      : "text-gray-300  hover:text-white"
                   }
                 `}
                 tabIndex={isOpen ? 0 : -1}

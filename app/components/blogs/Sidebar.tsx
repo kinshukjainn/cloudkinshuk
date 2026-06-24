@@ -38,7 +38,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   };
 
   return (
-    <nav className="flex flex-col gap-6 text-sm">
+    <nav className="flex flex-col sidebar-font gap-6 text-sm">
       {/* Search - Pragmatic and sharp */}
       <div className="relative px-1 md:px-0">
         <svg
@@ -55,7 +55,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search docs/blogs"
-          className="w-full rounded-md border border-[#444444] bg-[#313131] py-2 pl-10 pr-3 text-md text-white placeholder:text-zinc-500 outline-none transition-colors"
+          className="w-full rounded-md border sidebar-font border-[#444444] bg-[#313131] py-2 pl-10 pr-3 text-md text-white placeholder:text-zinc-500 outline-none transition-colors"
         />
       </div>
 
@@ -70,7 +70,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
             >
               <button
                 onClick={() => toggle(section.title)}
-                className="group flex w-full items-center justify-between rounded-md px-2 py-1.5 text-sm font-bold text-green-500 transition-colors "
+                className="group flex w-full items-center justify-between rounded-md px-2 py-1.5 text-lg font-normal text-white transition-colors "
               >
                 {section.title}
                 <svg
@@ -110,8 +110,8 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                           onClick={onNavigate}
                           className={`block w-full rounded-md px-3 py-1.5 text-sm transition-colors ${
                             active
-                              ? "bg-green-300 font-medium text-black"
-                              : "text-zinc-300 hover:bg-zinc-800 hover:text-zinc-200"
+                              ? " font-normal text-yellow-200"
+                              : "text-zinc-100 hover:bg-zinc-800 hover:text-zinc-200"
                           }`}
                         >
                           {item.title}

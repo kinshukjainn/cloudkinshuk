@@ -15,7 +15,7 @@ export default function DocsLayout({
 }) {
   return (
     <div
-      className="min-h-screen bg-[#1e1e1e] text-zinc-300 selection:bg-blue-500/30 selection:text-blue-100"
+      className="min-h-screen bg-[#161923] text-zinc-300 selection:bg-blue-500/30 selection:text-blue-100"
       style={
         {
           "--header-h": HEADER_HEIGHT,
@@ -67,16 +67,16 @@ export function MobileDocsNav() {
     <>
       {/* Sticky Mobile Header - Clean and sharp */}
       <div
-        className="sticky z-40 flex items-center justify-between border-b border-zinc-800 bg-[#1e1e1e]/95 px-4 py-3 backdrop-blur-md md:hidden"
+        className="sticky z-40 flex items-center justify-between border-b border-zinc-800 bg-[#161923]/95 px-4 py-3 backdrop-blur-md md:hidden"
         style={{ top: "var(--header-h)" }}
       >
         <div className="flex items-center gap-2.5">
           <svg
             viewBox="0 0 24 24"
             fill="none"
-            className="h-5 w-5 text-blue-400"
+            className="h-5 w-5 text-white"
             stroke="currentColor"
-            strokeWidth="2.5"
+            strokeWidth="5"
           >
             <path
               strokeLinecap="round"
@@ -84,7 +84,7 @@ export function MobileDocsNav() {
               d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
             />
           </svg>
-          <span className="text-[16px] font-bold tracking-tight text-white">
+          <span className="text-[24px] font-normal tracking-tight text-white">
             Documentation
           </span>
         </div>
@@ -122,9 +122,9 @@ export function MobileDocsNav() {
           />
 
           {/* Drawer Content - Flush edges, squared off */}
-          <div className="relative flex w-[80vw] max-w-[320px] flex-col border-r border-zinc-700 bg-[#1e1e1e] shadow-2xl transition-transform duration-300 animate-in slide-in-from-left">
+          <div className="relative flex w-[80vw] max-w-[320px] flex-col border-r border-zinc-700 bg-[#161923] shadow-2xl transition-transform duration-300 animate-in slide-in-from-left">
             <div className="flex items-center justify-between border-b border-zinc-800 px-5 py-4">
-              <span className="text-sm font-bold tracking-wider text-green-500">
+              <span className="text-xl font-normal tracking-wider text-white">
                 Navigation
               </span>
               <button

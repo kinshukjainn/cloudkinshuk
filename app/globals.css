@@ -2,11 +2,14 @@
 
 body {
   background-color: #1e1e1e;
-  font-family: system-ui, sans-serif;
+  font-family: var(--font-open-sans), sans-serif;
 }
 
 .desc-font {
   font-family: var(--font-rubik), sans-serif;
+}
+.sidebar-font {
+  font-family: var(--font-ibm-plex-sans), sans-serif;
 }
 
 .prose pre code {

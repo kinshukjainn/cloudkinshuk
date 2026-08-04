@@ -214,7 +214,7 @@ const CONFIG = {
     location: "Noida, Uttar Pradesh",
     period: "2022 - 2026",
     description:
-      "Pursuing electrical engineering while self-learning cloud technologies and software development. Focusing on the intersection of traditional engineering and modern cloud computing.",
+      "B.Tech graduate in Electrical Engineering, passionate about cloud computing and software development. Built practical skills through self-learning, focusing on the convergence of traditional engineering and modern cloud technologies.",
   },
 };
 

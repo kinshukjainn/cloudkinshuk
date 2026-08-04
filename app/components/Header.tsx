@@ -81,7 +81,7 @@ const Header = () => {
     <>
       <header
         ref={menuRef}
-        className="fixed top-0 left-0 right-0 z-50 bg-[#161923] text-white "
+        className="fixed top-0 left-0 right-0 z-50 bg-black text-white "
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
           <div className="flex items-center h-14 gap-2 md:gap-4 lg:gap-8">
@@ -99,7 +99,7 @@ const Header = () => {
                   className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
                 />
               </div>
-              <span className="font-thin  text-gray-400 leading-none text-base sm:text-3xl lg:text-4xl truncate">
+              <span className="font-bold  text-white leading-none text-base sm:text-xl lg:text-2xl truncate">
                 Cloudkinshuk{" "}
                 <span className="text-yellow-500 font-normal">.in</span>
               </span>
@@ -113,12 +113,12 @@ const Header = () => {
                   key={item.href}
                   href={item.href}
                   className={`
-                    flex items-center gap-1.5 md:px-3 lg:px-5 py-1  whitespace-nowrap transition-colors
+                    flex items-center gap-1.5 md:px-3 lg:px-5 py-1  whitespace-nowrap transition-colors rounded-full
                     md:text-sm lg:text-base font-medium
                     ${
                       isActive(item.href)
-                        ? "text-white border-b-2 border-blue-400 "
-                        : "text-gray-200 hover:text-white hover:bg-[#252525]"
+                        ? "text-blue-400 border-2 border-blue-400 "
+                        : "text-gray-200 rounded-full hover:text-white hover:bg-[#252525]"
                     }
                   `}
                 >
@@ -133,7 +133,7 @@ const Header = () => {
               {/* Sponsor Button: text hidden on smaller tablets to save space, visible on laptops (lg) */}
               <a
                 href="https://brewrepo.cloudkinshuk.in"
-                className="hidden md:flex items-center gap-1.5 font-semibold text-black px-3 py-1.5 lg:px-4 bg-yellow-200 hover:bg-yellow-300 transition-colors rounded-full text-sm shrink-0"
+                className="hidden md:flex items-center gap-1.5 font-bold text-black px-3 py-1.5 lg:px-4 bg-yellow-500 transition-colors rounded-full text-sm shrink-0"
               >
                 <GiCoffeeMug className="w-5 h-5 lg:w-6 lg:h-6 shrink-0" />
                 <span className="hidden lg:inline-block">Sponsor me</span>
@@ -143,7 +143,7 @@ const Header = () => {
               <a
                 href="https://github.com/kinshukjainn/cloudkinshuk"
                 aria-label="GitHub"
-                className="hidden md:flex items-center text-gray-400 hover:text-white transition-colors p-1.5 rounded-full hover:bg-[#252525]"
+                className="hidden md:flex items-center text-black bg-white cursor-pointer transition-colors p-1.5 rounded-full "
               >
                 <Github className="w-5 h-5 lg:w-6 lg:h-6" />
               </a>
@@ -169,14 +169,14 @@ const Header = () => {
         {/* ── Mobile Drawer (< md) ── */}
         <div
           id="mobile-menu"
-          className="md:hidden overflow-hidden bg-[#161923] transition-[max-height] duration-300 ease-in-out absolute w-full top-14 left-0 z-40 shadow-2xl"
+          className="md:hidden overflow-hidden bg-black transition-[max-height] duration-300 ease-in-out absolute w-full top-14 left-0 z-40 shadow-2xl"
           style={{ maxHeight: isOpen ? `${drawerHeight}px` : "0px" }}
           aria-hidden={!isOpen}
         >
           {/* Added max-h-[calc(100vh-3.5rem)] and overflow-y-auto for landscape phone views */}
           <div
             ref={drawerRef}
-            className="px-4 py-3 space-y-1 max-h-[calc(100vh-3.5rem)] overflow-y-auto"
+            className="px-4 py-1 space-y-1 max-h-[calc(100vh-3.5rem)] overflow-y-auto"
           >
             {navItems.map((item) => (
               <Link
@@ -184,7 +184,7 @@ const Header = () => {
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 className={`
-                  flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium transition-colors
+                  flex items-center gap-3 px-3 py-1 rounded-lg text-base font-medium transition-colors
                   ${
                     isActive(item.href)
                       ? "text-yellow-300"
@@ -202,18 +202,18 @@ const Header = () => {
             <div className="pt-4 mt-4 border-t border-[#333333] flex flex-col gap-3 pb-2">
               <a
                 href="https://brewrepo.cloudkinshuk.in"
-                className="flex items-center justify-center gap-2 py-3 bg-yellow-200 hover:bg-yellow-300 text-black rounded-full font-semibold text-sm transition-colors"
+                className="flex items-center justify-center gap-2 py-1.5 bg-yellow-500  text-black rounded-full font-bold text-md transition-colors"
                 tabIndex={isOpen ? 0 : -1}
               >
-                <GiCoffeeMug className="w-5 h-5 shrink-0" />
+                <GiCoffeeMug className="w-7 h-7 shrink-0" />
                 Sponsor Cloudkinshuk
               </a>
               <a
                 href="https://github.com/kinshukjainn/cloudkinshuk"
-                className="flex items-center justify-center gap-2 py-3 bg-[#252525] hover:bg-[#333333] text-white rounded-full font-semibold text-sm transition-colors border border-[#444]"
+                className="flex items-center justify-center gap-2 py-1.5 bg-white text-black rounded-full font-semibold text-md transition-colors border border-[#444]"
                 tabIndex={isOpen ? 0 : -1}
               >
-                <Github className="w-5 h-5 shrink-0" />
+                <Github className="w-7 h-7 shrink-0" />
                 View on GitHub
               </a>
             </div>

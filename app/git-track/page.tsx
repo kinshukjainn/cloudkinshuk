@@ -219,12 +219,12 @@ export default function ChangelogTracker() {
       : "N/A";
 
   return (
-    <div className="min-h-screen bg-[#161923] text-zinc-300 selection:bg-green-700/30 selection:text-green-200 ">
+    <div className="min-h-screen bg-black text-zinc-300 selection:bg-green-700/30 selection:text-green-200 ">
       <div className="max-w-5xl mx-auto px-4 py-12 sm:py-16">
         {/* ── CLI HEADER ── */}
-        <div className="mb-8 border-b border-zinc-800 pb-6">
-          <div className="flex items-center gap-3 mb-2 text-sm sm:text-base  bg-black/50 p-4 rounded-md border border-zinc-800 shadow-sm overflow-x-auto whitespace-nowrap">
-            <Terminal className="w-5 h-5 text-green-500 shrink-0" />
+        <div className="mb-8  pb-6">
+          <div className="flex items-center gap-3 mb-2 text-sm sm:text-base  bg-[#141414] p-4 rounded-2xl shadow-sm overflow-x-auto whitespace-nowrap">
+            <Terminal className="w-5 h-5 text-blue-400 shrink-0" />
             <span className="text-zinc-400">
               <span className="text-green-400 font-medium">
                 {GITHUB_CONFIG.username}
@@ -233,10 +233,6 @@ export default function ChangelogTracker() {
               <span className="text-zinc-300">
                 ~/projects/{GITHUB_CONFIG.repository}
               </span>
-              $
-            </span>
-            <span className="text-white font-medium ml-1">
-              git log --oneline
             </span>
           </div>
 
@@ -256,13 +252,13 @@ export default function ChangelogTracker() {
                 href={`https://github.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-black hover:bg-zinc-900 border border-zinc-800 rounded-md text-sm font-medium text-white transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full text-sm font-semibold text-black transition-colors"
               >
                 <Github className="w-4 h-4" /> Repository
               </a>
               <Link
                 href="/git-track/tree"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-[#1b1f2b] border border-zinc-800 hover:border-zinc-600 rounded-md text-sm font-medium text-zinc-200 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-800  rounded-full text-sm font-semibold text-zinc-200 transition-colors"
               >
                 <GitCommit className="w-4 h-4" /> View Tree
               </Link>
@@ -271,41 +267,41 @@ export default function ChangelogTracker() {
         </div>
 
         {/* ── CONTROLS & FILTERS ── */}
-        <div className="mb-6 flex justify-between items-center bg-[#1b1f2b] p-3 rounded-md border border-zinc-800">
+        <div className="mb-6 flex justify-between items-center  ">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2 text-sm  text-zinc-400 hover:text-green-400 transition-colors"
+            className="flex items-center gap-2 text-md font-bold text-white bg-[#151515] p-3 rounded-full hover:text-green-400 transition-colors"
           >
-            <Filter className="w-4 h-4" />
-            {showFilters ? "[-]" : "[+]"} filters
+            <Filter className="w-6 h-6" />
+            {showFilters ? "-" : "+"} Filters
           </button>
-          <span className="text-xs  text-zinc-500">
+          <span className="text-md  text-white">
             {displayCommits.length} commits found
           </span>
         </div>
 
         {showFilters && (
-          <div className="bg-[#1b1f2b] border border-zinc-800 rounded-md p-4 mb-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="bg-[#141414] rounded-3xl p-4 mb-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
-                <Search className="w-3.5 h-3.5" /> Grep Message
+              <label className="text-sm font-semibold text-white  tracking-wider flex items-center gap-1.5">
+                <Search className="w-3.5 h-3.5" /> Search
               </label>
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search commits..."
-                className="w-full bg-[#161923] border border-zinc-700 text-sm text-zinc-200 px-3 py-2 rounded-md focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500/50 transition-all  placeholder:text-zinc-600"
+                className="w-full bg-black  text-md text-zinc-100 px-3 py-2 rounded-full focus:outline-none transition-all  placeholder:text-zinc-600"
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
+              <label className="text-sm font-semibold text-white  tracking-wider flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5" /> Author
               </label>
               <select
                 value={authorFilter}
                 onChange={(e) => setAuthorFilter(e.target.value)}
-                className="w-full bg-[#161923] border border-zinc-700 text-sm text-zinc-200 px-3 py-2 rounded-md focus:outline-none focus:border-green-500 transition-all  appearance-none"
+                className="w-full bg-black text-sm text-zinc-100 px-3 py-2 rounded-full focus:outline-none  transition-all  appearance-none"
               >
                 <option value="all">-- All Authors --</option>
                 {uniqueAuthors.map((a) => (
@@ -316,14 +312,14 @@ export default function ChangelogTracker() {
               </select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
+              <label className="text-sm font-semibold text-zinc-100  tracking-wider flex items-center gap-1.5">
                 <GitCommit className="w-3.5 h-3.5" /> Type
               </label>
               <div className="flex gap-2">
                 <select
                   value={typeFilter}
                   onChange={(e) => setTypeFilter(e.target.value)}
-                  className="w-full bg-[#161923] border border-zinc-700 text-sm text-zinc-200 px-3 py-2 rounded-md focus:outline-none focus:border-green-500 transition-all  appearance-none"
+                  className="w-full bg-black text-sm text-zinc-200 px-3 py-2 rounded-full focus:outline-none transition-all  appearance-none"
                 >
                   {COMMIT_TYPES.map((t) => (
                     <option key={t.id} value={t.id}>
@@ -337,7 +333,7 @@ export default function ChangelogTracker() {
                     setAuthorFilter("all");
                     setTypeFilter("all");
                   }}
-                  className="px-3 py-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-md text-sm font-medium text-zinc-300 transition-colors"
+                  className="px-3 py-2 bg-blue-700  rounded-full text-sm font-medium text-white transition-colors"
                   title="Clear Filters"
                 >
                   Clear
@@ -380,7 +376,7 @@ export default function ChangelogTracker() {
 
         {/* ── COMMIT LOG (GRAPH/TIMELINE STYLE) ── */}
         {!loading && !error && displayCommits.length > 0 && (
-          <div className="relative border border-zinc-800 rounded-md bg-[#1b1f2b] overflow-hidden">
+          <div className="relative  rounded-3xl bg-[#141414] overflow-hidden">
             {displayCommits.map((commit, index) => {
               const title = getCommitTitle(commit.commit.message);
               const shortSha = commit.sha.substring(0, 7);
@@ -388,7 +384,7 @@ export default function ChangelogTracker() {
               return (
                 <div
                   key={commit.sha}
-                  className="group relative flex flex-col sm:flex-row sm:items-center py-4 px-4 sm:px-6 border-b border-zinc-800/50 last:border-0 hover:bg-[#222736] transition-colors gap-3 sm:gap-6"
+                  className="group relative flex flex-col sm:flex-row sm:items-center py-4 px-4 sm:px-6 border-b border-zinc-800/50 last:border-0 hover:bg-[#202020] transition-colors gap-3 sm:gap-6"
                 >
                   {/* Left Column: SHA & Date */}
                   <div className="flex sm:flex-col items-center sm:items-start justify-between sm:justify-center shrink-0 sm:w-32 gap-2 sm:gap-1">
@@ -436,7 +432,7 @@ export default function ChangelogTracker() {
                       href={commit.html_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs  text-zinc-500 hover:text-white flex items-center gap-1"
+                      className="text-sm  text-blue-500 hover:text-white font-bold flex items-center gap-1"
                     >
                       [diff] <ExternalLink className="w-3 h-3" />
                     </a>
@@ -444,7 +440,7 @@ export default function ChangelogTracker() {
                       href={commit.html_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs  text-zinc-500 hover:text-white flex items-center gap-1"
+                      className="text-sm  text-blue-500 hover:text-white font-bold flex items-center gap-1"
                     >
                       [tree] <ExternalLink className="w-3 h-3" />
                     </a>

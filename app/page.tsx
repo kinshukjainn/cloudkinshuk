@@ -10,6 +10,7 @@ import {
   BookOpen,
   Terminal,
   MapPin,
+  CheckCircle2,
 } from "lucide-react";
 import Link from "next/link";
 import Recommendation from "./components/Recommendation";
@@ -279,10 +280,8 @@ const Pill = ({
   active?: boolean;
 }) => (
   <span
-    className={`px-2 py-1 rounded-md text-xs font-bold border ${
-      active
-        ? "bg-green-900/20 text-green-400 border-green-800"
-        : "bg-zinc-800 text-zinc-300 border-zinc-700"
+    className={`px-2 py-1 rounded-full text-xs font-bold  ${
+      active ? "bg-red-700 text-white" : "bg-[#141414] text-white"
     }`}
   >
     {children}
@@ -291,29 +290,29 @@ const Pill = ({
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#161923] text-zinc-300 selection:bg-green-700/30 selection:text-green-200">
+    <div className="min-h-screen bg-black text-zinc-300 selection:bg-green-700/30 selection:text-green-200">
       <main className="max-w-3xl mx-auto px-6 py-16 md:py-24">
         <div className="space-y-10">
           {/* HEADER / INTRO */}
           <section className="space-y-6">
             <div className="space-y-1">
-              <h1 className="text-xs font-bold text-zinc-500 uppercase tracking-widest">
-                cloud<span className="text-zinc-300">kinshuk</span>.in
+              <h1 className="text-xs font-bold text-white uppercase tracking-widest">
+                cloud<span className="text-[#ff9100]">kinshuk</span>.in
               </h1>
               <p className="text-4xl md:text-5xl font-bold tracking-tight text-white pb-2">
                 Hi, I&apos;m Kinshuk.
               </p>
             </div>
 
-            <div className="space-y-4 text-base leading-relaxed text-zinc-300 max-w-2xl">
+            <div className="space-y-4 text-base leading-relaxed text-zinc-200 max-w-2xl">
               {CONFIG.personal.bio.map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
               ))}
             </div>
 
             <div className="flex flex-wrap items-center gap-4 pt-2">
-              <span className="inline-flex items-center gap-2 text-sm text-zinc-200 bg-[#1b1f2b] px-3 py-1.5 rounded-md border border-zinc-800">
-                <MapPin className="w-4 h-4 text-zinc-400" />
+              <span className="inline-flex items-center gap-2 text-sm text-white bg-[#141414] px-3 py-2 rounded-full ">
+                <MapPin className="w-4 h-4 text-blue-400" />
                 {CONFIG.personal.location}
               </span>
               <div className="flex items-center gap-2">
@@ -323,7 +322,7 @@ export default function Home() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 text-zinc-400 hover:text-white hover:bg-[#1b1f2b] rounded-md transition-colors border border-transparent hover:border-zinc-800"
+                    className="p-2.5 text-white hover:text-white bg-[#141414] rounded-full transition-colors "
                     title={social.platform}
                   >
                     <SocialIcon icon={social.icon} />
@@ -335,13 +334,13 @@ export default function Home() {
             <div className="flex flex-wrap gap-4 pt-4">
               <Link
                 href="/myresume.pdf"
-                className="inline-flex items-center justify-center gap-2 rounded-md bg-green-700 px-5 py-2.5 text-sm font-bold text-white hover:bg-green-600 transition-colors shadow-sm"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-600 transition-colors shadow-sm"
               >
                 <Download className="w-4 h-4" /> Download Resume
               </Link>
               <Link
                 href="/blogs"
-                className="inline-flex items-center justify-center gap-2 rounded-md bg-green-700 px-5 py-2.5 text-sm font-bold text-white hover:bg-green-600 transition-colors shadow-sm"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-red-700 px-5 py-2.5 text-sm font-bold text-white transition-colors shadow-sm"
               >
                 <BookOpen className="w-4 h-4" /> Read Blog
               </Link>
@@ -355,15 +354,15 @@ export default function Home() {
           {/* EXPERIENCE */}
           <div>
             <SectionHeader title="Experience" />
-            <div className="bg-[#1b1f2b] border border-zinc-800 rounded-md p-6">
+            <div className="bg-[#141414] border border-[#141414] rounded-2xl p-6">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 gap-2">
                 <div>
-                  <h3 className="text-lg font-bold text-white">UPPTCL</h3>
-                  <p className="text-sm font-medium text-green-400 mt-0.5">
+                  <h3 className="text-xl font-bold text-white">UPPTCL</h3>
+                  <p className="text-sm font-medium text-blue-400 mt-0.5">
                     Uttar Pradesh Power Transmission Corporation Limited
                   </p>
                 </div>
-                <span className="text-xs font-mono text-zinc-300 bg-[#161923] px-2.5 py-1 rounded-md border border-zinc-800">
+                <span className="text-xs font-semibold text-white">
                   Jul 2025 - Aug 2025
                 </span>
               </div>
@@ -381,12 +380,9 @@ export default function Home() {
             <SectionHeader title="Shipped Stuff" />
             <div className="space-y-6">
               {CONFIG.projects.map((project, idx) => (
-                <div
-                  key={idx}
-                  className="bg-[#1b1f2b] border border-zinc-800 rounded-md p-6"
-                >
+                <div key={idx} className="bg-[#141414] rounded-2xl p-6">
                   <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-                    <h3 className="text-lg font-bold text-white">
+                    <h3 className="text-xl font-bold text-white">
                       {project.title}
                     </h3>
                     <div className="flex gap-2">
@@ -397,7 +393,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="space-y-3 mb-5 text-sm text-zinc-300 leading-relaxed">
+                  <div className="space-y-3 mb-5 text-sm text-zinc-200 leading-relaxed">
                     {project.description.map((p, i) => (
                       <p key={i}>{p}</p>
                     ))}
@@ -407,7 +403,7 @@ export default function Home() {
                     {project.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="text-xs font-medium text-zinc-300 bg-[#161923] border border-zinc-800 px-2.5 py-1 rounded-md"
+                        className="text-xs font-medium text-zinc-300 bg-black px-2.5 py-1 rounded-full"
                       >
                         {tech}
                       </span>
@@ -420,9 +416,9 @@ export default function Home() {
                         href={project.links.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm font-bold text-white px-3 py-1.5 bg-green-700 rounded-md flex items-center gap-1.5 hover:bg-green-600 transition-colors shadow-sm"
+                        className="text-sm font-semibold text-white px-3 py-1.5 bg-red-700 rounded-full flex items-center gap-1.5  transition-colors shadow-sm"
                       >
-                        <ExternalLink className="w-4 h-4" /> Live
+                        <ExternalLink className="w-4 h-4" /> Live link
                       </a>
                     )}
                     {project.links.repo && (
@@ -430,7 +426,7 @@ export default function Home() {
                         href={project.links.repo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm font-bold text-zinc-200 px-3 py-1.5 bg-black border border-zinc-800 rounded-md hover:bg-zinc-900 hover:text-white flex items-center gap-1.5 transition-colors"
+                        className="text-sm font-bold  px-3 py-1.5 bg-white  rounded-full text-black flex items-center gap-1.5 transition-colors"
                       >
                         <Github className="w-4 h-4" /> Github
                       </a>
@@ -446,10 +442,7 @@ export default function Home() {
             <SectionHeader title="Proficiencies" />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {Object.entries(CONFIG.skills).map(([category, skills]) => (
-                <div
-                  key={category}
-                  className="bg-[#1b1f2b] border border-zinc-800 rounded-md p-5"
-                >
+                <div key={category} className="bg-[#141414]  rounded-2xl p-5">
                   <h3 className="text-sm font-bold text-white mb-3">
                     {category}
                   </h3>
@@ -457,7 +450,7 @@ export default function Home() {
                     {skills.map((skill) => (
                       <span
                         key={skill}
-                        className="px-2.5 py-1 bg-[#161923] border border-zinc-800 rounded-md text-sm font-medium text-zinc-300"
+                        className="px-2.5 py-1 bg-black  rounded-full text-sm font-medium text-zinc-300"
                       >
                         {skill}
                       </span>
@@ -475,7 +468,7 @@ export default function Home() {
               {CONFIG.certifications.map((cert, idx) => (
                 <div
                   key={idx}
-                  className="flex flex-col sm:flex-row sm:items-start justify-between p-5 rounded-md bg-[#1b1f2b] border border-zinc-800 gap-4"
+                  className="flex flex-col sm:flex-row sm:items-start justify-between p-5 rounded-2xl bg-[#141414]  gap-4"
                 >
                   <div>
                     <h3 className="text-sm font-bold text-white mb-1">
@@ -492,12 +485,12 @@ export default function Home() {
                         cert.title
                       )}
                     </h3>
-                    <p className="text-xs text-zinc-400 font-bold mb-2">
-                      {cert.organization} • {cert.status}
+                    <p className="text-xs text-blue-400 font-bold mb-2">
+                      {cert.organization} | {cert.status}
                     </p>
                     <p className="text-sm text-zinc-300">{cert.description}</p>
                   </div>
-                  <span className="shrink-0 text-xs font-mono text-zinc-300 bg-[#161923] px-2.5 py-1 rounded-md border border-zinc-800">
+                  <span className="shrink-0 text-sm text-white px-2.5 py-1 ">
                     {cert.year}
                   </span>
                 </div>
@@ -508,7 +501,7 @@ export default function Home() {
           {/* EDUCATION */}
           <div>
             <SectionHeader title="Education" />
-            <div className="bg-[#1b1f2b] border border-zinc-800 rounded-md p-6">
+            <div className="bg-[#141414] rounded-2xl p-6">
               <div className="flex flex-col sm:flex-row justify-between items-start mb-4 gap-2">
                 <div>
                   <h3 className="text-lg font-bold text-white">
@@ -519,7 +512,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="text-left sm:text-right">
-                  <span className="text-xs font-bold text-zinc-300 bg-[#161923] px-2.5 py-1 rounded-md border border-zinc-800 inline-block">
+                  <span className="text-sm font-bold text-white px-2.5 py-1  inline-block">
                     {CONFIG.education.period}
                   </span>
                   <span className="text-xs text-zinc-400 block mt-2">
@@ -527,39 +520,26 @@ export default function Home() {
                   </span>
                 </div>
               </div>
+
               <p className="text-sm text-zinc-300 leading-relaxed">
                 {CONFIG.education.description}
               </p>
-            </div>
-          </div>
 
-          {/* TERMINAL */}
-          <div>
-            <SectionHeader title="Terminal Access" />
-            <div className="bg-black border border-zinc-800 rounded-md overflow-hidden">
-              <div className="bg-[#161923] px-4 py-2 flex items-center gap-2 border-b border-zinc-800">
-                <Terminal className="w-4 h-4 text-zinc-400" />
-                <span className="text-xs font-mono font-bold text-zinc-400">
-                  cli.sh
+              <div className="flex flex-wrap items-center gap-1 mt-5 pt-5 ">
+                <span className="inline-flex items-center gap-1.5 text-sm font-bold text-black bg-yellow-500 px-2.5 py-1.5 rounded-l-full ">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  Degree Completed
                 </span>
-              </div>
-              <div className="p-5 space-y-4">
-                <p className="text-sm text-zinc-400">
-                  Interactive command-line portfolio viewer built with Node.js.
-                </p>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-[#1b1f2b] rounded-md border border-zinc-800/50">
-                  <code className="text-sm font-mono text-zinc-300 break-all">
-                    <span className="text-green-500 mr-2">$</span>npm install -g
-                    hackkinshuk
-                  </code>
-                  <CopyText text="npm install -g hackkinshuk" />
-                </div>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-[#1b1f2b] rounded-md border border-zinc-800/50">
-                  <code className="text-sm font-mono text-zinc-300 break-all">
-                    <span className="text-green-500 mr-2">$</span>cloudkinshuk
-                  </code>
-                  <CopyText text="cloudkinshuk" />
-                </div>
+                <a
+                  href="#"
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-white bg-blue-800 transition-colors px-3 py-1.5 rounded-r-full border border-zinc-700"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  Download PDC (pdf)
+                </a>
               </div>
             </div>
           </div>

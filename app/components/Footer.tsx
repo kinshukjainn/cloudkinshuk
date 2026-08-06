@@ -38,7 +38,7 @@ const socialLinks: SocialLink[] = [
   },
   {
     icon: FaInstagram,
-    href: "https://instagram.com/kinshukjainn",
+    href: "https://instagram.com/kinshuukjainn",
     label: "Instagram",
   },
   {
@@ -57,21 +57,21 @@ const navLinks: NavLink[] = [
 
 const Footer = () => {
   return (
-    <footer className="bg-[#161923] rounded-t-4xl border-t border-[#444444] relative overflow-hidden">
+    <footer className="bg-black   relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 relative z-10">
         <div className="flex flex-col items-center space-y-10">
           {/* Logo and brand section */}
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center gap-4 group">
-              <FaCloud className="w-8 h-8 sm:w-10 sm:h-10 text-white transition-transform duration-300 group-hover:scale-110" />
+              <FaCloud className="w-8 h-8 sm:w-10 sm:h-10 text-blue-400 transition-transform duration-300 group-hover:scale-110" />
 
               <div className="relative flex items-center h-10 sm:h-12">
-                <h2 className="text-5xl  sm:text-5xl lg:text-6xl font-semibold text-yellow-500 flex items-center">
+                <h2 className="text-5xl  sm:text-5xl lg:text-6xl font-semibold text-white flex items-center">
                   CloudKinshuk
                 </h2>
               </div>
             </div>
-            <p className="text-sm sm:text-base text-[#888888] max-w-sm mx-auto">
+            <p className="text-sm sm:text-base text-white max-w-sm mx-auto">
               Building the future, one cloud at a time.
             </p>
           </div>
@@ -83,7 +83,7 @@ const Footer = () => {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm sm:text-base text-[#cccccc] hover:text-white transition-colors duration-300 relative group py-1"
+                    className="text-sm sm:text-base text-gray-200 hover:text-blue-400 transition-colors duration-300 relative group py-1"
                   >
                     {link.label}
                     <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full" />

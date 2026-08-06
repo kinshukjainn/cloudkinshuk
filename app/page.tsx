@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   Github,
   Linkedin,
@@ -8,7 +7,6 @@ import {
   ExternalLink,
   Download,
   BookOpen,
-  Terminal,
   MapPin,
   CheckCircle2,
 } from "lucide-react";
@@ -219,28 +217,6 @@ const CONFIG = {
 };
 
 // --- COMPONENTS ---
-const CopyText = ({ text }: { text: string }) => {
-  const [copied, setCopied] = useState(false);
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Failed to copy text: ", err);
-    }
-  };
-
-  return (
-    <button
-      onClick={handleCopy}
-      className="text-xs font-bold text-white bg-green-700 hover:bg-green-600 px-3 py-1.5 rounded-md transition-colors"
-      title="Copy to clipboard"
-    >
-      {copied ? "Copied" : "Copy"}
-    </button>
-  );
-};
 
 const SocialIcon = ({ icon }: { icon: string }) => {
   switch (icon) {
@@ -333,7 +309,7 @@ export default function Home() {
 
             <div className="flex flex-wrap gap-4 pt-4">
               <Link
-                href="/myresume.pdf"
+                href="/kinshukjainnresume (1).pdf"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-600 transition-colors shadow-sm"
               >
                 <Download className="w-4 h-4" /> Download Resume
@@ -439,7 +415,7 @@ export default function Home() {
 
           {/* SKILLS */}
           <div>
-            <SectionHeader title="Proficiencies" />
+            <SectionHeader title="Tools i use.." />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {Object.entries(CONFIG.skills).map(([category, skills]) => (
                 <div key={category} className="bg-[#141414]  rounded-2xl p-5">
@@ -525,17 +501,17 @@ export default function Home() {
                 {CONFIG.education.description}
               </p>
 
-              <div className="flex flex-wrap items-center gap-1 mt-5 pt-5 ">
-                <span className="inline-flex items-center gap-1.5 text-sm font-bold text-black bg-yellow-500 px-2.5 py-1.5 rounded-l-full ">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
+              <div className="flex flex-wrap items-center gap-3 mt-5 pt-5 ">
+                <span className="inline-flex items-center gap-1.5 text-sm font-se mibold text-white border-blue-500 border-2  bg-[#252525] px-2.5 py-1.5 rounded-full ">
+                  <CheckCircle2 className="w-4 h-4" />
                   Degree Completed
                 </span>
                 <a
-                  href="#"
+                  href="/2200910200015.pdf"
                   download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-white bg-blue-800 transition-colors px-3 py-1.5 rounded-r-full border border-zinc-700"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-white bg-blue-800 transition-colors px-3 py-1.5 rounded-full border border-zinc-700"
                 >
                   <Download className="w-3.5 h-3.5" />
                   Download PDC (pdf)

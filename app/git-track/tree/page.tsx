@@ -216,26 +216,26 @@ export default function RepositoryViewer() {
   const pathBreadcrumbs = currentPath.split("/").filter(Boolean);
 
   return (
-    <div className="min-h-screen bg-[#161923] text-zinc-300  selection:bg-green-700/30 selection:text-green-200">
+    <div className="min-h-screen bg-black text-zinc-300  selection:bg-green-700/30 selection:text-green-200">
       <div className="max-w-5xl mx-auto px-4 py-12 sm:py-16">
         {/* ── TOP HEADER ── */}
         <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-6">
-          <h1 className="text-4xl sm:text-4xl font-normal text-white flex items-center gap-3">
-            <Folder className="w-8 h-8 text-green-500" />
+          <h1 className="text-4xl sm:text-4xl font-semibold text-white flex items-center gap-3">
+            <Folder className="w-8 h-8 text-white" />
             Repository Explorer
           </h1>
           <Link
             href="/git-track"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[#1b1f2b] hover:bg-zinc-800 border border-zinc-700 rounded-md text-sm font-medium text-zinc-200 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-800  rounded-full text-sm font-medium text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> Back to Commits
           </Link>
         </div>
 
         {/* ── META INFO BLOCK ── */}
-        <div className="bg-[#1b1f2b] border border-zinc-800 rounded-md p-4 sm:p-6 mb-8 shadow-sm">
+        <div className="bg-[#141414]  rounded-2xl p-4 sm:p-6 mb-8 shadow-sm">
           <div className="grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-y-3 sm:gap-x-4 text-sm">
-            <div className="text-zinc-500 font-medium uppercase tracking-wider text-xs sm:text-sm pt-1">
+            <div className="text-blue-500 font-bold tracking-wider text-xs sm:text-sm pt-1">
               Repository
             </div>
             <div className="font-medium text-white text-base">
@@ -243,7 +243,7 @@ export default function RepositoryViewer() {
               <span className="text-green-400">{GITHUB_CONFIG.repository}</span>
             </div>
 
-            <div className="text-zinc-500 font-medium uppercase tracking-wider text-xs sm:text-sm pt-1">
+            <div className="text-blue-500 font-bold tracking-wider text-xs sm:text-sm pt-1">
               Current Path
             </div>
             <div className="flex flex-wrap items-center gap-2 text-base font-medium">
@@ -286,7 +286,7 @@ export default function RepositoryViewer() {
         )}
 
         {/* ── MAIN CONTENT AREA ── */}
-        <div className="bg-[#1b1f2b] border border-zinc-800 rounded-md overflow-hidden shadow-sm">
+        <div className="bg-[#141414] border border-zinc-800 rounded-md overflow-hidden shadow-sm">
           {/* Section Header */}
           <div className="bg-black/20 border-b border-zinc-800 py-3 px-4 sm:px-6">
             <h2 className="text-sm font-medium text-white uppercase tracking-wider">

@@ -309,7 +309,7 @@ export default function Home() {
 
             <div className="flex flex-wrap gap-4 pt-4">
               <Link
-                href="/kinshukjainnresume (1).pdf"
+                href="/kinshukkjainnresume.pdf"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-600 transition-colors shadow-sm"
               >
                 <Download className="w-4 h-4" /> Download Resume

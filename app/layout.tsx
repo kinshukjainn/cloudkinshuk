@@ -6,6 +6,7 @@ import {
   IBM_Plex_Serif,
   Roboto_Slab,
   PT_Sans,
+  Source_Serif_4,
   Geist_Mono,
   Roboto,
   IBM_Plex_Sans,
@@ -19,8 +20,8 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 import localFont from "next/font/local";
+import { ThemeProvider } from "./components/providers/Themeprovider";
 
 export const inter = Inter({
   subsets: ["latin"],
@@ -45,6 +46,12 @@ export const ibmPlexSans = IBM_Plex_Sans({
   weight: ["100", "200", "300", "400", "500", "600", "700"],
   display: "swap",
   variable: "--font-ibm-plex-sans",
+});
+
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 const publicSans = Public_Sans({
@@ -151,13 +158,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-google-analytics-opt-out="">
+    <html lang="en" data-google-analytics-opt-out="" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${openSans.variable} ${ibmPlexSans.variable} ${rubik.variable} ${dmSans.variable} ${verdana.variable} ${cabinSketch.variable} ${publicSans.variable} ${geistMono.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
+        className={`${inter.variable} ${openSans.variable} ${sourceSerif.variable} ${ibmPlexSans.variable} ${rubik.variable} ${dmSans.variable} ${verdana.variable} ${cabinSketch.variable} ${publicSans.variable} ${geistMono.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >
-        <Header />
-        {children}
-        <Footer />
+        <ThemeProvider>
+          <Header />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

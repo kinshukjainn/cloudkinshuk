@@ -5,7 +5,6 @@ import React, { useState, useEffect, useMemo } from "react";
 import {
   GitCommit,
   GitBranch,
-  Terminal,
   Search,
   Filter,
   ExternalLink,
@@ -13,6 +12,7 @@ import {
   Clock,
   User,
   AlertCircle,
+  FileCode2,
 } from "lucide-react";
 
 // ============================================================================
@@ -219,31 +219,18 @@ export default function ChangelogTracker() {
       : "N/A";
 
   return (
-    <div className="min-h-screen bg-black text-zinc-300 selection:bg-green-700/30 selection:text-green-200 ">
-      <div className="max-w-5xl mx-auto px-4 py-12 sm:py-16">
-        {/* ── CLI HEADER ── */}
-        <div className="mb-8  pb-6">
-          <div className="flex items-center gap-3 mb-2 text-sm sm:text-base  bg-[#141414] p-4 rounded-2xl shadow-sm overflow-x-auto whitespace-nowrap">
-            <Terminal className="w-5 h-5 text-blue-400 shrink-0" />
-            <span className="text-zinc-400">
-              <span className="text-green-400 font-medium">
-                {GITHUB_CONFIG.username}
-              </span>
-              @<span className="text-blue-400">dev</span>:
-              <span className="text-zinc-300">
-                ~/projects/{GITHUB_CONFIG.repository}
-              </span>
-            </span>
-          </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-6">
-            <div className="space-y-1">
-              <h1 className="text-2xl font-medium text-white flex items-center gap-2">
-                <GitBranch className="w-6 h-6 text-green-500" />
-                {GITHUB_CONFIG.repository}.git
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-neutral-800 dark:text-neutral-300 selection:bg-blue-200 dark:selection:bg-blue-900/50 selection:text-blue-900 dark:selection:text-blue-100">
+      <div className="max-w-5xl mx-auto px-6 py-12 sm:py-16">
+        {/* ── DASHBOARD HEADER ── */}
+        <div className="mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-neutral-300 dark:border-neutral-800 pb-4">
+            <div className="space-y-2">
+              <h1 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
+                <GitBranch className="w-5 h-5 text-blue-600 dark:text-blue-500" />
+                {GITHUB_CONFIG.repository} / Commits
               </h1>
-              <p className="text-xs  text-zinc-500 flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5" /> Last updated: {lastChangeDate}
+              <p className="text-sm font-medium text-neutral-600 dark:text-neutral-500 flex items-center gap-1.5">
+                <Clock className="w-4 h-4" /> Last updated: {lastChangeDate}
               </p>
             </div>
 
@@ -252,58 +239,59 @@ export default function ChangelogTracker() {
                 href={`https://github.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full text-sm font-semibold text-black transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-sm font-semibold text-neutral-900 dark:text-neutral-100 rounded-none"
               >
                 <Github className="w-4 h-4" /> Repository
               </a>
               <Link
                 href="/git-track/tree"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-800  rounded-full text-sm font-semibold text-zinc-200 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600 border border-blue-600 dark:border-blue-700 text-sm font-semibold text-white rounded-none"
               >
-                <GitCommit className="w-4 h-4" /> View Tree
+                <FileCode2 className="w-4 h-4" /> View Tree
               </Link>
             </div>
           </div>
         </div>
 
         {/* ── CONTROLS & FILTERS ── */}
-        <div className="mb-6 flex justify-between items-center  ">
+        <div className="mb-6 flex justify-between items-center">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2 text-md font-bold text-white bg-[#151515] p-3 rounded-full hover:text-green-400 transition-colors"
+            className="flex items-center gap-2 text-sm font-bold text-neutral-900 dark:text-neutral-100 bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 cursor-pointer dark:border-neutral-800 px-4 py-2 hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-none"
           >
-            <Filter className="w-6 h-6" />
-            {showFilters ? "-" : "+"} Filters
+            <Filter className="w-4 h-4" />
+            {showFilters ? "Hide Filters" : "Show Filters"}
           </button>
-          <span className="text-md  text-white">
-            {displayCommits.length} commits found
+          <span className="text-sm font-semibold text-neutral-600 dark:text-neutral-400 border border-neutral-200 rounded dark:border-neutral-800 px-3 py-1 bg-neutral-50 dark:bg-neutral-900/50 ">
+            {displayCommits.length} Records
           </span>
         </div>
 
-        {showFilters && (
-          <div className="bg-[#141414] rounded-3xl p-4 mb-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="space-y-1.5">
-              <label className="text-sm font-semibold text-white  tracking-wider flex items-center gap-1.5">
+        {/* Strict block layout for filters, no smooth expanding */}
+        <div className={showFilters ? "block" : "hidden"}>
+          <div className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-6 mb-6 grid grid-cols-1 sm:grid-cols-3 gap-6 rounded-none">
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-neutral-900 dark:text-neutral-300 uppercase tracking-widest flex items-center gap-1.5">
                 <Search className="w-3.5 h-3.5" /> Search
               </label>
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search commits..."
-                className="w-full bg-black  text-md text-zinc-100 px-3 py-2 rounded-full focus:outline-none transition-all  placeholder:text-zinc-600"
+                placeholder="Message or SHA..."
+                className="w-full bg-white dark:bg-black text-sm text-neutral-900 dark:text-neutral-100 border border-neutral-300 dark:border-neutral-700 px-3 py-2 rounded-none focus:outline-none focus:border-blue-600 dark:focus:border-blue-500 focus:ring-1 focus:ring-blue-600 dark:focus:ring-blue-500 placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
               />
             </div>
-            <div className="space-y-1.5">
-              <label className="text-sm font-semibold text-white  tracking-wider flex items-center gap-1.5">
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-neutral-900 dark:text-neutral-300 uppercase tracking-widest flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5" /> Author
               </label>
               <select
                 value={authorFilter}
                 onChange={(e) => setAuthorFilter(e.target.value)}
-                className="w-full bg-black text-sm text-zinc-100 px-3 py-2 rounded-full focus:outline-none  transition-all  appearance-none"
+                className="w-full bg-white dark:bg-black text-sm text-neutral-900 dark:text-neutral-100 border border-neutral-300 dark:border-neutral-700 px-3 py-2 rounded-none focus:outline-none focus:border-blue-600 dark:focus:border-blue-500 focus:ring-1 focus:ring-blue-600 dark:focus:ring-blue-500"
               >
-                <option value="all">-- All Authors --</option>
+                <option value="all">All Authors</option>
                 {uniqueAuthors.map((a) => (
                   <option key={a} value={a}>
                     {a}
@@ -311,15 +299,15 @@ export default function ChangelogTracker() {
                 ))}
               </select>
             </div>
-            <div className="space-y-1.5">
-              <label className="text-sm font-semibold text-zinc-100  tracking-wider flex items-center gap-1.5">
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-neutral-900 dark:text-neutral-300 uppercase tracking-widest flex items-center gap-1.5">
                 <GitCommit className="w-3.5 h-3.5" /> Type
               </label>
               <div className="flex gap-2">
                 <select
                   value={typeFilter}
                   onChange={(e) => setTypeFilter(e.target.value)}
-                  className="w-full bg-black text-sm text-zinc-200 px-3 py-2 rounded-full focus:outline-none transition-all  appearance-none"
+                  className="w-full bg-white dark:bg-black text-sm text-neutral-900 dark:text-neutral-100 border border-neutral-300 dark:border-neutral-700 px-3 py-2 rounded-none focus:outline-none focus:border-blue-600 dark:focus:border-blue-500 focus:ring-1 focus:ring-blue-600 dark:focus:ring-blue-500"
                 >
                   {COMMIT_TYPES.map((t) => (
                     <option key={t.id} value={t.id}>
@@ -333,7 +321,7 @@ export default function ChangelogTracker() {
                     setAuthorFilter("all");
                     setTypeFilter("all");
                   }}
-                  className="px-3 py-2 bg-blue-700  rounded-full text-sm font-medium text-white transition-colors"
+                  className="px-4 py-2 bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-700 text-sm font-semibold text-neutral-900 dark:text-neutral-100 rounded-none"
                   title="Clear Filters"
                 >
                   Clear
@@ -341,25 +329,27 @@ export default function ChangelogTracker() {
               </div>
             </div>
           </div>
-        )}
+        </div>
 
         {/* ── STATUS STATES ── */}
         {loading && (
-          <div className="p-8 border border-zinc-800 border-dashed rounded-md flex flex-col items-center justify-center text-zinc-500 space-y-3">
-            <Terminal className="w-8 h-8 animate-pulse text-zinc-600" />
-            <p className=" text-sm">Fetching block {fetchingProgress}...</p>
+          <div className="p-8 border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40 rounded-none flex flex-col items-center justify-center text-neutral-500 space-y-3">
+            <Clock className="w-8 h-8 text-neutral-400 dark:text-neutral-600" />
+            <p className="text-sm font-medium">
+              Fetching records... (Page {fetchingProgress})
+            </p>
           </div>
         )}
 
         {error && (
-          <div className="p-4 bg-red-950/30 border border-red-900/50 rounded-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3 text-red-400  text-sm">
+          <div className="p-4 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 rounded-none flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3 text-red-700 dark:text-red-400 text-sm font-semibold">
               <AlertCircle className="w-5 h-5 shrink-0" />
-              <span>ERR: {error}</span>
+              <span>Error: {error}</span>
             </div>
             <button
               onClick={fetchCommits}
-              className="px-4 py-2 bg-green-700 hover:bg-green-600 text-white text-sm font-medium rounded-md transition-colors whitespace-nowrap"
+              className="px-4 py-2 bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-600 text-white text-sm font-bold rounded-none whitespace-nowrap"
             >
               Retry Connection
             </button>
@@ -367,16 +357,16 @@ export default function ChangelogTracker() {
         )}
 
         {!loading && !error && displayCommits.length === 0 && (
-          <div className="p-8 border border-zinc-800 rounded-md text-center bg-[#1b1f2b]">
-            <p className=" text-sm text-zinc-500">
-              0 results returned from query.
+          <div className="p-8 border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40 rounded-none text-center">
+            <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+              No matching records found.
             </p>
           </div>
         )}
 
-        {/* ── COMMIT LOG (GRAPH/TIMELINE STYLE) ── */}
+        {/* ── COMMIT LOG (DATA TABLE STYLE) ── */}
         {!loading && !error && displayCommits.length > 0 && (
-          <div className="relative  rounded-3xl bg-[#141414] overflow-hidden">
+          <div className="border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40 rounded-none">
             {displayCommits.map((commit, index) => {
               const title = getCommitTitle(commit.commit.message);
               const shortSha = commit.sha.substring(0, 7);
@@ -384,7 +374,7 @@ export default function ChangelogTracker() {
               return (
                 <div
                   key={commit.sha}
-                  className="group relative flex flex-col sm:flex-row sm:items-center py-4 px-4 sm:px-6 border-b border-zinc-800/50 last:border-0 hover:bg-[#202020] transition-colors gap-3 sm:gap-6"
+                  className="flex flex-col sm:flex-row sm:items-center py-4 px-4 sm:px-6 border-b border-neutral-200 dark:border-neutral-800/80 last:border-0 hover:bg-white dark:hover:bg-neutral-900 gap-3 sm:gap-6"
                 >
                   {/* Left Column: SHA & Date */}
                   <div className="flex sm:flex-col items-center sm:items-start justify-between sm:justify-center shrink-0 sm:w-32 gap-2 sm:gap-1">
@@ -392,12 +382,12 @@ export default function ChangelogTracker() {
                       href={commit.html_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className=" text-sm text-green-400 hover:text-green-300 hover:underline"
+                      className="text-sm font-bold text-blue-600 dark:text-blue-500 hover:underline"
                     >
                       {shortSha}
                     </a>
                     <span
-                      className="text-xs  text-zinc-500"
+                      className="text-xs font-medium text-neutral-500 dark:text-neutral-500"
                       title={new Date(
                         commit.commit.author.date,
                       ).toLocaleString()}
@@ -409,53 +399,37 @@ export default function ChangelogTracker() {
                   {/* Main Content: Message & Author */}
                   <div className="flex-1 min-w-0 flex flex-col gap-1.5">
                     <div className="flex items-center flex-wrap gap-2">
-                      <span className="text-sm font-semibold text-zinc-200 break-words leading-snug">
+                      <span className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 break-words leading-snug">
                         {title}
                       </span>
                       {index === 0 && (
-                        <span className="px-1.5 py-0.5 rounded bg-green-900/30 border border-green-700 text-green-400 text-[10px]  font-medium uppercase tracking-wider">
+                        <span className="px-1.5 py-0.5 bg-blue-100 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-400 text-[10px] font-bold uppercase tracking-widest rounded-none">
                           HEAD {GITHUB_CONFIG.branch}
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center gap-2 text-xs ">
-                      <span className="text-zinc-400 flex items-center gap-1.5">
-                        <User className="w-3 h-3" />
+                    <div className="flex items-center gap-2 text-xs font-medium">
+                      <span className="text-neutral-600 dark:text-neutral-400 flex items-center gap-1.5">
+                        <User className="w-3.5 h-3.5" />
                         {commit.commit.author.name}
                       </span>
                     </div>
                   </div>
 
-                  {/* Right Actions (Hidden on mobile, inline on desktop) */}
-                  <div className="hidden sm:flex shrink-0 gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                  {/* Right Actions (Links) */}
+                  <div className="hidden sm:flex shrink-0 gap-4">
                     <a
                       href={commit.html_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm  text-blue-500 hover:text-white font-bold flex items-center gap-1"
+                      className="text-xs font-bold text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 flex items-center gap-1 uppercase tracking-widest"
                     >
-                      [diff] <ExternalLink className="w-3 h-3" />
-                    </a>
-                    <a
-                      href={commit.html_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm  text-blue-500 hover:text-white font-bold flex items-center gap-1"
-                    >
-                      [tree] <ExternalLink className="w-3 h-3" />
+                      Diff <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   </div>
                 </div>
               );
             })}
-          </div>
-        )}
-
-        {!loading && !error && displayCommits.length > 0 && (
-          <div className="mt-6 text-center">
-            <span className="text-xs  text-zinc-600 bg-[#1b1f2b] px-3 py-1.5 rounded-full border border-zinc-800">
-              -- END OF LOG --
-            </span>
           </div>
         )}
       </div>

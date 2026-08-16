@@ -10,7 +10,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
 
   // State for immediate input feedback
   const [query, setQuery] = useState("");
-  // Deferred value for heavy filtering without blocking the main thread (makes typing faster)
+  // Deferred value for heavy filtering without blocking the main thread
   const deferredQuery = useDeferredValue(query);
 
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
@@ -38,12 +38,12 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   };
 
   return (
-    <nav className="flex flex-col sidebar-font gap-6 text-sm">
+    <nav className="flex flex-col gap-8 text-sm">
       {/* Search - Pragmatic and sharp */}
-      <div className="relative px-1 md:px-0">
+      <div className="relative">
         <svg
           viewBox="0 0 24 24"
-          className="pointer-events-none absolute left-4 md:left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-white"
+          className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-500 dark:text-neutral-400"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
@@ -54,35 +54,30 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search docs/blogs"
-          className="w-full rounded-full  bg-[#141414] py-2 pl-10 pr-3 text-md text-white placeholder:text-zinc-500 outline-none transition-colors"
+          placeholder="Search docs..."
+          className="w-full rounded-none bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 py-2.5 pl-9 pr-3 text-sm text-neutral-900 dark:text-white placeholder:text-neutral-500 focus:outline-none focus:border-blue-600 dark:focus:border-blue-500 focus:ring-1 focus:ring-blue-600 dark:focus:ring-blue-500"
         />
       </div>
 
       {/* Sections */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6">
         {sections.map((section) => {
           const open = q ? true : !collapsed[section.title];
           return (
-            <div
-              key={section.title}
-              className="flex flex-col gap-1 px-1 md:px-0"
-            >
+            <div key={section.title} className="flex flex-col gap-2">
               <button
                 onClick={() => toggle(section.title)}
-                className="group flex w-full items-center justify-between rounded-md px-2 py-1.5 text-lg font-normal text-white transition-colors "
+                className="group flex w-full items-center justify-between px-3 py-1 text-xs font-bold uppercase tracking-widest text-neutral-900 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400"
               >
                 {section.title}
                 <svg
                   viewBox="0 0 24 24"
-                  className={`h-5 w-5 transition-transform duration-200 ${
-                    open
-                      ? "rotate-0 cursor-pointer text-green-400"
-                      : "-rotate-90 cursor-pointer text-green-600 group-hover:text-green-400"
-                  }`}
+                  className={`h-4 w-4 ${
+                    open ? "rotate-0" : "-rotate-90"
+                  } text-neutral-400 dark:text-neutral-500`}
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2.5"
+                  strokeWidth="2"
                 >
                   <path
                     d="m6 9 6 6 6-6"
@@ -92,26 +87,21 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                 </svg>
               </button>
 
-              <div
-                className={`grid transition-all duration-200 ease-in-out ${
-                  open
-                    ? "grid-rows-[1fr] opacity-100"
-                    : "grid-rows-[0fr] opacity-0"
-                }`}
-              >
-                <ul className="flex flex-col overflow-hidden pl-2">
+              {/* Strict block/hidden layout - no smooth expanding transitions */}
+              <div className={open ? "block" : "hidden"}>
+                <ul className="flex flex-col">
                   {section.items.map((item) => {
                     const active = isActive(item.slug);
                     return (
-                      <li key={item.slug} className="mt-0.5">
+                      <li key={item.slug}>
                         <Link
                           href={`/blogs/${item.slug}`}
                           aria-current={active ? "page" : undefined}
                           onClick={onNavigate}
-                          className={`block w-full rounded-full px-3 py-1.5 text-sm transition-colors ${
+                          className={`block w-full border-l-2 px-3 py-2 text-sm ${
                             active
-                              ? " font-bold text-blue-400"
-                              : "text-zinc-100  hover:text-blue-400"
+                              ? "border-blue-600 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 font-semibold"
+                              : "border-transparent text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-900/40 hover:border-neutral-300 dark:hover:border-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100"
                           }`}
                         >
                           {item.title}
@@ -126,8 +116,10 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         })}
 
         {sections.length === 0 && (
-          <div className="mx-1 rounded-md  bg-black p-4 text-center md:mx-0">
-            <p className="text-lg text-white">No results found.</p>
+          <div className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-4 text-center rounded-none">
+            <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+              No results found.
+            </p>
           </div>
         )}
       </div>

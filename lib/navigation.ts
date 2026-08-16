@@ -30,10 +30,14 @@ export const navigation: NavSection[] = [
         title: " The Power of Blogging: Why I'm Committed to Sharing Knowledge",
         slug: "the-power-of-blogging-why-im-committed-to-sharing-knowledge",
       },
+      {
+        title: "Why PostgreSQL Became My Go-To Database",
+        slug: "db-sql",
+      },
     ],
   },
   {
-    title: "Project Documentation",
+    title: "Projects Description",
     items: [
       { title: "Welcome to the Project Documentation", slug: "welcome" },
       { title: "Kosha : Your Person Cloud Storage System", slug: "kosha" },

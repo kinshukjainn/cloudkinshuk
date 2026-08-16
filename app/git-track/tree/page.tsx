@@ -50,68 +50,38 @@ const formatBytes = (bytes: number = 0, decimals = 1) => {
 
 const getFileInfo = (filename: string) => {
   const ext = filename.split(".").pop()?.toLowerCase();
-  const iconProps = { size: 20, className: "shrink-0" };
+  const iconProps = {
+    size: 18,
+    className: "shrink-0 text-neutral-500 dark:text-neutral-400",
+  };
 
   switch (ext) {
     case "js":
     case "jsx":
-      return {
-        lang: "JavaScript",
-        icon: <FileCode2 {...iconProps} className="text-yellow-400" />,
-      };
+      return { lang: "JavaScript", icon: <FileCode2 {...iconProps} /> };
     case "ts":
     case "tsx":
-      return {
-        lang: "TypeScript",
-        icon: <FileCode2 {...iconProps} className="text-blue-400" />,
-      };
+      return { lang: "TypeScript", icon: <FileCode2 {...iconProps} /> };
     case "json":
-      return {
-        lang: "JSON",
-        icon: <FileJson {...iconProps} className="text-green-400" />,
-      };
+      return { lang: "JSON", icon: <FileJson {...iconProps} /> };
     case "html":
-      return {
-        lang: "HTML",
-        icon: <FileCode2 {...iconProps} className="text-orange-500" />,
-      };
+      return { lang: "HTML", icon: <FileCode2 {...iconProps} /> };
     case "css":
-      return {
-        lang: "CSS",
-        icon: <FileCode2 {...iconProps} className="text-indigo-400" />,
-      };
+      return { lang: "CSS", icon: <FileCode2 {...iconProps} /> };
     case "md":
-      return {
-        lang: "Markdown",
-        icon: <FileText {...iconProps} className="text-zinc-300" />,
-      };
+      return { lang: "Markdown", icon: <FileText {...iconProps} /> };
     case "png":
     case "jpg":
     case "svg":
-      return {
-        lang: "Image",
-        icon: <ImageIcon {...iconProps} className="text-purple-400" />,
-      };
+      return { lang: "Image", icon: <ImageIcon {...iconProps} /> };
     case "sh":
-      return {
-        lang: "Shell",
-        icon: <Terminal {...iconProps} className="text-green-500" />,
-      };
+      return { lang: "Shell", icon: <Terminal {...iconProps} /> };
     case "sql":
-      return {
-        lang: "SQL",
-        icon: <Database {...iconProps} className="text-amber-500" />,
-      };
+      return { lang: "SQL", icon: <Database {...iconProps} /> };
     case "lock":
-      return {
-        lang: "Lockfile",
-        icon: <FileBox {...iconProps} className="text-zinc-500" />,
-      };
+      return { lang: "Lockfile", icon: <FileBox {...iconProps} /> };
     default:
-      return {
-        lang: "Text",
-        icon: <DefaultFile {...iconProps} className="text-zinc-400" />,
-      };
+      return { lang: "Text", icon: <DefaultFile {...iconProps} /> };
   }
 };
 
@@ -136,7 +106,6 @@ export default function RepositoryViewer() {
     fetchRepositoryTree();
   }, []);
 
-  // 1. Fetch the entire folder structure once
   const fetchRepositoryTree = async () => {
     setIsLoadingTree(true);
     setError(null);
@@ -155,12 +124,10 @@ export default function RepositoryViewer() {
     }
   };
 
-  // 2. Fetch the actual code on-the-fly when a file is clicked
   const fetchFileContent = async (filePath: string) => {
     setIsFileLoading(true);
     setError(null);
     try {
-      // Using GitHub's raw content URL for direct text retrieval
       const response = await fetch(
         `https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}/${GITHUB_CONFIG.branch}/${filePath}`,
       );
@@ -192,10 +159,9 @@ export default function RepositoryViewer() {
 
   const jumpToPath = (path: string) => {
     setCurrentPath(path);
-    setViewMode("tree"); // Always default back to tree when clicking a breadcrumb folder
+    setViewMode("tree");
   };
 
-  // Filter items for current directory view
   const currentItems = useMemo(() => {
     const items = treeData.filter((item) => {
       if (currentPath === "" || viewMode === "blob") {
@@ -216,40 +182,42 @@ export default function RepositoryViewer() {
   const pathBreadcrumbs = currentPath.split("/").filter(Boolean);
 
   return (
-    <div className="min-h-screen bg-black text-zinc-300  selection:bg-green-700/30 selection:text-green-200">
-      <div className="max-w-5xl mx-auto px-4 py-12 sm:py-16">
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-neutral-800 dark:text-neutral-300 selection:bg-blue-200 dark:selection:bg-blue-900/50 selection:text-blue-900 dark:selection:text-blue-100">
+      <div className="max-w-5xl mx-auto px-6 py-12 sm:py-16">
         {/* ── TOP HEADER ── */}
-        <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-6">
-          <h1 className="text-4xl sm:text-4xl font-semibold text-white flex items-center gap-3">
-            <Folder className="w-8 h-8 text-white" />
+        <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-neutral-300 dark:border-neutral-800 pb-4">
+          <h1 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
+            <Folder className="w-6 h-6 text-blue-600 dark:text-blue-500" />
             Repository Explorer
           </h1>
           <Link
             href="/git-track"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-800  rounded-full text-sm font-medium text-white transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-sm font-semibold text-neutral-900 dark:text-neutral-100 rounded-none"
           >
             <ArrowLeft className="w-4 h-4" /> Back to Commits
           </Link>
         </div>
 
         {/* ── META INFO BLOCK ── */}
-        <div className="bg-[#141414]  rounded-2xl p-4 sm:p-6 mb-8 shadow-sm">
-          <div className="grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-y-3 sm:gap-x-4 text-sm">
-            <div className="text-blue-500 font-bold tracking-wider text-xs sm:text-sm pt-1">
+        <div className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-4 sm:p-6 mb-8 rounded-none">
+          <div className="grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-y-3 sm:gap-x-4">
+            <div className="text-neutral-500 dark:text-neutral-400 font-bold uppercase tracking-widest text-xs pt-1">
               Repository
             </div>
-            <div className="font-medium text-white text-base">
+            <div className="font-bold text-neutral-900 dark:text-neutral-100 text-sm">
               {GITHUB_CONFIG.username} /{" "}
-              <span className="text-green-400">{GITHUB_CONFIG.repository}</span>
+              <span className="text-blue-600 dark:text-blue-500">
+                {GITHUB_CONFIG.repository}
+              </span>
             </div>
 
-            <div className="text-blue-500 font-bold tracking-wider text-xs sm:text-sm pt-1">
+            <div className="text-neutral-500 dark:text-neutral-400 font-bold uppercase tracking-widest text-xs pt-1">
               Current Path
             </div>
-            <div className="flex flex-wrap items-center gap-2 text-base font-medium">
+            <div className="flex flex-wrap items-center gap-2 text-sm font-semibold">
               <span
                 onClick={() => jumpToPath("")}
-                className="text-zinc-300 hover:text-green-400 cursor-pointer transition-colors"
+                className="text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
               >
                 {GITHUB_CONFIG.repository}
               </span>
@@ -260,13 +228,15 @@ export default function RepositoryViewer() {
 
                 return (
                   <React.Fragment key={buildPath}>
-                    <span className="text-zinc-600">/</span>
+                    <span className="text-neutral-400 dark:text-neutral-600">
+                      /
+                    </span>
                     <span
                       onClick={() => !isCurrentFile && jumpToPath(buildPath)}
                       className={
                         isCurrentFile
-                          ? "text-white font-medium"
-                          : "text-zinc-300 hover:text-green-400 cursor-pointer transition-colors"
+                          ? "text-neutral-900 dark:text-neutral-100 font-bold"
+                          : "text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
                       }
                     >
                       {part}
@@ -280,16 +250,16 @@ export default function RepositoryViewer() {
 
         {/* ── ERROR DISPLAY ── */}
         {error && (
-          <div className="p-4 bg-red-950/30 border border-red-900/50 rounded-md text-red-400 font-medium mb-6">
+          <div className="p-4 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 text-red-700 dark:text-red-400 text-sm font-bold rounded-none mb-6">
             Error: {error}
           </div>
         )}
 
         {/* ── MAIN CONTENT AREA ── */}
-        <div className="bg-[#141414] border border-zinc-800 rounded-md overflow-hidden shadow-sm">
+        <div className="border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40 rounded-none">
           {/* Section Header */}
-          <div className="bg-black/20 border-b border-zinc-800 py-3 px-4 sm:px-6">
-            <h2 className="text-sm font-medium text-white uppercase tracking-wider">
+          <div className="bg-neutral-200 dark:bg-neutral-900 border-b border-neutral-300 dark:border-neutral-800 py-3 px-4 sm:px-6">
+            <h2 className="text-xs font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-widest">
               {viewMode === "tree" ? "Directory Contents" : "File View"}
             </h2>
           </div>
@@ -298,7 +268,7 @@ export default function RepositoryViewer() {
           {viewMode === "tree" ? (
             <div className="w-full flex flex-col">
               {isLoadingTree ? (
-                <div className="p-8 text-center text-zinc-500 font-medium animate-pulse">
+                <div className="p-8 text-center text-sm font-medium text-neutral-500 dark:text-neutral-400">
                   Fetching repository structure...
                 </div>
               ) : (
@@ -310,12 +280,15 @@ export default function RepositoryViewer() {
                         pathParts.pop();
                         jumpToPath(pathParts.join("/"));
                       }}
-                      className="flex items-center py-3 px-4 sm:px-6 hover:bg-[#222736] transition-colors gap-3 sm:gap-4 cursor-pointer border-b border-zinc-800/50"
+                      className="flex items-center py-3 px-4 sm:px-6 hover:bg-white dark:hover:bg-neutral-900 gap-3 sm:gap-4 cursor-pointer border-b border-neutral-200 dark:border-neutral-800/80"
                     >
-                      <div className="w-8 flex justify-center items-center">
-                        <CornerLeftUp size={20} className="text-zinc-500" />
+                      <div className="w-6 flex justify-center items-center">
+                        <CornerLeftUp
+                          size={18}
+                          className="text-neutral-500 dark:text-neutral-400"
+                        />
                       </div>
-                      <div className="text-zinc-400 font-medium hover:text-white transition-colors">
+                      <div className="text-neutral-700 dark:text-neutral-300 font-semibold text-sm">
                         Go up a directory
                       </div>
                     </div>
@@ -329,8 +302,8 @@ export default function RepositoryViewer() {
                           lang: "Directory",
                           icon: (
                             <Folder
-                              size={20}
-                              className="text-blue-400 fill-blue-400/20 shrink-0"
+                              size={18}
+                              className="text-blue-600 dark:text-blue-500 shrink-0"
                             />
                           ),
                         }
@@ -340,27 +313,27 @@ export default function RepositoryViewer() {
                       <div
                         key={item.sha}
                         onClick={() => handleNavigate(item.path, item.type)}
-                        className="group flex flex-col sm:flex-row sm:items-center py-3 px-4 sm:px-6 hover:bg-[#222736] transition-colors gap-2 sm:gap-4 cursor-pointer border-b border-zinc-800/50 last:border-0"
+                        className="group flex flex-col sm:flex-row sm:items-center py-3 px-4 sm:px-6 hover:bg-white dark:hover:bg-neutral-900 gap-2 sm:gap-4 cursor-pointer border-b border-neutral-200 dark:border-neutral-800/80 last:border-0"
                       >
-                        <div className="flex-1 min-w-0 flex items-center gap-4">
-                          <div className="w-8 flex justify-center items-center shrink-0">
+                        <div className="flex-1 min-w-0 flex items-center gap-3">
+                          <div className="w-6 flex justify-center items-center shrink-0">
                             {icon}
                           </div>
                           <span
-                            className={`truncate text-sm sm:text-base transition-colors ${
+                            className={`truncate text-sm ${
                               isFolder
-                                ? "text-green-400 font-medium group-hover:text-green-300"
-                                : "text-zinc-200 font-medium group-hover:text-white"
+                                ? "text-blue-700 dark:text-blue-400 font-bold"
+                                : "text-neutral-900 dark:text-neutral-100 font-medium"
                             }`}
                           >
                             {itemName}
                           </span>
                         </div>
-                        <div className="flex flex-row items-center gap-6 shrink-0 text-sm pl-12 sm:pl-0">
-                          <span className="text-zinc-500 hidden sm:block w-24 text-right">
+                        <div className="flex flex-row items-center gap-6 shrink-0 text-xs font-semibold pl-9 sm:pl-0">
+                          <span className="text-neutral-500 dark:text-neutral-500 hidden sm:block w-24 text-right uppercase tracking-widest">
                             {lang}
                           </span>
-                          <span className="text-zinc-500 w-20 text-right font-medium">
+                          <span className="text-neutral-500 dark:text-neutral-500 w-20 text-right uppercase tracking-widest">
                             {isFolder ? "--" : formatBytes(item.size)}
                           </span>
                         </div>
@@ -374,25 +347,25 @@ export default function RepositoryViewer() {
             /* ── BLOB (CODE) VIEW ── */
             <div className="w-full flex flex-col">
               {isFileLoading ? (
-                <div className="p-8 text-center text-zinc-500 font-medium animate-pulse">
+                <div className="p-8 text-center text-sm font-medium text-neutral-500 dark:text-neutral-400">
                   Loading file contents...
                 </div>
               ) : (
-                <div className="overflow-x-auto bg-[#161923] p-4 sm:p-6">
-                  <pre className="text-sm text-zinc-300 leading-relaxed ">
+                <div className="overflow-x-auto bg-white dark:bg-black p-4 sm:p-6">
+                  <pre className="text-xs sm:text-sm text-neutral-800 dark:text-neutral-300 font-mono leading-relaxed">
                     <code>{fileContent}</code>
                   </pre>
                 </div>
               )}
 
-              <div className="p-4 sm:p-6 border-t border-zinc-800 bg-[#1b1f2b]">
+              <div className="p-4 sm:p-6 border-t border-neutral-300 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
                 <button
                   onClick={() => {
                     const pathParts = currentPath.split("/");
                     pathParts.pop();
                     jumpToPath(pathParts.join("/"));
                   }}
-                  className="inline-flex items-center justify-center gap-2 rounded-md bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-600 transition-colors shadow-sm"
+                  className="inline-flex items-center justify-center gap-2 border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 px-5 py-2.5 text-sm font-bold text-neutral-900 dark:text-neutral-100 rounded-none"
                 >
                   <ArrowLeft className="w-4 h-4" /> Return to Folder
                 </button>

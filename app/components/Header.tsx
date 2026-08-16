@@ -4,16 +4,22 @@ import React, { useMemo, useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { FileText, Github, Menu, X } from "lucide-react";
+import { useTheme } from "next-themes";
+import { FileText, Github, Menu, X, Sun, Moon } from "lucide-react";
 import { PiGithubLogoBold } from "react-icons/pi";
 import { GiCoffeeMug } from "react-icons/gi";
 
 const Header = () => {
   const pathname = usePathname();
+  const { setTheme, resolvedTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
-  const [drawerHeight, setDrawerHeight] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const drawerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
   const navItems = useMemo(
     () => [
@@ -22,7 +28,6 @@ const Header = () => {
         label: "Blogs",
         icon: <FileText className="w-4 h-4 shrink-0" />,
       },
-
       {
         href: "/git-track",
         label: "Commits",
@@ -34,18 +39,6 @@ const Header = () => {
 
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(href + "/");
-
-  // Measure drawer content height for smooth animation
-  useEffect(() => {
-    if (!drawerRef.current) return;
-    const observer = new ResizeObserver(() => {
-      if (drawerRef.current) {
-        setDrawerHeight(drawerRef.current.scrollHeight);
-      }
-    });
-    observer.observe(drawerRef.current);
-    return () => observer.disconnect();
-  }, [isOpen]); // Added isOpen to dependency array to recalculate if content shifts
 
   // Close menu on outside click
   useEffect(() => {
@@ -77,161 +70,185 @@ const Header = () => {
     };
   }, [isOpen]);
 
+  const toggleTheme = () => {
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  };
+
   return (
     <>
       <header
         ref={menuRef}
-        className="fixed top-0 left-0 right-0 z-50 bg-black text-white "
+        className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-black border-b border-neutral-200 dark:border-neutral-800 transition-colors duration-200"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
-          <div className="flex items-center h-14 gap-2 md:gap-4 lg:gap-8">
+          <div className="flex items-center justify-between h-16">
             {/* ── Logo Section ── */}
-            <Link
-              href="/"
-              className="flex items-center gap-2 hover:opacity-80 transition-opacity shrink-0 min-w-0 max-w-[65%] sm:max-w-none"
-            >
-              <div className="rounded-full bg-white p-0.5 shrink-0 flex items-center justify-center">
-                <Image
-                  src="/corelogo.png"
-                  alt="Cloudkinshuk logo"
-                  width={24}
-                  height={24}
-                  className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
-                />
-              </div>
-              <span className="font-bold  text-white leading-none text-base sm:text-xl lg:text-2xl truncate">
-                Cloudkinshuk{" "}
-                <span className="text-yellow-500 font-normal">.in</span>
+            <Link href="/" className="flex items-center gap-3 shrink-0 min-w-0">
+              <Image
+                src="/corelogo.png"
+                alt="Cloudkinshuk logo"
+                width={24}
+                height={24}
+                className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+              />
+              <span className="font-bold tracking-tight text-black dark:text-white text-lg sm:text-xl truncate">
+                Cloudkinshuk
               </span>
             </Link>
 
-            {/* ── Desktop Nav (Tablets & Up) ── */}
-            {/* Hidden on phones, visible on md and up. Uses smaller gaps/text on tablets, scales up on lg screens */}
-            <nav className="hidden md:flex items-center md:gap-1 lg:gap-2 flex-1 justify-center min-w-0 overflow-hidden">
+            {/* ── Desktop Nav ── */}
+            <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={`
-                    flex items-center gap-1.5 md:px-3 lg:px-5 py-1  whitespace-nowrap transition-colors rounded-full
-                    md:text-sm lg:text-base font-medium
+                    flex items-center gap-2 text-sm font-medium transition-colors
                     ${
                       isActive(item.href)
-                        ? "text-blue-400 border-2 border-blue-400 "
-                        : "text-gray-200 rounded-full hover:text-white hover:bg-[#252525]"
+                        ? "text-black dark:text-white"
+                        : "text-neutral-500 hover:text-black dark:hover:text-white"
                     }
                   `}
                 >
                   {item.icon}
-                  <span className="truncate">{item.label}</span>
+                  <span>{item.label}</span>
                 </Link>
               ))}
             </nav>
 
             {/* ── Right Action Cluster ── */}
-            <div className="flex items-center gap-2 sm:gap-3 ml-auto shrink-0">
-              {/* Sponsor Button: text hidden on smaller tablets to save space, visible on laptops (lg) */}
+            <div className="flex items-center gap-4 shrink-0">
+              {/* Sponsor Button */}
               <a
                 href="https://brewrepo.cloudkinshuk.in"
-                className="hidden md:flex items-center gap-1.5 font-bold text-black px-3 py-1.5 lg:px-4 bg-yellow-500 transition-colors rounded-full text-sm shrink-0"
+                className="hidden md:flex items-center gap-2 px-4 py-2 bg-black text-white dark:bg-white dark:text-black text-sm font-medium hover:opacity-80 transition-opacity"
               >
-                <GiCoffeeMug className="w-5 h-5 lg:w-6 lg:h-6 shrink-0" />
-                <span className="hidden lg:inline-block">Sponsor me</span>
+                <GiCoffeeMug className="w-4 h-4" />
+                <span>Sponsor</span>
               </a>
 
-              {/* GitHub Icon: Hidden on mobile, visible on tablets/desktops */}
-              <a
-                href="https://github.com/kinshukjainn/cloudkinshuk"
-                aria-label="GitHub"
-                className="hidden md:flex items-center text-black bg-white cursor-pointer transition-colors p-1.5 rounded-full "
-              >
-                <Github className="w-5 h-5 lg:w-6 lg:h-6" />
-              </a>
+              <div className="hidden md:flex items-center gap-4 border-l border-neutral-200 dark:border-neutral-800 pl-4">
+                {/* GitHub Icon */}
+                <a
+                  href="https://github.com/kinshukjainn/cloudkinshuk"
+                  aria-label="GitHub"
+                  className="text-neutral-500 hover:text-black dark:hover:text-white transition-colors"
+                >
+                  <Github className="w-5 h-5" />
+                </a>
 
-              {/* Mobile Menu Toggle (Visible below md) */}
-              <button
-                className="md:hidden cursor-pointer flex items-center rounded-full justify-center p-2  text-white  active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-white/20"
-                onClick={() => setIsOpen((prev) => !prev)}
-                aria-label={isOpen ? "Close menu" : "Open menu"}
-                aria-expanded={isOpen}
-                aria-controls="mobile-menu"
-              >
-                {isOpen ? (
-                  <X className="w-5 h-5" />
-                ) : (
-                  <Menu className="w-5 h-5" />
-                )}
-              </button>
+                {/* Theme Toggle */}
+                <button
+                  onClick={toggleTheme}
+                  className="text-neutral-500 hover:text-black dark:hover:text-white transition-colors cursor-pointer focus:outline-none"
+                  aria-label="Toggle theme"
+                >
+                  {mounted ? (
+                    resolvedTheme === "dark" ? (
+                      <Sun className="w-5 h-5" />
+                    ) : (
+                      <Moon className="w-5 h-5" />
+                    )
+                  ) : (
+                    <div className="w-5 h-5 opacity-0" />
+                  )}
+                </button>
+              </div>
+
+              {/* Mobile Controls */}
+              <div className="flex md:hidden items-center gap-4">
+                <button
+                  onClick={toggleTheme}
+                  className="text-neutral-500 hover:text-black dark:hover:text-white transition-colors focus:outline-none"
+                  aria-label="Toggle theme"
+                >
+                  {mounted ? (
+                    resolvedTheme === "dark" ? (
+                      <Sun className="w-5 h-5" />
+                    ) : (
+                      <Moon className="w-5 h-5" />
+                    )
+                  ) : (
+                    <div className="w-5 h-5 opacity-0" />
+                  )}
+                </button>
+
+                <button
+                  className="text-neutral-500 hover:text-black dark:hover:text-white transition-colors focus:outline-none"
+                  onClick={() => setIsOpen((prev) => !prev)}
+                  aria-label={isOpen ? "Close menu" : "Open menu"}
+                  aria-expanded={isOpen}
+                >
+                  {isOpen ? (
+                    <X className="w-6 h-6" />
+                  ) : (
+                    <Menu className="w-6 h-6" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* ── Mobile Drawer (< md) ── */}
+        {/* ── Mobile Drawer ── */}
         <div
           id="mobile-menu"
-          className="md:hidden overflow-hidden bg-black transition-[max-height] duration-300 ease-in-out absolute w-full top-14 left-0 z-40 shadow-2xl"
-          style={{ maxHeight: isOpen ? `${drawerHeight}px` : "0px" }}
-          aria-hidden={!isOpen}
+          className={`md:hidden grid transition-all duration-300 ease-in-out bg-white dark:bg-black border-b border-neutral-200 dark:border-neutral-800 ${
+            isOpen
+              ? "grid-rows-[1fr] border-opacity-100"
+              : "grid-rows-[0fr] border-opacity-0"
+          }`}
         >
-          {/* Added max-h-[calc(100vh-3.5rem)] and overflow-y-auto for landscape phone views */}
-          <div
-            ref={drawerRef}
-            className="px-4 py-1 space-y-1 max-h-[calc(100vh-3.5rem)] overflow-y-auto"
-          >
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setIsOpen(false)}
-                className={`
-                  flex items-center gap-3 px-3 py-1 rounded-lg text-base font-medium transition-colors
-                  ${
-                    isActive(item.href)
-                      ? "text-yellow-300"
-                      : "text-gray-300  hover:text-white"
-                  }
-                `}
-                tabIndex={isOpen ? 0 : -1}
-              >
-                {item.icon}
-                {item.label}
-              </Link>
-            ))}
+          <div className="overflow-hidden">
+            <div className="px-4 py-6 space-y-6">
+              <nav className="flex flex-col gap-4">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`
+                      flex items-center gap-3 text-lg font-medium transition-colors
+                      ${
+                        isActive(item.href)
+                          ? "text-black dark:text-white"
+                          : "text-neutral-500 hover:text-black dark:hover:text-white"
+                      }
+                    `}
+                    tabIndex={isOpen ? 0 : -1}
+                  >
+                    {item.icon}
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
 
-            {/* Mobile Actions Divider */}
-            <div className="pt-4 mt-4 border-t border-[#333333] flex flex-col gap-3 pb-2">
-              <a
-                href="https://brewrepo.cloudkinshuk.in"
-                className="flex items-center justify-center gap-2 py-1.5 bg-yellow-500  text-black rounded-full font-bold text-md transition-colors"
-                tabIndex={isOpen ? 0 : -1}
-              >
-                <GiCoffeeMug className="w-7 h-7 shrink-0" />
-                Sponsor Cloudkinshuk
-              </a>
-              <a
-                href="https://github.com/kinshukjainn/cloudkinshuk"
-                className="flex items-center justify-center gap-2 py-1.5 bg-white text-black rounded-full font-semibold text-md transition-colors border border-[#444]"
-                tabIndex={isOpen ? 0 : -1}
-              >
-                <Github className="w-7 h-7 shrink-0" />
-                View on GitHub
-              </a>
+              <div className="pt-6 border-t border-neutral-200 dark:border-neutral-800 flex flex-col gap-4">
+                <a
+                  href="https://brewrepo.cloudkinshuk.in"
+                  className="flex items-center justify-center gap-2 py-3 bg-black text-white dark:bg-white dark:text-black font-medium text-base hover:opacity-80 transition-opacity"
+                  tabIndex={isOpen ? 0 : -1}
+                >
+                  <GiCoffeeMug className="w-5 h-5 shrink-0" />
+                  Sponsor
+                </a>
+                <a
+                  href="https://github.com/kinshukjainn/cloudkinshuk"
+                  className="flex items-center justify-center gap-2 py-3 border border-neutral-200 dark:border-neutral-800 text-black dark:text-white font-medium text-base hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors"
+                  tabIndex={isOpen ? 0 : -1}
+                >
+                  <Github className="w-5 h-5 shrink-0" />
+                  GitHub
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </header>
 
       {/* ── Spacer ── */}
-      <div className="h-14" aria-hidden="true" />
-
-      {/* ── Mobile Backdrop ── */}
-      {isOpen && (
-        <div
-          className="md:hidden fixed inset-0 z-30 bg-black/60 backdrop-blur-sm transition-opacity"
-          onClick={() => setIsOpen(false)}
-          aria-hidden="true"
-        />
-      )}
+      <div className="h-16" aria-hidden="true" />
     </>
   );
 };

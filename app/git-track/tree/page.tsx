@@ -192,14 +192,14 @@ export default function RepositoryViewer() {
           </h1>
           <Link
             href="/git-track"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-sm font-semibold text-neutral-900 dark:text-neutral-100 rounded-none"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-sm font-semibold text-neutral-900 dark:text-neutral-100 rounded-md"
           >
             <ArrowLeft className="w-4 h-4" /> Back to Commits
           </Link>
         </div>
 
         {/* ── META INFO BLOCK ── */}
-        <div className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-4 sm:p-6 mb-8 rounded-none">
+        <div className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-4 sm:p-6 mb-8 rounded-md">
           <div className="grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-y-3 sm:gap-x-4">
             <div className="text-neutral-500 dark:text-neutral-400 font-bold uppercase tracking-widest text-xs pt-1">
               Repository
@@ -250,13 +250,13 @@ export default function RepositoryViewer() {
 
         {/* ── ERROR DISPLAY ── */}
         {error && (
-          <div className="p-4 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 text-red-700 dark:text-red-400 text-sm font-bold rounded-none mb-6">
+          <div className="p-4 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 text-red-700 dark:text-red-400 text-sm font-bold rounded-md mb-6">
             Error: {error}
           </div>
         )}
 
         {/* ── MAIN CONTENT AREA ── */}
-        <div className="border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40 rounded-none">
+        <div className="border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40 rounded-md">
           {/* Section Header */}
           <div className="bg-neutral-200 dark:bg-neutral-900 border-b border-neutral-300 dark:border-neutral-800 py-3 px-4 sm:px-6">
             <h2 className="text-xs font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-widest">
@@ -365,7 +365,7 @@ export default function RepositoryViewer() {
                     pathParts.pop();
                     jumpToPath(pathParts.join("/"));
                   }}
-                  className="inline-flex items-center justify-center gap-2 border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 px-5 py-2.5 text-sm font-bold text-neutral-900 dark:text-neutral-100 rounded-none"
+                  className="inline-flex items-center justify-center gap-2 border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 px-5 py-2.5 text-sm font-bold text-neutral-900 dark:text-neutral-100 rounded-md"
                 >
                   <ArrowLeft className="w-4 h-4" /> Return to Folder
                 </button>

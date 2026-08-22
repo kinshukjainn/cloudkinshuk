@@ -1,20 +1,32 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import type { Metadata } from "next";
 import Markdown from "react-markdown";
 import type { Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import { getDoc, getAllSlugs } from "@/lib/blogs";
+import { navigation } from "@/lib/navigation"; // Your navigation file
+import "highlight.js/styles/github-dark.css";
+import BlogFeed from "@/app/components/BlogsFeed";
+import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 type Props = { params: Promise<{ slug?: string[] }> };
 
 export function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug: [slug] }));
+  const paths = getAllSlugs().map((slug) => ({ slug: [slug] }));
+  paths.push({ slug: [] }); // Add the empty slug for the root /blogs index page
+  return paths;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const doc = getDoc(slug?.[0] ?? "introduction");
+
+  if (!slug || slug.length === 0) {
+    return { title: "Blog", description: "Our latest articles and thoughts." };
+  }
+
+  const doc = getDoc(slug[0]);
   return { title: doc?.meta.title, description: doc?.meta.description };
 }
 
@@ -28,7 +40,7 @@ function omitNode<T extends object>(props: T): Omit<T, "node"> {
 const components: Components = {
   h1: (p) => (
     <h1
-      className="mt-10 mb-6 scroll-mt-24 text-3xl font-bold tracking-tight text-neutral-900 dark:text-white md:text-4xl"
+      className="mt-10 mb-6 scroll-mt-24 text-3xl font-bold tracking-tight  text-neutral-900 dark:text-white md:text-4xl"
       {...omitNode(p)}
     />
   ),
@@ -86,7 +98,7 @@ const components: Components = {
   ),
   pre: (p) => (
     <pre
-      className="mt-6 mb-6 max-w-full overflow-x-auto rounded-none border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-[#0a0a0a] p-4 text-sm leading-normal text-neutral-800 dark:text-neutral-300 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-300 dark:scrollbar-thumb-neutral-700"
+      className="mt-6 mb-6 max-w-full overflow-x-auto rounded-md border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-[#0a0a0a] p-4 text-sm leading-normal text-neutral-800 dark:text-neutral-300 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-300 dark:scrollbar-thumb-neutral-700"
       {...omitNode(p)}
     />
   ),
@@ -100,7 +112,7 @@ const components: Components = {
       );
     return (
       <code
-        className="break-words rounded-none bg-neutral-100 dark:bg-neutral-900 px-1.5 py-0.5 border border-neutral-200 dark:border-neutral-800 text-[0.875em] font-mono text-neutral-900 dark:text-neutral-200"
+        className="break-words rounded-md bg-neutral-100 dark:bg-neutral-900 px-1.5 py-0.5 border border-neutral-200 dark:border-neutral-800 text-[0.875em] font-mono text-neutral-900 dark:text-neutral-200"
         {...omitNode(rest)}
       >
         {children}
@@ -108,7 +120,7 @@ const components: Components = {
     );
   },
   table: (p) => (
-    <div className="my-6 block w-full max-w-full overflow-x-auto rounded-none border border-neutral-300 dark:border-neutral-800 bg-transparent scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-300 dark:scrollbar-thumb-neutral-700">
+    <div className="my-6 block w-full max-w-full overflow-x-auto rounded-md border border-neutral-300 dark:border-neutral-800 bg-transparent scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-300 dark:scrollbar-thumb-neutral-700">
       <table
         className="w-full min-w-[600px] border-collapse text-sm md:text-base"
         {...omitNode(p)}
@@ -133,7 +145,7 @@ const components: Components = {
   img: (p) => (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      className="my-6 h-auto w-full rounded-none border border-neutral-300 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 object-cover sm:object-contain"
+      className="my-6 h-auto w-full rounded-md border border-neutral-300 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 object-cover sm:object-contain"
       alt=""
       {...omitNode(p)}
     />
@@ -142,23 +154,65 @@ const components: Components = {
 
 export default async function DocPage({ params }: Props) {
   const { slug } = await params;
-  const doc = getDoc(slug?.[0] ?? "introduction");
+
+  // ==========================================
+  // VIEW 1: INDEX PAGE (LIST OF ALL BLOGS)
+  // ==========================================
+  if (!slug || slug.length === 0) {
+    // Map over your navigation.ts data and attach the descriptions from Markdown
+    const sectionsData = navigation.map((section) => ({
+      title: section.title,
+      items: section.items.map((item) => {
+        const doc = getDoc(item.slug);
+        return {
+          title: item.title,
+          slug: item.slug,
+          description: doc?.meta.description || "",
+        };
+      }),
+    }));
+
+    return <BlogFeed sections={sectionsData} />;
+  }
+
+  // ==========================================
+  // VIEW 2: INDIVIDUAL BLOG POST PAGE
+  // ==========================================
+  const doc = getDoc(slug[0]);
   if (!doc) notFound();
 
   return (
     <article className="min-w-0 max-w-full overflow-hidden bg-white dark:bg-[#0a0a0a]">
-      {doc.meta.title && (
+      {/* 
+        FIX: Pulled the back button OUTSIDE the title check.
+        Now it will always render on every post.
+      */}
+      <div className="mb-8">
+        <Link
+          href="/blogs"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-md font-medium text-black bg-neutral-200 transition-colors hover:bg-neutral-300 dark:bg-[#252525] dark:text-white dark:hover:bg-[#333]"
+        >
+          <IoChevronBackCircleOutline className="text-lg" />
+          <span>Return</span>
+        </Link>
+      </div>
+
+      {/* Conditionally render header block only if title or description exists */}
+      {(doc.meta.title || doc.meta.description) && (
         <header className="mb-10 border-b border-neutral-300 dark:border-neutral-800 pb-8">
-          <h1 className="text-4xl font-bold tracking-tight text-neutral-900 dark:text-white md:text-5xl">
-            {doc.meta.title}
-          </h1>
+          {doc.meta.title && (
+            <h1 className="text-4xl font-semibold tracking-tight h-font text-neutral-900 dark:text-white md:text-5xl">
+              {doc.meta.title}
+            </h1>
+          )}
           {doc.meta.description && (
-            <p className="mt-4 text-lg text-neutral-800 dark:text-neutral-400">
+            <p className="mt-4 text-lg text-neutral-600 dark:text-neutral-400">
               {doc.meta.description}
             </p>
           )}
         </header>
       )}
+
       <div className="prose-container">
         <Markdown
           remarkPlugins={[remarkGfm]}

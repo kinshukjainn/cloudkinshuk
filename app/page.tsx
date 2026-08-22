@@ -126,7 +126,13 @@ const CONFIG = {
       "Lucide React",
       "React Router DOM",
     ],
-    "Database & Authentication": ["NeonDB", "Supabase", "Clerk"],
+    "Database & Authentication": [
+      "NeonDB",
+      "Supabase",
+      "PostgresSQL",
+      "SQL",
+      "Clerk",
+    ],
     "AI Tools I use": ["Gemini", "Claude", "Chat GPT"],
     "Version Control & Tools": ["Git Terminal", "VS Code"],
   },
@@ -256,7 +262,7 @@ const Pill = ({
   active?: boolean;
 }) => (
   <span
-    className={`px-3 py-1 text-xs font-semibold tracking-wide border rounded-none ${
+    className={`px-3 py-1 text-xs font-semibold tracking-wide border rounded-md ${
       active
         ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800"
         : "bg-neutral-100 dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 border-neutral-300 dark:border-neutral-700"
@@ -275,7 +281,7 @@ export default function Home() {
           <section className="space-y-8">
             <div className="space-y-2">
               <h1 className="text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-widest flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-none" />
+                <span className="w-2 h-2 bg-green-500 rounded-md" />
                 cloud
                 <span className="text-blue-600 dark:text-blue-500">
                   kinshuk
@@ -294,7 +300,7 @@ export default function Home() {
             </div>
 
             <div className="flex flex-wrap items-center gap-4 pt-2">
-              <span className="inline-flex items-center gap-2 text-sm text-neutral-700 dark:text-neutral-300 bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 px-4 py-2 rounded-none">
+              <span className="inline-flex items-center gap-2 text-sm text-neutral-700 dark:text-neutral-300 bg-neutral-50 rounded-md dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 px-4 py-2">
                 <MapPin className="w-4 h-4 text-blue-600 dark:text-blue-500" />
                 {CONFIG.personal.location}
               </span>
@@ -305,7 +311,7 @@ export default function Home() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors rounded-none"
+                    className="p-2.5 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors rounded-md"
                     title={social.platform}
                   >
                     <SocialIcon icon={social.icon} />
@@ -317,13 +323,13 @@ export default function Home() {
             <div className="flex flex-wrap gap-4 pt-4">
               <Link
                 href="/kinshukkjainnresume.pdf"
-                className="inline-flex items-center justify-center gap-2 bg-blue-600 dark:bg-blue-700 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors rounded-none"
+                className="inline-flex items-center justify-center gap-2 bg-blue-600 dark:bg-blue-700 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors rounded-md"
               >
                 <Download className="w-4 h-4" /> Download Resume
               </Link>
               <Link
                 href="/blogs"
-                className="inline-flex items-center justify-center gap-2 bg-transparent border border-neutral-300 dark:border-neutral-700 px-6 py-3 text-sm font-semibold text-neutral-900 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors rounded-none"
+                className="inline-flex items-center justify-center gap-2 bg-transparent border border-neutral-300 dark:border-neutral-700 px-6 py-3 text-sm font-semibold text-neutral-900 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors rounded-md"
               >
                 <BookOpen className="w-4 h-4" /> Read Blog
               </Link>
@@ -337,7 +343,7 @@ export default function Home() {
           {/* EXPERIENCE */}
           <div>
             <SectionHeader title="Experience" />
-            <div className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-6 md:p-8 rounded-none transition-colors hover:border-neutral-400 dark:hover:border-neutral-600">
+            <div className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-6 md:p-8 rounded-md transition-colors hover:border-neutral-400 dark:hover:border-neutral-600">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
                 <div>
                   <h3 className="text-lg font-bold text-neutral-900 dark:text-neutral-100">
@@ -347,7 +353,7 @@ export default function Home() {
                     Uttar Pradesh Power Transmission Corporation Limited
                   </p>
                 </div>
-                <span className="text-xs font-semibold text-neutral-600 dark:text-neutral-400 bg-neutral-200 dark:bg-neutral-950 px-3 py-1.5 border border-neutral-300 dark:border-neutral-800 rounded-none">
+                <span className="text-xs font-semibold text-neutral-600 dark:text-neutral-400 bg-neutral-200 dark:bg-neutral-950 px-3 py-1.5 border border-neutral-300 dark:border-neutral-800 rounded-md">
                   Jul 2025 - Aug 2025
                 </span>
               </div>
@@ -367,7 +373,7 @@ export default function Home() {
               {CONFIG.projects.map((project, idx) => (
                 <div
                   key={idx}
-                  className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-6 md:p-8 rounded-none transition-colors hover:border-neutral-400 dark:hover:border-neutral-600"
+                  className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-6 md:p-8 rounded-md transition-colors hover:border-neutral-400 dark:hover:border-neutral-600"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-4 mb-5">
                     <h3 className="text-lg font-bold text-neutral-900 dark:text-neutral-100">
@@ -391,7 +397,7 @@ export default function Home() {
                     {project.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="text-xs font-medium text-neutral-600 dark:text-neutral-400 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 px-3 py-1.5 rounded-none"
+                        className="text-xs font-medium text-neutral-600 dark:text-neutral-400 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 px-3 py-1.5 rounded-md"
                       >
                         {tech}
                       </span>
@@ -404,7 +410,7 @@ export default function Home() {
                         href={project.links.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm font-semibold text-white px-4 py-2 bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600 flex items-center gap-2 transition-colors rounded-none"
+                        className="text-sm font-semibold text-white px-4 py-2 bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600 flex items-center gap-2 transition-colors rounded-md"
                       >
                         <ExternalLink className="w-4 h-4" /> Live Preview
                       </a>
@@ -414,7 +420,7 @@ export default function Home() {
                         href={project.links.repo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm font-semibold px-4 py-2 bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-neutral-900 dark:text-neutral-100 flex items-center gap-2 transition-colors rounded-none"
+                        className="text-sm font-semibold px-4 py-2 bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-neutral-900 dark:text-neutral-100 flex items-center gap-2 transition-colors rounded-md"
                       >
                         <Github className="w-4 h-4" /> Source Code
                       </a>
@@ -432,7 +438,7 @@ export default function Home() {
               {Object.entries(CONFIG.skills).map(([category, skills]) => (
                 <div
                   key={category}
-                  className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-6 rounded-none"
+                  className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-6 rounded-md"
                 >
                   <h3 className="text-sm font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-wide">
                     {category}
@@ -441,7 +447,7 @@ export default function Home() {
                     {skills.map((skill) => (
                       <span
                         key={skill}
-                        className="px-3 py-1.5 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-700 dark:text-neutral-400 rounded-none"
+                        className="px-3 py-1.5 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-700 dark:text-neutral-400 rounded-md"
                       >
                         {skill}
                       </span>
@@ -459,7 +465,7 @@ export default function Home() {
               {CONFIG.certifications.map((cert, idx) => (
                 <div
                   key={idx}
-                  className="flex flex-col sm:flex-row sm:items-start justify-between p-6 bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 gap-4 rounded-none transition-colors hover:border-neutral-400 dark:hover:border-neutral-600"
+                  className="flex flex-col sm:flex-row sm:items-start justify-between p-6 bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 gap-4 rounded-md transition-colors hover:border-neutral-400 dark:hover:border-neutral-600"
                 >
                   <div>
                     <h3 className="text-base font-bold text-neutral-900 dark:text-neutral-100 mb-1.5">
@@ -484,7 +490,7 @@ export default function Home() {
                       {cert.description}
                     </p>
                   </div>
-                  <span className="shrink-0 text-xs font-semibold text-neutral-600 dark:text-neutral-400 bg-neutral-200 dark:bg-neutral-950 px-3 py-1.5 border border-neutral-300 dark:border-neutral-800 rounded-none">
+                  <span className="shrink-0 text-xs font-semibold text-neutral-600 dark:text-neutral-400 bg-neutral-200 dark:bg-neutral-950 px-3 py-1.5 border border-neutral-300 dark:border-neutral-800 rounded-md">
                     {cert.year}
                   </span>
                 </div>
@@ -495,7 +501,7 @@ export default function Home() {
           {/* EDUCATION */}
           <div>
             <SectionHeader title="Education" />
-            <div className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-6 md:p-8 rounded-none">
+            <div className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-6 md:p-8 rounded-md">
               <div className="flex flex-col md:flex-row justify-between items-start mb-6 gap-4">
                 <div>
                   <h3 className="text-lg font-bold text-neutral-900 dark:text-neutral-100">
@@ -506,7 +512,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="text-left md:text-right">
-                  <span className="text-xs font-bold text-neutral-700 dark:text-neutral-300 bg-neutral-200 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 px-3 py-1.5 inline-block rounded-none">
+                  <span className="text-xs font-bold text-neutral-700 dark:text-neutral-300 bg-neutral-200 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 px-3 py-1.5 inline-block rounded-md">
                     {CONFIG.education.period}
                   </span>
                   <span className="text-xs text-neutral-500 block mt-2.5 font-medium">
@@ -520,7 +526,7 @@ export default function Home() {
               </p>
 
               <div className="flex flex-wrap items-center gap-3 mt-8 pt-6 border-t border-neutral-200 dark:border-neutral-800">
-                <span className="inline-flex items-center gap-2 text-sm font-medium text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-900 px-4 py-2 rounded-none">
+                <span className="inline-flex items-center gap-2 text-sm font-medium text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-900 px-4 py-2 rounded-md">
                   <CheckCircle2 className="w-4 h-4" />
                   Degree Completed
                 </span>
@@ -529,7 +535,7 @@ export default function Home() {
                   download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-900 dark:text-neutral-300 bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 transition-colors px-5 py-2 border border-neutral-300 dark:border-neutral-700 rounded-none"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-900 dark:text-neutral-300 bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 transition-colors px-5 py-2 border border-neutral-300 dark:border-neutral-700 rounded-md"
                 >
                   <Download className="w-4 h-4" />
                   Download PDC (pdf)

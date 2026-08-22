@@ -239,13 +239,13 @@ export default function ChangelogTracker() {
                 href={`https://github.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-sm font-semibold text-neutral-900 dark:text-neutral-100 rounded-none"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-sm font-semibold text-neutral-900 dark:text-neutral-100 rounded-md"
               >
                 <Github className="w-4 h-4" /> Repository
               </a>
               <Link
                 href="/git-track/tree"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600 border border-blue-600 dark:border-blue-700 text-sm font-semibold text-white rounded-none"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600 border border-blue-600 dark:border-blue-700 text-sm font-semibold text-white rounded-md"
               >
                 <FileCode2 className="w-4 h-4" /> View Tree
               </Link>
@@ -257,7 +257,7 @@ export default function ChangelogTracker() {
         <div className="mb-6 flex justify-between items-center">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2 text-sm font-bold text-neutral-900 dark:text-neutral-100 bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 cursor-pointer dark:border-neutral-800 px-4 py-2 hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-none"
+            className="flex items-center gap-2 text-sm font-bold text-neutral-900 dark:text-neutral-100 bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 cursor-pointer dark:border-neutral-800 px-4 py-2 hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-md"
           >
             <Filter className="w-4 h-4" />
             {showFilters ? "Hide Filters" : "Show Filters"}
@@ -269,7 +269,7 @@ export default function ChangelogTracker() {
 
         {/* Strict block layout for filters, no smooth expanding */}
         <div className={showFilters ? "block" : "hidden"}>
-          <div className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-6 mb-6 grid grid-cols-1 sm:grid-cols-3 gap-6 rounded-none">
+          <div className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-6 mb-6 grid grid-cols-1 sm:grid-cols-3 gap-6 rounded-md">
             <div className="space-y-2">
               <label className="text-xs font-bold text-neutral-900 dark:text-neutral-300 uppercase tracking-widest flex items-center gap-1.5">
                 <Search className="w-3.5 h-3.5" /> Search
@@ -279,7 +279,7 @@ export default function ChangelogTracker() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Message or SHA..."
-                className="w-full bg-white dark:bg-black text-sm text-neutral-900 dark:text-neutral-100 border border-neutral-300 dark:border-neutral-700 px-3 py-2 rounded-none focus:outline-none focus:border-blue-600 dark:focus:border-blue-500 focus:ring-1 focus:ring-blue-600 dark:focus:ring-blue-500 placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
+                className="w-full bg-white dark:bg-black text-sm text-neutral-900 dark:text-neutral-100 border border-neutral-300 dark:border-neutral-700 px-3 py-2 rounded-md focus:outline-none focus:border-blue-600 dark:focus:border-blue-500 focus:ring-1 focus:ring-blue-600 dark:focus:ring-blue-500 placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
               />
             </div>
             <div className="space-y-2">
@@ -289,7 +289,7 @@ export default function ChangelogTracker() {
               <select
                 value={authorFilter}
                 onChange={(e) => setAuthorFilter(e.target.value)}
-                className="w-full bg-white dark:bg-black text-sm text-neutral-900 dark:text-neutral-100 border border-neutral-300 dark:border-neutral-700 px-3 py-2 rounded-none focus:outline-none focus:border-blue-600 dark:focus:border-blue-500 focus:ring-1 focus:ring-blue-600 dark:focus:ring-blue-500"
+                className="w-full bg-white dark:bg-black text-sm text-neutral-900 dark:text-neutral-100 border border-neutral-300 dark:border-neutral-700 px-3 py-2 rounded-md focus:outline-none focus:border-blue-600 dark:focus:border-blue-500 focus:ring-1 focus:ring-blue-600 dark:focus:ring-blue-500"
               >
                 <option value="all">All Authors</option>
                 {uniqueAuthors.map((a) => (
@@ -307,7 +307,7 @@ export default function ChangelogTracker() {
                 <select
                   value={typeFilter}
                   onChange={(e) => setTypeFilter(e.target.value)}
-                  className="w-full bg-white dark:bg-black text-sm text-neutral-900 dark:text-neutral-100 border border-neutral-300 dark:border-neutral-700 px-3 py-2 rounded-none focus:outline-none focus:border-blue-600 dark:focus:border-blue-500 focus:ring-1 focus:ring-blue-600 dark:focus:ring-blue-500"
+                  className="w-full bg-white dark:bg-black text-sm text-neutral-900 dark:text-neutral-100 border border-neutral-300 dark:border-neutral-700 px-3 py-2 rounded-md focus:outline-none focus:border-blue-600 dark:focus:border-blue-500 focus:ring-1 focus:ring-blue-600 dark:focus:ring-blue-500"
                 >
                   {COMMIT_TYPES.map((t) => (
                     <option key={t.id} value={t.id}>
@@ -321,7 +321,7 @@ export default function ChangelogTracker() {
                     setAuthorFilter("all");
                     setTypeFilter("all");
                   }}
-                  className="px-4 py-2 bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-700 text-sm font-semibold text-neutral-900 dark:text-neutral-100 rounded-none"
+                  className="px-4 py-2 bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-700 text-sm font-semibold text-neutral-900 dark:text-neutral-100 rounded-md"
                   title="Clear Filters"
                 >
                   Clear
@@ -333,7 +333,7 @@ export default function ChangelogTracker() {
 
         {/* ── STATUS STATES ── */}
         {loading && (
-          <div className="p-8 border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40 rounded-none flex flex-col items-center justify-center text-neutral-500 space-y-3">
+          <div className="p-8 border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40 rounded-md flex flex-col items-center justify-center text-neutral-500 space-y-3">
             <Clock className="w-8 h-8 text-neutral-400 dark:text-neutral-600" />
             <p className="text-sm font-medium">
               Fetching records... (Page {fetchingProgress})
@@ -342,14 +342,14 @@ export default function ChangelogTracker() {
         )}
 
         {error && (
-          <div className="p-4 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 rounded-none flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="p-4 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 rounded-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3 text-red-700 dark:text-red-400 text-sm font-semibold">
               <AlertCircle className="w-5 h-5 shrink-0" />
               <span>Error: {error}</span>
             </div>
             <button
               onClick={fetchCommits}
-              className="px-4 py-2 bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-600 text-white text-sm font-bold rounded-none whitespace-nowrap"
+              className="px-4 py-2 bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-600 text-white text-sm font-bold rounded-md whitespace-nowrap"
             >
               Retry Connection
             </button>
@@ -357,7 +357,7 @@ export default function ChangelogTracker() {
         )}
 
         {!loading && !error && displayCommits.length === 0 && (
-          <div className="p-8 border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40 rounded-none text-center">
+          <div className="p-8 border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40 rounded-md text-center">
             <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
               No matching records found.
             </p>
@@ -366,7 +366,7 @@ export default function ChangelogTracker() {
 
         {/* ── COMMIT LOG (DATA TABLE STYLE) ── */}
         {!loading && !error && displayCommits.length > 0 && (
-          <div className="border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40 rounded-none">
+          <div className="border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40 rounded-md">
             {displayCommits.map((commit, index) => {
               const title = getCommitTitle(commit.commit.message);
               const shortSha = commit.sha.substring(0, 7);
@@ -403,7 +403,7 @@ export default function ChangelogTracker() {
                         {title}
                       </span>
                       {index === 0 && (
-                        <span className="px-1.5 py-0.5 bg-blue-100 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-400 text-[10px] font-bold uppercase tracking-widest rounded-none">
+                        <span className="px-1.5 py-0.5 bg-blue-100 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-400 text-[10px] font-bold uppercase tracking-widest rounded-md">
                           HEAD {GITHUB_CONFIG.branch}
                         </span>
                       )}

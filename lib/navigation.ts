@@ -5,7 +5,6 @@ export const navigation: NavSection[] = [
   {
     title: "Blogs",
     items: [
-      { title: "Welcome to the Blogs", slug: "introduction" },
       {
         title: "How Instagram Is Engineered Under The Hood",
         slug: "how-instagram-is-engineered-under-the-hood",
@@ -39,7 +38,6 @@ export const navigation: NavSection[] = [
   {
     title: "Projects Description",
     items: [
-      { title: "Welcome to the Project Documentation", slug: "welcome" },
       { title: "Kosha : Your Person Cloud Storage System", slug: "kosha" },
       {
         title: "opaque : Your personal password manager",

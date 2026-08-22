@@ -132,7 +132,7 @@ export default function Recommendation({
               <button
                 key={i}
                 type="button"
-                className={`w-2.5 h-2.5 p-0 border rounded-none cursor-pointer ${
+                className={`w-2.5 h-2.5 p-0 border rounded-md cursor-pointer ${
                   i === page
                     ? "bg-blue-600 dark:bg-blue-500 border-blue-600 dark:border-blue-500"
                     : "bg-transparent border-neutral-400 dark:border-neutral-600 hover:border-neutral-900 dark:hover:border-neutral-300"
@@ -151,11 +151,11 @@ export default function Recommendation({
           <li key={post.slug} className="flex min-w-0">
             <Link
               href={post.route}
-              className="flex flex-col gap-2 w-full p-4 border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40 hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:border-neutral-400 dark:hover:border-neutral-600 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 no-underline text-inherit rounded-none"
+              className="flex flex-col gap-2 w-full p-4 border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40 hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:border-neutral-400 dark:hover:border-neutral-600 focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2 no-underline text-inherit rounded-md"
               onClick={() => onSelect?.(post)}
             >
               {post.topics[0] && (
-                <span className="self-start text-[10px] font-bold uppercase tracking-widest bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 border border-blue-200 dark:border-blue-800 px-1.5 py-0.5 rounded-none">
+                <span className="self-start text-[10px] font-bold uppercase tracking-widest bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 border border-blue-200 dark:border-blue-800 px-1.5 py-0.5 rounded-md">
                   {post.topics[0]}
                 </span>
               )}

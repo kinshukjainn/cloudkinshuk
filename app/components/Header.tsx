@@ -122,7 +122,7 @@ const Header = () => {
               {/* Sponsor Button */}
               <a
                 href="https://brewrepo.cloudkinshuk.in"
-                className="hidden md:flex items-center gap-2 px-4 py-2 bg-black text-white dark:bg-white dark:text-black text-sm font-medium hover:opacity-80 transition-opacity"
+                className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg bg-black text-white dark:bg-white dark:text-black text-sm font-medium hover:opacity-80 transition-opacity"
               >
                 <GiCoffeeMug className="w-4 h-4" />
                 <span>Sponsor</span>
@@ -227,7 +227,7 @@ const Header = () => {
               <div className="pt-6 border-t border-neutral-200 dark:border-neutral-800 flex flex-col gap-4">
                 <a
                   href="https://brewrepo.cloudkinshuk.in"
-                  className="flex items-center justify-center gap-2 py-3 bg-black text-white dark:bg-white dark:text-black font-medium text-base hover:opacity-80 transition-opacity"
+                  className="flex items-center justify-center gap-2 py-3 bg-black text-white dark:bg-white dark:text-black rounded-lg font-medium text-base hover:opacity-80 transition-opacity"
                   tabIndex={isOpen ? 0 : -1}
                 >
                   <GiCoffeeMug className="w-5 h-5 shrink-0" />

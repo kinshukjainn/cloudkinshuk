@@ -274,13 +274,13 @@ const Pill = ({
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-neutral-800 dark:text-neutral-300 selection:bg-blue-200 dark:selection:bg-blue-900/50 selection:text-blue-900 dark:selection:text-blue-100 transition-colors">
+    <div className="min-h-screen bg-white dark:bg-[#1e1e1e] text-neutral-800 dark:text-neutral-300 selection:bg-blue-200 dark:selection:bg-blue-900/50 selection:text-blue-900 dark:selection:text-blue-100 transition-colors">
       <main className="max-w-3xl mx-auto px-6 py-16 md:py-24">
         <div className="space-y-16">
           {/* HEADER / INTRO */}
           <section className="space-y-8">
             <div className="space-y-2">
-              <h1 className="text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-widest flex items-center gap-2">
+              <h1 className="text-xs font-bold text-neutral-500 dark:text-neutral-200 uppercase tracking-widest flex items-center gap-2">
                 <span className="w-2 h-2 bg-green-500 rounded-md" />
                 cloud
                 <span className="text-blue-600 dark:text-blue-500">
@@ -293,7 +293,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="space-y-4 text-base leading-relaxed text-neutral-600 dark:text-neutral-400 max-w-2xl">
+            <div className="space-y-4 text-base leading-relaxed text-neutral-800 dark:text-neutral-200 max-w-2xl">
               {CONFIG.personal.bio.map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
               ))}
@@ -311,7 +311,7 @@ export default function Home() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors rounded-md"
+                    className="p-2.5 text-neutral-600 dark:text-neutral-200 hover:text-neutral-900 dark:hover:text-white bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors rounded-md"
                     title={social.platform}
                   >
                     <SocialIcon icon={social.icon} />
@@ -343,21 +343,21 @@ export default function Home() {
           {/* EXPERIENCE */}
           <div>
             <SectionHeader title="Experience" />
-            <div className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-6 md:p-8 rounded-md transition-colors hover:border-neutral-400 dark:hover:border-neutral-600">
+            <div className="bg-neutral-50 dark:bg-[#101010] border border-neutral-300 dark:border-neutral-800 p-6 md:p-8 rounded-md transition-colors hover:border-neutral-400 dark:hover:border-neutral-600">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
                 <div>
                   <h3 className="text-lg font-bold text-neutral-900 dark:text-neutral-100">
                     UPPTCL
                   </h3>
-                  <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400 mt-1">
+                  <p className="text-sm font-medium text-neutral-600 dark:text-neutral-200 mt-1">
                     Uttar Pradesh Power Transmission Corporation Limited
                   </p>
                 </div>
-                <span className="text-xs font-semibold text-neutral-600 dark:text-neutral-400 bg-neutral-200 dark:bg-neutral-950 px-3 py-1.5 border border-neutral-300 dark:border-neutral-800 rounded-md">
+                <span className="text-xs font-semibold text-neutral-600 dark:text-neutral-200 bg-neutral-200 dark:bg-neutral-950 px-3 py-1.5 border border-neutral-300 dark:border-neutral-800 rounded-md">
                   Jul 2025 - Aug 2025
                 </span>
               </div>
-              <p className="text-sm text-neutral-700 dark:text-neutral-400 leading-relaxed">
+              <p className="text-sm text-neutral-700 dark:text-neutral-200 leading-relaxed">
                 Worked with the transmission division to understand the
                 operation, protection, and maintenance of 132kV and 220kV
                 substations. Prepared technical documentation and maintained
@@ -373,7 +373,7 @@ export default function Home() {
               {CONFIG.projects.map((project, idx) => (
                 <div
                   key={idx}
-                  className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-6 md:p-8 rounded-md transition-colors hover:border-neutral-400 dark:hover:border-neutral-600"
+                  className="bg-neutral-50 dark:bg-[#101010] border border-neutral-300 dark:border-neutral-800 p-6 md:p-8 rounded-md transition-colors hover:border-neutral-400 dark:hover:border-neutral-600"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-4 mb-5">
                     <h3 className="text-lg font-bold text-neutral-900 dark:text-neutral-100">
@@ -387,7 +387,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="space-y-3 mb-6 text-sm text-neutral-700 dark:text-neutral-400 leading-relaxed">
+                  <div className="space-y-3 mb-6 text-sm text-neutral-700 dark:text-neutral-200 leading-relaxed">
                     {project.description.map((p, i) => (
                       <p key={i}>{p}</p>
                     ))}
@@ -397,7 +397,7 @@ export default function Home() {
                     {project.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="text-xs font-medium text-neutral-600 dark:text-neutral-400 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 px-3 py-1.5 rounded-md"
+                        className="text-xs font-medium text-neutral-600 dark:text-neutral-200 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 px-3 py-1.5 rounded-md"
                       >
                         {tech}
                       </span>
@@ -438,7 +438,7 @@ export default function Home() {
               {Object.entries(CONFIG.skills).map(([category, skills]) => (
                 <div
                   key={category}
-                  className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-6 rounded-md"
+                  className="bg-neutral-50 dark:bg-[#101010] border border-neutral-300 dark:border-neutral-800 p-6 rounded-md"
                 >
                   <h3 className="text-sm font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-wide">
                     {category}
@@ -447,7 +447,7 @@ export default function Home() {
                     {skills.map((skill) => (
                       <span
                         key={skill}
-                        className="px-3 py-1.5 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-700 dark:text-neutral-400 rounded-md"
+                        className="px-3 py-1.5 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-700 dark:text-neutral-200 rounded-md"
                       >
                         {skill}
                       </span>
@@ -465,7 +465,7 @@ export default function Home() {
               {CONFIG.certifications.map((cert, idx) => (
                 <div
                   key={idx}
-                  className="flex flex-col sm:flex-row sm:items-start justify-between p-6 bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 gap-4 rounded-md transition-colors hover:border-neutral-400 dark:hover:border-neutral-600"
+                  className="flex flex-col sm:flex-row sm:items-start justify-between p-6 bg-neutral-50 dark:bg-[#101010] border border-neutral-300 dark:border-neutral-800 gap-4 rounded-md transition-colors hover:border-neutral-400 dark:hover:border-neutral-600"
                 >
                   <div>
                     <h3 className="text-base font-bold text-neutral-900 dark:text-neutral-100 mb-1.5">
@@ -486,11 +486,11 @@ export default function Home() {
                     <p className="text-xs text-blue-600 dark:text-blue-500 font-bold mb-3 tracking-wide">
                       {cert.organization} • {cert.status}
                     </p>
-                    <p className="text-sm text-neutral-700 dark:text-neutral-400 leading-relaxed">
+                    <p className="text-sm text-neutral-700 dark:text-neutral-200 leading-relaxed">
                       {cert.description}
                     </p>
                   </div>
-                  <span className="shrink-0 text-xs font-semibold text-neutral-600 dark:text-neutral-400 bg-neutral-200 dark:bg-neutral-950 px-3 py-1.5 border border-neutral-300 dark:border-neutral-800 rounded-md">
+                  <span className="shrink-0 text-xs font-semibold text-neutral-600 dark:text-neutral-200 bg-neutral-200 dark:bg-neutral-950 px-3 py-1.5 border border-neutral-300 dark:border-neutral-800 rounded-md">
                     {cert.year}
                   </span>
                 </div>
@@ -501,7 +501,7 @@ export default function Home() {
           {/* EDUCATION */}
           <div>
             <SectionHeader title="Education" />
-            <div className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-6 md:p-8 rounded-md">
+            <div className="bg-neutral-50 dark:bg-[#101010] border border-neutral-300 dark:border-neutral-800 p-6 md:p-8 rounded-md">
               <div className="flex flex-col md:flex-row justify-between items-start mb-6 gap-4">
                 <div>
                   <h3 className="text-lg font-bold text-neutral-900 dark:text-neutral-100">
@@ -521,7 +521,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <p className="text-sm text-neutral-700 dark:text-neutral-400 leading-relaxed max-w-2xl">
+              <p className="text-sm text-neutral-700 dark:text-neutral-200 leading-relaxed max-w-2xl">
                 {CONFIG.education.description}
               </p>
 

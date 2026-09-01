@@ -141,7 +141,7 @@ const Header = () => {
                 {/* Theme Toggle */}
                 <button
                   onClick={toggleTheme}
-                  className="text-neutral-500 hover:text-black dark:hover:text-white transition-colors cursor-pointer focus:outline-none"
+                  className="text-neutral-500 hover:text-black cursor-pointer  dark:hover:text-white transition-colors focus:outline-none"
                   aria-label="Toggle theme"
                 >
                   {mounted ? (
@@ -160,7 +160,7 @@ const Header = () => {
               <div className="flex md:hidden items-center gap-4">
                 <button
                   onClick={toggleTheme}
-                  className="text-neutral-500 hover:text-black dark:hover:text-white transition-colors focus:outline-none"
+                  className="text-neutral-500 hover:text-black cursor-pointer dark:hover:text-white transition-colors focus:outline-none"
                   aria-label="Toggle theme"
                 >
                   {mounted ? (
@@ -175,7 +175,7 @@ const Header = () => {
                 </button>
 
                 <button
-                  className="text-neutral-500 hover:text-black dark:hover:text-white transition-colors focus:outline-none"
+                  className="text-neutral-500 hover:text-black cursor-pointer dark:hover:text-white transition-colors focus:outline-none"
                   onClick={() => setIsOpen((prev) => !prev)}
                   aria-label={isOpen ? "Close menu" : "Open menu"}
                   aria-expanded={isOpen}

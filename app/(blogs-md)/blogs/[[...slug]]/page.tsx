@@ -182,7 +182,7 @@ export default async function DocPage({ params }: Props) {
   if (!doc) notFound();
 
   return (
-    <article className="min-w-0 max-w-full overflow-hidden bg-white dark:bg-[#0a0a0a]">
+    <article className="min-w-0 max-w-full overflow-hidden bg-white dark:bg-[#1e1e1e]">
       {/* 
         FIX: Pulled the back button OUTSIDE the title check.
         Now it will always render on every post.
@@ -190,7 +190,7 @@ export default async function DocPage({ params }: Props) {
       <div className="mb-8">
         <Link
           href="/blogs"
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-md font-medium text-black bg-neutral-200 transition-colors hover:bg-neutral-300 dark:bg-[#252525] dark:text-white dark:hover:bg-[#333]"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-md rounded-md font-medium text-black bg-green-400 transition-colors dark:bg-green-800 dark:text-white"
         >
           <IoChevronBackCircleOutline className="text-lg" />
           <span>Return</span>

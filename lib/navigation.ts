@@ -6,6 +6,10 @@ export const navigation: NavSection[] = [
     title: "Blogs",
     items: [
       {
+        title: "Why PostgreSQL Became My Go-To Database",
+        slug: "db-sql",
+      },
+      {
         title: "How Instagram Is Engineered Under The Hood",
         slug: "how-instagram-is-engineered-under-the-hood",
       },
@@ -28,10 +32,6 @@ export const navigation: NavSection[] = [
       {
         title: " The Power of Blogging: Why I'm Committed to Sharing Knowledge",
         slug: "the-power-of-blogging-why-im-committed-to-sharing-knowledge",
-      },
-      {
-        title: "Why PostgreSQL Became My Go-To Database",
-        slug: "db-sql",
       },
     ],
   },

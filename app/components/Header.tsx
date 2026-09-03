@@ -78,19 +78,21 @@ const Header = () => {
     <>
       <header
         ref={menuRef}
-        className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-black border-b border-neutral-200 dark:border-neutral-800 transition-colors duration-200"
+        className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#202020] border-b border-neutral-200 dark:border-neutral-800 transition-colors duration-200"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
           <div className="flex items-center justify-between h-16">
             {/* ── Logo Section ── */}
             <Link href="/" className="flex items-center gap-3 shrink-0 min-w-0">
-              <Image
-                src="/corelogo.png"
-                alt="Cloudkinshuk logo"
-                width={24}
-                height={24}
-                className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
-              />
+              <div className="p-1 dark:bg-white rounded-full bg-transparent ">
+                <Image
+                  src="/corelogo.png"
+                  alt="Cloudkinshuk logo"
+                  width={24}
+                  height={24}
+                  className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                />
+              </div>
               <span className="font-bold tracking-tight text-black dark:text-white text-lg sm:text-xl truncate">
                 Cloudkinshuk
               </span>
@@ -103,11 +105,11 @@ const Header = () => {
                   key={item.href}
                   href={item.href}
                   className={`
-                    flex items-center gap-2 text-sm font-medium transition-colors
+                    flex items-center gap-2 text-md font-medium transition-colors
                     ${
                       isActive(item.href)
                         ? "text-black dark:text-white"
-                        : "text-neutral-500 hover:text-black dark:hover:text-white"
+                        : "text-neutral-900 dark:text-neutral-100 hover:text-black dark:hover:text-white"
                     }
                   `}
                 >
@@ -213,7 +215,7 @@ const Header = () => {
                       ${
                         isActive(item.href)
                           ? "text-black dark:text-white"
-                          : "text-neutral-500 hover:text-black dark:hover:text-white"
+                          : "text-neutral-900 dark:text-neutral-100 hover:text-black dark:hover:text-white"
                       }
                     `}
                     tabIndex={isOpen ? 0 : -1}

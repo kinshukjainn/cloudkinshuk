@@ -2,8 +2,6 @@
 
 import {
   Github,
-  Linkedin,
-  Mail,
   ExternalLink,
   Download,
   BookOpen,
@@ -224,333 +222,248 @@ const CONFIG = {
 
 // --- COMPONENTS ---
 
-const SocialIcon = ({ icon }: { icon: string }) => {
-  switch (icon) {
-    case "github":
-      return <Github className="w-5 h-5" />;
-    case "linkedin":
-      return <Linkedin className="w-5 h-5" />;
-    case "mail":
-      return <Mail className="w-5 h-5" />;
-    case "x":
-      return (
-        <svg
-          className="w-4 h-4"
-          fill="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.627l-5.1-6.658-5.848 6.658H2.425l7.752-8.858L.754 2.25h6.844l4.608 6.09L17.502 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-        </svg>
-      );
-    default:
-      return null;
-  }
-};
-
 const SectionHeader = ({ title }: { title: string }) => (
-  <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mt-20 mb-6 border-b border-neutral-300 dark:border-neutral-800 pb-2">
+  <h2 className="text-xl md:text-2xl font-bold text-black dark:text-white mt-16 mb-6">
     {title}
   </h2>
 );
 
-const Pill = ({
-  children,
-  active = false,
-}: {
-  children: React.ReactNode;
-  active?: boolean;
-}) => (
-  <span
-    className={`px-3 py-1 text-xs font-semibold tracking-wide border rounded-md ${
-      active
-        ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800"
-        : "bg-neutral-100 dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 border-neutral-300 dark:border-neutral-700"
-    }`}
-  >
-    {children}
-  </span>
-);
-
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white dark:bg-[#1e1e1e] text-neutral-800 dark:text-neutral-300 selection:bg-blue-200 dark:selection:bg-blue-900/50 selection:text-blue-900 dark:selection:text-blue-100 transition-colors">
-      <main className="max-w-3xl mx-auto px-6 py-16 md:py-24">
-        <div className="space-y-16">
-          {/* HEADER / INTRO */}
-          <section className="space-y-8">
-            <div className="space-y-2">
-              <h1 className="text-xs font-bold text-neutral-500 dark:text-neutral-200 uppercase tracking-widest flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-md" />
-                cloud
-                <span className="text-blue-600 dark:text-blue-500">
-                  kinshuk
-                </span>
-                .in
-              </h1>
-              <p className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-900 dark:text-white pb-2">
-                Hi, I&apos;m Kinshuk.
-              </p>
-            </div>
+    <div className="min-h-screen bg-white dark:bg-[#1e1e1e] text-neutral-900 dark:text-neutral-200 selection:bg-blue-200 dark:selection:bg-blue-900 selection:text-black dark:selection:text-white">
+      {/* Widen max-width to max-w-4xl/5xl to give it a broader document feel */}
+      <main className="max-w-4xl mx-auto px-6 py-16 md:py-24">
+        {/* HEADER / INTRO */}
+        <section className="space-y-6 mb-16">
+          <h1 className="text-3xl md:text-5xl font-bold text-black dark:text-white tracking-tight">
+            Hi, I&apos;m Kinshuk.
+          </h1>
 
-            <div className="space-y-4 text-base leading-relaxed text-neutral-800 dark:text-neutral-200 max-w-2xl">
-              {CONFIG.personal.bio.map((paragraph, idx) => (
-                <p key={idx}>{paragraph}</p>
-              ))}
-            </div>
-
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <span className="inline-flex items-center gap-2 text-sm text-neutral-700 dark:text-neutral-300 bg-neutral-50 rounded-md dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 px-4 py-2">
-                <MapPin className="w-4 h-4 text-blue-600 dark:text-blue-500" />
-                {CONFIG.personal.location}
-              </span>
-              <div className="flex items-center gap-2">
-                {CONFIG.social.map((social) => (
-                  <a
-                    key={social.platform}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2.5 text-neutral-600 dark:text-neutral-200 hover:text-neutral-900 dark:hover:text-white bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors rounded-md"
-                    title={social.platform}
-                  >
-                    <SocialIcon icon={social.icon} />
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Link
-                href="/kinshukkjainnresume.pdf"
-                className="inline-flex items-center justify-center gap-2 bg-blue-600 dark:bg-blue-700 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors rounded-md"
-              >
-                <Download className="w-4 h-4" /> Download Resume
-              </Link>
-              <Link
-                href="/blogs"
-                className="inline-flex items-center justify-center gap-2 bg-transparent border border-neutral-300 dark:border-neutral-700 px-6 py-3 text-sm font-semibold text-neutral-900 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors rounded-md"
-              >
-                <BookOpen className="w-4 h-4" /> Read Blog
-              </Link>
-            </div>
-          </section>
-
-          <section className="space-y-6">
-            <Recommendation />
-          </section>
-
-          {/* EXPERIENCE */}
-          <div>
-            <SectionHeader title="Experience" />
-            <div className="bg-neutral-50 dark:bg-[#101010] border border-neutral-300 dark:border-neutral-800 p-6 md:p-8 rounded-md transition-colors hover:border-neutral-400 dark:hover:border-neutral-600">
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
-                <div>
-                  <h3 className="text-lg font-bold text-neutral-900 dark:text-neutral-100">
-                    UPPTCL
-                  </h3>
-                  <p className="text-sm font-medium text-neutral-600 dark:text-neutral-200 mt-1">
-                    Uttar Pradesh Power Transmission Corporation Limited
-                  </p>
-                </div>
-                <span className="text-xs font-semibold text-neutral-600 dark:text-neutral-200 bg-neutral-200 dark:bg-neutral-950 px-3 py-1.5 border border-neutral-300 dark:border-neutral-800 rounded-md">
-                  Jul 2025 - Aug 2025
-                </span>
-              </div>
-              <p className="text-sm text-neutral-700 dark:text-neutral-200 leading-relaxed">
-                Worked with the transmission division to understand the
-                operation, protection, and maintenance of 132kV and 220kV
-                substations. Prepared technical documentation and maintained
-                logs on equipment performance and safety checks.
-              </p>
-            </div>
+          <div className="space-y-4 text-base md:text-lg leading-relaxed max-w-3xl">
+            {CONFIG.personal.bio.map((paragraph, idx) => (
+              <p key={idx}>{paragraph}</p>
+            ))}
           </div>
 
-          {/* PROJECTS */}
-          <div>
-            <SectionHeader title="Shipped Stuff" />
-            <div className="space-y-6">
-              {CONFIG.projects.map((project, idx) => (
-                <div
-                  key={idx}
-                  className="bg-neutral-50 dark:bg-[#101010] border border-neutral-300 dark:border-neutral-800 p-6 md:p-8 rounded-md transition-colors hover:border-neutral-400 dark:hover:border-neutral-600"
-                >
-                  <div className="flex flex-wrap items-center justify-between gap-4 mb-5">
-                    <h3 className="text-lg font-bold text-neutral-900 dark:text-neutral-100">
-                      {project.title}
-                    </h3>
-                    <div className="flex gap-2">
-                      <Pill active={project.status === "Live"}>
-                        {project.status}
-                      </Pill>
-                      <Pill>{project.year}</Pill>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3 mb-6 text-sm text-neutral-700 dark:text-neutral-200 leading-relaxed">
-                    {project.description.map((p, i) => (
-                      <p key={i}>{p}</p>
-                    ))}
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="text-xs font-medium text-neutral-600 dark:text-neutral-200 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 px-3 py-1.5 rounded-md"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-3 pt-5 border-t border-neutral-200 dark:border-neutral-800">
-                    {project.links.live && (
-                      <a
-                        href={project.links.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm font-semibold text-white px-4 py-2 bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600 flex items-center gap-2 transition-colors rounded-md"
-                      >
-                        <ExternalLink className="w-4 h-4" /> Live Preview
-                      </a>
-                    )}
-                    {project.links.repo && (
-                      <a
-                        href={project.links.repo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm font-semibold px-4 py-2 bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-neutral-900 dark:text-neutral-100 flex items-center gap-2 transition-colors rounded-md"
-                      >
-                        <Github className="w-4 h-4" /> Source Code
-                      </a>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* SKILLS */}
-          <div>
-            <SectionHeader title="Tools I Use" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-              {Object.entries(CONFIG.skills).map(([category, skills]) => (
-                <div
-                  key={category}
-                  className="bg-neutral-50 dark:bg-[#101010] border border-neutral-300 dark:border-neutral-800 p-6 rounded-md"
-                >
-                  <h3 className="text-sm font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-wide">
-                    {category}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1.5 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-700 dark:text-neutral-200 rounded-md"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* CERTIFICATIONS */}
-          <div>
-            <SectionHeader title="Certifications" />
-            <div className="space-y-4">
-              {CONFIG.certifications.map((cert, idx) => (
-                <div
-                  key={idx}
-                  className="flex flex-col sm:flex-row sm:items-start justify-between p-6 bg-neutral-50 dark:bg-[#101010] border border-neutral-300 dark:border-neutral-800 gap-4 rounded-md transition-colors hover:border-neutral-400 dark:hover:border-neutral-600"
-                >
-                  <div>
-                    <h3 className="text-base font-bold text-neutral-900 dark:text-neutral-100 mb-1.5">
-                      {cert.url ? (
-                        <a
-                          href={cert.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center gap-1.5"
-                        >
-                          {cert.title}
-                          <ExternalLink className="w-3.5 h-3.5" />
-                        </a>
-                      ) : (
-                        cert.title
-                      )}
-                    </h3>
-                    <p className="text-xs text-blue-600 dark:text-blue-500 font-bold mb-3 tracking-wide">
-                      {cert.organization} • {cert.status}
-                    </p>
-                    <p className="text-sm text-neutral-700 dark:text-neutral-200 leading-relaxed">
-                      {cert.description}
-                    </p>
-                  </div>
-                  <span className="shrink-0 text-xs font-semibold text-neutral-600 dark:text-neutral-200 bg-neutral-200 dark:bg-neutral-950 px-3 py-1.5 border border-neutral-300 dark:border-neutral-800 rounded-md">
-                    {cert.year}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* EDUCATION */}
-          <div>
-            <SectionHeader title="Education" />
-            <div className="bg-neutral-50 dark:bg-[#101010] border border-neutral-300 dark:border-neutral-800 p-6 md:p-8 rounded-md">
-              <div className="flex flex-col md:flex-row justify-between items-start mb-6 gap-4">
-                <div>
-                  <h3 className="text-lg font-bold text-neutral-900 dark:text-neutral-100">
-                    {CONFIG.education.institution}
-                  </h3>
-                  <p className="text-sm text-blue-600 dark:text-blue-500 mt-1.5 font-medium">
-                    {CONFIG.education.degree} — {CONFIG.education.field}
-                  </p>
-                </div>
-                <div className="text-left md:text-right">
-                  <span className="text-xs font-bold text-neutral-700 dark:text-neutral-300 bg-neutral-200 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 px-3 py-1.5 inline-block rounded-md">
-                    {CONFIG.education.period}
-                  </span>
-                  <span className="text-xs text-neutral-500 block mt-2.5 font-medium">
-                    {CONFIG.education.location}
-                  </span>
-                </div>
-              </div>
-
-              <p className="text-sm text-neutral-700 dark:text-neutral-200 leading-relaxed max-w-2xl">
-                {CONFIG.education.description}
-              </p>
-
-              <div className="flex flex-wrap items-center gap-3 mt-8 pt-6 border-t border-neutral-200 dark:border-neutral-800">
-                <span className="inline-flex items-center gap-2 text-sm font-medium text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-900 px-4 py-2 rounded-md">
-                  <CheckCircle2 className="w-4 h-4" />
-                  Degree Completed
-                </span>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 pt-2 text-base">
+            <span className="flex items-center gap-1.5 text-neutral-600 dark:text-neutral-400">
+              <MapPin className="w-4 h-4" />
+              {CONFIG.personal.location}
+            </span>
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+              {CONFIG.social.map((social) => (
                 <a
-                  href="/2200910200015.pdf"
-                  download
+                  key={social.platform}
+                  href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-900 dark:text-neutral-300 bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 transition-colors px-5 py-2 border border-neutral-300 dark:border-neutral-700 rounded-md"
+                  className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
                 >
-                  <Download className="w-4 h-4" />
-                  Download PDC (pdf)
+                  {social.platform}
                 </a>
-              </div>
+              ))}
             </div>
           </div>
-        </div>
+
+          <div className="flex flex-wrap gap-6 pt-4">
+            <Link
+              href="/kinshukkjainnresume.pdf"
+              className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:underline font-medium text-lg"
+            >
+              <Download className="w-4 h-4" /> Resume
+            </Link>
+            <Link
+              href="/blogs"
+              className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:underline font-medium text-lg"
+            >
+              <BookOpen className="w-4 h-4" /> Read Blog
+            </Link>
+          </div>
+        </section>
+
+        <section className="mb-16">
+          <Recommendation />
+        </section>
+
+        {/* EXPERIENCE */}
+        <section className="mb-16">
+          <SectionHeader title="Experience" />
+          <div className="space-y-2">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline">
+              <h3 className="text-lg font-bold text-black dark:text-white">
+                UPPTCL (Uttar Pradesh Power Transmission Corporation Limited)
+              </h3>
+              <span className="text-sm text-neutral-500 font-medium">
+                Jul 2025 - Aug 2025
+              </span>
+            </div>
+            <p className="text-base leading-relaxed">
+              Worked with the transmission division to understand the operation,
+              protection, and maintenance of 132kV and 220kV substations.
+              Prepared technical documentation and maintained logs on equipment
+              performance and safety checks.
+            </p>
+          </div>
+        </section>
+
+        {/* PROJECTS */}
+        <section className="mb-16">
+          <SectionHeader title="Shipped Stuff" />
+          <div className="space-y-12">
+            {CONFIG.projects.map((project, idx) => (
+              <div key={idx} className="space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-baseline gap-2">
+                  <h3 className="text-lg font-bold text-black dark:text-white">
+                    {project.title}
+                  </h3>
+                  <span className="text-sm text-neutral-500">
+                    ({project.year}) • {project.status}
+                  </span>
+                </div>
+
+                <div className="space-y-2 text-base leading-relaxed">
+                  {project.description.map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </div>
+
+                <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                  <strong className="text-neutral-900 dark:text-neutral-200">
+                    Technologies:
+                  </strong>{" "}
+                  {project.technologies.join(", ")}
+                </p>
+
+                <div className="flex flex-wrap items-center gap-6 pt-2">
+                  {project.links.live && (
+                    <a
+                      href={project.links.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                    >
+                      <ExternalLink className="w-4 h-4" /> Live Preview
+                    </a>
+                  )}
+                  {project.links.repo && (
+                    <a
+                      href={project.links.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                    >
+                      <Github className="w-4 h-4" /> Source Code
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* SKILLS */}
+        <section className="mb-16">
+          <SectionHeader title="Tools & Technologies" />
+          <div className="space-y-6">
+            {Object.entries(CONFIG.skills).map(([category, skills]) => (
+              <div key={category}>
+                <h3 className="text-base font-bold text-black dark:text-white mb-1">
+                  {category}
+                </h3>
+                <p className="text-base leading-relaxed text-neutral-700 dark:text-neutral-300">
+                  {skills.join(", ")}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* CERTIFICATIONS */}
+        <section className="mb-16">
+          <SectionHeader title="Certifications" />
+          <div className="space-y-8">
+            {CONFIG.certifications.map((cert, idx) => (
+              <div key={idx} className="space-y-1">
+                <div className="flex flex-col sm:flex-row sm:items-baseline gap-2">
+                  {cert.url ? (
+                    <a
+                      href={cert.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-lg font-bold text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1.5"
+                    >
+                      {cert.title}
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  ) : (
+                    <h3 className="text-lg font-bold text-black dark:text-white">
+                      {cert.title}
+                    </h3>
+                  )}
+                  <span className="text-sm text-neutral-500">
+                    {cert.year} • {cert.status}
+                  </span>
+                </div>
+
+                <p className="text-sm font-medium text-neutral-800 dark:text-neutral-200 pb-1">
+                  {cert.organization}
+                </p>
+
+                <p className="text-base leading-relaxed text-neutral-700 dark:text-neutral-300">
+                  {cert.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* EDUCATION */}
+        <section className="mb-16">
+          <SectionHeader title="Education" />
+          <div className="space-y-4">
+            <div className="flex flex-col sm:flex-row justify-between items-baseline gap-2">
+              <h3 className="text-lg font-bold text-black dark:text-white">
+                {CONFIG.education.institution}
+              </h3>
+              <span className="text-sm font-medium text-neutral-500">
+                {CONFIG.education.period}
+              </span>
+            </div>
+
+            <div>
+              <p className="text-base font-medium text-black dark:text-white">
+                {CONFIG.education.degree} — {CONFIG.education.field}
+              </p>
+              <p className="text-sm text-neutral-500">
+                {CONFIG.education.location}
+              </p>
+            </div>
+
+            <p className="text-base leading-relaxed">
+              {CONFIG.education.description}
+            </p>
+
+            <div className="flex flex-wrap items-center gap-6 pt-2">
+              <span className="inline-flex items-center gap-1.5 text-sm font-medium text-neutral-600 dark:text-neutral-400">
+                <CheckCircle2 className="w-4 h-4" /> Degree Completed
+              </span>
+              <a
+                href="/2200910200015.pdf"
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:underline font-medium"
+              >
+                <Download className="w-4 h-4" /> Download PDC
+              </a>
+            </div>
+          </div>
+        </section>
       </main>
 
       {/* FOOTER */}
-      <footer className="border-t border-neutral-200 dark:border-neutral-800 py-10 text-center bg-neutral-50 dark:bg-neutral-900/20">
-        <p className="text-sm text-neutral-500 font-medium">
-          © {new Date().getFullYear()} Kinshuk Jain. All rights reserved.
-        </p>
+      <footer className="py-12 text-center text-sm text-neutral-500 font-medium">
+        <p>© {new Date().getFullYear()} Kinshuk Jain. All rights reserved.</p>
       </footer>
     </div>
   );

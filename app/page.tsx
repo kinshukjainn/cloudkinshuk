@@ -63,8 +63,9 @@ const CONFIG = {
     {
       title: "AWS Cloud Practitioner Exam - CLF-02",
       organization: "AWS",
-      status: "Preparing",
-      year: "2025",
+      status: "Completed",
+      year: "2026",
+      url: "https://www.credly.com/badges/0bcd1190-2d68-45ff-91d9-32b65aa93ed8/public_url",
       description:
         "Comprehensive certification covering AWS top 40 best core services of aws",
       skills: ["Cloud Computing", "AWS Services", "Security", "Pricing Models"],
@@ -73,7 +74,7 @@ const CONFIG = {
       title: "AWS Developer Cloud Associate - DVA-02",
       organization: "AWS",
       status: "Preparing",
-      year: "2025",
+      year: "2026",
       description:
         "Certification focused on AWS development and deployment best practices, covering core AWS services, security, and application development concepts",
       skills: ["Cloud Computing", "AWS Services", "Security", "Pricing Models"],
@@ -223,7 +224,8 @@ const CONFIG = {
 // --- COMPONENTS ---
 
 const SectionHeader = ({ title }: { title: string }) => (
-  <h2 className="text-xl md:text-2xl font-bold text-black dark:text-white mt-16 mb-6">
+  <h2 className="text-xl md:text-2xl font-bold text-black dark:text-green-500 mt-16 mb-6">
+    <span className="text-green-500 mr-2">{"#"}</span>
     {title}
   </h2>
 );

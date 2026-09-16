@@ -7,11 +7,17 @@ import {
   BookOpen,
   MapPin,
   CheckCircle2,
+  Briefcase,
+  FolderGit2,
+  Award,
+  GraduationCap,
+  Wrench,
+  Sparkles,
 } from "lucide-react";
 import Link from "next/link";
 import Recommendation from "./components/Recommendation";
 
-// --- CONFIGURATION ---
+// --- CONFIGURATION (unchanged data) ---
 const CONFIG = {
   personal: {
     email: "kinshuk25jan04@gmail.com",
@@ -221,250 +227,367 @@ const CONFIG = {
   },
 };
 
-// --- COMPONENTS ---
+// --- SHARED TOKENS ---
+const surfaceCard = "rounded-4xl bg-[#f0f4f9] dark:bg-[#191919] p-5 md:p-6";
+const chip =
+  "inline-flex items-center gap-1.5 rounded-full border border-[#c4c7c5] dark:border-[#444746] px-3 py-1 text-xs font-medium text-[#444746] dark:text-[#c4c7c5]";
+const iconChip =
+  "inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#d3e3fd] dark:bg-[#004a77] text-[#0842a0] dark:text-[#d3e3fd]";
+const linkPrimary =
+  "text-[#0b57d0] hover:text-[#0842a0] dark:text-[#a8c7fa] dark:hover:text-[#d3e3fd] transition-colors";
 
-const SectionHeader = ({ title }: { title: string }) => (
-  <h2 className="text-xl md:text-2xl font-bold text-black dark:text-green-500 mt-16 mb-6">
-    <span className="text-green-500 mr-2">{"#"}</span>
-    {title}
-  </h2>
-);
+// --- SECTION WRAPPER ---
+function Section({
+  icon,
+  title,
+  subtitle,
+  children,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="space-y-5">
+      <div className="flex items-center gap-3">
+        <span className={iconChip}>{icon}</span>
+        <div>
+          <h2 className="text-lg font-medium tracking-tight text-[#1f1f1f] dark:text-[#e3e3e3] md:text-xl">
+            {title}
+          </h2>
+          {subtitle && (
+            <p className="text-xs text-[#747775] dark:text-[#8e918f]">
+              {subtitle}
+            </p>
+          )}
+        </div>
+      </div>
+      {children}
+    </section>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white dark:bg-[#1e1e1e] text-neutral-900 dark:text-neutral-200 selection:bg-blue-200 dark:selection:bg-blue-900 selection:text-black dark:selection:text-white">
-      {/* Widen max-width to max-w-4xl/5xl to give it a broader document feel */}
-      <main className="max-w-4xl mx-auto px-6 py-16 md:py-24">
-        {/* HEADER / INTRO */}
-        <section className="space-y-6 mb-16">
-          <h1 className="text-3xl md:text-5xl font-bold text-black dark:text-white tracking-tight">
-            Hi, I&apos;m Kinshuk.
-          </h1>
-
-          <div className="space-y-4 text-base md:text-lg leading-relaxed max-w-3xl">
-            {CONFIG.personal.bio.map((paragraph, idx) => (
-              <p key={idx}>{paragraph}</p>
-            ))}
-          </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 pt-2 text-base">
-            <span className="flex items-center gap-1.5 text-neutral-600 dark:text-neutral-400">
-              <MapPin className="w-4 h-4" />
+    <div className="min-h-screen bg-white text-[#1f1f1f] selection:bg-[#d3e3fd] selection:text-[#0842a0] dark:bg-[#1f1f1f] dark:text-[#e3e3e3] dark:selection:bg-[#004a77] dark:selection:text-[#d3e3fd]">
+      <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 md:py-16 lg:px-8 lg:py-20">
+        {/* ============ HERO ============ */}
+        <header className="mb-10 space-y-6 md:mb-14">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className={chip}>
+              <Sparkles className="h-3.5 w-3.5" />
+              Available for collaboration
+            </span>
+            <span className={chip}>
+              <MapPin className="h-3.5 w-3.5" />
               {CONFIG.personal.location}
             </span>
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-              {CONFIG.social.map((social) => (
+          </div>
+
+          <div className="space-y-3">
+            <h1 className="text-3xl font-bold tracking-tight text-[#1f1f1f] dark:text-[#e3e3e3] h-font sm:text-4xl md:text-5xl md:leading-[1.1]">
+              Hi, I&apos;m <span className="font-bold">Kinshuk</span>.
+            </h1>
+            <p className="max-w-2xl text-base leading-7 text-[#444746] dark:text-[#c4c7c5] md:text-lg">
+              {CONFIG.personal.bio[0]}
+            </p>
+            <p className="max-w-3xl text-sm leading-7 text-[#444746] dark:text-[#c4c7c5] md:text-base">
+              {CONFIG.personal.bio[1]}
+            </p>
+          </div>
+
+          {/* Social + CTA row */}
+          <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+            <div className="flex flex-wrap gap-2">
+              {CONFIG.social.map((s) => (
                 <a
-                  key={social.platform}
-                  href={social.url}
+                  key={s.platform}
+                  href={s.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                  className="rounded-full border border-[#c4c7c5] px-3.5 py-1.5 text-xs font-medium text-[#444746] transition-colors hover:bg-[#f0f4f9] dark:border-[#444746] dark:text-[#c4c7c5] dark:hover:bg-[#282a2c]"
                 >
-                  {social.platform}
+                  {s.platform}
                 </a>
               ))}
             </div>
-          </div>
 
-          <div className="flex flex-wrap gap-6 pt-4">
-            <Link
-              href="/kinshukkjainnresume.pdf"
-              className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:underline font-medium text-lg"
-            >
-              <Download className="w-4 h-4" /> Resume
-            </Link>
-            <Link
-              href="/blogs"
-              className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:underline font-medium text-lg"
-            >
-              <BookOpen className="w-4 h-4" /> Read Blog
-            </Link>
+            <div className="flex flex-wrap gap-2">
+              <Link
+                href="/myresumekinshuk.pdf"
+                className="inline-flex items-center gap-1.5 rounded-full bg-[#0b57d0] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#0842a0] dark:bg-[#a8c7fa] dark:text-[#062e6f] dark:hover:bg-[#d3e3fd]"
+              >
+                <Download className="h-4 w-4" />
+                Download My Resume
+              </Link>
+              <Link
+                href="/blogs"
+                className="inline-flex items-center gap-1.5 rounded-full border border-[#c4c7c5] px-4 py-2 text-sm font-medium text-[#0b57d0] transition-colors hover:bg-[#f0f4f9] dark:border-[#444746] dark:text-[#a8c7fa] dark:hover:bg-[#282a2c]"
+              >
+                <BookOpen className="h-4 w-4" />
+                Read my blogs, thoughts..{"+"}
+              </Link>
+            </div>
           </div>
-        </section>
+        </header>
 
-        <section className="mb-16">
+        {/* ============ RECOMMENDATION ============ */}
+        <div className="mb-10 md:mb-14">
           <Recommendation />
-        </section>
+        </div>
 
-        {/* EXPERIENCE */}
-        <section className="mb-16">
-          <SectionHeader title="Experience" />
-          <div className="space-y-2">
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline">
-              <h3 className="text-lg font-bold text-black dark:text-white">
-                UPPTCL (Uttar Pradesh Power Transmission Corporation Limited)
-              </h3>
-              <span className="text-sm text-neutral-500 font-medium">
-                Jul 2025 - Aug 2025
-              </span>
-            </div>
-            <p className="text-base leading-relaxed">
-              Worked with the transmission division to understand the operation,
-              protection, and maintenance of 132kV and 220kV substations.
-              Prepared technical documentation and maintained logs on equipment
-              performance and safety checks.
-            </p>
-          </div>
-        </section>
-
-        {/* PROJECTS */}
-        <section className="mb-16">
-          <SectionHeader title="Shipped Stuff" />
-          <div className="space-y-12">
-            {CONFIG.projects.map((project, idx) => (
-              <div key={idx} className="space-y-3">
-                <div className="flex flex-col sm:flex-row sm:items-baseline gap-2">
-                  <h3 className="text-lg font-bold text-black dark:text-white">
-                    {project.title}
-                  </h3>
-                  <span className="text-sm text-neutral-500">
-                    ({project.year}) • {project.status}
-                  </span>
-                </div>
-
-                <div className="space-y-2 text-base leading-relaxed">
-                  {project.description.map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
-                </div>
-
-                <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                  <strong className="text-neutral-900 dark:text-neutral-200">
-                    Technologies:
-                  </strong>{" "}
-                  {project.technologies.join(", ")}
-                </p>
-
-                <div className="flex flex-wrap items-center gap-6 pt-2">
-                  {project.links.live && (
-                    <a
-                      href={project.links.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:underline font-medium"
-                    >
-                      <ExternalLink className="w-4 h-4" /> Live Preview
-                    </a>
-                  )}
-                  {project.links.repo && (
-                    <a
-                      href={project.links.repo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:underline font-medium"
-                    >
-                      <Github className="w-4 h-4" /> Source Code
-                    </a>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* SKILLS */}
-        <section className="mb-16">
-          <SectionHeader title="Tools & Technologies" />
-          <div className="space-y-6">
-            {Object.entries(CONFIG.skills).map(([category, skills]) => (
-              <div key={category}>
-                <h3 className="text-base font-bold text-black dark:text-white mb-1">
-                  {category}
+        {/* ============ CONTENT STACK ============ */}
+        <div className="space-y-10 md:space-y-14">
+          {/* EXPERIENCE */}
+          <Section
+            icon={<Briefcase className="h-4 w-4" />}
+            title="Experience"
+            subtitle="Where I've worked"
+          >
+            <div className={surfaceCard}>
+              <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+                <h3 className="text-base font-medium text-[#1f1f1f] dark:text-[#e3e3e3]">
+                  UPPTCL — Uttar Pradesh Power Transmission Corporation Limited
                 </h3>
-                <p className="text-base leading-relaxed text-neutral-700 dark:text-neutral-300">
-                  {skills.join(", ")}
-                </p>
+                <span className="text-xs text-[#747775] dark:text-[#8e918f]">
+                  Jul 2025 – Aug 2025
+                </span>
               </div>
-            ))}
-          </div>
-        </section>
-
-        {/* CERTIFICATIONS */}
-        <section className="mb-16">
-          <SectionHeader title="Certifications" />
-          <div className="space-y-8">
-            {CONFIG.certifications.map((cert, idx) => (
-              <div key={idx} className="space-y-1">
-                <div className="flex flex-col sm:flex-row sm:items-baseline gap-2">
-                  {cert.url ? (
-                    <a
-                      href={cert.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-lg font-bold text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1.5"
-                    >
-                      {cert.title}
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                  ) : (
-                    <h3 className="text-lg font-bold text-black dark:text-white">
-                      {cert.title}
-                    </h3>
-                  )}
-                  <span className="text-sm text-neutral-500">
-                    {cert.year} • {cert.status}
-                  </span>
-                </div>
-
-                <p className="text-sm font-medium text-neutral-800 dark:text-neutral-200 pb-1">
-                  {cert.organization}
-                </p>
-
-                <p className="text-base leading-relaxed text-neutral-700 dark:text-neutral-300">
-                  {cert.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* EDUCATION */}
-        <section className="mb-16">
-          <SectionHeader title="Education" />
-          <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row justify-between items-baseline gap-2">
-              <h3 className="text-lg font-bold text-black dark:text-white">
-                {CONFIG.education.institution}
-              </h3>
-              <span className="text-sm font-medium text-neutral-500">
-                {CONFIG.education.period}
-              </span>
+              <p className="mt-2 text-sm leading-7 text-[#444746] dark:text-[#c4c7c5]">
+                Worked with the transmission division to understand the
+                operation, protection, and maintenance of 132kV and 220kV
+                substations. Prepared technical documentation and maintained
+                logs on equipment performance and safety checks.
+              </p>
             </div>
+          </Section>
 
-            <div>
-              <p className="text-base font-medium text-black dark:text-white">
+          {/* PROJECTS */}
+          <Section
+            icon={<FolderGit2 className="h-4 w-4" />}
+            title="Shipped Stuff"
+            subtitle="Selected projects"
+          >
+            <div className="grid gap-4 md:grid-cols-2">
+              {CONFIG.projects.map((project, idx) => (
+                <article
+                  key={idx}
+                  className={`${surfaceCard} flex flex-col gap-4 ${
+                    idx === 0 ? "md:col-span-2" : ""
+                  }`}
+                >
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span
+                        className={
+                          project.status === "Live"
+                            ? "rounded-full bg-[#d3e3fd] px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide text-[#0842a0] dark:bg-[#004a77] dark:text-[#d3e3fd]"
+                            : "rounded-full bg-[#f0f4f9] px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide text-[#444746] dark:bg-[#282a2c] dark:text-[#c4c7c5]"
+                        }
+                      >
+                        {project.status}
+                      </span>
+                      <span className="text-[11px] text-[#747775] dark:text-[#8e918f]">
+                        {project.year} · {project.type}
+                      </span>
+                    </div>
+
+                    <h3 className="text-base font-medium leading-snug text-[#1f1f1f] dark:text-[#e3e3e3] md:text-lg">
+                      {project.title}
+                    </h3>
+
+                    <div className="space-y-2 text-sm leading-7 text-[#444746] dark:text-[#c4c7c5]">
+                      {project.description.map((p, i) => (
+                        <p key={i}>{p}</p>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Tech chips */}
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.technologies.slice(0, 6).map((t, i) => (
+                      <span
+                        key={i}
+                        className="rounded-md bg-white px-2 py-1 text-[11px] font-medium text-[#444746] dark:bg-[#282a2c] dark:text-[#c4c7c5]"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                    {project.technologies.length > 6 && (
+                      <span className="rounded-md bg-white px-2 py-1 text-[11px] font-medium text-[#747775] dark:bg-[#282a2c] dark:text-[#8e918f]">
+                        +{project.technologies.length - 6}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Action row */}
+                  <div className="mt-auto flex flex-wrap gap-2 pt-1">
+                    {project.links.live && (
+                      <a
+                        href={project.links.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-full bg-[#0b57d0] px-3.5 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[#0842a0] dark:bg-[#a8c7fa] dark:text-[#062e6f] dark:hover:bg-[#d3e3fd]"
+                      >
+                        <ExternalLink className="h-3.5 w-3.5" />
+                        Live
+                      </a>
+                    )}
+                    {project.links.repo && (
+                      <a
+                        href={project.links.repo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-full border border-[#c4c7c5] px-3.5 py-1.5 text-xs font-medium text-[#444746] transition-colors hover:bg-white dark:border-[#444746] dark:text-[#c4c7c5] dark:hover:bg-[#282a2c]"
+                      >
+                        <Github className="h-3.5 w-3.5" />
+                        Source
+                      </a>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </Section>
+
+          {/* SKILLS */}
+          <Section
+            icon={<Wrench className="h-4 w-4" />}
+            title="Tools & Technologies"
+            subtitle="What I build with"
+          >
+            <div className="grid gap-3 sm:grid-cols-2">
+              {Object.entries(CONFIG.skills).map(([category, skills]) => (
+                <div key={category} className={surfaceCard}>
+                  <h3 className="mb-3 text-sm font-medium text-[#1f1f1f] dark:text-[#e3e3e3]">
+                    {category}
+                  </h3>
+                  <div className="flex flex-wrap gap-1.5">
+                    {skills.map((s, i) => (
+                      <span
+                        key={i}
+                        className="rounded-full bg-white px-2.5 py-1 text-[11px] font-medium text-[#444746] dark:bg-[#282a2c] dark:text-[#c4c7c5]"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Section>
+
+          {/* CERTIFICATIONS */}
+          <Section
+            icon={<Award className="h-4 w-4" />}
+            title="Certifications"
+            subtitle="Verified badges & exams"
+          >
+            <div className="grid gap-3 md:grid-cols-2">
+              {CONFIG.certifications.map((cert, idx) => (
+                <div key={idx} className={`${surfaceCard} flex flex-col gap-3`}>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      {cert.url ? (
+                        <a
+                          href={cert.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`inline-flex items-start gap-1.5 text-sm font-medium leading-snug ${linkPrimary}`}
+                        >
+                          <span>{cert.title}</span>
+                          <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                        </a>
+                      ) : (
+                        <h3 className="text-sm font-medium leading-snug text-[#1f1f1f] dark:text-[#e3e3e3]">
+                          {cert.title}
+                        </h3>
+                      )}
+                      <p className="mt-1 text-xs text-[#747775] dark:text-[#8e918f]">
+                        {cert.organization} · {cert.year}
+                      </p>
+                    </div>
+                    <span
+                      className={
+                        cert.status === "Completed"
+                          ? "shrink-0 rounded-full bg-[#d3e3fd] px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide text-[#0842a0] dark:bg-[#004a77] dark:text-[#d3e3fd]"
+                          : "shrink-0 rounded-full bg-[#f0f4f9] px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide text-[#444746] dark:bg-[#282a2c] dark:text-[#c4c7c5]"
+                      }
+                    >
+                      {cert.status}
+                    </span>
+                  </div>
+
+                  <p className="text-xs leading-6 text-[#444746] dark:text-[#c4c7c5]">
+                    {cert.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5">
+                    {cert.skills.map((s, i) => (
+                      <span
+                        key={i}
+                        className="rounded-md bg-white px-2 py-0.5 text-[10px] font-medium text-[#747775] dark:bg-[#282a2c] dark:text-[#8e918f]"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Section>
+
+          {/* EDUCATION */}
+          <Section
+            icon={<GraduationCap className="h-4 w-4" />}
+            title="Education"
+            subtitle="Academic background"
+          >
+            <div className={surfaceCard}>
+              <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+                <h3 className="text-base font-medium text-[#1f1f1f] dark:text-[#e3e3e3]">
+                  {CONFIG.education.institution}
+                </h3>
+                <span className="text-xs text-[#747775] dark:text-[#8e918f]">
+                  {CONFIG.education.period}
+                </span>
+              </div>
+
+              <p className="mt-1 text-sm font-medium text-[#0b57d0] dark:text-[#a8c7fa]">
                 {CONFIG.education.degree} — {CONFIG.education.field}
               </p>
-              <p className="text-sm text-neutral-500">
+              <p className="text-xs text-[#747775] dark:text-[#8e918f]">
                 {CONFIG.education.location}
               </p>
-            </div>
 
-            <p className="text-base leading-relaxed">
-              {CONFIG.education.description}
-            </p>
+              <p className="mt-3 text-sm leading-7 text-[#444746] dark:text-[#c4c7c5]">
+                {CONFIG.education.description}
+              </p>
 
-            <div className="flex flex-wrap items-center gap-6 pt-2">
-              <span className="inline-flex items-center gap-1.5 text-sm font-medium text-neutral-600 dark:text-neutral-400">
-                <CheckCircle2 className="w-4 h-4" /> Degree Completed
-              </span>
-              <a
-                href="/2200910200015.pdf"
-                download
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:underline font-medium"
-              >
-                <Download className="w-4 h-4" /> Download PDC
-              </a>
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[#444746] dark:text-[#c4c7c5]">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-[#0b57d0] dark:text-[#a8c7fa]" />
+                  Degree Completed
+                </span>
+                <a
+                  href="/2200910200015.pdf"
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex items-center gap-1.5 text-xs font-medium ${linkPrimary}`}
+                >
+                  <Download className="h-3.5 w-3.5" />
+                  Download PDC
+                </a>
+              </div>
             </div>
-          </div>
-        </section>
+          </Section>
+        </div>
       </main>
 
       {/* FOOTER */}
-      <footer className="py-12 text-center text-sm text-neutral-500 font-medium">
+      <footer className="border-t border-[#e0e3e7] py-8 text-center text-xs text-[#747775] dark:border-[#2d2f31] dark:text-[#8e918f]">
         <p>© {new Date().getFullYear()} Kinshuk Jain. All rights reserved.</p>
       </footer>
     </div>

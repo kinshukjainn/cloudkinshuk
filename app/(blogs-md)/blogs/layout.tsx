@@ -11,10 +11,10 @@ export default function BlogLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-white dark:bg-[#1e1e1e] text-neutral-800 dark:text-neutral-300 selection:bg-blue-200 dark:selection:bg-blue-900/50 selection:text-blue-900 dark:selection:text-blue-100">
+    <div className="min-h-screen bg-white text-[#1f1f1f] selection:bg-[#d3e3fd] selection:text-[#0842a0] dark:bg-[#1f1f1f] dark:text-[#e3e3e3] dark:selection:bg-[#004a77] dark:selection:text-[#d3e3fd]">
       {/* 
-        A clean, Medium-style centered column layout 
-        Max-width keeps line lengths comfortable for reading
+        Material 3 reading column — centered, comfortable line length,
+        generous vertical rhythm matching Google's content spacing.
       */}
       <main className="mx-auto max-w-[768px] px-6 py-12 md:py-20 lg:px-8">
         {children}

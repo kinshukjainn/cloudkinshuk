@@ -31,23 +31,23 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
     .filter((section) => section.items.length > 0);
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-16 md:py-24 text-neutral-900 dark:text-neutral-200 selection:bg-blue-200 dark:selection:bg-blue-900 selection:text-black dark:selection:text-white">
+    <div className="mx-auto max-w-4xl px-6 py-16 text-[#1f1f1f] selection:bg-[#d3e3fd] selection:text-[#0842a0] dark:text-[#e3e3e3] dark:selection:bg-[#004a77] dark:selection:text-[#d3e3fd] md:py-24">
       <header className="mb-16">
-        <h1 className="text-3xl md:text-5xl font-bold text-black dark:text-white mb-4 tracking-tight">
-          All Blogs :
+        <h1 className="mb-4 text-5xl font-bold h-font tracking-tight text-[#1f1f1f] dark:text-[#e3e3e3] md:text-5xl">
+          Blogs, Project Descriptions, Thoughts
         </h1>
-        <p className="text-base md:text-lg text-neutral-700 dark:text-neutral-300 mb-8 max-w-3xl leading-relaxed">
+        <p className="mb-8 max-w-3xl text-base leading-7 text-[#444746] dark:text-[#c4c7c5] md:text-lg">
           Read my latest project descriptions, updates, and thoughts.
         </p>
 
-        {/* Minimalist Search Input */}
+        {/* Material 3 outlined search field */}
         <div className="max-w-md">
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search / Find Article , Keyword , Title"
-            className="w-full bg-transparent border-b-2 border-neutral-400 dark:border-[#404040] focus:border-blue-600 dark:focus:border-blue-400 px-3 py-2 text-base focus:outline-none transition-colors rounded-none"
+            placeholder="Search articles, keywords, titles"
+            className="w-full rounded-full border border-[#c4c7c5] bg-transparent px-5 py-3 text-base text-[#1f1f1f] placeholder:text-[#747775] transition-colors focus:border-[#0b57d0] focus:outline-none focus:ring-1 focus:ring-[#0b57d0] dark:border-[#444746] dark:text-[#e3e3e3] dark:placeholder:text-[#8e918f] dark:focus:border-[#a8c7fa] dark:focus:ring-[#a8c7fa]"
           />
         </div>
       </header>
@@ -56,19 +56,19 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
         {filteredSections.length > 0 ? (
           filteredSections.map((section) => (
             <section key={section.title}>
-              <h2 className="text-xl font-bold text-black dark:text-white mb-6 border-b border-neutral-300 dark:border-neutral-800 pb-2">
+              <h2 className="mb-6 border-b border-[#e0e3e7] pb-3 text-2xl h-font font-medium text-[#1f1f1f] dark:border-[#2d2f31] dark:text-[#e3e3e3]">
                 {section.title}
               </h2>
               <div className="space-y-10">
                 {section.items.map((item) => (
                   <article key={item.slug} className="flex flex-col gap-1.5">
                     <Link href={`/blogs/${item.slug}`}>
-                      <h3 className="text-lg md:text-xl font-semibold text-blue-600 dark:text-blue-400 hover:underline">
+                      <h3 className="text-lg font-medium text-[#0b57d0] transition-colors hover:text-[#0842a0] hover:underline dark:text-[#a8c7fa] dark:hover:text-[#d3e3fd] md:text-xl">
                         {item.title}
                       </h3>
                     </Link>
                     {item.description && (
-                      <p className="text-base leading-relaxed text-neutral-700 dark:text-neutral-300 max-w-3xl">
+                      <p className="max-w-3xl text-base leading-7 text-[#444746] dark:text-[#c4c7c5]">
                         {item.description}
                       </p>
                     )}
@@ -78,7 +78,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
             </section>
           ))
         ) : (
-          <p className="text-base text-neutral-500">
+          <p className="text-base text-[#747775] dark:text-[#8e918f]">
             No results found matching &quot;{search}&quot;.
           </p>
         )}

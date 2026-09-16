@@ -6,6 +6,10 @@ export const navigation: NavSection[] = [
     title: "Blogs",
     items: [
       {
+        title: "Right way to clear AWS certification",
+        slug: "aws-ccp-exam",
+      },
+      {
         title: "Why PostgreSQL Became My Go-To Database",
         slug: "db-sql",
       },

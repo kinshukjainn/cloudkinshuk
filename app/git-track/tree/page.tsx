@@ -11,8 +11,11 @@ import {
   FileBox,
   Database,
   File as DefaultFile,
-  ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
   CornerLeftUp,
+  GitBranch,
+  type LucideIcon,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -36,7 +39,7 @@ interface GithubTreeItem {
 }
 
 // ============================================================================
-// Utility Functions
+// Utilities
 // ============================================================================
 
 const formatBytes = (bytes: number = 0, decimals = 1) => {
@@ -48,40 +51,35 @@ const formatBytes = (bytes: number = 0, decimals = 1) => {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 };
 
-const getFileInfo = (filename: string) => {
+const getFileInfo = (filename: string): { lang: string; Icon: LucideIcon } => {
   const ext = filename.split(".").pop()?.toLowerCase();
-  const iconProps = {
-    size: 18,
-    className: "shrink-0 text-neutral-500 dark:text-neutral-400",
-  };
-
   switch (ext) {
     case "js":
     case "jsx":
-      return { lang: "JavaScript", icon: <FileCode2 {...iconProps} /> };
+      return { lang: "JavaScript", Icon: FileCode2 };
     case "ts":
     case "tsx":
-      return { lang: "TypeScript", icon: <FileCode2 {...iconProps} /> };
+      return { lang: "TypeScript", Icon: FileCode2 };
     case "json":
-      return { lang: "JSON", icon: <FileJson {...iconProps} /> };
+      return { lang: "JSON", Icon: FileJson };
     case "html":
-      return { lang: "HTML", icon: <FileCode2 {...iconProps} /> };
+      return { lang: "HTML", Icon: FileCode2 };
     case "css":
-      return { lang: "CSS", icon: <FileCode2 {...iconProps} /> };
+      return { lang: "CSS", Icon: FileCode2 };
     case "md":
-      return { lang: "Markdown", icon: <FileText {...iconProps} /> };
+      return { lang: "Markdown", Icon: FileText };
     case "png":
     case "jpg":
     case "svg":
-      return { lang: "Image", icon: <ImageIcon {...iconProps} /> };
+      return { lang: "Image", Icon: ImageIcon };
     case "sh":
-      return { lang: "Shell", icon: <Terminal {...iconProps} /> };
+      return { lang: "Shell", Icon: Terminal };
     case "sql":
-      return { lang: "SQL", icon: <Database {...iconProps} /> };
+      return { lang: "SQL", Icon: Database };
     case "lock":
-      return { lang: "Lockfile", icon: <FileBox {...iconProps} /> };
+      return { lang: "Lockfile", Icon: FileBox };
     default:
-      return { lang: "Text", icon: <DefaultFile {...iconProps} /> };
+      return { lang: "Text", Icon: DefaultFile };
   }
 };
 
@@ -94,11 +92,9 @@ export default function RepositoryViewer() {
   const [isLoadingTree, setIsLoadingTree] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // -- View States --
   const [viewMode, setViewMode] = useState<"tree" | "blob">("tree");
   const [currentPath, setCurrentPath] = useState<string>("");
 
-  // -- File Content States --
   const [fileContent, setFileContent] = useState<string>("");
   const [isFileLoading, setIsFileLoading] = useState(false);
 
@@ -143,10 +139,6 @@ export default function RepositoryViewer() {
     }
   };
 
-  // --------------------------------------------------------------------------
-  // Navigation
-  // --------------------------------------------------------------------------
-
   const handleNavigate = (path: string, type: "blob" | "tree") => {
     setCurrentPath(path);
     if (type === "tree") {
@@ -162,15 +154,20 @@ export default function RepositoryViewer() {
     setViewMode("tree");
   };
 
+  const goUp = () => {
+    const parts = currentPath.split("/");
+    parts.pop();
+    jumpToPath(parts.join("/"));
+  };
+
   const currentItems = useMemo(() => {
     const items = treeData.filter((item) => {
       if (currentPath === "" || viewMode === "blob") {
         return !item.path.includes("/");
-      } else {
-        const prefix = currentPath + "/";
-        if (!item.path.startsWith(prefix)) return false;
-        return !item.path.slice(prefix.length).includes("/");
       }
+      const prefix = currentPath + "/";
+      if (!item.path.startsWith(prefix)) return false;
+      return !item.path.slice(prefix.length).includes("/");
     });
 
     return items.sort((a, b) => {
@@ -180,200 +177,230 @@ export default function RepositoryViewer() {
   }, [treeData, currentPath, viewMode]);
 
   const pathBreadcrumbs = currentPath.split("/").filter(Boolean);
+  const currentFileName = pathBreadcrumbs[pathBreadcrumbs.length - 1] ?? "";
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-neutral-800 dark:text-neutral-300 selection:bg-blue-200 dark:selection:bg-blue-900/50 selection:text-blue-900 dark:selection:text-blue-100">
-      <div className="max-w-5xl mx-auto px-6 py-12 sm:py-16">
-        {/* ── TOP HEADER ── */}
-        <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-neutral-300 dark:border-neutral-800 pb-4">
-          <h1 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
-            <Folder className="w-6 h-6 text-blue-600 dark:text-blue-500" />
-            Repository Explorer
-          </h1>
+    <div className="min-h-screen bg-white text-[#1f1f1f] selection:bg-[#d3e3fd] selection:text-[#0842a0] dark:bg-[#1f1f1f] dark:text-[#e3e3e3] dark:selection:bg-[#004a77] dark:selection:text-[#d3e3fd]">
+      <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 md:py-12 lg:px-8">
+        {/* ============ HEADER ============ */}
+        <header className="mb-6 flex flex-wrap items-center justify-between gap-3">
           <Link
             href="/git-track"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-sm font-semibold text-neutral-900 dark:text-neutral-100 rounded-md"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#c4c7c5] px-3.5 py-2 text-xs font-medium text-[#0b57d0] transition-colors hover:bg-[#f0f4f9] dark:border-[#444746] dark:text-[#a8c7fa] dark:hover:bg-[#282a2c]"
           >
-            <ArrowLeft className="w-4 h-4" /> Back to Commits
+            <ChevronLeft className="h-3.5 w-3.5" />
+            Back to commits
           </Link>
-        </div>
 
-        {/* ── META INFO BLOCK ── */}
-        <div className="bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 p-4 sm:p-6 mb-8 rounded-md">
-          <div className="grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-y-3 sm:gap-x-4">
-            <div className="text-neutral-500 dark:text-neutral-400 font-bold uppercase tracking-widest text-xs pt-1">
-              Repository
-            </div>
-            <div className="font-bold text-neutral-900 dark:text-neutral-100 text-sm">
-              {GITHUB_CONFIG.username} /{" "}
-              <span className="text-blue-600 dark:text-blue-500">
-                {GITHUB_CONFIG.repository}
-              </span>
-            </div>
-
-            <div className="text-neutral-500 dark:text-neutral-400 font-bold uppercase tracking-widest text-xs pt-1">
-              Current Path
-            </div>
-            <div className="flex flex-wrap items-center gap-2 text-sm font-semibold">
-              <span
-                onClick={() => jumpToPath("")}
-                className="text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
-              >
-                {GITHUB_CONFIG.repository}
-              </span>
-              {pathBreadcrumbs.map((part, index) => {
-                const buildPath = pathBreadcrumbs.slice(0, index + 1).join("/");
-                const isLast = index === pathBreadcrumbs.length - 1;
-                const isCurrentFile = isLast && viewMode === "blob";
-
-                return (
-                  <React.Fragment key={buildPath}>
-                    <span className="text-neutral-400 dark:text-neutral-600">
-                      /
-                    </span>
-                    <span
-                      onClick={() => !isCurrentFile && jumpToPath(buildPath)}
-                      className={
-                        isCurrentFile
-                          ? "text-neutral-900 dark:text-neutral-100 font-bold"
-                          : "text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
-                      }
-                    >
-                      {part}
-                    </span>
-                  </React.Fragment>
-                );
-              })}
-            </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#f0f4f9] px-3 py-1.5 text-xs font-medium text-[#444746] dark:bg-[#282a2c] dark:text-[#c4c7c5]">
+              <Folder className="h-3.5 w-3.5 text-[#0b57d0] dark:text-[#a8c7fa]" />
+              {GITHUB_CONFIG.repository}
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#f0f4f9] px-3 py-1.5 text-xs font-medium text-[#444746] dark:bg-[#282a2c] dark:text-[#c4c7c5]">
+              <GitBranch className="h-3.5 w-3.5" />
+              {GITHUB_CONFIG.branch}
+            </span>
           </div>
+        </header>
+
+        {/* ============ TITLE ============ */}
+        <section className="mb-5">
+          <h1 className="text-4xl font-bold h-font tracking-tight text-[#1f1f1f] dark:text-[#e3e3e3] md:text-3xl">
+            Repository Explorer
+          </h1>
+          <p className="mt-1 text-sm text-[#444746] dark:text-[#c4c7c5]">
+            Browse files and directories in the repository.
+          </p>
+        </section>
+
+        {/* ============ BREADCRUMB CHIP RAIL ============ */}
+        <div className="mb-4 flex items-center gap-1.5 overflow-x-auto pb-1">
+          <button
+            type="button"
+            onClick={() => jumpToPath("")}
+            className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+              pathBreadcrumbs.length === 0
+                ? "bg-[#d3e3fd] text-[#0842a0] dark:bg-[#004a77] dark:text-[#d3e3fd]"
+                : "bg-[#f0f4f9] text-[#444746] hover:bg-[#e8eef7] dark:bg-[#282a2c] dark:text-[#c4c7c5] dark:hover:bg-[#2f3133]"
+            }`}
+          >
+            {GITHUB_CONFIG.repository}
+          </button>
+
+          {pathBreadcrumbs.map((part, index) => {
+            const buildPath = pathBreadcrumbs.slice(0, index + 1).join("/");
+            const isLast = index === pathBreadcrumbs.length - 1;
+            const isFile = isLast && viewMode === "blob";
+
+            return (
+              <React.Fragment key={buildPath}>
+                <ChevronRight className="h-3.5 w-3.5 shrink-0 text-[#c4c7c5] dark:text-[#444746]" />
+                <button
+                  type="button"
+                  onClick={() => !isFile && jumpToPath(buildPath)}
+                  disabled={isFile}
+                  className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+                    isLast
+                      ? "bg-[#d3e3fd] text-[#0842a0] dark:bg-[#004a77] dark:text-[#d3e3fd]"
+                      : "bg-[#f0f4f9] text-[#444746] hover:bg-[#e8eef7] dark:bg-[#282a2c] dark:text-[#c4c7c5] dark:hover:bg-[#2f3133]"
+                  } ${isFile ? "cursor-default" : ""}`}
+                >
+                  {part}
+                </button>
+              </React.Fragment>
+            );
+          })}
         </div>
 
-        {/* ── ERROR DISPLAY ── */}
+        {/* ============ ERROR ============ */}
         {error && (
-          <div className="p-4 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 text-red-700 dark:text-red-400 text-sm font-bold rounded-md mb-6">
-            Error: {error}
+          <div className="mb-4 rounded-2xl border border-[#f6aea9] bg-[#fce8e6] px-4 py-3 text-sm font-medium text-[#8c1d18] dark:border-[#8c1d18] dark:bg-[#2a1215] dark:text-[#f6aea9]">
+            {error}
           </div>
         )}
 
-        {/* ── MAIN CONTENT AREA ── */}
-        <div className="border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40 rounded-md">
-          {/* Section Header */}
-          <div className="bg-neutral-200 dark:bg-neutral-900 border-b border-neutral-300 dark:border-neutral-800 py-3 px-4 sm:px-6">
-            <h2 className="text-xs font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-widest">
-              {viewMode === "tree" ? "Directory Contents" : "File View"}
-            </h2>
+        {/* ============ MAIN CARD ============ */}
+        <section className="overflow-hidden rounded-3xl bg-[#f0f4f9] dark:bg-[#1e1f21]">
+          {/* Card header */}
+          <div className="flex items-center justify-between gap-3 border-b border-[#e0e3e7] px-5 py-4 dark:border-[#2d2f31]">
+            <div className="flex min-w-0 items-center gap-3">
+              <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-[#0b57d0] dark:bg-[#282a2c] dark:text-[#a8c7fa]">
+                {viewMode === "tree" ? (
+                  <Folder className="h-4 w-4" />
+                ) : (
+                  <FileCode2 className="h-4 w-4" />
+                )}
+              </span>
+              <div className="min-w-0">
+                <p className="text-[10px] font-medium uppercase tracking-wider text-[#747775] dark:text-[#8e918f]">
+                  {viewMode === "tree" ? "Directory" : "File"}
+                </p>
+                <h2 className="truncate text-sm font-medium text-[#1f1f1f] dark:text-[#e3e3e3]">
+                  {viewMode === "tree"
+                    ? currentFileName || GITHUB_CONFIG.repository
+                    : currentFileName}
+                </h2>
+              </div>
+            </div>
+
+            {viewMode === "tree" && !isLoadingTree && (
+              <span className="shrink-0 rounded-full bg-white px-3 py-1 text-[11px] font-medium text-[#747775] dark:bg-[#282a2c] dark:text-[#8e918f]">
+                {currentItems.length}{" "}
+                {currentItems.length === 1 ? "item" : "items"}
+              </span>
+            )}
           </div>
 
-          {/* ── TREE VIEW ── */}
+          {/* Card body */}
           {viewMode === "tree" ? (
-            <div className="w-full flex flex-col">
+            <>
               {isLoadingTree ? (
-                <div className="p-8 text-center text-sm font-medium text-neutral-500 dark:text-neutral-400">
-                  Fetching repository structure...
+                <div className="p-10 text-center text-sm text-[#747775] dark:text-[#8e918f]">
+                  Fetching repository structure…
                 </div>
               ) : (
-                <>
+                <ul className="divide-y divide-[#e0e3e7] dark:divide-[#2d2f31]">
                   {currentPath !== "" && (
-                    <div
-                      onClick={() => {
-                        const pathParts = currentPath.split("/");
-                        pathParts.pop();
-                        jumpToPath(pathParts.join("/"));
-                      }}
-                      className="flex items-center py-3 px-4 sm:px-6 hover:bg-white dark:hover:bg-neutral-900 gap-3 sm:gap-4 cursor-pointer border-b border-neutral-200 dark:border-neutral-800/80"
-                    >
-                      <div className="w-6 flex justify-center items-center">
-                        <CornerLeftUp
-                          size={18}
-                          className="text-neutral-500 dark:text-neutral-400"
-                        />
-                      </div>
-                      <div className="text-neutral-700 dark:text-neutral-300 font-semibold text-sm">
-                        Go up a directory
-                      </div>
-                    </div>
+                    <li>
+                      <button
+                        type="button"
+                        onClick={goUp}
+                        className="group flex w-full items-center gap-3 px-5 py-3 text-left transition-colors hover:bg-white dark:hover:bg-[#282a2c]"
+                      >
+                        <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-[#0b57d0] dark:bg-[#282a2c] dark:text-[#a8c7fa]">
+                          <CornerLeftUp className="h-4 w-4" />
+                        </span>
+                        <span className="text-sm font-medium text-[#444746] transition-colors group-hover:text-[#0b57d0] dark:text-[#c4c7c5] dark:group-hover:text-[#a8c7fa]">
+                          Go up a directory
+                        </span>
+                      </button>
+                    </li>
+                  )}
+
+                  {currentItems.length === 0 && (
+                    <li className="px-5 py-10 text-center text-sm text-[#747775] dark:text-[#8e918f]">
+                      This directory is empty.
+                    </li>
                   )}
 
                   {currentItems.map((item) => {
                     const itemName = item.path.split("/").pop() || item.path;
                     const isFolder = item.type === "tree";
-                    const { lang, icon } = isFolder
-                      ? {
-                          lang: "Directory",
-                          icon: (
-                            <Folder
-                              size={18}
-                              className="text-blue-600 dark:text-blue-500 shrink-0"
-                            />
-                          ),
-                        }
+
+                    const { lang, Icon } = isFolder
+                      ? { lang: "Folder", Icon: Folder }
                       : getFileInfo(itemName);
 
                     return (
-                      <div
-                        key={item.sha}
-                        onClick={() => handleNavigate(item.path, item.type)}
-                        className="group flex flex-col sm:flex-row sm:items-center py-3 px-4 sm:px-6 hover:bg-white dark:hover:bg-neutral-900 gap-2 sm:gap-4 cursor-pointer border-b border-neutral-200 dark:border-neutral-800/80 last:border-0"
-                      >
-                        <div className="flex-1 min-w-0 flex items-center gap-3">
-                          <div className="w-6 flex justify-center items-center shrink-0">
-                            {icon}
-                          </div>
+                      <li key={item.sha}>
+                        <button
+                          type="button"
+                          onClick={() => handleNavigate(item.path, item.type)}
+                          className="group flex w-full items-center gap-3 px-5 py-3 text-left transition-colors hover:bg-white dark:hover:bg-[#282a2c]"
+                        >
+                          {/* Icon chip */}
                           <span
-                            className={`truncate text-sm ${
+                            className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${
                               isFolder
-                                ? "text-blue-700 dark:text-blue-400 font-bold"
-                                : "text-neutral-900 dark:text-neutral-100 font-medium"
+                                ? "bg-[#d3e3fd] text-[#0842a0] dark:bg-[#004a77] dark:text-[#d3e3fd]"
+                                : "bg-white text-[#444746] dark:bg-[#282a2c] dark:text-[#c4c7c5]"
                             }`}
                           >
+                            <Icon className="h-4 w-4" />
+                          </span>
+
+                          {/* Name */}
+                          <span className="min-w-0 flex-1 truncate text-sm font-medium text-[#1f1f1f] transition-colors group-hover:text-[#0b57d0] dark:text-[#e3e3e3] dark:group-hover:text-[#a8c7fa]">
                             {itemName}
                           </span>
-                        </div>
-                        <div className="flex flex-row items-center gap-6 shrink-0 text-xs font-semibold pl-9 sm:pl-0">
-                          <span className="text-neutral-500 dark:text-neutral-500 hidden sm:block w-24 text-right uppercase tracking-widest">
-                            {lang}
+
+                          {/* Metadata (desktop only) */}
+                          <span className="hidden shrink-0 items-center gap-3 sm:flex">
+                            <span className="text-[11px] font-medium uppercase tracking-wider text-[#747775] dark:text-[#8e918f]">
+                              {lang}
+                            </span>
+                            <span className="w-16 text-right text-[11px] tabular-nums text-[#747775] dark:text-[#8e918f]">
+                              {isFolder ? "—" : formatBytes(item.size)}
+                            </span>
                           </span>
-                          <span className="text-neutral-500 dark:text-neutral-500 w-20 text-right uppercase tracking-widest">
-                            {isFolder ? "--" : formatBytes(item.size)}
-                          </span>
-                        </div>
-                      </div>
+
+                          <ChevronRight className="h-4 w-4 shrink-0 text-[#c4c7c5] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-[#0b57d0] dark:text-[#444746] dark:group-hover:text-[#a8c7fa]" />
+                        </button>
+                      </li>
                     );
                   })}
-                </>
+                </ul>
               )}
-            </div>
+            </>
           ) : (
-            /* ── BLOB (CODE) VIEW ── */
-            <div className="w-full flex flex-col">
+            <>
               {isFileLoading ? (
-                <div className="p-8 text-center text-sm font-medium text-neutral-500 dark:text-neutral-400">
-                  Loading file contents...
+                <div className="p-10 text-center text-sm text-[#747775] dark:text-[#8e918f]">
+                  Loading file contents…
                 </div>
               ) : (
-                <div className="overflow-x-auto bg-white dark:bg-black p-4 sm:p-6">
-                  <pre className="text-xs sm:text-sm text-neutral-800 dark:text-neutral-300 font-mono leading-relaxed">
+                <div className="overflow-x-auto px-5 py-5">
+                  <pre className="whitespace-pre font-mono text-xs leading-6 text-[#1f1f1f] dark:text-[#e3e3e3] sm:text-[13px]">
                     <code>{fileContent}</code>
                   </pre>
                 </div>
               )}
 
-              <div className="p-4 sm:p-6 border-t border-neutral-300 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+              <div className="border-t border-[#e0e3e7] px-5 py-4 dark:border-[#2d2f31]">
                 <button
-                  onClick={() => {
-                    const pathParts = currentPath.split("/");
-                    pathParts.pop();
-                    jumpToPath(pathParts.join("/"));
-                  }}
-                  className="inline-flex items-center justify-center gap-2 border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 px-5 py-2.5 text-sm font-bold text-neutral-900 dark:text-neutral-100 rounded-md"
+                  type="button"
+                  onClick={goUp}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-[#c4c7c5] px-4 py-2 text-xs font-medium text-[#0b57d0] transition-colors hover:bg-white dark:border-[#444746] dark:text-[#a8c7fa] dark:hover:bg-[#282a2c]"
                 >
-                  <ArrowLeft className="w-4 h-4" /> Return to Folder
+                  <ChevronLeft className="h-3.5 w-3.5" />
+                  Return to folder
                 </button>
               </div>
-            </div>
+            </>
           )}
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   );
 }

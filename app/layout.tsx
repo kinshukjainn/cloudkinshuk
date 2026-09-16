@@ -6,6 +6,7 @@ import {
   IBM_Plex_Serif,
   Roboto_Slab,
   PT_Sans,
+  Varela_Round,
   Source_Serif_4,
   Geist_Mono,
   Roboto,
@@ -128,6 +129,12 @@ const ibmplex_serif = IBM_Plex_Serif({
   display: "swap",
 });
 
+const varelaRound = Varela_Round({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-varela-round",
+});
+
 const ubuntuSans = Ubuntu_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "700"], // choose what you need
@@ -160,7 +167,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-google-analytics-opt-out="" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${openSans.variable} ${sourceSerif.variable} ${ibmPlexSans.variable} ${rubik.variable} ${dmSans.variable} ${verdana.variable} ${cabinSketch.variable} ${publicSans.variable} ${geistMono.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
+        className={`${inter.variable} ${openSans.variable} ${sourceSerif.variable} ${ibmPlexSans.variable} ${varelaRound.variable} ${rubik.variable} ${dmSans.variable} ${verdana.variable} ${cabinSketch.variable} ${publicSans.variable} ${geistMono.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >
         <ThemeProvider>
           <Header />

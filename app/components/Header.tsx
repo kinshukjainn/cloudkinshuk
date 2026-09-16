@@ -8,67 +8,105 @@ import { useTheme } from "next-themes";
 import { FileText, Github, Menu, X, Sun, Moon } from "lucide-react";
 import { PiGithubLogoBold } from "react-icons/pi";
 import { GiCoffeeMug } from "react-icons/gi";
+import { useMounted } from "./hooks/useMounted";
 
-const Header = () => {
+/* ── Types ──────────────────────────────────────────────── */
+interface NavItem {
+  href: string;
+  label: string;
+  icon: React.ReactNode;
+}
+
+/* ── Material 3 Expressive · Pixel UI design tokens ─────── */
+const M3 = {
+  surface:
+    "bg-white/80 dark:bg-[#1E1F20]/80 backdrop-blur-2xl backdrop-saturate-[180%] " +
+    "border border-[#DDE3EA] dark:border-[#303134] " +
+    "shadow-[0_1px_2px_rgba(11,87,208,0.06),0_10px_28px_-10px_rgba(11,87,208,0.18)] " +
+    "dark:shadow-[0_1px_2px_rgba(0,0,0,0.5),0_10px_28px_-10px_rgba(0,0,0,0.75)]",
+  onSurface: "text-[#1F1F1F] dark:text-[#E3E3E3]",
+  onSurfaceVariant: "text-[#444746] dark:text-[#C4C7C5]",
+  primaryFill: "bg-[#0B57D0] text-white dark:bg-[#A8C7FA] dark:text-[#062E6F]",
+  primaryContainer:
+    "bg-[#D3E3FD] text-[#041E49] dark:bg-[#0842A0] dark:text-[#D3E3FD]",
+  stateLayer: "hover:bg-[#0B57D0]/[0.08] dark:hover:bg-[#A8C7FA]/[0.14]",
+  ease: "ease-[cubic-bezier(0.2,0,0,1)]",
+  spring: "ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+  focus:
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0B57D0] dark:focus-visible:ring-[#A8C7FA] focus-visible:ring-offset-0",
+};
+
+const Header: React.FC = () => {
   const pathname = usePathname();
   const { setTheme, resolvedTheme } = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const menuRef = useRef<HTMLElement>(null);
+  const mounted = useMounted();
+  const isDark = mounted && resolvedTheme === "dark";
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-  }, []);
-
-  const navItems = useMemo(
+  const navItems: NavItem[] = useMemo(
     () => [
       {
         href: "/blogs",
         label: "Blogs",
-        icon: <FileText className="w-4 h-4 shrink-0" />,
+        icon: <FileText className="h-4 w-4 shrink-0" aria-hidden="true" />,
       },
       {
         href: "/git-track",
         label: "Commits",
-        icon: <PiGithubLogoBold className="w-4 h-4 shrink-0" />,
+        icon: (
+          <PiGithubLogoBold className="h-4 w-4 shrink-0" aria-hidden="true" />
+        ),
       },
     ],
     [],
   );
 
-  const isActive = (href: string) =>
+  const isActive = (href: string): boolean =>
     pathname === href || pathname.startsWith(href + "/");
 
-  // Close menu on outside click
+  /* Close on outside click */
   useEffect(() => {
     if (!isOpen) return;
-    const handleClick = (e: MouseEvent) => {
+    const handle = (e: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setIsOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
+    document.addEventListener("mousedown", handle);
+    return () => document.removeEventListener("mousedown", handle);
   }, [isOpen]);
 
-  // Close menu on Escape key
+  /* Close on Escape */
   useEffect(() => {
     if (!isOpen) return;
-    const handleKey = (e: KeyboardEvent) => {
+    const handle = (e: KeyboardEvent) => {
       if (e.key === "Escape") setIsOpen(false);
     };
-    document.addEventListener("keydown", handleKey);
-    return () => document.removeEventListener("keydown", handleKey);
+    document.addEventListener("keydown", handle);
+    return () => document.removeEventListener("keydown", handle);
   }, [isOpen]);
 
-  // Prevent body scroll when mobile menu open
+  /* Lock body scroll while drawer is open */
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
+    if (!isOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previous;
     };
   }, [isOpen]);
+
+  /* Auto-close drawer when crossing to desktop breakpoint */
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const handle = (e: MediaQueryListEvent) => {
+      if (e.matches) setIsOpen(false);
+    };
+    mq.addEventListener("change", handle);
+    return () => mq.removeEventListener("change", handle);
+  }, []);
 
   const toggleTheme = () => {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
@@ -78,179 +116,310 @@ const Header = () => {
     <>
       <header
         ref={menuRef}
-        className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#202020] border-b border-neutral-200 dark:border-neutral-800 transition-colors duration-200"
+        className="fixed inset-x-0 top-0 z-50 bg-transparent"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
-          <div className="flex items-center justify-between h-16">
-            {/* ── Logo Section ── */}
-            <Link href="/" className="flex items-center gap-3 shrink-0 min-w-0">
-              <div className="p-1 dark:bg-white rounded-full bg-transparent ">
+        <div className="mx-auto max-w-7xl px-3 pt-3 sm:px-5 sm:pt-4 lg:px-8">
+          <div className="relative flex items-center justify-between gap-2">
+            {/* ── Brand chip ─────────────────────────────────── */}
+            <Link
+              href="/"
+              aria-label="Cloudkinshuk — Home"
+              className={`
+                group flex min-w-0 items-center gap-2.5
+                rounded-full py-1.5 pl-1.5 pr-4 ${M3.surface}
+                transition-all duration-300 ${M3.ease}
+                hover:shadow-[0_1px_2px_rgba(11,87,208,0.1),0_14px_34px_-12px_rgba(11,87,208,0.32)]
+                dark:hover:shadow-[0_1px_2px_rgba(0,0,0,0.6),0_14px_34px_-12px_rgba(0,0,0,0.9)]
+                active:scale-[0.97]
+                lg:max-w-[220px]
+                ${M3.focus}
+              `}
+            >
+              <span className="relative grid h-8 w-8 shrink-0 place-items-center overflow-hidden rounded-full bg-[#EAF1FB] ring-1 ring-inset ring-[#0B57D0]/10 dark:bg-[#131314] dark:ring-[#A8C7FA]/15">
                 <Image
                   src="/corelogo.png"
-                  alt="Cloudkinshuk logo"
-                  width={24}
-                  height={24}
-                  className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className={`h-5 w-5 object-contain transition-transform duration-500 ${M3.spring} group-hover:rotate-[10deg] group-hover:scale-110`}
                 />
-              </div>
-              <span className="font-bold tracking-tight text-black dark:text-white text-lg sm:text-xl truncate">
+              </span>
+              <span
+                className={`truncate text-[15px] font-semibold tracking-[-0.01em] ${M3.onSurface}`}
+              >
                 Cloudkinshuk
               </span>
             </Link>
 
-            {/* ── Desktop Nav ── */}
-            <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`
-                    flex items-center gap-2 text-md font-medium transition-colors
-                    ${
-                      isActive(item.href)
-                        ? "text-black dark:text-white"
-                        : "text-neutral-900 dark:text-neutral-100 hover:text-black dark:hover:text-white"
-                    }
-                  `}
-                >
-                  {item.icon}
-                  <span>{item.label}</span>
-                </Link>
-              ))}
+            {/* ── Desktop nav (absolutely centered) ──────────── */}
+            <nav
+              aria-label="Primary"
+              className={`
+                absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2
+                items-center gap-1 rounded-full p-1.5 lg:flex
+                ${M3.surface}
+              `}
+            >
+              {navItems.map((item) => {
+                const active = isActive(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    aria-current={active ? "page" : undefined}
+                    className={`
+                      relative flex items-center gap-2 rounded-full px-4 py-2
+                      text-sm font-medium transition-all duration-300 ${M3.ease}
+                      active:scale-[0.95] active:rounded-xl ${M3.focus}
+                      ${
+                        active
+                          ? `${M3.primaryContainer} shadow-[0_1px_3px_rgba(11,87,208,0.22)]`
+                          : `${M3.onSurfaceVariant} ${M3.stateLayer} hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]`
+                      }
+                    `}
+                  >
+                    {item.icon}
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
             </nav>
 
-            {/* ── Right Action Cluster ── */}
-            <div className="flex items-center gap-4 shrink-0">
-              {/* Sponsor Button */}
+            {/* ── Right action cluster ───────────────────────── */}
+            <div className="flex shrink-0 items-center gap-2">
+              {/* Sponsor — filled primary */}
               <a
                 href="https://brewrepo.cloudkinshuk.in"
-                className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg bg-black text-white dark:bg-white dark:text-black text-sm font-medium hover:opacity-80 transition-opacity"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`
+                  hidden lg:inline-flex items-center gap-2 rounded-full px-4 py-2.5
+                  text-sm font-semibold ${M3.primaryFill}
+                  transition-all duration-300 ${M3.ease}
+                  hover:shadow-[0_8px_24px_-6px_rgba(11,87,208,0.55)]
+                  dark:hover:shadow-[0_8px_24px_-6px_rgba(168,199,250,0.45)]
+                  hover:brightness-110 active:scale-[0.95] active:rounded-2xl
+                  ${M3.focus}
+                `}
               >
-                <GiCoffeeMug className="w-4 h-4" />
+                <GiCoffeeMug className="h-4 w-4 shrink-0" aria-hidden="true" />
                 <span>Sponsor</span>
               </a>
 
-              <div className="hidden md:flex items-center gap-4 border-l border-neutral-200 dark:border-neutral-800 pl-4">
-                {/* GitHub Icon */}
+              {/* Icon cluster */}
+              <div
+                className={`flex items-center gap-0.5 rounded-full p-1.5 ${M3.surface}`}
+              >
+                {/* GitHub — hidden on tiny screens */}
                 <a
                   href="https://github.com/kinshukjainn/cloudkinshuk"
-                  aria-label="GitHub"
-                  className="text-neutral-500 hover:text-black dark:hover:text-white transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub repository"
+                  className={`
+                    hidden sm:grid h-9 w-9 place-items-center rounded-full
+                    ${M3.onSurfaceVariant} ${M3.stateLayer}
+                    hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]
+                    transition-all duration-300 ${M3.ease}
+                    active:scale-90 active:rounded-xl ${M3.focus}
+                  `}
                 >
-                  <Github className="w-5 h-5" />
+                  <Github className="h-[18px] w-[18px]" aria-hidden="true" />
                 </a>
 
-                {/* Theme Toggle */}
+                {/* Theme toggle */}
                 <button
+                  type="button"
                   onClick={toggleTheme}
-                  className="text-neutral-500 hover:text-black cursor-pointer  dark:hover:text-white transition-colors focus:outline-none"
-                  aria-label="Toggle theme"
+                  aria-label={
+                    isDark ? "Switch to light theme" : "Switch to dark theme"
+                  }
+                  className={`
+                    grid h-9 w-9 place-items-center rounded-full
+                    ${M3.onSurfaceVariant} ${M3.stateLayer}
+                    hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]
+                    transition-all duration-300 ${M3.ease}
+                    active:scale-90 active:rounded-xl ${M3.focus}
+                  `}
                 >
                   {mounted ? (
-                    resolvedTheme === "dark" ? (
-                      <Sun className="w-5 h-5" />
-                    ) : (
-                      <Moon className="w-5 h-5" />
-                    )
+                    <span className="relative grid h-[18px] w-[18px] place-items-center">
+                      <Sun
+                        aria-hidden="true"
+                        className={`
+                          absolute h-[18px] w-[18px] transition-all duration-500 ${M3.spring}
+                          ${
+                            isDark
+                              ? "rotate-0 scale-100 opacity-100"
+                              : "-rotate-90 scale-0 opacity-0"
+                          }
+                        `}
+                      />
+                      <Moon
+                        aria-hidden="true"
+                        className={`
+                          absolute h-[18px] w-[18px] transition-all duration-500 ${M3.spring}
+                          ${
+                            isDark
+                              ? "rotate-90 scale-0 opacity-0"
+                              : "rotate-0 scale-100 opacity-100"
+                          }
+                        `}
+                      />
+                    </span>
                   ) : (
-                    <div className="w-5 h-5 opacity-0" />
+                    <span className="h-[18px] w-[18px]" aria-hidden="true" />
                   )}
                 </button>
-              </div>
 
-              {/* Mobile Controls */}
-              <div className="flex md:hidden items-center gap-4">
+                {/* Mobile menu toggle — only below lg */}
                 <button
-                  onClick={toggleTheme}
-                  className="text-neutral-500 hover:text-black cursor-pointer dark:hover:text-white transition-colors focus:outline-none"
-                  aria-label="Toggle theme"
-                >
-                  {mounted ? (
-                    resolvedTheme === "dark" ? (
-                      <Sun className="w-5 h-5" />
-                    ) : (
-                      <Moon className="w-5 h-5" />
-                    )
-                  ) : (
-                    <div className="w-5 h-5 opacity-0" />
-                  )}
-                </button>
-
-                <button
-                  className="text-neutral-500 hover:text-black cursor-pointer dark:hover:text-white transition-colors focus:outline-none"
-                  onClick={() => setIsOpen((prev) => !prev)}
+                  type="button"
+                  onClick={() => setIsOpen((p) => !p)}
                   aria-label={isOpen ? "Close menu" : "Open menu"}
                   aria-expanded={isOpen}
+                  aria-controls="mobile-menu"
+                  className={`
+                    lg:hidden grid h-9 w-9 place-items-center rounded-full
+                    ${M3.onSurfaceVariant} ${M3.stateLayer}
+                    hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]
+                    transition-all duration-300 ${M3.ease}
+                    active:scale-90 active:rounded-xl ${M3.focus}
+                  `}
                 >
-                  {isOpen ? (
-                    <X className="w-6 h-6" />
-                  ) : (
-                    <Menu className="w-6 h-6" />
-                  )}
+                  <span className="relative grid h-5 w-5 place-items-center">
+                    <Menu
+                      aria-hidden="true"
+                      className={`
+                        absolute h-5 w-5 transition-all duration-300 ${M3.ease}
+                        ${
+                          isOpen
+                            ? "rotate-90 scale-50 opacity-0"
+                            : "rotate-0 scale-100 opacity-100"
+                        }
+                      `}
+                    />
+                    <X
+                      aria-hidden="true"
+                      className={`
+                        absolute h-5 w-5 transition-all duration-300 ${M3.ease}
+                        ${
+                          isOpen
+                            ? "rotate-0 scale-100 opacity-100"
+                            : "-rotate-90 scale-50 opacity-0"
+                        }
+                      `}
+                    />
+                  </span>
                 </button>
               </div>
             </div>
           </div>
         </div>
 
-        {/* ── Mobile Drawer ── */}
+        {/* ── Mobile drawer — M3 large sheet ──────────────── */}
         <div
           id="mobile-menu"
-          className={`md:hidden grid transition-all duration-300 ease-in-out bg-white dark:bg-black border-b border-neutral-200 dark:border-neutral-800 ${
-            isOpen
-              ? "grid-rows-[1fr] border-opacity-100"
-              : "grid-rows-[0fr] border-opacity-0"
-          }`}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
+          className={`
+            lg:hidden absolute inset-x-3 top-full mt-2 origin-top
+            max-h-[80vh] overflow-y-auto overflow-x-hidden
+            rounded-[28px] ${M3.surface}
+            transition-all duration-300 ${M3.ease}
+            ${
+              isOpen
+                ? "visible translate-y-0 scale-100 opacity-100"
+                : "invisible -translate-y-3 scale-[0.96] opacity-0"
+            }
+          `}
         >
-          <div className="overflow-hidden">
-            <div className="px-4 py-6 space-y-6">
-              <nav className="flex flex-col gap-4">
-                {navItems.map((item) => (
+          <div className="space-y-5 p-4">
+            <nav className="flex flex-col gap-1.5">
+              {navItems.map((item) => {
+                const active = isActive(item.href);
+                return (
                   <Link
                     key={item.href}
                     href={item.href}
                     onClick={() => setIsOpen(false)}
+                    tabIndex={isOpen ? 0 : -1}
+                    aria-current={active ? "page" : undefined}
                     className={`
-                      flex items-center gap-3 text-lg font-medium transition-colors
+                      flex items-center gap-3 rounded-[20px] px-3 py-3
+                      text-base font-semibold transition-all duration-300 ${M3.ease}
+                      active:scale-[0.97] active:rounded-2xl ${M3.focus}
                       ${
-                        isActive(item.href)
-                          ? "text-black dark:text-white"
-                          : "text-neutral-900 dark:text-neutral-100 hover:text-black dark:hover:text-white"
+                        active
+                          ? M3.primaryContainer
+                          : `${M3.onSurfaceVariant} ${M3.stateLayer}`
                       }
                     `}
-                    tabIndex={isOpen ? 0 : -1}
                   >
-                    {item.icon}
-                    {item.label}
+                    <span
+                      className={`
+                        grid h-9 w-9 shrink-0 place-items-center rounded-full
+                        transition-colors duration-300 ${M3.ease}
+                        ${
+                          active
+                            ? "bg-white/70 dark:bg-black/25"
+                            : "bg-[#0B57D0]/[0.09] dark:bg-[#A8C7FA]/[0.14]"
+                        }
+                      `}
+                    >
+                      {item.icon}
+                    </span>
+                    <span className="truncate">{item.label}</span>
                   </Link>
-                ))}
-              </nav>
+                );
+              })}
+            </nav>
 
-              <div className="pt-6 border-t border-neutral-200 dark:border-neutral-800 flex flex-col gap-4">
-                <a
-                  href="https://brewrepo.cloudkinshuk.in"
-                  className="flex items-center justify-center gap-2 py-3 bg-black text-white dark:bg-white dark:text-black rounded-lg font-medium text-base hover:opacity-80 transition-opacity"
-                  tabIndex={isOpen ? 0 : -1}
-                >
-                  <GiCoffeeMug className="w-5 h-5 shrink-0" />
-                  Sponsor
-                </a>
-                <a
-                  href="https://github.com/kinshukjainn/cloudkinshuk"
-                  className="flex items-center justify-center gap-2 py-3 border border-neutral-200 dark:border-neutral-800 text-black dark:text-white font-medium text-base hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors"
-                  tabIndex={isOpen ? 0 : -1}
-                >
-                  <Github className="w-5 h-5 shrink-0" />
-                  GitHub
-                </a>
-              </div>
+            <div
+              className="h-px w-full bg-[#0B57D0]/10 dark:bg-[#A8C7FA]/12"
+              aria-hidden="true"
+            />
+
+            <div className="flex flex-col gap-2.5">
+              <a
+                href="https://brewrepo.cloudkinshuk.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                tabIndex={isOpen ? 0 : -1}
+                className={`
+                  flex items-center justify-center gap-2 rounded-full py-3.5
+                  text-sm font-semibold ${M3.primaryFill}
+                  transition-all duration-300 ${M3.ease}
+                  active:scale-[0.97] active:rounded-2xl ${M3.focus}
+                `}
+              >
+                <GiCoffeeMug className="h-5 w-5 shrink-0" aria-hidden="true" />
+                <span>Sponsor</span>
+              </a>
+
+              <a
+                href="https://github.com/kinshukjainn/cloudkinshuk"
+                target="_blank"
+                rel="noopener noreferrer"
+                tabIndex={isOpen ? 0 : -1}
+                className={`
+                  flex items-center justify-center gap-2 rounded-full py-3.5
+                  text-sm font-semibold ${M3.primaryContainer}
+                  transition-all duration-300 ${M3.ease}
+                  active:scale-[0.97] active:rounded-2xl ${M3.focus}
+                `}
+              >
+                <Github className="h-5 w-5 shrink-0" aria-hidden="true" />
+                <span>GitHub</span>
+              </a>
             </div>
           </div>
         </div>
       </header>
 
-      {/* ── Spacer ── */}
-      <div className="h-16" aria-hidden="true" />
+      {/* ── Spacer so content clears the fixed header ───── */}
+      <div className="h-20 sm:h-24" aria-hidden="true" />
     </>
   );
 };

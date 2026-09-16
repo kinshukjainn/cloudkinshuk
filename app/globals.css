@@ -1,13 +1,21 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+:root {
+  --background: #ffffff;
+}
+
+.dark {
+  --background: #1e1e1e;
+}
+
 body {
-  background-color: #1e1e1e;
-  font-family: var(--font-public-sans), sans-serif;
+  background-color: var(--background);
+  font-family: var(--font-roboto), sans-serif;
 }
 
 .h-font {
-  font-family: var(--font-source-serif), sans-serif;
+  font-family: var(--font-varela-round), sans-serif;
 }
 
 .prose pre code {

@@ -1,23 +1,5 @@
 import type { BlogPost } from "./engine";
 
-/**
- * The single source of truth for every blog post.
- *
- * 👉 To add a recommendation, just append an object to this array.
- *    The engine indexes whatever is here automatically — no other code
- *    needs to change, no matter how many posts you add.
- *
- * Tips for good recommendations:
- *   - `topics`   carry the most weight, so keep them consistent across
- *                related posts (e.g. always use "aws", not "AWS").
- *   - `route`    should match the real route the post lives on.
- *   - `excerpt`  + `keywords` widen the matching and improve quality.
- *   - `pinned`   forces a post to the top; `boost` nudges it (e.g. 1.5).
- *   - `date`     (ISO, e.g. "2025-09-01") turns on recency ranking. None of
- *                the posts below have a date yet — add real publish dates to
- *                rank newer posts higher. Until then they're ordered
- *                newest-first so that fallback ordering still makes sense.
- */
 export const blogs: BlogPost[] = [
   {
     slug: "kosha",
@@ -97,6 +79,15 @@ export const blogs: BlogPost[] = [
     keywords: ["instagram", "feed", "database", "sharding", "caching"],
     excerpt:
       "Ideas and thoughts on how Instagram is engineered under the hood.",
+  },
+  {
+    slug: "db-sql",
+    route: "/blogs/db-sql",
+    title: "Why PostgreSQL Became My Go-To Database",
+    topics: ["system-design", "architecture", "scaling", "database"],
+    keywords: ["database", "sql", "postgress", "sharding", "caching"],
+    excerpt:
+      "The article shows that why i choosed postgress SQL database over other dabatbase for my projects i build.",
   },
   {
     slug: "linux-is-go-to-os-for-development",

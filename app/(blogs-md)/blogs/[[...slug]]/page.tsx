@@ -6,16 +6,16 @@ import type { Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import { getDoc, getAllSlugs } from "@/lib/blogs";
-import { navigation } from "@/lib/navigation"; // Your navigation file
+import { navigation } from "@/lib/navigation";
 import "highlight.js/styles/github-dark.css";
 import BlogFeed from "@/app/components/BlogsFeed";
-import { IoChevronBackCircleOutline } from "react-icons/io5";
+import { IoArrowBack } from "react-icons/io5";
 
 type Props = { params: Promise<{ slug?: string[] }> };
 
 export function generateStaticParams() {
   const paths = getAllSlugs().map((slug) => ({ slug: [slug] }));
-  paths.push({ slug: [] }); // Add the empty slug for the root /blogs index page
+  paths.push({ slug: [] });
   return paths;
 }
 
@@ -40,65 +40,65 @@ function omitNode<T extends object>(props: T): Omit<T, "node"> {
 const components: Components = {
   h1: (p) => (
     <h1
-      className="mt-10 mb-6 scroll-mt-24 text-3xl font-bold tracking-tight  text-neutral-900 dark:text-white md:text-4xl"
+      className="mt-12 mb-6 scroll-mt-24 text-3xl font-normal tracking-tight text-[#1f1f1f] dark:text-[#e3e3e3] md:text-[2.5rem] md:leading-[1.15]"
       {...omitNode(p)}
     />
   ),
   h2: (p) => (
     <h2
-      className="mt-10 mb-4 scroll-mt-24 border-b border-neutral-300 dark:border-neutral-800 pb-2 text-2xl font-bold tracking-tight text-neutral-900 dark:text-white md:text-3xl"
+      className="mt-10 mb-4 scroll-mt-24 text-2xl font-normal tracking-tight text-[#1f1f1f] dark:text-[#e3e3e3] md:text-3xl"
       {...omitNode(p)}
     />
   ),
   h3: (p) => (
     <h3
-      className="mt-8 mb-4 scroll-mt-24 text-xl font-bold text-neutral-900 dark:text-white"
+      className="mt-8 mb-3 scroll-mt-24 text-xl font-medium text-[#1f1f1f] dark:text-[#e3e3e3]"
       {...omitNode(p)}
     />
   ),
   p: (p) => (
     <p
-      className="mt-4 mb-4 break-words text-base leading-relaxed text-neutral-900 dark:text-neutral-200"
+      className="mt-4 mb-4 break-words text-base leading-7 text-[#444746] dark:text-[#c4c7c5]"
       {...omitNode(p)}
     />
   ),
   a: (p) => (
     <a
-      className="text-blue-600 dark:text-blue-400 underline decoration-blue-600/40 dark:decoration-blue-400/40 underline-offset-4 transition-colors hover:text-blue-800 dark:hover:text-blue-300 hover:decoration-blue-800 dark:hover:decoration-blue-300 font-medium"
+      className="rounded text-[#0b57d0] underline decoration-[#0b57d0]/30 underline-offset-4 transition-colors hover:text-[#0842a0] hover:decoration-[#0842a0]/60 dark:text-[#a8c7fa] dark:decoration-[#a8c7fa]/30 dark:hover:text-[#d3e3fd] font-medium"
       {...omitNode(p)}
     />
   ),
   ul: (p) => (
     <ul
-      className="mt-4 mb-4 list-outside list-disc space-y-2 pl-6 text-base text-neutral-700 dark:text-neutral-300 marker:text-neutral-400 dark:marker:text-neutral-600"
+      className="mt-4 mb-4 list-outside list-disc space-y-2 pl-6 text-base leading-7 text-[#444746] dark:text-[#c4c7c5] marker:text-[#747775] dark:marker:text-[#8e918f]"
       {...omitNode(p)}
     />
   ),
   ol: (p) => (
     <ol
-      className="mt-4 mb-4 list-outside list-decimal space-y-2 pl-6 text-base text-neutral-700 dark:text-neutral-300 marker:text-neutral-500 dark:marker:text-neutral-500"
+      className="mt-4 mb-4 list-outside list-decimal space-y-2 pl-6 text-base leading-7 text-[#444746] dark:text-[#c4c7c5] marker:text-[#747775] dark:marker:text-[#8e918f]"
       {...omitNode(p)}
     />
   ),
-  li: (p) => <li className="pl-2 leading-relaxed" {...omitNode(p)} />,
+  li: (p) => <li className="pl-1.5 leading-7" {...omitNode(p)} />,
   strong: (p) => (
     <strong
-      className="font-bold text-neutral-900 dark:text-white"
+      className="font-semibold text-[#1f1f1f] dark:text-[#e3e3e3]"
       {...omitNode(p)}
     />
   ),
   blockquote: (p) => (
     <blockquote
-      className="my-6 border-l-4 border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900/50 px-5 py-4 text-base text-neutral-600 dark:text-neutral-400"
+      className="my-6 rounded-r-xl border-l-4 border-[#0b57d0] dark:border-[#a8c7fa] bg-[#f0f4f9] dark:bg-[#1e1f21] px-5 py-4 text-base leading-7 text-[#444746] dark:text-[#c4c7c5]"
       {...omitNode(p)}
     />
   ),
   hr: () => (
-    <hr className="my-10 border-t border-neutral-300 dark:border-neutral-800" />
+    <hr className="my-10 border-t border-[#e0e3e7] dark:border-[#2d2f31]" />
   ),
   pre: (p) => (
     <pre
-      className="mt-6 mb-6 max-w-full overflow-x-auto rounded-md border border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-[#0a0a0a] p-4 text-sm leading-normal text-neutral-800 dark:text-neutral-300 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-300 dark:scrollbar-thumb-neutral-700"
+      className="mt-6 mb-6 max-w-full overflow-x-auto rounded-xl bg-[#f0f4f9] dark:bg-[#1e1f21] p-5 text-sm leading-6 text-[#1f1f1f] dark:text-[#e3e3e3] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#c4c7c5] dark:scrollbar-thumb-[#444746]"
       {...omitNode(p)}
     />
   ),
@@ -112,7 +112,7 @@ const components: Components = {
       );
     return (
       <code
-        className="break-words rounded-md bg-neutral-100 dark:bg-neutral-900 px-1.5 py-0.5 border border-neutral-200 dark:border-neutral-800 text-[0.875em] font-mono text-neutral-900 dark:text-neutral-200"
+        className="break-words rounded-md bg-[#f0f4f9] dark:bg-[#1e1f21] px-1.5 py-0.5 text-[0.875em] font-mono text-[#0b57d0] dark:text-[#a8c7fa]"
         {...omitNode(rest)}
       >
         {children}
@@ -120,7 +120,7 @@ const components: Components = {
     );
   },
   table: (p) => (
-    <div className="my-6 block w-full max-w-full overflow-x-auto rounded-md border border-neutral-300 dark:border-neutral-800 bg-transparent scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-300 dark:scrollbar-thumb-neutral-700">
+    <div className="my-6 block w-full max-w-full overflow-x-auto rounded-xl border border-[#e0e3e7] dark:border-[#2d2f31] bg-white dark:bg-[#1e1f21] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#c4c7c5] dark:scrollbar-thumb-[#444746]">
       <table
         className="w-full min-w-[600px] border-collapse text-sm md:text-base"
         {...omitNode(p)}
@@ -128,24 +128,24 @@ const components: Components = {
     </div>
   ),
   thead: (p) => (
-    <thead className="bg-neutral-50 dark:bg-neutral-900/50" {...omitNode(p)} />
+    <thead className="bg-[#f0f4f9] dark:bg-[#282a2c]" {...omitNode(p)} />
   ),
   th: (p) => (
     <th
-      className="whitespace-nowrap border-b border-neutral-300 dark:border-neutral-800 px-4 py-3 text-left font-bold text-neutral-900 dark:text-neutral-100"
+      className="whitespace-nowrap border-b border-[#e0e3e7] dark:border-[#2d2f31] px-4 py-3 text-left font-medium text-[#1f1f1f] dark:text-[#e3e3e3]"
       {...omitNode(p)}
     />
   ),
   td: (p) => (
     <td
-      className="border-b border-neutral-200 dark:border-neutral-800 px-4 py-3 text-neutral-700 dark:text-neutral-300"
+      className="border-b border-[#e0e3e7] dark:border-[#2d2f31] px-4 py-3 text-[#444746] dark:text-[#c4c7c5]"
       {...omitNode(p)}
     />
   ),
   img: (p) => (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      className="my-6 h-auto w-full rounded-md border border-neutral-300 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 object-cover sm:object-contain"
+      className="my-6 h-auto w-full rounded-xl bg-[#f0f4f9] dark:bg-[#1e1f21] object-cover sm:object-contain"
       alt=""
       {...omitNode(p)}
     />
@@ -159,7 +159,6 @@ export default async function DocPage({ params }: Props) {
   // VIEW 1: INDEX PAGE (LIST OF ALL BLOGS)
   // ==========================================
   if (!slug || slug.length === 0) {
-    // Map over your navigation.ts data and attach the descriptions from Markdown
     const sectionsData = navigation.map((section) => ({
       title: section.title,
       items: section.items.map((item) => {
@@ -182,31 +181,28 @@ export default async function DocPage({ params }: Props) {
   if (!doc) notFound();
 
   return (
-    <article className="min-w-0 max-w-full overflow-hidden bg-white dark:bg-[#1e1e1e]">
-      {/* 
-        FIX: Pulled the back button OUTSIDE the title check.
-        Now it will always render on every post.
-      */}
+    <article className="min-w-0 max-w-full overflow-hidden bg-white dark:bg-[#1f1f1f]">
+      {/* Material 3 back chip */}
       <div className="mb-8">
         <Link
           href="/blogs"
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-md rounded-md font-medium text-black bg-green-400 transition-colors dark:bg-green-800 dark:text-white"
+          className="inline-flex items-center gap-2 rounded-full border border-[#c4c7c5] dark:border-[#444746] bg-transparent px-4 py-2 text-sm font-medium text-[#0b57d0] dark:text-[#a8c7fa] transition-colors hover:bg-[#f0f4f9] dark:hover:bg-[#282a2c]"
         >
-          <IoChevronBackCircleOutline className="text-lg" />
-          <span>Return</span>
+          <IoArrowBack className="text-base" />
+          <span>Back to all posts</span>
         </Link>
       </div>
 
-      {/* Conditionally render header block only if title or description exists */}
+      {/* Header block */}
       {(doc.meta.title || doc.meta.description) && (
-        <header className="mb-10 border-b border-neutral-300 dark:border-neutral-800 pb-8">
+        <header className="mb-10 border-b border-[#e0e3e7] dark:border-[#2d2f31] pb-8">
           {doc.meta.title && (
-            <h1 className="text-4xl font-semibold tracking-tight h-font text-neutral-900 dark:text-white md:text-5xl">
+            <h1 className="h-font text-[2rem] font-semibold tracking-tight text-[#1f1f1f] dark:text-[#e3e3e3] md:text-[2.75rem] md:leading-[1.15]">
               {doc.meta.title}
             </h1>
           )}
           {doc.meta.description && (
-            <p className="mt-4 text-lg text-neutral-600 dark:text-neutral-400">
+            <p className="mt-3 text-base leading-7 text-[#444746] dark:text-[#c4c7c5] md:text-lg">
               {doc.meta.description}
             </p>
           )}

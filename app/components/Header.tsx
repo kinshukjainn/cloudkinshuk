@@ -20,7 +20,7 @@ interface NavItem {
 /* ── Material 3 Expressive · Pixel UI design tokens ─────── */
 const M3 = {
   surface:
-    "bg-white/80 dark:bg-[#1E1F20]/80 backdrop-blur-2xl backdrop-saturate-[180%] " +
+    "bg-white/40 dark:bg-[#1E1F20]/40 backdrop-blur-xs backdrop-saturate-[100%] " +
     "border border-[#DDE3EA] dark:border-[#303134] " +
     "shadow-[0_1px_2px_rgba(11,87,208,0.06),0_10px_28px_-10px_rgba(11,87,208,0.18)] " +
     "dark:shadow-[0_1px_2px_rgba(0,0,0,0.5),0_10px_28px_-10px_rgba(0,0,0,0.75)]",
@@ -326,7 +326,7 @@ const Header: React.FC = () => {
           className={`
             lg:hidden absolute inset-x-3 top-full mt-2 origin-top
             max-h-[80vh] overflow-y-auto overflow-x-hidden
-            rounded-[28px] ${M3.surface}
+            rounded-[48px] ${M3.surface}
             transition-all duration-300 ${M3.ease}
             ${
               isOpen
@@ -347,9 +347,9 @@ const Header: React.FC = () => {
                     tabIndex={isOpen ? 0 : -1}
                     aria-current={active ? "page" : undefined}
                     className={`
-                      flex items-center gap-3 rounded-[20px] px-3 py-3
+                      flex items-center gap-3 rounded-full px-3 py-3
                       text-base font-semibold transition-all duration-300 ${M3.ease}
-                      active:scale-[0.97] active:rounded-2xl ${M3.focus}
+                      active:scale-[0.97] active:rounded-4xl ${M3.focus}
                       ${
                         active
                           ? M3.primaryContainer

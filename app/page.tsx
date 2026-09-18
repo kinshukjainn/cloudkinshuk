@@ -15,9 +15,10 @@ import {
   Sparkles,
 } from "lucide-react";
 import Link from "next/link";
+import Script from "next/script";
 import Recommendation from "./components/Recommendation";
 
-// --- CONFIGURATION (unchanged data) ---
+// --- CONFIGURATION ---
 const CONFIG = {
   personal: {
     email: "kinshuk25jan04@gmail.com",
@@ -53,62 +54,6 @@ const CONFIG = {
       url: "http://x.com/realkinshuk004",
       icon: "x",
       handle: "@realkinshuk04",
-    },
-  ],
-  certifications: [
-    {
-      title: "AWS Getting started with storage services",
-      organization: "AWS",
-      status: "Completed",
-      year: "2025 July",
-      url: "https://www.credly.com/badges/a4406a81-77da-4003-b153-9e36582f7877/public_url",
-      description:
-        "Digital badge covering storage services concepts and AWS storage solutions",
-      skills: ["Amazon S3", "Amazon EBS", "Amazon EFS", "AWS Storage Gateway"],
-    },
-    {
-      title: "AWS Cloud Practitioner Exam - CLF-02",
-      organization: "AWS",
-      status: "Completed",
-      year: "2026",
-      url: "https://www.credly.com/badges/0bcd1190-2d68-45ff-91d9-32b65aa93ed8/public_url",
-      description:
-        "Comprehensive certification covering AWS top 40 best core services of aws",
-      skills: ["Cloud Computing", "AWS Services", "Security", "Pricing Models"],
-    },
-    {
-      title: "AWS Developer Cloud Associate - DVA-02",
-      organization: "AWS",
-      status: "Preparing",
-      year: "2026",
-      description:
-        "Certification focused on AWS development and deployment best practices, covering core AWS services, security, and application development concepts",
-      skills: ["Cloud Computing", "AWS Services", "Security", "Pricing Models"],
-    },
-    {
-      title: "AWS Serverless Badge",
-      organization: "AWS",
-      status: "Completed",
-      year: "2024",
-      url: "https://www.credly.com/badges/0bcd1190-2d68-45ff-91d9-32b65aa93ed8/public_url",
-      description:
-        "Digital badge demonstrating serverless architecture knowledge and implementation",
-      skills: [
-        "Amazon Lambda",
-        "API Gateway",
-        "DynamoDB",
-        "Serverless Framework",
-      ],
-    },
-    {
-      title: "AWS Machine Learning Badge",
-      organization: "AWS",
-      status: "Completed",
-      year: "2025",
-      url: "https://www.credly.com/badges/a0042ec2-cc6e-4a99-84de-a1516ee5775a/public_url",
-      description:
-        "Digital badge covering machine learning concepts and AWS ML services",
-      skills: ["ML Algorithms", "Data Processing", "Model Deployment"],
     },
   ],
   skills: {
@@ -235,6 +180,14 @@ const iconChip =
   "inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#d3e3fd] dark:bg-[#004a77] text-[#0842a0] dark:text-[#d3e3fd]";
 const linkPrimary =
   "text-[#0b57d0] hover:text-[#0842a0] dark:text-[#a8c7fa] dark:hover:text-[#d3e3fd] transition-colors";
+
+// --- CREDLY BADGE IDS ---
+const CREDLY_BADGES = [
+  "f42e01a4-b2d6-4069-8038-db78a81c81b5",
+  "a4406a81-77da-4003-b153-9e36582f7877",
+  "a0042ec2-cc6e-4a99-84de-a1516ee5775a",
+  "0bcd1190-2d68-45ff-91d9-32b65aa93ed8",
+];
 
 // --- SECTION WRAPPER ---
 function Section({
@@ -484,58 +437,27 @@ export default function Home() {
             title="Certifications"
             subtitle="Verified badges & exams"
           >
-            <div className="grid gap-3 md:grid-cols-2">
-              {CONFIG.certifications.map((cert, idx) => (
-                <div key={idx} className={`${surfaceCard} flex flex-col gap-3`}>
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      {cert.url ? (
-                        <a
-                          href={cert.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`inline-flex items-start gap-1.5 text-sm font-medium leading-snug ${linkPrimary}`}
-                        >
-                          <span>{cert.title}</span>
-                          <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-                        </a>
-                      ) : (
-                        <h3 className="text-sm font-medium leading-snug text-[#1f1f1f] dark:text-[#e3e3e3]">
-                          {cert.title}
-                        </h3>
-                      )}
-                      <p className="mt-1 text-xs text-[#747775] dark:text-[#8e918f]">
-                        {cert.organization} · {cert.year}
-                      </p>
-                    </div>
-                    <span
-                      className={
-                        cert.status === "Completed"
-                          ? "shrink-0 rounded-full bg-[#d3e3fd] px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide text-[#0842a0] dark:bg-[#004a77] dark:text-[#d3e3fd]"
-                          : "shrink-0 rounded-full bg-[#f0f4f9] px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide text-[#444746] dark:bg-[#282a2c] dark:text-[#c4c7c5]"
-                      }
-                    >
-                      {cert.status}
-                    </span>
-                  </div>
-
-                  <p className="text-xs leading-6 text-[#444746] dark:text-[#c4c7c5]">
-                    {cert.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-1.5">
-                    {cert.skills.map((s, i) => (
-                      <span
-                        key={i}
-                        className="rounded-md bg-white px-2 py-0.5 text-[10px] font-medium text-[#747775] dark:bg-[#282a2c] dark:text-[#8e918f]"
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+              {CREDLY_BADGES.map((badgeId) => (
+                <div
+                  key={badgeId}
+                  className="group flex min-w-0 items-center justify-center overflow-hidden rounded-3xl bg-white p-2 shadow-sm ring-1 ring-black/5 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg dark:ring-white/10"
+                >
+                  <div
+                    data-iframe-width="150"
+                    data-iframe-height="270"
+                    data-share-badge-id={badgeId}
+                    data-share-badge-host="https://www.credly.com"
+                  />
                 </div>
               ))}
             </div>
+
+            <Script
+              id="credly-embed-script"
+              src="https://cdn.credly.com/assets/utilities/embed.js"
+              strategy="afterInteractive"
+            />
           </Section>
 
           {/* EDUCATION */}

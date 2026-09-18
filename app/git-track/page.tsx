@@ -12,6 +12,7 @@ import {
   AlertCircle,
   FileCode2,
   X,
+  MoreHorizontal,
 } from "lucide-react";
 
 // ============================================================================
@@ -86,7 +87,6 @@ const timeAgo = (dateString: string) => {
 
 const getCommitTitle = (message: string) => message.split("\n")[0];
 
-// Group key for timeline: "Today", "Yesterday", "This week", "This month", then month/year
 const getDayGroup = (dateString: string): string => {
   const d = new Date(dateString);
   const now = new Date();
@@ -127,8 +127,8 @@ export default function ChangelogTracker() {
   const [searchQuery, setSearchQuery] = useState("");
   const [authorFilter, setAuthorFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
-  const [dateRange] = useState({ start: "", end: "" });
   const [showFilters, setShowFilters] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const fetchCommits = async () => {
     setLoading(true);
@@ -207,7 +207,6 @@ export default function ChangelogTracker() {
     return commits.filter((commit) => {
       const msg = commit.commit.message.toLowerCase();
       const authorName = commit.commit.author.name;
-      const commitDate = new Date(commit.commit.author.date);
       const sha = commit.sha.toLowerCase();
 
       if (
@@ -223,21 +222,10 @@ export default function ChangelogTracker() {
       )
         return false;
 
-      if (dateRange.start) {
-        const startDate = new Date(dateRange.start);
-        startDate.setHours(0, 0, 0, 0);
-        if (commitDate < startDate) return false;
-      }
-      if (dateRange.end) {
-        const endDate = new Date(dateRange.end);
-        endDate.setHours(23, 59, 59, 999);
-        if (commitDate > endDate) return false;
-      }
       return true;
     });
-  }, [commits, searchQuery, authorFilter, typeFilter, dateRange]);
+  }, [commits, searchQuery, authorFilter, typeFilter]);
 
-  // Group commits by day group, preserving order
   const grouped = useMemo(() => {
     const map = new Map<string, GithubCommit[]>();
     for (const c of displayCommits) {
@@ -253,180 +241,243 @@ export default function ChangelogTracker() {
     (authorFilter !== "all" ? 1 : 0) +
     (typeFilter !== "all" ? 1 : 0);
 
+  // --------------------------------------------------------------------------
+  // Render
+  // --------------------------------------------------------------------------
+
   return (
     <div className="min-h-screen bg-white text-[#1f1f1f] selection:bg-[#d3e3fd] selection:text-[#0842a0] dark:bg-[#1f1f1f] dark:text-[#e3e3e3] dark:selection:bg-[#004a77] dark:selection:text-[#d3e3fd]">
-      <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 md:py-16 lg:px-8">
-        {/* ── HEADER ── */}
-        <header className="mb-8 space-y-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#c4c7c5] px-3 py-1 text-xs font-medium text-[#444746] dark:border-[#444746] dark:text-[#c4c7c5]">
-              <GitBranch className="h-3.5 w-3.5" />
+      <header className="sticky top-16 z-30 mx-auto w-[calc(100%-1.5rem)] max-w-4xl rounded-3xl border border-gray-400/40 bg-white/20 backdrop-blur-xs backdrop-saturate-150 dark:border-white/[0.08] dark:bg-[#1f1f1f]/20">
+        <div className="px-4 sm:px-6 md:px-8">
+          {/* Row 1 — identity + actions */}
+          <div className="flex h-14 items-center gap-2">
+            {/* Branch chip (hidden on very small screens) */}
+            <span className="hidden shrink-0 items-center gap-1 rounded-full border border-[#c4c7c5]/70 px-2.5 py-1 text-[11px] font-medium text-[#444746] dark:border-[#444746] dark:text-[#c4c7c5] sm:inline-flex">
+              <GitBranch className="h-3 w-3" />
               {GITHUB_CONFIG.branch}
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#c4c7c5] px-3 py-1 text-xs font-medium text-[#444746] dark:border-[#444746] dark:text-[#c4c7c5]">
-              <Clock className="h-3.5 w-3.5" />
-              {timeAgo(
-                commits[0]?.commit.author.date ?? new Date().toISOString(),
-              )}
-            </span>
-          </div>
 
-          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight h-font text-[#1f1f1f] dark:text-[#e3e3e3] md:text-4xl md:leading-[1.1]">
-                {GITHUB_CONFIG.repository}
-              </h1>
-              <p className="mt-1 text-sm text-[#747775] dark:text-[#8e918f]">
-                Commit history · last year · {displayCommits.length} records
-              </p>
+            {/* Repo name */}
+            <h1 className="truncate text-sm font-semibold tracking-tight text-[#1f1f1f] dark:text-[#e3e3e3] md:text-[15px]">
+              {GITHUB_CONFIG.repository}
+            </h1>
+
+            {/* Record count */}
+            <span className="hidden shrink-0 text-xs tabular-nums text-[#747775] dark:text-[#8e918f] md:inline">
+              · {displayCommits.length} records
+            </span>
+
+            {/* Desktop inline search */}
+            <div className="relative ml-auto hidden w-full max-w-xs lg:block">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#747775] dark:text-[#8e918f]" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search commits…"
+                className="h-9 w-full rounded-full border border-[#c4c7c5]/70 bg-white/60 pl-9 pr-8 text-[13px] text-[#1f1f1f] placeholder:text-[#747775] transition-colors focus:border-[#0b57d0] focus:bg-white focus:outline-none dark:border-[#444746] dark:bg-[#1f1f1f]/60 dark:text-[#e3e3e3] dark:placeholder:text-[#8e918f] dark:focus:border-[#a8c7fa]"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery("")}
+                  aria-label="Clear search"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-1 text-[#747775] transition-colors hover:bg-[#f0f4f9] dark:text-[#8e918f] dark:hover:bg-[#282a2c]"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              )}
             </div>
 
-            <div className="flex flex-wrap gap-2">
+            {/* Mobile spacer pushes actions right */}
+            <div className="ml-auto lg:hidden" />
+            <div className="hidden lg:block" />
+
+            {/* Actions cluster */}
+            <div className="flex shrink-0 items-center gap-1.5">
+              {/* Filter toggle */}
+              <button
+                type="button"
+                onClick={() => setShowFilters((s) => !s)}
+                aria-expanded={showFilters}
+                className={`relative inline-flex h-9 items-center gap-1.5 rounded-full border px-3 text-[13px] font-medium transition-colors ${
+                  showFilters || activeFilterCount > 0
+                    ? "border-transparent bg-[#0b57d0] text-white dark:bg-[#a8c7fa] dark:text-[#062e6f]"
+                    : "border-[#c4c7c5]/70 bg-white/60 text-[#444746] hover:bg-white dark:border-[#444746] dark:bg-[#1f1f1f]/60 dark:text-[#c4c7c5] dark:hover:bg-[#282a2c]"
+                }`}
+              >
+                <Filter className="h-4 w-4" />
+                <span className="hidden sm:inline">Filters</span>
+                {activeFilterCount > 0 && (
+                  <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-white px-1 text-[10px] font-semibold text-[#0b57d0] dark:bg-[#062e6f] dark:text-[#d3e3fd]">
+                    {activeFilterCount}
+                  </span>
+                )}
+              </button>
+
+              {/* Mobile overflow menu */}
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen((s) => !s)}
+                aria-label="More options"
+                aria-expanded={mobileMenuOpen}
+                className={`inline-flex h-9 w-9 items-center justify-center rounded-full border transition-colors lg:hidden ${
+                  mobileMenuOpen
+                    ? "border-transparent bg-[#0b57d0] text-white dark:bg-[#a8c7fa] dark:text-[#062e6f]"
+                    : "border-[#c4c7c5]/70 bg-white/60 text-[#444746] hover:bg-white dark:border-[#444746] dark:bg-[#1f1f1f]/60 dark:text-[#c4c7c5] dark:hover:bg-[#282a2c]"
+                }`}
+              >
+                <MoreHorizontal className="h-4 w-4" />
+              </button>
+
+              {/* Desktop: Repo */}
               <a
                 href={`https://github.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-full border border-[#c4c7c5] px-4 py-2 text-sm font-medium text-[#444746] transition-colors hover:bg-[#f0f4f9] dark:border-[#444746] dark:text-[#c4c7c5] dark:hover:bg-[#282a2c]"
+                className="hidden h-9 items-center gap-1.5 rounded-full border border-[#c4c7c5]/70 bg-white/60 px-3 text-[13px] font-medium text-[#444746] transition-colors hover:bg-white dark:border-[#444746] dark:bg-[#1f1f1f]/60 dark:text-[#c4c7c5] dark:hover:bg-[#282a2c] lg:inline-flex"
+              >
+                <Github className="h-4 w-4" />
+                <span className="hidden xl:inline">Repo</span>
+              </a>
+
+              {/* Desktop: View Tree */}
+              <Link
+                href="/git-track/tree"
+                className="hidden h-9 items-center gap-1.5 rounded-full bg-[#0b57d0] px-3 text-[13px] font-medium text-white transition-colors hover:bg-[#0842a0] dark:bg-[#a8c7fa] dark:text-[#062e6f] dark:hover:bg-[#d3e3fd] lg:inline-flex"
+              >
+                <FileCode2 className="h-4 w-4" />
+                <span className="hidden xl:inline">Tree</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Row 2 — mobile search */}
+          <div className="pb-2.5 lg:hidden">
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#747775] dark:text-[#8e918f]" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search commits…"
+                className="h-9 w-full rounded-full border border-[#c4c7c5]/70 bg-white/60 pl-9 pr-8 text-[13px] text-[#1f1f1f] placeholder:text-[#747775] transition-colors focus:border-[#0b57d0] focus:bg-white focus:outline-none dark:border-[#444746] dark:bg-[#1f1f1f]/60 dark:text-[#e3e3e3] dark:placeholder:text-[#8e918f] dark:focus:border-[#a8c7fa]"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery("")}
+                  aria-label="Clear search"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-1 text-[#747775] transition-colors hover:bg-[#f0f4f9] dark:text-[#8e918f] dark:hover:bg-[#282a2c]"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Mobile overflow menu (Repo + Tree) */}
+          {mobileMenuOpen && (
+            <div className="flex gap-2 pb-2.5 lg:hidden">
+              <a
+                href={`https://github.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-full border border-[#c4c7c5]/70 bg-white/60 text-[13px] font-medium text-[#444746] dark:border-[#444746] dark:bg-[#1f1f1f]/60 dark:text-[#c4c7c5]"
               >
                 <Github className="h-4 w-4" />
                 Repository
               </a>
               <Link
                 href="/git-track/tree"
-                className="inline-flex items-center gap-1.5 rounded-full bg-[#0b57d0] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#0842a0] dark:bg-[#a8c7fa] dark:text-[#062e6f] dark:hover:bg-[#d3e3fd]"
+                className="inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-full bg-[#0b57d0] text-[13px] font-medium text-white dark:bg-[#a8c7fa] dark:text-[#062e6f]"
               >
                 <FileCode2 className="h-4 w-4" />
                 View Tree
               </Link>
             </div>
-          </div>
-        </header>
+          )}
 
-        {/* ── SEARCH + FILTER TOGGLE ── */}
-        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <div className="relative flex-1">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#747775] dark:text-[#8e918f]" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search message or SHA"
-              className="w-full rounded-full border border-[#c4c7c5] bg-transparent py-2.5 pl-11 pr-10 text-sm text-[#1f1f1f] placeholder:text-[#747775] transition-colors focus:border-[#0b57d0] focus:outline-none focus:ring-1 focus:ring-[#0b57d0] dark:border-[#444746] dark:text-[#e3e3e3] dark:placeholder:text-[#8e918f] dark:focus:border-[#a8c7fa] dark:focus:ring-[#a8c7fa]"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery("")}
-                aria-label="Clear search"
-                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-[#747775] transition-colors hover:bg-[#f0f4f9] dark:text-[#8e918f] dark:hover:bg-[#282a2c]"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            )}
-          </div>
+          {/* Filter panel (integrated in the sticky header) */}
+          {showFilters && (
+            <div className="pb-3">
+              <div className="max-h-[55vh] space-y-4 overflow-y-auto rounded-2xl bg-[#f0f4f9]/70 p-4 backdrop-blur-xl dark:bg-[#1e1f21]/70">
+                {/* Type chips */}
+                <div className="space-y-2">
+                  <p className="text-[11px] font-medium uppercase tracking-wider text-[#747775] dark:text-[#8e918f]">
+                    Type
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {COMMIT_TYPES.map((t) => {
+                      const isActive = typeFilter === t.id;
+                      return (
+                        <button
+                          key={t.id}
+                          type="button"
+                          onClick={() => setTypeFilter(t.id)}
+                          className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+                            isActive
+                              ? "border-transparent bg-[#0b57d0] text-white dark:bg-[#a8c7fa] dark:text-[#062e6f]"
+                              : "border-[#c4c7c5]/70 bg-white/60 text-[#444746] hover:bg-white dark:border-[#444746] dark:bg-[#1f1f1f]/60 dark:text-[#c4c7c5] dark:hover:bg-[#282a2c]"
+                          }`}
+                        >
+                          {t.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
 
-          <button
-            type="button"
-            onClick={() => setShowFilters((s) => !s)}
-            className={`inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium transition-colors ${
-              showFilters || activeFilterCount > 0
-                ? "border-[#0b57d0] bg-[#d3e3fd] text-[#0842a0] dark:border-[#a8c7fa] dark:bg-[#004a77] dark:text-[#d3e3fd]"
-                : "border-[#c4c7c5] text-[#444746] hover:bg-[#f0f4f9] dark:border-[#444746] dark:text-[#c4c7c5] dark:hover:bg-[#282a2c]"
-            }`}
-          >
-            <Filter className="h-4 w-4" />
-            Filters
-            {activeFilterCount > 0 && (
-              <span className="ml-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[#0b57d0] px-1.5 text-[10px] font-semibold text-white dark:bg-[#a8c7fa] dark:text-[#062e6f]">
-                {activeFilterCount}
-              </span>
-            )}
-          </button>
+                {/* Author chips */}
+                <div className="space-y-2">
+                  <p className="text-[11px] font-medium uppercase tracking-wider text-[#747775] dark:text-[#8e918f]">
+                    Author
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {["all", ...uniqueAuthors].map((a) => {
+                      const isActive = authorFilter === a;
+                      return (
+                        <button
+                          key={a}
+                          type="button"
+                          onClick={() => setAuthorFilter(a)}
+                          className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+                            isActive
+                              ? "border-transparent bg-[#0b57d0] text-white dark:bg-[#a8c7fa] dark:text-[#062e6f]"
+                              : "border-[#c4c7c5]/70 bg-white/60 text-[#444746] hover:bg-white dark:border-[#444746] dark:bg-[#1f1f1f]/60 dark:text-[#c4c7c5] dark:hover:bg-[#282a2c]"
+                          }`}
+                        >
+                          {a === "all" ? "All" : a}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {activeFilterCount > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearchQuery("");
+                      setAuthorFilter("all");
+                      setTypeFilter("all");
+                    }}
+                    className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-[#0b57d0] transition-colors hover:bg-white/70 dark:text-[#a8c7fa] dark:hover:bg-[#282a2c]"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                    Clear all filters
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
         </div>
+      </header>
 
-        {/* ── FILTER PANEL (Material 3 chips) ── */}
-        {showFilters && (
-          <div className="mb-6 space-y-5 rounded-2xl bg-[#f0f4f9] p-5 dark:bg-[#1e1f21]">
-            {/* Type chips */}
-            <div className="space-y-2">
-              <p className="text-[11px] font-medium uppercase tracking-wider text-[#747775] dark:text-[#8e918f]">
-                Type
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {COMMIT_TYPES.map((t) => {
-                  const isActive = typeFilter === t.id;
-                  return (
-                    <button
-                      key={t.id}
-                      type="button"
-                      onClick={() => setTypeFilter(t.id)}
-                      className={`rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors ${
-                        isActive
-                          ? "border-transparent bg-[#0b57d0] text-white dark:bg-[#a8c7fa] dark:text-[#062e6f]"
-                          : "border-[#c4c7c5] bg-transparent text-[#444746] hover:bg-white dark:border-[#444746] dark:text-[#c4c7c5] dark:hover:bg-[#282a2c]"
-                      }`}
-                    >
-                      {t.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Author chips */}
-            <div className="space-y-2">
-              <p className="text-[11px] font-medium uppercase tracking-wider text-[#747775] dark:text-[#8e918f]">
-                Author
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  onClick={() => setAuthorFilter("all")}
-                  className={`rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors ${
-                    authorFilter === "all"
-                      ? "border-transparent bg-[#0b57d0] text-white dark:bg-[#a8c7fa] dark:text-[#062e6f]"
-                      : "border-[#c4c7c5] bg-transparent text-[#444746] hover:bg-white dark:border-[#444746] dark:text-[#c4c7c5] dark:hover:bg-[#282a2c]"
-                  }`}
-                >
-                  All
-                </button>
-                {uniqueAuthors.map((a) => {
-                  const isActive = authorFilter === a;
-                  return (
-                    <button
-                      key={a}
-                      type="button"
-                      onClick={() => setAuthorFilter(a)}
-                      className={`rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors ${
-                        isActive
-                          ? "border-transparent bg-[#0b57d0] text-white dark:bg-[#a8c7fa] dark:text-[#062e6f]"
-                          : "border-[#c4c7c5] bg-transparent text-[#444746] hover:bg-white dark:border-[#444746] dark:text-[#c4c7c5] dark:hover:bg-[#282a2c]"
-                      }`}
-                    >
-                      {a}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {activeFilterCount > 0 && (
-              <button
-                type="button"
-                onClick={() => {
-                  setSearchQuery("");
-                  setAuthorFilter("all");
-                  setTypeFilter("all");
-                }}
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-[#0b57d0] transition-colors hover:bg-white dark:text-[#a8c7fa] dark:hover:bg-[#282a2c]"
-              >
-                <X className="h-3.5 w-3.5" />
-                Clear all filters
-              </button>
-            )}
-          </div>
-        )}
-
+      {/* ============================================================
+          CONTENT (scrolls beneath the sticky header)
+      ============================================================ */}
+      <div className="mx-auto max-w-4xl px-4 pt-6 pb-10 sm:px-6 md:pb-16 lg:px-8">
         {/* ── STATUS STATES ── */}
         {loading && (
           <div className="flex flex-col items-center justify-center space-y-3 rounded-2xl bg-[#f0f4f9] p-10 dark:bg-[#1e1f21]">
@@ -468,22 +519,19 @@ export default function ChangelogTracker() {
           <div className="space-y-8">
             {grouped.map(([group, items]) => (
               <section key={group}>
-                {/* Sticky group header */}
-                <div className="sticky top-0 z-[5] -mx-1 mb-3 bg-white/80 px-1 py-2 backdrop-blur dark:bg-[#1f1f1f]/80">
-                  <div className="flex items-center gap-3">
-                    <h2 className="text-xs font-medium uppercase tracking-wider text-[#747775] dark:text-[#8e918f]">
-                      {group}
-                    </h2>
-                    <span className="h-px flex-1 bg-[#e0e3e7] dark:bg-[#2d2f31]" />
-                    <span className="text-[11px] font-medium tabular-nums text-[#747775] dark:text-[#8e918f]">
-                      {items.length}
-                    </span>
-                  </div>
+                {/* Group header (non-sticky — the main header owns the sticky slot) */}
+                <div className="mb-3 flex items-center gap-3">
+                  <h2 className="text-xs font-medium uppercase tracking-wider text-[#747775] dark:text-[#8e918f]">
+                    {group}
+                  </h2>
+                  <span className="h-px flex-1 bg-[#e0e3e7] dark:bg-[#2d2f31]" />
+                  <span className="text-[11px] font-medium tabular-nums text-[#747775] dark:text-[#8e918f]">
+                    {items.length}
+                  </span>
                 </div>
 
                 {/* Commits in this group */}
                 <ol className="relative space-y-2 pl-6">
-                  {/* Vertical timeline line */}
                   <span
                     aria-hidden="true"
                     className="absolute left-[7px] top-2 bottom-2 w-px bg-[#e0e3e7] dark:bg-[#2d2f31]"
@@ -496,7 +544,6 @@ export default function ChangelogTracker() {
 
                     return (
                       <li key={commit.sha} className="relative">
-                        {/* Timeline dot */}
                         <span
                           aria-hidden="true"
                           className={`absolute -left-6 top-4 z-[1] flex h-3.5 w-3.5 items-center justify-center rounded-full border-2 border-white dark:border-[#1f1f1f] ${
@@ -514,7 +561,6 @@ export default function ChangelogTracker() {
                         >
                           <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
                             <div className="min-w-0 flex-1">
-                              {/* Meta row */}
                               <div className="mb-1 flex flex-wrap items-center gap-2">
                                 <span className="rounded-md bg-white px-2 py-0.5 text-[10px] font-medium tabular-nums text-[#0b57d0] dark:bg-[#282a2c] dark:text-[#a8c7fa]">
                                   {shortSha}
@@ -529,12 +575,10 @@ export default function ChangelogTracker() {
                                 </span>
                               </div>
 
-                              {/* Title */}
                               <p className="line-clamp-2 text-sm font-medium leading-snug text-[#1f1f1f] transition-colors group-hover:text-[#0b57d0] dark:text-[#e3e3e3] dark:group-hover:text-[#a8c7fa]">
                                 {title}
                               </p>
 
-                              {/* Author */}
                               <div className="mt-2 flex items-center gap-2 text-xs text-[#747775] dark:text-[#8e918f]">
                                 <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#d3e3fd] text-[9px] font-semibold uppercase text-[#0842a0] dark:bg-[#004a77] dark:text-[#d3e3fd]">
                                   {commit.commit.author.name.charAt(0)}
@@ -545,7 +589,6 @@ export default function ChangelogTracker() {
                               </div>
                             </div>
 
-                            {/* Diff link */}
                             <span className="inline-flex shrink-0 items-center gap-1 self-start rounded-full border border-[#c4c7c5] px-3 py-1 text-[11px] font-medium text-[#444746] transition-colors group-hover:border-[#0b57d0] group-hover:bg-white group-hover:text-[#0b57d0] dark:border-[#444746] dark:text-[#c4c7c5] dark:group-hover:border-[#a8c7fa] dark:group-hover:bg-[#282a2c] dark:group-hover:text-[#a8c7fa]">
                               Diff
                               <ExternalLink className="h-3 w-3" />

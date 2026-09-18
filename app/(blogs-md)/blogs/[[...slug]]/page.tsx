@@ -181,42 +181,50 @@ export default async function DocPage({ params }: Props) {
   if (!doc) notFound();
 
   return (
-    <article className="min-w-0 max-w-full overflow-hidden bg-white dark:bg-[#1f1f1f]">
-      {/* Material 3 back chip */}
-      <div className="mb-8">
+    <article className="min-w-0 max-w-full bg-white dark:bg-[#1f1f1f]">
+      {/*
+        Sticky back button.
+        `top-20` clears the site header (adjust if your header is taller/shorter).
+        `z-30` keeps it above content but below the site header.
+        The white/near-white background prevents text bleeding through while scrolling.
+      */}
+      <div className="sticky top-20 z-30 -mx-4 mb-6 flex  px-4 py-3  sm:-mx-6 sm:px-6 md:-mx-8 md:px-8">
         <Link
           href="/blogs"
-          className="inline-flex items-center gap-2 rounded-full border border-[#c4c7c5] dark:border-[#444746] bg-transparent px-4 py-2 text-sm font-medium text-[#0b57d0] dark:text-[#a8c7fa] transition-colors hover:bg-[#f0f4f9] dark:hover:bg-[#282a2c]"
+          className="inline-flex items-center gap-2 rounded-full border border-[#c4c7c5] bg-white/20 backdrop-blur-xs px-4 py-2 text-sm font-medium text-black shadow-sm transition-colors  dark:border-[#444444] dark:bg-black/20 dark:text-white"
         >
           <IoArrowBack className="text-base" />
-          <span>Back to all posts</span>
+          <span>Return</span>
         </Link>
       </div>
 
-      {/* Header block */}
-      {(doc.meta.title || doc.meta.description) && (
-        <header className="mb-10 border-b border-[#e0e3e7] dark:border-[#2d2f31] pb-8">
-          {doc.meta.title && (
-            <h1 className="h-font text-[2rem] font-semibold tracking-tight text-[#1f1f1f] dark:text-[#e3e3e3] md:text-[2.75rem] md:leading-[1.15]">
-              {doc.meta.title}
-            </h1>
-          )}
-          {doc.meta.description && (
-            <p className="mt-3 text-base leading-7 text-[#444746] dark:text-[#c4c7c5] md:text-lg">
-              {doc.meta.description}
-            </p>
-          )}
-        </header>
-      )}
+      {/* Content wrapper keeps horizontal overflow contained (code blocks, tables) */}
+      <div className="overflow-hidden">
+        {/* Header block */}
+        {(doc.meta.title || doc.meta.description) && (
+          <header className="mb-10 border-b border-[#e0e3e7] dark:border-[#2d2f31] pb-8">
+            {doc.meta.title && (
+              <h1 className="h-font text-[2rem] font-semibold tracking-tight text-[#1f1f1f] dark:text-[#e3e3e3] md:text-[2.75rem] md:leading-[1.15]">
+                {doc.meta.title}
+              </h1>
+            )}
+            {doc.meta.description && (
+              <p className="mt-3 text-base leading-7 text-[#444746] dark:text-[#c4c7c5] md:text-lg">
+                {doc.meta.description}
+              </p>
+            )}
+          </header>
+        )}
 
-      <div className="prose-container">
-        <Markdown
-          remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeHighlight]}
-          components={components}
-        >
-          {doc.content}
-        </Markdown>
+        <div className="prose-container">
+          <Markdown
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeHighlight]}
+            components={components}
+          >
+            {doc.content}
+          </Markdown>
+        </div>
       </div>
     </article>
   );

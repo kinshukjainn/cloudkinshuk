@@ -104,7 +104,7 @@ export const blogs: BlogPost[] = [
       "cloud developer",
     ],
     excerpt:
-      "The article shows that why i choosed postgress SQL database over other dabatbase for my projects i build.",
+      "This article shows how we can clear AWS certification exams in the right practical ways. These tips and guide are completely based on my experience while preparing for AWS certification exams.",
   },
   {
     slug: "linux-is-go-to-os-for-development",

@@ -6,6 +6,11 @@ export const navigation: NavSection[] = [
     title: "Blogs",
     items: [
       {
+        title:
+          "Different archietecture in aws i have been using for my projects",
+        slug: "infra-service",
+      },
+      {
         title: "Right way to clear AWS certification",
         slug: "aws-ccp-exam",
       },

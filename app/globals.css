@@ -162,7 +162,7 @@
 
 body {
   background-color: var(--background);
-  font-family: var(--font-work-sans), sans-serif;
+  font-family: var(--font-inter), sans-serif;
 }
 
 .h-font {

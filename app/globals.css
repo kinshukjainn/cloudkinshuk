@@ -1,6 +1,157 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ============================================
+   Syntax highlighting — switches with .dark
+   ============================================ */
+
+:root {
+  --hljs-bg: #f6f8fa;
+  --hljs-fg: #24292f;
+  --hljs-comment: #6e7781;
+  --hljs-keyword: #cf222e;
+  --hljs-string: #0a3069;
+  --hljs-number: #0550ae;
+  --hljs-title: #8250df;
+  --hljs-attr: #0550ae;
+  --hljs-built_in: #953800;
+  --hljs-literal: #0550ae;
+  --hljs-type: #cf222e;
+  --hljs-symbol: #953800;
+  --hljs-meta: #6e7781;
+  --hljs-tag: #116329;
+  --hljs-name: #116329;
+  --hljs-regexp: #0a3069;
+  --hljs-selector-class: #8250df;
+  --hljs-selector-id: #0550ae;
+  --hljs-selector-tag: #116329;
+  --hljs-section: #0550ae;
+  --hljs-bullet: #953800;
+  --hljs-addition-fg: #116329;
+  --hljs-addition-bg: #dafbe1;
+  --hljs-deletion-fg: #82071e;
+  --hljs-deletion-bg: #ffebe9;
+}
+
+.dark {
+  --hljs-bg: #161b22;
+  --hljs-fg: #c9d1d9;
+  --hljs-comment: #8b949e;
+  --hljs-keyword: #ff7b72;
+  --hljs-string: #a5d6ff;
+  --hljs-number: #79c0ff;
+  --hljs-title: #d2a8ff;
+  --hljs-attr: #79c0ff;
+  --hljs-built_in: #ffa657;
+  --hljs-literal: #79c0ff;
+  --hljs-type: #ff7b72;
+  --hljs-symbol: #ffa657;
+  --hljs-meta: #8b949e;
+  --hljs-tag: #7ee787;
+  --hljs-name: #7ee787;
+  --hljs-regexp: #a5d6ff;
+  --hljs-selector-class: #d2a8ff;
+  --hljs-selector-id: #79c0ff;
+  --hljs-selector-tag: #7ee787;
+  --hljs-section: #1f6feb;
+  --hljs-bullet: #f2cc60;
+  --hljs-addition-fg: #aff5b4;
+  --hljs-addition-bg: #033a16;
+  --hljs-deletion-fg: #ffdcd7;
+  --hljs-deletion-bg: #67060c;
+}
+
+.hljs {
+  color: var(--hljs-fg);
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-meta .hljs-keyword,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-variable.language_ {
+  color: var(--hljs-keyword);
+}
+
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.class_.inherited__,
+.hljs-title.function_ {
+  color: var(--hljs-title);
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-literal,
+.hljs-meta,
+.hljs-number,
+.hljs-operator,
+.hljs-selector-attr,
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-variable {
+  color: var(--hljs-attr);
+}
+
+.hljs-meta .hljs-string,
+.hljs-regexp,
+.hljs-string {
+  color: var(--hljs-string);
+}
+
+.hljs-built_in,
+.hljs-symbol {
+  color: var(--hljs-built_in);
+}
+
+.hljs-code,
+.hljs-comment,
+.hljs-formula {
+  color: var(--hljs-comment);
+}
+
+.hljs-name,
+.hljs-quote,
+.hljs-selector-pseudo,
+.hljs-selector-tag {
+  color: var(--hljs-tag);
+}
+
+.hljs-subst {
+  color: var(--hljs-fg);
+}
+
+.hljs-section {
+  color: var(--hljs-section);
+  font-weight: 700;
+}
+
+.hljs-bullet {
+  color: var(--hljs-bullet);
+}
+
+.hljs-emphasis {
+  color: var(--hljs-fg);
+  font-style: italic;
+}
+
+.hljs-strong {
+  color: var(--hljs-fg);
+  font-weight: 700;
+}
+
+.hljs-addition {
+  color: var(--hljs-addition-fg);
+  background-color: var(--hljs-addition-bg);
+}
+
+.hljs-deletion {
+  color: var(--hljs-deletion-fg);
+  background-color: var(--hljs-deletion-bg);
+}
+
 :root {
   --background: #ffffff;
 }
@@ -11,7 +162,7 @@
 
 body {
   background-color: var(--background);
-  font-family: var(--font-roboto), sans-serif;
+  font-family: var(--font-work-sans), sans-serif;
 }
 
 .h-font {

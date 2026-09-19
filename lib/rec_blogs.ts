@@ -90,6 +90,23 @@ export const blogs: BlogPost[] = [
       "The article shows that why i choosed postgress SQL database over other dabatbase for my projects i build.",
   },
   {
+    slug: "aws-ccp-exam",
+    route: "/blogs/aws-ccp-exam",
+    title: "Right way to clear AWS Certification exam.",
+    topics: ["aws", "aws certification", "exams", "guidance"],
+    keywords: [
+      "certifcations",
+      "exams",
+      "aws",
+      "guide",
+      "clf-02",
+      "cloud practioner",
+      "cloud developer",
+    ],
+    excerpt:
+      "The article shows that why i choosed postgress SQL database over other dabatbase for my projects i build.",
+  },
+  {
     slug: "linux-is-go-to-os-for-development",
     route: "/blogs/linux-is-go-to-os-for-development",
     title: "Linux Is the Go-To OS for Development",

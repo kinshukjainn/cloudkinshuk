@@ -153,11 +153,11 @@
 }
 
 :root {
-  --background: #ffffff;
+  --background: #f7f9fc;
 }
 
 .dark {
-  --background: #1e1e1e;
+  --background: #141414;
 }
 
 body {

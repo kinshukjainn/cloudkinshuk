@@ -15,27 +15,116 @@ interface NavItem {
   href: string;
   label: string;
   icon: React.ReactNode;
+  /** icon container — idle (round) */
+  tint: string;
+  /** tile background — selected */
+  soft: string;
+  /** icon container — selected (squircle) */
+  solid: string;
 }
 
-/* ── Material 3 Expressive · Pixel UI design tokens ─────── */
-const M3 = {
-  surface:
-    "bg-white/40 dark:bg-[#1E1F20]/40 backdrop-blur-xs backdrop-saturate-[100%] " +
-    "border border-[#DDE3EA] dark:border-[#303134] " +
-    "shadow-[0_1px_2px_rgba(11,87,208,0.06),0_10px_28px_-10px_rgba(11,87,208,0.18)] " +
-    "dark:shadow-[0_1px_2px_rgba(0,0,0,0.5),0_10px_28px_-10px_rgba(0,0,0,0.75)]",
-  onSurface: "text-[#1F1F1F] dark:text-[#E3E3E3]",
-  onSurfaceVariant: "text-[#444746] dark:text-[#C4C7C5]",
-  primaryFill: "bg-[#0B57D0] text-white dark:bg-[#A8C7FA] dark:text-[#062E6F]",
-  primaryContainer:
-    "bg-[#D3E3FD] text-[#041E49] dark:bg-[#0842A0] dark:text-[#D3E3FD]",
-  stateLayer: "hover:bg-[#0B57D0]/[0.08] dark:hover:bg-[#A8C7FA]/[0.14]",
-  ease: "ease-[cubic-bezier(0.2,0,0,1)]",
-  spring: "ease-[cubic-bezier(0.34,1.56,0.64,1)]",
-  focus:
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0B57D0] dark:focus-visible:ring-[#A8C7FA] focus-visible:ring-offset-0",
+/* ── Material 3 Expressive · Pixel UI tokens ────────────── */
+const SURFACE =
+  "bg-white dark:bg-[#1E1F20] " +
+  "border border-[#C4C7C5] dark:border-[#3C4043] " +
+  "shadow-[0_1px_3px_rgba(0,0,0,0.10),0_8px_24px_-14px_rgba(0,0,0,0.45)] " +
+  "dark:shadow-[0_1px_3px_rgba(0,0,0,0.65),0_8px_24px_-14px_rgba(0,0,0,0.95)]";
+
+const EASE = "ease-[cubic-bezier(0.2,0,0,1)]";
+const SPRING = "ease-[cubic-bezier(0.34,1.56,0.64,1)]";
+
+const FOCUS =
+  "focus-visible:outline-none focus-visible:ring-2 " +
+  "focus-visible:ring-[#0B57D0] dark:focus-visible:ring-[#A8C7FA] " +
+  "focus-visible:ring-offset-0";
+
+const STATE = "hover:bg-[#0B57D0]/[0.08] dark:hover:bg-[#A8C7FA]/[0.14]";
+
+/* ── Mobile tile ────────────────────────────────────────── */
+interface MobileTileProps {
+  href: string;
+  label: string;
+  icon: React.ReactNode;
+  tint: string;
+  soft: string;
+  solid: string;
+  active?: boolean;
+  external?: boolean;
+  isOpen: boolean;
+  onSelect: () => void;
+}
+
+const MobileTile: React.FC<MobileTileProps> = ({
+  href,
+  label,
+  icon,
+  tint,
+  soft,
+  solid,
+  active = false,
+  external = false,
+  isOpen,
+  onSelect,
+}) => {
+  const className = `
+    group flex items-center gap-2.5 rounded-full p-1.5 pr-3
+    transition-all duration-300 ${EASE}
+    active:scale-[0.96] active:rounded-[20px]
+    ${FOCUS}
+    ${
+      active
+        ? soft
+        : "bg-[#F0F4F9] hover:bg-[#E4E9F0] dark:bg-[#282A2C] dark:hover:bg-[#303134]"
+    }
+  `;
+
+  const content = (
+    <>
+      {/* Shape morph: circle → squircle when selected */}
+      <span
+        className={`
+          grid h-9 w-9 shrink-0 place-items-center
+          transition-all duration-300 ${SPRING}
+          ${active ? `rounded-[10px] ${solid}` : `rounded-full ${tint}`}
+        `}
+      >
+        {icon}
+      </span>
+      <span className="truncate text-[13px] font-semibold leading-none text-[#1F1F1F] dark:text-[#E3E3E3]">
+        {label}
+      </span>
+    </>
+  );
+
+  if (external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        tabIndex={isOpen ? 0 : -1}
+        onClick={onSelect}
+        className={className}
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <Link
+      href={href}
+      aria-current={active ? "page" : undefined}
+      tabIndex={isOpen ? 0 : -1}
+      onClick={onSelect}
+      className={className}
+    >
+      {content}
+    </Link>
+  );
 };
 
+/* ── Header ─────────────────────────────────────────────── */
 const Header: React.FC = () => {
   const pathname = usePathname();
   const { setTheme, resolvedTheme } = useTheme();
@@ -50,6 +139,9 @@ const Header: React.FC = () => {
         href: "/blogs",
         label: "Blogs",
         icon: <FileText className="h-4 w-4 shrink-0" aria-hidden="true" />,
+        tint: "bg-[#D3E3FD] text-[#0B57D0] dark:bg-[#0B57D0]/25 dark:text-[#A8C7FA]",
+        soft: "bg-[#D3E3FD] ring-1 ring-inset ring-[#0B57D0]/25 dark:bg-[#0B57D0]/25 dark:ring-[#A8C7FA]/35",
+        solid: "bg-[#0B57D0] text-white dark:bg-[#A8C7FA] dark:text-[#041E49]",
       },
       {
         href: "/git-track",
@@ -57,6 +149,32 @@ const Header: React.FC = () => {
         icon: (
           <PiGithubLogoBold className="h-4 w-4 shrink-0" aria-hidden="true" />
         ),
+        tint: "bg-[#C8F0D4] text-[#146C2E] dark:bg-[#146C2E]/35 dark:text-[#6DD58C]",
+        soft: "bg-[#C8F0D4] ring-1 ring-inset ring-[#146C2E]/25 dark:bg-[#146C2E]/35 dark:ring-[#6DD58C]/35",
+        solid: "bg-[#146C2E] text-white dark:bg-[#6DD58C] dark:text-[#072711]",
+      },
+    ],
+    [],
+  );
+
+  const actionTiles: NavItem[] = useMemo(
+    () => [
+      {
+        href: "https://brewrepo.cloudkinshuk.in",
+        label: "Sponsor",
+        icon: <GiCoffeeMug className="h-4 w-4 shrink-0" aria-hidden="true" />,
+        tint: "bg-[#FFE8B8] text-[#7A4E00] dark:bg-[#F9AB00]/20 dark:text-[#FDD663]",
+        soft: "bg-[#FFE8B8] ring-1 ring-inset ring-[#F9AB00]/30 dark:bg-[#F9AB00]/20 dark:ring-[#FDD663]/35",
+        solid:
+          "bg-[#F9AB00] text-[#2A1800] dark:bg-[#FDD663] dark:text-[#2A1800]",
+      },
+      {
+        href: "https://github.com/kinshukjainn/cloudkinshuk",
+        label: "GitHub",
+        icon: <Github className="h-4 w-4 shrink-0" aria-hidden="true" />,
+        tint: "bg-[#EADDFF] text-[#6750A4] dark:bg-[#D0BCFF]/20 dark:text-[#D0BCFF]",
+        soft: "bg-[#EADDFF] ring-1 ring-inset ring-[#6750A4]/30 dark:bg-[#D0BCFF]/20 dark:ring-[#D0BCFF]/35",
+        solid: "bg-[#6750A4] text-white dark:bg-[#D0BCFF] dark:text-[#21005D]",
       },
     ],
     [],
@@ -114,10 +232,7 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header
-        ref={menuRef}
-        className="fixed inset-x-0 top-0 z-50 bg-transparent"
-      >
+      <header ref={menuRef} className="fixed inset-x-0 top-0 z-50">
         <div className="mx-auto max-w-7xl px-3 pt-3 sm:px-5 sm:pt-4 lg:px-8">
           <div className="relative flex items-center justify-between gap-2">
             {/* ── Brand chip ─────────────────────────────────── */}
@@ -125,39 +240,46 @@ const Header: React.FC = () => {
               href="/"
               aria-label="Cloudkinshuk — Home"
               className={`
-                group flex min-w-0 items-center gap-2.5
-                rounded-full py-1.5 pl-1.5 pr-4 ${M3.surface}
-                transition-all duration-300 ${M3.ease}
-                hover:shadow-[0_1px_2px_rgba(11,87,208,0.1),0_14px_34px_-12px_rgba(11,87,208,0.32)]
-                dark:hover:shadow-[0_1px_2px_rgba(0,0,0,0.6),0_14px_34px_-12px_rgba(0,0,0,0.9)]
-                active:scale-[0.97]
-                lg:max-w-[220px]
-                ${M3.focus}
+                group flex min-w-0 items-center gap-2.5 rounded-full
+                py-2 pl-2 pr-4 ${SURFACE}
+                transition-all duration-300 ${EASE}
+                hover:shadow-[0_1px_3px_rgba(0,0,0,0.14),0_14px_32px_-14px_rgba(11,87,208,0.55)]
+                dark:hover:shadow-[0_1px_3px_rgba(0,0,0,0.7),0_14px_32px_-14px_rgba(168,199,250,0.35)]
+                active:scale-[0.97] active:rounded-[22px]
+                lg:max-w-[230px] ${FOCUS}
               `}
             >
-              <span className="relative grid h-8 w-8 shrink-0 place-items-center overflow-hidden rounded-full bg-[#EAF1FB] ring-1 ring-inset ring-[#0B57D0]/10 dark:bg-[#131314] dark:ring-[#A8C7FA]/15">
+              <span
+                className="
+                  relative grid h-8 w-8 shrink-0 place-items-center overflow-hidden
+                  rounded-full bg-[#D3E3FD]
+                  ring-1 ring-inset ring-[#0B57D0]/20
+                  dark:bg-[#0842A0] dark:ring-[#A8C7FA]/25
+                "
+              >
                 <Image
                   src="/corelogo.png"
                   alt=""
                   width={20}
                   height={20}
-                  className={`h-5 w-5 object-contain transition-transform duration-500 ${M3.spring} group-hover:rotate-[10deg] group-hover:scale-110`}
+                  className={`
+                    h-5 w-5 object-contain transition-transform duration-500
+                    ${SPRING}
+                    group-hover:rotate-[10deg] group-hover:scale-110
+                  `}
                 />
               </span>
-              <span
-                className={`truncate text-[15px] font-semibold tracking-[-0.01em] ${M3.onSurface}`}
-              >
+              <span className="truncate text-[15px] font-bold tracking-[-0.01em] text-[#1F1F1F] dark:text-[#E3E3E3]">
                 Cloudkinshuk
               </span>
             </Link>
 
-            {/* ── Desktop nav (absolutely centered) ──────────── */}
+            {/* ── Desktop nav (absolutely centred) ───────────── */}
             <nav
               aria-label="Primary"
               className={`
                 absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2
-                items-center gap-1 rounded-full p-1.5 lg:flex
-                ${M3.surface}
+                items-center gap-1 rounded-full p-1.5 lg:flex ${SURFACE}
               `}
             >
               {navItems.map((item) => {
@@ -168,18 +290,37 @@ const Header: React.FC = () => {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={`
-                      relative flex items-center gap-2 rounded-full px-4 py-2
-                      text-sm font-medium transition-all duration-300 ${M3.ease}
-                      active:scale-[0.95] active:rounded-xl ${M3.focus}
+                      group relative flex items-center gap-2 rounded-full
+                      py-1.5 pl-1.5 pr-4 text-sm font-semibold
+                      transition-all duration-300 ${EASE}
+                      active:scale-[0.95] active:rounded-[20px] ${FOCUS}
                       ${
                         active
-                          ? `${M3.primaryContainer} shadow-[0_1px_3px_rgba(11,87,208,0.22)]`
-                          : `${M3.onSurfaceVariant} ${M3.stateLayer} hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]`
+                          ? item.soft
+                          : `text-[#444746] dark:text-[#C4C7C5] ${STATE} hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]`
                       }
                     `}
                   >
-                    {item.icon}
-                    <span>{item.label}</span>
+                    <span
+                      className={`
+                        grid h-6 w-6 shrink-0 place-items-center
+                        transition-all duration-300 ${SPRING}
+                        ${
+                          active
+                            ? `rounded-[7px] ${item.solid}`
+                            : `rounded-full ${active ? "" : "bg-transparent"}`
+                        }
+                      `}
+                    >
+                      {item.icon}
+                    </span>
+                    <span
+                      className={
+                        active ? "text-[#1F1F1F] dark:text-[#E3E3E3]" : ""
+                      }
+                    >
+                      {item.label}
+                    </span>
                   </Link>
                 );
               })}
@@ -193,13 +334,17 @@ const Header: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`
-                  hidden lg:inline-flex items-center gap-2 rounded-full px-4 py-2.5
-                  text-sm font-semibold ${M3.primaryFill}
-                  transition-all duration-300 ${M3.ease}
-                  hover:shadow-[0_8px_24px_-6px_rgba(11,87,208,0.55)]
-                  dark:hover:shadow-[0_8px_24px_-6px_rgba(168,199,250,0.45)]
-                  hover:brightness-110 active:scale-[0.95] active:rounded-2xl
-                  ${M3.focus}
+                  hidden items-center gap-2 rounded-full lg:inline-flex
+                  bg-[#0B57D0] px-4 py-2.5 text-sm font-semibold text-white
+                  shadow-[0_1px_3px_rgba(0,0,0,0.16),0_8px_20px_-10px_rgba(11,87,208,0.9)]
+                  transition-all duration-300 ${EASE}
+                  hover:brightness-110
+                  hover:shadow-[0_1px_3px_rgba(0,0,0,0.2),0_12px_28px_-10px_rgba(11,87,208,1)]
+                  active:scale-[0.95] active:rounded-[18px]
+                  dark:bg-[#A8C7FA] dark:text-[#041E49]
+                  dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_8px_20px_-10px_rgba(168,199,250,0.75)]
+                  dark:hover:shadow-[0_1px_3px_rgba(0,0,0,0.7),0_12px_28px_-10px_rgba(168,199,250,0.95)]
+                  ${FOCUS}
                 `}
               >
                 <GiCoffeeMug className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -208,7 +353,7 @@ const Header: React.FC = () => {
 
               {/* Icon cluster */}
               <div
-                className={`flex items-center gap-0.5 rounded-full p-1.5 ${M3.surface}`}
+                className={`flex items-center gap-0.5 rounded-full p-1.5 ${SURFACE}`}
               >
                 {/* GitHub — hidden on tiny screens */}
                 <a
@@ -217,11 +362,11 @@ const Header: React.FC = () => {
                   rel="noopener noreferrer"
                   aria-label="GitHub repository"
                   className={`
-                    hidden sm:grid h-9 w-9 place-items-center rounded-full
-                    ${M3.onSurfaceVariant} ${M3.stateLayer}
+                    hidden h-9 w-9 place-items-center rounded-full sm:grid
+                    text-[#444746] dark:text-[#C4C7C5] ${STATE}
                     hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]
-                    transition-all duration-300 ${M3.ease}
-                    active:scale-90 active:rounded-xl ${M3.focus}
+                    transition-all duration-300 ${EASE}
+                    active:scale-90 active:rounded-[10px] ${FOCUS}
                   `}
                 >
                   <Github className="h-[18px] w-[18px]" aria-hidden="true" />
@@ -236,10 +381,10 @@ const Header: React.FC = () => {
                   }
                   className={`
                     grid h-9 w-9 place-items-center rounded-full
-                    ${M3.onSurfaceVariant} ${M3.stateLayer}
+                    text-[#444746] dark:text-[#C4C7C5] ${STATE}
                     hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]
-                    transition-all duration-300 ${M3.ease}
-                    active:scale-90 active:rounded-xl ${M3.focus}
+                    transition-all duration-300 ${EASE}
+                    active:scale-90 active:rounded-[10px] ${FOCUS}
                   `}
                 >
                   {mounted ? (
@@ -247,7 +392,7 @@ const Header: React.FC = () => {
                       <Sun
                         aria-hidden="true"
                         className={`
-                          absolute h-[18px] w-[18px] transition-all duration-500 ${M3.spring}
+                          absolute h-[18px] w-[18px] transition-all duration-500 ${SPRING}
                           ${
                             isDark
                               ? "rotate-0 scale-100 opacity-100"
@@ -258,7 +403,7 @@ const Header: React.FC = () => {
                       <Moon
                         aria-hidden="true"
                         className={`
-                          absolute h-[18px] w-[18px] transition-all duration-500 ${M3.spring}
+                          absolute h-[18px] w-[18px] transition-all duration-500 ${SPRING}
                           ${
                             isDark
                               ? "rotate-90 scale-0 opacity-0"
@@ -280,18 +425,18 @@ const Header: React.FC = () => {
                   aria-expanded={isOpen}
                   aria-controls="mobile-menu"
                   className={`
-                    lg:hidden grid h-9 w-9 place-items-center rounded-full
-                    ${M3.onSurfaceVariant} ${M3.stateLayer}
+                    grid h-9 w-9 place-items-center rounded-full lg:hidden
+                    text-[#444746] dark:text-[#C4C7C5] ${STATE}
                     hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]
-                    transition-all duration-300 ${M3.ease}
-                    active:scale-90 active:rounded-xl ${M3.focus}
+                    transition-all duration-300 ${EASE}
+                    active:scale-90 active:rounded-[10px] ${FOCUS}
                   `}
                 >
                   <span className="relative grid h-5 w-5 place-items-center">
                     <Menu
                       aria-hidden="true"
                       className={`
-                        absolute h-5 w-5 transition-all duration-300 ${M3.ease}
+                        absolute h-5 w-5 transition-all duration-300 ${EASE}
                         ${
                           isOpen
                             ? "rotate-90 scale-50 opacity-0"
@@ -302,7 +447,7 @@ const Header: React.FC = () => {
                     <X
                       aria-hidden="true"
                       className={`
-                        absolute h-5 w-5 transition-all duration-300 ${M3.ease}
+                        absolute h-5 w-5 transition-all duration-300 ${EASE}
                         ${
                           isOpen
                             ? "rotate-0 scale-100 opacity-100"
@@ -317,103 +462,53 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* ── Mobile drawer — M3 large sheet ──────────────── */}
+        {/* ── Mobile drawer — compact tile grid ───────────── */}
         <div
           id="mobile-menu"
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
           className={`
-            lg:hidden absolute inset-x-3 top-full mt-2 origin-top
-            max-h-[80vh] overflow-y-auto overflow-x-hidden
-            rounded-[48px] ${M3.surface}
-            transition-all duration-300 ${M3.ease}
+            absolute inset-x-3 top-full mt-2 origin-top overflow-hidden
+            rounded-[28px] p-2.5 sm:inset-x-5 lg:hidden ${SURFACE}
+            transition-all duration-300 ${EASE}
             ${
               isOpen
                 ? "visible translate-y-0 scale-100 opacity-100"
-                : "invisible -translate-y-3 scale-[0.96] opacity-0"
+                : "invisible pointer-events-none -translate-y-3 scale-[0.96] opacity-0"
             }
           `}
         >
-          <div className="space-y-5 p-4">
-            <nav className="flex flex-col gap-1.5">
-              {navItems.map((item) => {
-                const active = isActive(item.href);
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setIsOpen(false)}
-                    tabIndex={isOpen ? 0 : -1}
-                    aria-current={active ? "page" : undefined}
-                    className={`
-                      flex items-center gap-3 rounded-full px-3 py-3
-                      text-base font-semibold transition-all duration-300 ${M3.ease}
-                      active:scale-[0.97] active:rounded-4xl ${M3.focus}
-                      ${
-                        active
-                          ? M3.primaryContainer
-                          : `${M3.onSurfaceVariant} ${M3.stateLayer}`
-                      }
-                    `}
-                  >
-                    <span
-                      className={`
-                        grid h-9 w-9 shrink-0 place-items-center rounded-full
-                        transition-colors duration-300 ${M3.ease}
-                        ${
-                          active
-                            ? "bg-white/70 dark:bg-black/25"
-                            : "bg-[#0B57D0]/[0.09] dark:bg-[#A8C7FA]/[0.14]"
-                        }
-                      `}
-                    >
-                      {item.icon}
-                    </span>
-                    <span className="truncate">{item.label}</span>
-                  </Link>
-                );
-              })}
-            </nav>
+          <div className="grid grid-cols-2 gap-2">
+            {navItems.map((item) => (
+              <MobileTile
+                key={item.href}
+                href={item.href}
+                label={item.label}
+                icon={item.icon}
+                tint={item.tint}
+                soft={item.soft}
+                solid={item.solid}
+                active={isActive(item.href)}
+                isOpen={isOpen}
+                onSelect={() => setIsOpen(false)}
+              />
+            ))}
 
-            <div
-              className="h-px w-full bg-[#0B57D0]/10 dark:bg-[#A8C7FA]/12"
-              aria-hidden="true"
-            />
-
-            <div className="flex flex-col gap-2.5">
-              <a
-                href="https://brewrepo.cloudkinshuk.in"
-                target="_blank"
-                rel="noopener noreferrer"
-                tabIndex={isOpen ? 0 : -1}
-                className={`
-                  flex items-center justify-center gap-2 rounded-full py-3.5
-                  text-sm font-semibold ${M3.primaryFill}
-                  transition-all duration-300 ${M3.ease}
-                  active:scale-[0.97] active:rounded-2xl ${M3.focus}
-                `}
-              >
-                <GiCoffeeMug className="h-5 w-5 shrink-0" aria-hidden="true" />
-                <span>Sponsor</span>
-              </a>
-
-              <a
-                href="https://github.com/kinshukjainn/cloudkinshuk"
-                target="_blank"
-                rel="noopener noreferrer"
-                tabIndex={isOpen ? 0 : -1}
-                className={`
-                  flex items-center justify-center gap-2 rounded-full py-3.5
-                  text-sm font-semibold ${M3.primaryContainer}
-                  transition-all duration-300 ${M3.ease}
-                  active:scale-[0.97] active:rounded-2xl ${M3.focus}
-                `}
-              >
-                <Github className="h-5 w-5 shrink-0" aria-hidden="true" />
-                <span>GitHub</span>
-              </a>
-            </div>
+            {actionTiles.map((item) => (
+              <MobileTile
+                key={item.href}
+                href={item.href}
+                label={item.label}
+                icon={item.icon}
+                tint={item.tint}
+                soft={item.soft}
+                solid={item.solid}
+                external
+                isOpen={isOpen}
+                onSelect={() => setIsOpen(false)}
+              />
+            ))}
           </div>
         </div>
       </header>

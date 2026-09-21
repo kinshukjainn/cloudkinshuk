@@ -13,6 +13,7 @@ import {
   FileCode2,
   X,
   MoreHorizontal,
+  RotateCcw,
 } from "lucide-react";
 
 // ============================================================================
@@ -53,12 +54,12 @@ const GITHUB_CONFIG = {
 };
 
 const COMMIT_TYPES = [
-  { id: "all", label: "All" },
-  { id: "feat", label: "Features" },
-  { id: "fix", label: "Fixes" },
-  { id: "chore", label: "Chores" },
-  { id: "docs", label: "Docs" },
-  { id: "refactor", label: "Refactors" },
+  { id: "all", label: "All", tint: "neutral" as const },
+  { id: "feat", label: "Features", tint: "green" as const },
+  { id: "fix", label: "Fixes", tint: "rose" as const },
+  { id: "chore", label: "Chores", tint: "amber" as const },
+  { id: "docs", label: "Docs", tint: "cyan" as const },
+  { id: "refactor", label: "Refactors", tint: "purple" as const },
 ];
 
 // ============================================================================
@@ -111,6 +112,139 @@ const getDayGroup = (dateString: string): string => {
     month: "long",
     year: "numeric",
   }).format(d);
+};
+
+/* ── Material 3 Expressive · Pixel UI tokens ────────────── */
+const SURFACE =
+  "bg-white dark:bg-[#1E1F20] " +
+  "border border-[#C4C7C5]/60 dark:border-[#3C4043] " +
+  "shadow-[0_1px_3px_rgba(0,0,0,0.06),0_8px_24px_-16px_rgba(0,0,0,0.35)] " +
+  "dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_8px_24px_-16px_rgba(0,0,0,0.9)]";
+
+const SURFACE_FLAT =
+  "bg-[#F0F4F9] dark:bg-[#1E1F20] " +
+  "border border-[#C4C7C5]/50 dark:border-[#3C4043]";
+
+const EASE = "ease-[cubic-bezier(0.2,0,0,1)]";
+const SPRING = "ease-[cubic-bezier(0.34,1.56,0.64,1)]";
+
+const FOCUS =
+  "focus-visible:outline-none focus-visible:ring-2 " +
+  "focus-visible:ring-[#0B57D0] dark:focus-visible:ring-[#A8C7FA] " +
+  "focus-visible:ring-offset-0";
+
+const STATE = "hover:bg-[#0B57D0]/[0.08] dark:hover:bg-[#A8C7FA]/[0.14]";
+
+/* ── Colour tints (Material 3 tonal palette) ────────────── */
+const TINTS = {
+  blue: {
+    idle: "bg-[#D3E3FD] text-[#0B57D0] dark:bg-[#0B57D0]/25 dark:text-[#A8C7FA]",
+    solid: "bg-[#0B57D0] text-white dark:bg-[#A8C7FA] dark:text-[#041E49]",
+    soft: "bg-[#D3E3FD] ring-1 ring-inset ring-[#0B57D0]/25 dark:bg-[#0B57D0]/25 dark:ring-[#A8C7FA]/35",
+    text: "text-[#0B57D0] dark:text-[#A8C7FA]",
+  },
+  green: {
+    idle: "bg-[#C8F0D4] text-[#146C2E] dark:bg-[#146C2E]/35 dark:text-[#6DD58C]",
+    solid: "bg-[#146C2E] text-white dark:bg-[#6DD58C] dark:text-[#072711]",
+    soft: "bg-[#C8F0D4] ring-1 ring-inset ring-[#146C2E]/25 dark:bg-[#146C2E]/35 dark:ring-[#6DD58C]/35",
+    text: "text-[#146C2E] dark:text-[#6DD58C]",
+  },
+  amber: {
+    idle: "bg-[#FFE8B8] text-[#7A4E00] dark:bg-[#F9AB00]/20 dark:text-[#FDD663]",
+    solid: "bg-[#F9AB00] text-[#2A1800] dark:bg-[#FDD663] dark:text-[#2A1800]",
+    soft: "bg-[#FFE8B8] ring-1 ring-inset ring-[#F9AB00]/30 dark:bg-[#F9AB00]/20 dark:ring-[#FDD663]/35",
+    text: "text-[#7A4E00] dark:text-[#FDD663]",
+  },
+  purple: {
+    idle: "bg-[#EADDFF] text-[#6750A4] dark:bg-[#D0BCFF]/25 dark:text-[#D0BCFF]",
+    solid: "bg-[#6750A4] text-white dark:bg-[#D0BCFF] dark:text-[#21005D]",
+    soft: "bg-[#EADDFF] ring-1 ring-inset ring-[#6750A4]/25 dark:bg-[#D0BCFF]/25 dark:ring-[#D0BCFF]/35",
+    text: "text-[#6750A4] dark:text-[#D0BCFF]",
+  },
+  cyan: {
+    idle: "bg-[#C2E7FF] text-[#00639B] dark:bg-[#004A77] dark:text-[#7FCFFF]",
+    solid: "bg-[#00639B] text-white dark:bg-[#7FCFFF] dark:text-[#00344F]",
+    soft: "bg-[#C2E7FF] ring-1 ring-inset ring-[#00639B]/25 dark:bg-[#004A77] dark:ring-[#7FCFFF]/35",
+    text: "text-[#00639B] dark:text-[#7FCFFF]",
+  },
+  rose: {
+    idle: "bg-[#FFDAD6] text-[#B3261E] dark:bg-[#8C1D18]/40 dark:text-[#F2B8B5]",
+    solid: "bg-[#B3261E] text-white dark:bg-[#F2B8B5] dark:text-[#410E0B]",
+    soft: "bg-[#FFDAD6] ring-1 ring-inset ring-[#B3261E]/25 dark:bg-[#8C1D18]/40 dark:ring-[#F2B8B5]/35",
+    text: "text-[#B3261E] dark:text-[#F2B8B5]",
+  },
+  neutral: {
+    idle: "bg-[#E3E3E3] text-[#1F1F1F] dark:bg-[#C4C7C5]/20 dark:text-[#E3E3E3]",
+    solid: "bg-[#1F1F1F] text-white dark:bg-[#E3E3E3] dark:text-[#1F1F1F]",
+    soft: "bg-[#E3E3E3] ring-1 ring-inset ring-[#1F1F1F]/15 dark:bg-[#C4C7C5]/20 dark:ring-[#E3E3E3]/25",
+    text: "text-[#1F1F1F] dark:text-[#E3E3E3]",
+  },
+} as const;
+
+type TintKey = keyof typeof TINTS;
+
+/* ── Commit type → tint mapping ─────────────────────────── */
+function commitTypeTint(message: string): TintKey {
+  const msg = message.toLowerCase();
+  if (msg.startsWith("feat")) return "green";
+  if (msg.startsWith("fix")) return "rose";
+  if (msg.startsWith("chore")) return "amber";
+  if (msg.startsWith("docs")) return "cyan";
+  if (msg.startsWith("refactor")) return "purple";
+  return "blue";
+}
+
+/* ── Filter chip ────────────────────────────────────────── */
+interface FilterChipProps {
+  label: string;
+  active: boolean;
+  tint: TintKey;
+  onClick: () => void;
+}
+
+const FilterChip: React.FC<FilterChipProps> = ({
+  label,
+  active,
+  tint,
+  onClick,
+}) => {
+  const t = TINTS[tint];
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className={`
+        group inline-flex items-center gap-1.5 rounded-full
+        py-1.5 pl-1.5 pr-3 text-xs font-semibold
+        transition-all duration-300 ${EASE}
+        active:scale-[0.95] active:rounded-[14px]
+        ${FOCUS}
+        ${
+          active
+            ? t.soft
+            : `${SURFACE} text-[#444746] dark:text-[#C4C7C5] ${STATE} hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]`
+        }
+      `}
+    >
+      <span
+        className={`
+          grid h-5 w-5 shrink-0 place-items-center rounded-full
+          transition-all duration-300 ${SPRING}
+          ${active ? `rounded-[6px] ${t.solid}` : t.idle}
+        `}
+      >
+        {active ? (
+          <span className="h-1.5 w-1.5 rounded-full bg-current" />
+        ) : (
+          <span className="h-1.5 w-1.5 rounded-full bg-current opacity-60" />
+        )}
+      </span>
+      <span className={active ? "text-[#1F1F1F] dark:text-[#E3E3E3]" : ""}>
+        {label}
+      </span>
+    </button>
+  );
 };
 
 // ============================================================================
@@ -246,45 +380,97 @@ export default function ChangelogTracker() {
   // --------------------------------------------------------------------------
 
   return (
-    <div className="min-h-screen bg-white text-[#1f1f1f] selection:bg-[#d3e3fd] selection:text-[#0842a0] dark:bg-[#1f1f1f] dark:text-[#e3e3e3] dark:selection:bg-[#004a77] dark:selection:text-[#d3e3fd]">
-      <header className="sticky top-16 z-30 mx-auto w-[calc(100%-1.5rem)] max-w-4xl rounded-3xl border border-gray-400/40 bg-white/20 backdrop-blur-xs backdrop-saturate-150 dark:border-white/[0.08] dark:bg-[#1f1f1f]/20">
+    <div
+      className="
+        min-h-screen bg-[#F7F9FC] text-[#1F1F1F]
+        selection:bg-[#D3E3FD] selection:text-[#041E49]
+        dark:bg-[#141414] dark:text-[#E3E3E3]
+        dark:selection:bg-[#0842A0] dark:selection:text-[#D3E3FD]
+      "
+    >
+      {/* ═══════════════════════════════════════════════════════════
+          STICKY HEADER
+      ═══════════════════════════════════════════════════════════ */}
+      <header
+        className={`
+          sticky top-16 z-30 mx-auto w-[calc(100%-1.5rem)] max-w-4xl
+          rounded-[28px] ${SURFACE}
+        `}
+      >
         <div className="px-4 sm:px-6 md:px-8">
           {/* Row 1 — identity + actions */}
           <div className="flex h-14 items-center gap-2">
-            {/* Branch chip (hidden on very small screens) */}
-            <span className="hidden shrink-0 items-center gap-1 rounded-full border border-[#c4c7c5]/70 px-2.5 py-1 text-[11px] font-medium text-[#444746] dark:border-[#444746] dark:text-[#c4c7c5] sm:inline-flex">
-              <GitBranch className="h-3 w-3" />
-              {GITHUB_CONFIG.branch}
+            {/* Branch chip */}
+            <span
+              className={`
+                hidden shrink-0 items-center gap-1 rounded-full
+                py-1 pl-1 pr-2.5 text-[11px] font-semibold
+                sm:inline-flex
+                ${TINTS.cyan.soft}
+              `}
+            >
+              <span
+                className={`
+                  grid h-5 w-5 shrink-0 place-items-center rounded-full
+                  ${TINTS.cyan.solid}
+                `}
+              >
+                <GitBranch className="h-3 w-3" aria-hidden="true" />
+              </span>
+              <span className="text-[#1F1F1F] dark:text-[#E3E3E3]">
+                {GITHUB_CONFIG.branch}
+              </span>
             </span>
 
             {/* Repo name */}
-            <h1 className="truncate text-sm font-semibold tracking-tight text-[#1f1f1f] dark:text-[#e3e3e3] md:text-[15px]">
+            <h1 className="truncate text-sm font-semibold tracking-tight text-[#1F1F1F] dark:text-[#E3E3E3] md:text-[15px]">
               {GITHUB_CONFIG.repository}
             </h1>
 
             {/* Record count */}
-            <span className="hidden shrink-0 text-xs tabular-nums text-[#747775] dark:text-[#8e918f] md:inline">
+            <span className="hidden shrink-0 text-xs tabular-nums text-[#747775] dark:text-[#8E918F] md:inline">
               · {displayCommits.length} records
             </span>
 
             {/* Desktop inline search */}
             <div className="relative ml-auto hidden w-full max-w-xs lg:block">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#747775] dark:text-[#8e918f]" />
+              <Search
+                className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#747775] dark:text-[#8E918F]"
+                aria-hidden="true"
+              />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search commits…"
-                className="h-9 w-full rounded-full border border-[#c4c7c5]/70 bg-white/60 pl-9 pr-8 text-[13px] text-[#1f1f1f] placeholder:text-[#747775] transition-colors focus:border-[#0b57d0] focus:bg-white focus:outline-none dark:border-[#444746] dark:bg-[#1f1f1f]/60 dark:text-[#e3e3e3] dark:placeholder:text-[#8e918f] dark:focus:border-[#a8c7fa]"
+                className={`
+                  h-9 w-full rounded-full border border-[#C4C7C5]/60
+                  bg-[#F0F4F9] pl-9 pr-8 text-[13px] text-[#1F1F1F]
+                  placeholder:text-[#747775]
+                  transition-all duration-200 ${EASE}
+                  focus:border-[#0B57D0] focus:bg-white focus:outline-none
+                  focus:ring-2 focus:ring-[#0B57D0]/20
+                  dark:border-[#3C4043] dark:bg-[#282A2C] dark:text-[#E3E3E3]
+                  dark:placeholder:text-[#8E918F]
+                  dark:focus:border-[#A8C7FA] dark:focus:bg-[#1E1F20]
+                  dark:focus:ring-[#A8C7FA]/20
+                `}
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
                   aria-label="Clear search"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-1 text-[#747775] transition-colors hover:bg-[#f0f4f9] dark:text-[#8e918f] dark:hover:bg-[#282a2c]"
+                  className={`
+                    absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-1
+                    text-[#747775] dark:text-[#8E918F]
+                    transition-all duration-200 ${EASE}
+                    hover:bg-[#0B57D0]/10 hover:text-[#0B57D0]
+                    dark:hover:bg-[#A8C7FA]/15 dark:hover:text-[#A8C7FA]
+                    ${FOCUS}
+                  `}
                 >
-                  <X className="h-3.5 w-3.5" />
+                  <X className="h-3.5 w-3.5" aria-hidden="true" />
                 </button>
               )}
             </div>
@@ -300,16 +486,29 @@ export default function ChangelogTracker() {
                 type="button"
                 onClick={() => setShowFilters((s) => !s)}
                 aria-expanded={showFilters}
-                className={`relative inline-flex h-9 items-center gap-1.5 rounded-full border px-3 text-[13px] font-medium transition-colors ${
-                  showFilters || activeFilterCount > 0
-                    ? "border-transparent bg-[#0b57d0] text-white dark:bg-[#a8c7fa] dark:text-[#062e6f]"
-                    : "border-[#c4c7c5]/70 bg-white/60 text-[#444746] hover:bg-white dark:border-[#444746] dark:bg-[#1f1f1f]/60 dark:text-[#c4c7c5] dark:hover:bg-[#282a2c]"
-                }`}
+                className={`
+                  relative inline-flex h-9 items-center gap-1.5 rounded-full
+                  px-3 text-[13px] font-semibold
+                  transition-all duration-300 ${EASE}
+                  active:scale-[0.95] active:rounded-[14px]
+                  ${FOCUS}
+                  ${
+                    showFilters || activeFilterCount > 0
+                      ? "bg-[#0B57D0] text-white shadow-[0_1px_3px_rgba(0,0,0,0.16),0_6px_16px_-8px_rgba(11,87,208,0.9)] dark:bg-[#A8C7FA] dark:text-[#041E49] dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_6px_16px_-8px_rgba(168,199,250,0.7)]"
+                      : `${SURFACE} text-[#444746] dark:text-[#C4C7C5] ${STATE} hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]`
+                  }
+                `}
               >
-                <Filter className="h-4 w-4" />
+                <Filter className="h-4 w-4" aria-hidden="true" />
                 <span className="hidden sm:inline">Filters</span>
                 {activeFilterCount > 0 && (
-                  <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-white px-1 text-[10px] font-semibold text-[#0b57d0] dark:bg-[#062e6f] dark:text-[#d3e3fd]">
+                  <span
+                    className="
+                      inline-flex h-4 min-w-4 items-center justify-center rounded-full
+                      bg-white px-1 text-[10px] font-bold text-[#0B57D0]
+                      dark:bg-[#041E49] dark:text-[#A8C7FA]
+                    "
+                  >
                     {activeFilterCount}
                   </span>
                 )}
@@ -321,13 +520,19 @@ export default function ChangelogTracker() {
                 onClick={() => setMobileMenuOpen((s) => !s)}
                 aria-label="More options"
                 aria-expanded={mobileMenuOpen}
-                className={`inline-flex h-9 w-9 items-center justify-center rounded-full border transition-colors lg:hidden ${
-                  mobileMenuOpen
-                    ? "border-transparent bg-[#0b57d0] text-white dark:bg-[#a8c7fa] dark:text-[#062e6f]"
-                    : "border-[#c4c7c5]/70 bg-white/60 text-[#444746] hover:bg-white dark:border-[#444746] dark:bg-[#1f1f1f]/60 dark:text-[#c4c7c5] dark:hover:bg-[#282a2c]"
-                }`}
+                className={`
+                  inline-flex h-9 w-9 items-center justify-center rounded-full
+                  transition-all duration-300 ${EASE}
+                  active:scale-90 active:rounded-[10px] lg:hidden
+                  ${FOCUS}
+                  ${
+                    mobileMenuOpen
+                      ? "bg-[#0B57D0] text-white dark:bg-[#A8C7FA] dark:text-[#041E49]"
+                      : `${SURFACE} text-[#444746] dark:text-[#C4C7C5] ${STATE} hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]`
+                  }
+                `}
               >
-                <MoreHorizontal className="h-4 w-4" />
+                <MoreHorizontal className="h-4 w-4" aria-hidden="true" />
               </button>
 
               {/* Desktop: Repo */}
@@ -335,18 +540,37 @@ export default function ChangelogTracker() {
                 href={`https://github.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden h-9 items-center gap-1.5 rounded-full border border-[#c4c7c5]/70 bg-white/60 px-3 text-[13px] font-medium text-[#444746] transition-colors hover:bg-white dark:border-[#444746] dark:bg-[#1f1f1f]/60 dark:text-[#c4c7c5] dark:hover:bg-[#282a2c] lg:inline-flex"
+                className={`
+                  hidden h-9 items-center gap-1.5 rounded-full px-3
+                  text-[13px] font-semibold lg:inline-flex
+                  text-[#444746] dark:text-[#C4C7C5] ${SURFACE} ${STATE}
+                  transition-all duration-300 ${EASE}
+                  hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]
+                  active:scale-[0.95] active:rounded-[14px]
+                  ${FOCUS}
+                `}
               >
-                <Github className="h-4 w-4" />
+                <Github className="h-4 w-4" aria-hidden="true" />
                 <span className="hidden xl:inline">Repo</span>
               </a>
 
               {/* Desktop: View Tree */}
               <Link
                 href="/git-track/tree"
-                className="hidden h-9 items-center gap-1.5 rounded-full bg-[#0b57d0] px-3 text-[13px] font-medium text-white transition-colors hover:bg-[#0842a0] dark:bg-[#a8c7fa] dark:text-[#062e6f] dark:hover:bg-[#d3e3fd] lg:inline-flex"
+                className={`
+                  hidden h-9 items-center gap-1.5 rounded-full px-3
+                  text-[13px] font-semibold text-white lg:inline-flex
+                  bg-[#0B57D0]
+                  shadow-[0_1px_3px_rgba(0,0,0,0.16),0_6px_16px_-8px_rgba(11,87,208,0.9)]
+                  transition-all duration-300 ${EASE}
+                  hover:brightness-110
+                  active:scale-[0.95] active:rounded-[14px]
+                  dark:bg-[#A8C7FA] dark:text-[#041E49]
+                  dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_6px_16px_-8px_rgba(168,199,250,0.7)]
+                  ${FOCUS}
+                `}
               >
-                <FileCode2 className="h-4 w-4" />
+                <FileCode2 className="h-4 w-4" aria-hidden="true" />
                 <span className="hidden xl:inline">Tree</span>
               </Link>
             </div>
@@ -355,22 +579,43 @@ export default function ChangelogTracker() {
           {/* Row 2 — mobile search */}
           <div className="pb-2.5 lg:hidden">
             <div className="relative">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#747775] dark:text-[#8e918f]" />
+              <Search
+                className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#747775] dark:text-[#8E918F]"
+                aria-hidden="true"
+              />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search commits…"
-                className="h-9 w-full rounded-full border border-[#c4c7c5]/70 bg-white/60 pl-9 pr-8 text-[13px] text-[#1f1f1f] placeholder:text-[#747775] transition-colors focus:border-[#0b57d0] focus:bg-white focus:outline-none dark:border-[#444746] dark:bg-[#1f1f1f]/60 dark:text-[#e3e3e3] dark:placeholder:text-[#8e918f] dark:focus:border-[#a8c7fa]"
+                className={`
+                  h-9 w-full rounded-full border border-[#C4C7C5]/60
+                  bg-[#F0F4F9] pl-9 pr-8 text-[13px] text-[#1F1F1F]
+                  placeholder:text-[#747775]
+                  transition-all duration-200 ${EASE}
+                  focus:border-[#0B57D0] focus:bg-white focus:outline-none
+                  focus:ring-2 focus:ring-[#0B57D0]/20
+                  dark:border-[#3C4043] dark:bg-[#282A2C] dark:text-[#E3E3E3]
+                  dark:placeholder:text-[#8E918F]
+                  dark:focus:border-[#A8C7FA] dark:focus:bg-[#1E1F20]
+                  dark:focus:ring-[#A8C7FA]/20
+                `}
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
                   aria-label="Clear search"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-1 text-[#747775] transition-colors hover:bg-[#f0f4f9] dark:text-[#8e918f] dark:hover:bg-[#282a2c]"
+                  className={`
+                    absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-1
+                    text-[#747775] dark:text-[#8E918F]
+                    transition-all duration-200 ${EASE}
+                    hover:bg-[#0B57D0]/10 hover:text-[#0B57D0]
+                    dark:hover:bg-[#A8C7FA]/15 dark:hover:text-[#A8C7FA]
+                    ${FOCUS}
+                  `}
                 >
-                  <X className="h-3.5 w-3.5" />
+                  <X className="h-3.5 w-3.5" aria-hidden="true" />
                 </button>
               )}
             </div>
@@ -383,16 +628,35 @@ export default function ChangelogTracker() {
                 href={`https://github.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-full border border-[#c4c7c5]/70 bg-white/60 text-[13px] font-medium text-[#444746] dark:border-[#444746] dark:bg-[#1f1f1f]/60 dark:text-[#c4c7c5]"
+                className={`
+                  inline-flex h-9 flex-1 items-center justify-center gap-1.5
+                  rounded-full text-[13px] font-semibold
+                  text-[#444746] dark:text-[#C4C7C5] ${SURFACE} ${STATE}
+                  transition-all duration-300 ${EASE}
+                  hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]
+                  active:scale-[0.97] active:rounded-[14px]
+                  ${FOCUS}
+                `}
               >
-                <Github className="h-4 w-4" />
+                <Github className="h-4 w-4" aria-hidden="true" />
                 Repository
               </a>
               <Link
                 href="/git-track/tree"
-                className="inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-full bg-[#0b57d0] text-[13px] font-medium text-white dark:bg-[#a8c7fa] dark:text-[#062e6f]"
+                className={`
+                  inline-flex h-9 flex-1 items-center justify-center gap-1.5
+                  rounded-full text-[13px] font-semibold text-white
+                  bg-[#0B57D0]
+                  shadow-[0_1px_3px_rgba(0,0,0,0.16),0_6px_16px_-8px_rgba(11,87,208,0.9)]
+                  transition-all duration-300 ${EASE}
+                  hover:brightness-110
+                  active:scale-[0.97] active:rounded-[14px]
+                  dark:bg-[#A8C7FA] dark:text-[#041E49]
+                  dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_6px_16px_-8px_rgba(168,199,250,0.7)]
+                  ${FOCUS}
+                `}
               >
-                <FileCode2 className="h-4 w-4" />
+                <FileCode2 className="h-4 w-4" aria-hidden="true" />
                 View Tree
               </Link>
             </div>
@@ -401,56 +665,45 @@ export default function ChangelogTracker() {
           {/* Filter panel (integrated in the sticky header) */}
           {showFilters && (
             <div className="pb-3">
-              <div className="max-h-[55vh] space-y-4 overflow-y-auto rounded-2xl bg-[#f0f4f9]/70 p-4 backdrop-blur-xl dark:bg-[#1e1f21]/70">
+              <div
+                className={`
+                  max-h-[55vh] space-y-4 overflow-y-auto rounded-[20px]
+                  ${SURFACE_FLAT} p-4
+                `}
+              >
                 {/* Type chips */}
-                <div className="space-y-2">
-                  <p className="text-[11px] font-medium uppercase tracking-wider text-[#747775] dark:text-[#8e918f]">
+                <div className="space-y-2.5">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-[#747775] dark:text-[#8E918F]">
                     Type
                   </p>
                   <div className="flex flex-wrap gap-1.5">
-                    {COMMIT_TYPES.map((t) => {
-                      const isActive = typeFilter === t.id;
-                      return (
-                        <button
-                          key={t.id}
-                          type="button"
-                          onClick={() => setTypeFilter(t.id)}
-                          className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
-                            isActive
-                              ? "border-transparent bg-[#0b57d0] text-white dark:bg-[#a8c7fa] dark:text-[#062e6f]"
-                              : "border-[#c4c7c5]/70 bg-white/60 text-[#444746] hover:bg-white dark:border-[#444746] dark:bg-[#1f1f1f]/60 dark:text-[#c4c7c5] dark:hover:bg-[#282a2c]"
-                          }`}
-                        >
-                          {t.label}
-                        </button>
-                      );
-                    })}
+                    {COMMIT_TYPES.map((t) => (
+                      <FilterChip
+                        key={t.id}
+                        label={t.label}
+                        active={typeFilter === t.id}
+                        tint={t.tint}
+                        onClick={() => setTypeFilter(t.id)}
+                      />
+                    ))}
                   </div>
                 </div>
 
                 {/* Author chips */}
-                <div className="space-y-2">
-                  <p className="text-[11px] font-medium uppercase tracking-wider text-[#747775] dark:text-[#8e918f]">
+                <div className="space-y-2.5">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-[#747775] dark:text-[#8E918F]">
                     Author
                   </p>
                   <div className="flex flex-wrap gap-1.5">
-                    {["all", ...uniqueAuthors].map((a) => {
-                      const isActive = authorFilter === a;
-                      return (
-                        <button
-                          key={a}
-                          type="button"
-                          onClick={() => setAuthorFilter(a)}
-                          className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
-                            isActive
-                              ? "border-transparent bg-[#0b57d0] text-white dark:bg-[#a8c7fa] dark:text-[#062e6f]"
-                              : "border-[#c4c7c5]/70 bg-white/60 text-[#444746] hover:bg-white dark:border-[#444746] dark:bg-[#1f1f1f]/60 dark:text-[#c4c7c5] dark:hover:bg-[#282a2c]"
-                          }`}
-                        >
-                          {a === "all" ? "All" : a}
-                        </button>
-                      );
-                    })}
+                    {["all", ...uniqueAuthors].map((a) => (
+                      <FilterChip
+                        key={a}
+                        label={a === "all" ? "All" : a}
+                        active={authorFilter === a}
+                        tint="blue"
+                        onClick={() => setAuthorFilter(a)}
+                      />
+                    ))}
                   </div>
                 </div>
 
@@ -462,9 +715,23 @@ export default function ChangelogTracker() {
                       setAuthorFilter("all");
                       setTypeFilter("all");
                     }}
-                    className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-[#0b57d0] transition-colors hover:bg-white/70 dark:text-[#a8c7fa] dark:hover:bg-[#282a2c]"
+                    className={`
+                      inline-flex items-center gap-1.5 rounded-full
+                      py-1.5 pl-1.5 pr-3.5 text-xs font-semibold
+                      ${TINTS.rose.soft} text-[#1F1F1F] dark:text-[#E3E3E3]
+                      transition-all duration-300 ${EASE}
+                      active:scale-[0.95] active:rounded-[14px]
+                      ${FOCUS}
+                    `}
                   >
-                    <X className="h-3.5 w-3.5" />
+                    <span
+                      className={`
+                        grid h-5 w-5 shrink-0 place-items-center rounded-full
+                        ${TINTS.rose.solid}
+                      `}
+                    >
+                      <RotateCcw className="h-3 w-3" aria-hidden="true" />
+                    </span>
                     Clear all filters
                   </button>
                 )}
@@ -474,42 +741,105 @@ export default function ChangelogTracker() {
         </div>
       </header>
 
-      {/* ============================================================
-          CONTENT (scrolls beneath the sticky header)
-      ============================================================ */}
-      <div className="mx-auto max-w-4xl px-4 pt-6 pb-10 sm:px-6 md:pb-16 lg:px-8">
+      {/* ═══════════════════════════════════════════════════════════
+          CONTENT
+      ═══════════════════════════════════════════════════════════ */}
+      <div className="mx-auto max-w-4xl px-4 pt-6 pb-16 sm:px-6 lg:px-8">
         {/* ── STATUS STATES ── */}
+
+        {/* Loading */}
         {loading && (
-          <div className="flex flex-col items-center justify-center space-y-3 rounded-2xl bg-[#f0f4f9] p-10 dark:bg-[#1e1f21]">
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#d3e3fd] text-[#0842a0] dark:bg-[#004a77] dark:text-[#d3e3fd]">
-              <Clock className="h-5 w-5 animate-pulse" />
+          <div
+            className={`
+              flex flex-col items-center justify-center space-y-4
+              rounded-[28px] p-10 ${SURFACE}
+            `}
+          >
+            <span
+              className={`
+                grid h-14 w-14 place-items-center rounded-[18px]
+                ${TINTS.amber.solid}
+                shadow-[0_2px_6px_rgba(0,0,0,0.12)]
+                transition-transform duration-300 ${SPRING}
+              `}
+            >
+              <Clock className="h-6 w-6 animate-pulse" aria-hidden="true" />
             </span>
-            <p className="text-sm font-medium text-[#444746] dark:text-[#c4c7c5]">
-              Fetching commits — page {fetchingProgress}
-            </p>
+            <div className="text-center">
+              <p className="text-sm font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
+                Fetching commits
+              </p>
+              <p className="mt-0.5 text-xs text-[#747775] dark:text-[#8E918F]">
+                Page {fetchingProgress}
+              </p>
+            </div>
           </div>
         )}
 
+        {/* Error */}
         {error && (
-          <div className="flex flex-col gap-4 rounded-2xl bg-[#fce8e6] p-5 sm:flex-row sm:items-center sm:justify-between dark:bg-[#3a1a1a]">
-            <div className="flex items-center gap-3 text-sm font-medium text-[#8c1d18] dark:text-[#f2b8b5]">
-              <AlertCircle className="h-5 w-5 shrink-0" />
-              <span>{error}</span>
+          <div
+            className={`
+              flex flex-col gap-4 rounded-[28px] p-5
+              sm:flex-row sm:items-center sm:justify-between
+              ${TINTS.rose.soft}
+            `}
+          >
+            <div className="flex items-center gap-3">
+              <span
+                className={`
+                  grid h-10 w-10 shrink-0 place-items-center rounded-[14px]
+                  ${TINTS.rose.solid}
+                  shadow-[0_2px_6px_rgba(0,0,0,0.12)]
+                `}
+              >
+                <AlertCircle className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <span className="text-sm font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
+                {error}
+              </span>
             </div>
             <button
               type="button"
               onClick={fetchCommits}
-              className="whitespace-nowrap rounded-full bg-[#8c1d18] px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-[#6d1410] dark:bg-[#f2b8b5] dark:text-[#601410] dark:hover:bg-[#f9dedc]"
+              className={`
+                inline-flex shrink-0 items-center gap-1.5 rounded-full
+                bg-[#B3261E] px-4 py-2 text-xs font-semibold text-white
+                shadow-[0_1px_3px_rgba(0,0,0,0.16),0_6px_16px_-8px_rgba(179,38,30,0.8)]
+                transition-all duration-300 ${EASE}
+                hover:brightness-110
+                active:scale-[0.95] active:rounded-[14px]
+                dark:bg-[#F2B8B5] dark:text-[#410E0B]
+                dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_6px_16px_-8px_rgba(242,184,181,0.6)]
+                ${FOCUS}
+              `}
             >
+              <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
               Retry
             </button>
           </div>
         )}
 
+        {/* Empty */}
         {!loading && !error && displayCommits.length === 0 && (
-          <div className="rounded-2xl bg-[#f0f4f9] p-10 text-center dark:bg-[#1e1f21]">
-            <p className="text-sm font-medium text-[#747775] dark:text-[#8e918f]">
-              No matching commits.
+          <div
+            className={`
+              rounded-[28px] p-10 text-center ${SURFACE}
+            `}
+          >
+            <span
+              className={`
+                mx-auto mb-3 grid h-12 w-12 place-items-center rounded-[16px]
+                ${TINTS.neutral.idle}
+              `}
+            >
+              <Search className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <p className="text-sm font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
+              No matching commits
+            </p>
+            <p className="mt-0.5 text-xs text-[#747775] dark:text-[#8E918F]">
+              Try adjusting your filters or search query.
             </p>
           </div>
         )}
@@ -519,79 +849,182 @@ export default function ChangelogTracker() {
           <div className="space-y-8">
             {grouped.map(([group, items]) => (
               <section key={group}>
-                {/* Group header (non-sticky — the main header owns the sticky slot) */}
+                {/* Group header */}
                 <div className="mb-3 flex items-center gap-3">
-                  <h2 className="text-xs font-medium uppercase tracking-wider text-[#747775] dark:text-[#8e918f]">
-                    {group}
-                  </h2>
-                  <span className="h-px flex-1 bg-[#e0e3e7] dark:bg-[#2d2f31]" />
-                  <span className="text-[11px] font-medium tabular-nums text-[#747775] dark:text-[#8e918f]">
+                  <span
+                    className={`
+                      inline-flex items-center gap-1.5 rounded-full
+                      py-1 pl-1 pr-2.5 text-[10px] font-bold uppercase tracking-wider
+                      ${TINTS.blue.soft}
+                    `}
+                  >
+                    <span
+                      className={`
+                        grid h-4 w-4 place-items-center rounded-full
+                        ${TINTS.blue.solid}
+                      `}
+                    >
+                      <span className="h-1 w-1 rounded-full bg-current" />
+                    </span>
+                    <span className="text-[#1F1F1F] dark:text-[#E3E3E3]">
+                      {group}
+                    </span>
+                  </span>
+                  <span className="h-px flex-1 bg-[#C4C7C5]/40 dark:bg-[#3C4043]" />
+                  <span className="text-[11px] font-semibold tabular-nums text-[#747775] dark:text-[#8E918F]">
                     {items.length}
                   </span>
                 </div>
 
                 {/* Commits in this group */}
-                <ol className="relative space-y-2 pl-6">
+                <ol className="relative space-y-2.5 pl-6">
                   <span
                     aria-hidden="true"
-                    className="absolute left-[7px] top-2 bottom-2 w-px bg-[#e0e3e7] dark:bg-[#2d2f31]"
+                    className="
+                      absolute left-[7px] top-2 bottom-2 w-px
+                      bg-[#C4C7C5]/50 dark:bg-[#3C4043]
+                    "
                   />
 
                   {items.map((commit) => {
                     const title = getCommitTitle(commit.commit.message);
                     const shortSha = commit.sha.substring(0, 7);
                     const isHead = commits[0]?.sha === commit.sha;
+                    const tint = commitTypeTint(commit.commit.message);
+                    const t = TINTS[tint];
 
                     return (
                       <li key={commit.sha} className="relative">
+                        {/* Timeline dot */}
                         <span
                           aria-hidden="true"
-                          className={`absolute -left-6 top-4 z-[1] flex h-3.5 w-3.5 items-center justify-center rounded-full border-2 border-white dark:border-[#1f1f1f] ${
-                            isHead
-                              ? "bg-[#0b57d0] dark:bg-[#a8c7fa]"
-                              : "bg-[#c4c7c5] dark:bg-[#444746]"
-                          }`}
-                        />
+                          className={`
+                            absolute -left-6 top-5 z-[1] grid h-4 w-4 place-items-center
+                            rounded-full border-2 border-[#F7F9FC] dark:border-[#141414]
+                            ${isHead ? t.solid : `${TINTS.neutral.idle}`}
+                          `}
+                        >
+                          <span className="h-1.5 w-1.5 rounded-full bg-current" />
+                        </span>
 
                         <a
                           href={commit.html_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group block rounded-2xl bg-[#f0f4f9] px-4 py-3.5 transition-colors hover:bg-[#e8eef7] dark:bg-[#1e1f21] dark:hover:bg-[#232527]"
+                          className={`
+                            group block rounded-[24px] ${SURFACE}
+                            p-4
+                            transition-all duration-300 ${EASE}
+                            hover:-translate-y-0.5
+                            hover:shadow-[0_2px_6px_rgba(0,0,0,0.1),0_18px_40px_-20px_rgba(11,87,208,0.5)]
+                            dark:hover:shadow-[0_2px_6px_rgba(0,0,0,0.7),0_18px_40px_-20px_rgba(168,199,250,0.35)]
+                            ${FOCUS}
+                          `}
                         >
-                          <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                          <div className="flex flex-col gap-2.5 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
                             <div className="min-w-0 flex-1">
-                              <div className="mb-1 flex flex-wrap items-center gap-2">
-                                <span className="rounded-md bg-white px-2 py-0.5 text-[10px] font-medium tabular-nums text-[#0b57d0] dark:bg-[#282a2c] dark:text-[#a8c7fa]">
-                                  {shortSha}
+                              {/* Meta row */}
+                              <div className="mb-2 flex flex-wrap items-center gap-2">
+                                <span
+                                  className={`
+                                    inline-flex items-center gap-1.5 rounded-full
+                                    py-1 pl-1 pr-2.5 text-[10px] font-bold
+                                    tabular-nums ${t.soft}
+                                  `}
+                                >
+                                  <span
+                                    className={`
+                                      grid h-4 w-4 place-items-center rounded-full
+                                      ${t.solid}
+                                    `}
+                                  >
+                                    <span className="h-1 w-1 rounded-full bg-current" />
+                                  </span>
+                                  <span className="text-[#1F1F1F] dark:text-[#E3E3E3]">
+                                    {shortSha}
+                                  </span>
                                 </span>
                                 {isHead && (
-                                  <span className="rounded-full bg-[#0b57d0] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-white dark:bg-[#a8c7fa] dark:text-[#062e6f]">
-                                    HEAD
+                                  <span
+                                    className={`
+                                      inline-flex items-center gap-1.5 rounded-full
+                                      py-1 pl-1 pr-2.5 text-[10px] font-bold uppercase tracking-wider
+                                      ${TINTS.blue.soft}
+                                    `}
+                                  >
+                                    <span
+                                      className={`
+                                        grid h-4 w-4 place-items-center rounded-full
+                                        ${TINTS.blue.solid}
+                                      `}
+                                    >
+                                      <span className="h-1 w-1 rounded-full bg-current" />
+                                    </span>
+                                    <span className="text-[#1F1F1F] dark:text-[#E3E3E3]">
+                                      HEAD
+                                    </span>
                                   </span>
                                 )}
-                                <span className="text-[11px] text-[#747775] dark:text-[#8e918f]">
+                                <span className="text-[11px] font-medium text-[#747775] dark:text-[#8E918F]">
                                   {timeAgo(commit.commit.author.date)}
                                 </span>
                               </div>
 
-                              <p className="line-clamp-2 text-sm font-medium leading-snug text-[#1f1f1f] transition-colors group-hover:text-[#0b57d0] dark:text-[#e3e3e3] dark:group-hover:text-[#a8c7fa]">
+                              {/* Commit title */}
+                              <p
+                                className="
+                                  line-clamp-2 text-sm font-semibold leading-snug
+                                  text-[#1F1F1F] dark:text-[#E3E3E3]
+                                  transition-colors duration-200 ${EASE}
+                                  group-hover:text-[#0B57D0] dark:group-hover:text-[#A8C7FA]
+                                "
+                              >
                                 {title}
                               </p>
 
-                              <div className="mt-2 flex items-center gap-2 text-xs text-[#747775] dark:text-[#8e918f]">
-                                <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#d3e3fd] text-[9px] font-semibold uppercase text-[#0842a0] dark:bg-[#004a77] dark:text-[#d3e3fd]">
+                              {/* Author row */}
+                              <div className="mt-2.5 flex items-center gap-2">
+                                <span
+                                  className={`
+                                    grid h-5 w-5 shrink-0 place-items-center rounded-full
+                                    text-[9px] font-bold uppercase
+                                    ${TINTS.purple.idle}
+                                  `}
+                                >
                                   {commit.commit.author.name.charAt(0)}
                                 </span>
-                                <span className="truncate">
+                                <span className="truncate text-xs font-medium text-[#444746] dark:text-[#C4C7C5]">
                                   {commit.commit.author.name}
                                 </span>
                               </div>
                             </div>
 
-                            <span className="inline-flex shrink-0 items-center gap-1 self-start rounded-full border border-[#c4c7c5] px-3 py-1 text-[11px] font-medium text-[#444746] transition-colors group-hover:border-[#0b57d0] group-hover:bg-white group-hover:text-[#0b57d0] dark:border-[#444746] dark:text-[#c4c7c5] dark:group-hover:border-[#a8c7fa] dark:group-hover:bg-[#282a2c] dark:group-hover:text-[#a8c7fa]">
+                            {/* Diff chip */}
+                            <span
+                              className={`
+                                inline-flex shrink-0 items-center gap-1.5
+                                self-start rounded-full py-1.5 pl-1.5 pr-3
+                                text-[11px] font-semibold
+                                ${t.soft}
+                                transition-all duration-300 ${EASE}
+                                group-hover:rounded-[12px]
+                                text-[#1F1F1F] dark:text-[#E3E3E3]
+                              `}
+                            >
+                              <span
+                                className={`
+                                  grid h-5 w-5 shrink-0 place-items-center rounded-full
+                                  transition-all duration-300 ${SPRING}
+                                  group-hover:rounded-[6px]
+                                  ${t.solid}
+                                `}
+                              >
+                                <ExternalLink
+                                  className="h-3 w-3"
+                                  aria-hidden="true"
+                                />
+                              </span>
                               Diff
-                              <ExternalLink className="h-3 w-3" />
                             </span>
                           </div>
                         </a>

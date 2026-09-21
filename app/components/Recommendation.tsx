@@ -24,6 +24,20 @@ export interface RecommendationProps {
   onSelect?: (post: BlogPost) => void;
 }
 
+/* ── Material 3 Expressive · Pixel UI tokens ────────────── */
+const SURFACE =
+  "bg-white dark:bg-[#1E1F20] " +
+  "border border-[#C4C7C5]/60 dark:border-[#3C4043] " +
+  "shadow-[0_1px_3px_rgba(0,0,0,0.06),0_8px_24px_-16px_rgba(0,0,0,0.35)] " +
+  "dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_8px_24px_-16px_rgba(0,0,0,0.9)]";
+
+const EASE = "ease-[cubic-bezier(0.2,0,0,1)]";
+
+const FOCUS =
+  "focus-visible:outline-none focus-visible:ring-2 " +
+  "focus-visible:ring-[#0B57D0] dark:focus-visible:ring-[#A8C7FA] " +
+  "focus-visible:ring-offset-0";
+
 export default function Recommendation({
   currentRoute,
   currentTopic,
@@ -87,7 +101,7 @@ export default function Recommendation({
   const showProgress =
     !paused && !reduceMotion && rotateMs > 0 && recs.length > 1;
 
-  // Shared framer-motion transition curves (Material-y)
+  // Shared framer-motion transition curves (Material-y, matches tailwind ease)
   const easeOut = [0.16, 1, 0.3, 1] as const;
   const easeInOut = [0.4, 0, 0.2, 1] as const;
 
@@ -106,7 +120,8 @@ export default function Recommendation({
     >
       {/* ---------------------------- HEADER ---------------------------- */}
       <div className="mb-4 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-3">
+          {/* Section icon — squircle in solid tonal blue */}
           <motion.span
             animate={reduceMotion ? undefined : { rotate: [0, 8, -8, 0] }}
             transition={{
@@ -114,20 +129,27 @@ export default function Recommendation({
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#d3e3fd] text-[#0842a0] dark:bg-[#004a77] dark:text-[#d3e3fd]"
+            className="
+              grid h-10 w-10 shrink-0 place-items-center rounded-[14px]
+              bg-[#0B57D0] text-white
+              shadow-[0_2px_6px_rgba(0,0,0,0.12)]
+              dark:bg-[#A8C7FA] dark:text-[#041E49]
+            "
           >
-            <Sparkles className="h-3.5 w-3.5" />
+            <Sparkles className="h-4 w-4" aria-hidden="true" />
           </motion.span>
+
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#747775] dark:text-[#8e918f]">
+            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#747775] dark:text-[#8E918F]">
               For you
             </p>
-            <h2 className="text-sm font-semibold text-[#1f1f1f] dark:text-[#e3e3e3]">
+            <h2 className="text-lg font-semibold tracking-tight text-[#1F1F1F] dark:text-[#E3E3E3] md:text-xl">
               {heading}
             </h2>
           </div>
         </div>
 
+        {/* Counter chip — matches site-wide chips */}
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.span
             key={active}
@@ -135,13 +157,19 @@ export default function Recommendation({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 4 }}
             transition={{ duration: 0.22 }}
-            className="font-mono text-[11px] font-medium tabular-nums text-[#747775] dark:text-[#8e918f]"
+            className={`
+              inline-flex items-center gap-1 rounded-full
+              py-1 pl-2.5 pr-3 ${SURFACE}
+              font-mono text-[11px] font-semibold tabular-nums
+            `}
           >
-            <span className="text-[#1f1f1f] dark:text-[#e3e3e3]">
+            <span className="text-[#1F1F1F] dark:text-[#E3E3E3]">
               {String(active + 1).padStart(2, "0")}
             </span>
-            <span className="mx-0.5 text-[#c4c7c5] dark:text-[#444746]">/</span>
-            {String(total).padStart(2, "0")}
+            <span className="text-[#C4C7C5] dark:text-[#5F6368]">/</span>
+            <span className="text-[#747775] dark:text-[#8E918F]">
+              {String(total).padStart(2, "0")}
+            </span>
           </motion.span>
         </AnimatePresence>
       </div>
@@ -150,10 +178,17 @@ export default function Recommendation({
       <motion.div
         whileHover={reduceMotion ? undefined : { y: -2 }}
         transition={{ duration: 0.25, ease: easeOut }}
-        className="relative min-h-[280px] overflow-hidden rounded-2xl border border-[#e0e3e7] bg-gradient-to-br from-[#f8fafd] to-[#eef3fb] shadow-sm transition-shadow hover:shadow-lg hover:shadow-[#0b57d0]/5 dark:border-[#2d2f31] dark:from-[#1a1d20] dark:to-[#1e1f21] dark:hover:shadow-[#a8c7fa]/5 md:min-h-[240px]"
+        className={`
+          relative min-h-[280px] overflow-hidden rounded-[28px]
+          ${SURFACE}
+          transition-shadow duration-300 ${EASE}
+          hover:shadow-[0_2px_6px_rgba(0,0,0,0.1),0_18px_40px_-20px_rgba(11,87,208,0.5)]
+          dark:hover:shadow-[0_2px_6px_rgba(0,0,0,0.7),0_18px_40px_-20px_rgba(168,199,250,0.35)]
+          md:min-h-[240px]
+        `}
       >
-        {/* Progress bar */}
-        <div className="absolute inset-x-0 top-0 z-10 h-0.5 bg-[#e0e3e7]/70 dark:bg-[#2d2f31]/70">
+        {/* Progress bar — Pixel blue gradient */}
+        <div className="absolute inset-x-0 top-0 z-10 h-1 bg-[#F0F4F9] dark:bg-[#282A2C]">
           <AnimatePresence initial={false}>
             {showProgress && (
               <motion.div
@@ -168,7 +203,11 @@ export default function Recommendation({
                   },
                   opacity: { duration: 0.2 },
                 }}
-                className="h-full bg-gradient-to-r from-[#0b57d0] via-[#4a8ff0] to-[#a8c7fa] dark:from-[#a8c7fa] dark:via-[#d3e3fd] dark:to-[#e8f0fe]"
+                className="
+                  h-full bg-gradient-to-r
+                  from-[#0B57D0] via-[#4A8FF0] to-[#A8C7FA]
+                  dark:from-[#A8C7FA] dark:via-[#D3E3FD] dark:to-[#E8F0FE]
+                "
               />
             )}
           </AnimatePresence>
@@ -178,51 +217,77 @@ export default function Recommendation({
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={active}
-            initial={{
-              opacity: 0,
-              y: 16,
-              filter: "blur(8px)",
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-              filter: "blur(0px)",
-            }}
-            exit={{
-              opacity: 0,
-              y: -16,
-              filter: "blur(8px)",
-            }}
+            initial={{ opacity: 0, y: 16, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -16, filter: "blur(8px)" }}
             transition={{ duration: 0.4, ease: easeInOut }}
             className="absolute inset-0"
           >
             <Link
               href={rec.post.route}
               onClick={() => onSelect?.(rec.post)}
-              className="group flex h-full flex-col justify-between p-5 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#0b57d0] md:p-7"
+              className={`
+                group flex h-full flex-col justify-between p-5
+                focus-visible:outline-2 focus-visible:outline-offset-[-2px]
+                focus-visible:outline-[#0B57D0] dark:focus-visible:outline-[#A8C7FA]
+                md:p-7
+              `}
             >
               <div>
-                {/* Rank + match percentage */}
+                {/* Rank chip — round → squircle shape morph on hover */}
                 <div className="mb-3 flex items-center gap-2">
                   <motion.span
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.08, ease: easeOut }}
-                    className="inline-flex items-center rounded-full bg-[#d3e3fd] px-2.5 py-1 font-mono text-[10px] font-semibold tabular-nums text-[#0842a0] dark:bg-[#004a77] dark:text-[#d3e3fd]"
+                    className="
+                      inline-flex items-center gap-2 rounded-full
+                      py-1 pl-1 pr-2.5 text-[10px] font-bold uppercase tracking-wide
+                      bg-[#D3E3FD] ring-1 ring-inset ring-[#0B57D0]/25
+                      dark:bg-[#0B57D0]/25 dark:ring-[#A8C7FA]/35
+                    "
                   >
-                    #{String(active + 1).padStart(2, "0")}
+                    <span
+                      className="
+                        grid h-5 w-5 shrink-0 place-items-center rounded-full
+                        bg-[#0B57D0] text-white
+                        dark:bg-[#A8C7FA] dark:text-[#041E49]
+                        transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                        group-hover:rounded-[6px]
+                      "
+                    >
+                      <span className="font-mono text-[9px] font-bold tabular-nums">
+                        {String(active + 1).padStart(2, "0")}
+                      </span>
+                    </span>
+                    <span className="text-[#041E49] dark:text-[#D3E3FD]">
+                      Rank
+                    </span>
                   </motion.span>
+
                   <motion.span
                     initial={{ opacity: 0, x: -4 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.12 }}
-                    className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#0b57d0] dark:text-[#a8c7fa]"
+                    className="
+                      inline-flex items-center gap-1.5 text-[11px] font-bold
+                      uppercase tracking-[0.14em]
+                      text-[#0B57D0] dark:text-[#A8C7FA]
+                    "
                   >
+                    <span
+                      aria-hidden="true"
+                      className="
+                        inline-block h-1.5 w-1.5 rounded-full
+                        bg-[#0B57D0] dark:bg-[#A8C7FA]
+                        animate-pulse
+                      "
+                    />
                     {pct}% match
                   </motion.span>
                 </div>
 
-                {/* Topic pills */}
+                {/* Topic pills — tonal, shape morph when matched */}
                 {topics.length > 0 && (
                   <div className="mb-3 flex flex-wrap gap-1.5">
                     {topics.map((t, i) => {
@@ -236,11 +301,16 @@ export default function Recommendation({
                             delay: 0.1 + i * 0.05,
                             ease: easeOut,
                           }}
-                          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider transition-colors ${
-                            isMatch
-                              ? "bg-[#0b57d0] text-white dark:bg-[#a8c7fa] dark:text-[#04234d]"
-                              : "bg-white/80 text-[#747775] ring-1 ring-[#e0e3e7] dark:bg-[#282a2c]/80 dark:text-[#8e918f] dark:ring-[#2d2f31]"
-                          }`}
+                          className={`
+                            inline-flex items-center rounded-full px-2.5 py-1
+                            text-[10px] font-semibold uppercase tracking-wider
+                            transition-colors duration-300 ${EASE}
+                            ${
+                              isMatch
+                                ? "bg-[#0B57D0] text-white dark:bg-[#A8C7FA] dark:text-[#041E49]"
+                                : "bg-[#F0F4F9] text-[#444746] ring-1 ring-inset ring-[#C4C7C5]/60 dark:bg-[#282A2C] dark:text-[#C4C7C5] dark:ring-[#3C4043]"
+                            }
+                          `}
                         >
                           {t}
                         </motion.span>
@@ -254,7 +324,13 @@ export default function Recommendation({
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.15, ease: easeOut }}
-                  className="text-lg font-semibold leading-snug tracking-tight text-[#1f1f1f] transition-colors group-hover:text-[#0b57d0] dark:text-[#e3e3e3] dark:group-hover:text-[#a8c7fa] md:text-2xl md:leading-[1.2]"
+                  className="
+                    text-lg font-bold leading-snug tracking-tight
+                    text-[#1F1F1F] transition-colors duration-300
+                    group-hover:text-[#0B57D0]
+                    dark:text-[#E3E3E3] dark:group-hover:text-[#A8C7FA]
+                    md:text-2xl md:leading-[1.2]
+                  "
                 >
                   {rec.post.title}
                 </motion.h3>
@@ -265,7 +341,11 @@ export default function Recommendation({
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, ease: easeOut }}
-                    className="mt-2 line-clamp-2 text-sm leading-6 text-[#444746] dark:text-[#c4c7c5] md:text-[15px] md:leading-7"
+                    className="
+                      mt-2 line-clamp-2 text-sm leading-6
+                      text-[#444746] dark:text-[#C4C7C5]
+                      md:text-[15px] md:leading-7
+                    "
                   >
                     {rec.post.excerpt}
                   </motion.p>
@@ -279,7 +359,7 @@ export default function Recommendation({
                 transition={{ delay: 0.25, ease: easeOut }}
                 className="mt-5 flex items-center gap-3"
               >
-                <div className="h-1 flex-1 overflow-hidden rounded-full bg-[#e0e3e7] dark:bg-[#2d2f31]">
+                <div className="h-1 flex-1 overflow-hidden rounded-full bg-[#F0F4F9] dark:bg-[#282A2C]">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${pct}%` }}
@@ -288,10 +368,34 @@ export default function Recommendation({
                       delay: 0.25,
                       ease: easeOut,
                     }}
-                    className="h-full rounded-full bg-gradient-to-r from-[#0b57d0] to-[#4a8ff0] dark:from-[#a8c7fa] dark:to-[#d3e3fd]"
+                    className="
+                      h-full rounded-full bg-gradient-to-r
+                      from-[#0B57D0] to-[#4A8FF0]
+                      dark:from-[#A8C7FA] dark:to-[#D3E3FD]
+                    "
                   />
                 </div>
-                <ArrowRight className="h-4 w-4 shrink-0 text-[#0b57d0] transition-transform duration-300 group-hover:translate-x-1 dark:text-[#a8c7fa]" />
+
+                {/* Arrow chip — circle → squircle on hover */}
+                <span
+                  className="
+                    grid h-8 w-8 shrink-0 place-items-center rounded-full
+                    bg-[#D3E3FD] text-[#0B57D0]
+                    dark:bg-[#0B57D0]/25 dark:text-[#A8C7FA]
+                    transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                    group-hover:rounded-[10px]
+                    group-hover:bg-[#0B57D0] group-hover:text-white
+                    dark:group-hover:bg-[#A8C7FA] dark:group-hover:text-[#041E49]
+                  "
+                >
+                  <ArrowRight
+                    className="
+                      h-4 w-4 transition-transform duration-300
+                      group-hover:translate-x-0.5
+                    "
+                    aria-hidden="true"
+                  />
+                </span>
               </motion.div>
             </Link>
           </motion.div>
@@ -308,14 +412,20 @@ export default function Recommendation({
               aria-label={`Show article ${i + 1}`}
               aria-current={i === dotActive}
               onClick={() => setActive(i)}
-              className="group flex h-3 items-center px-0.5"
+              className={`
+                group flex h-3 items-center px-0.5
+                rounded-full ${FOCUS}
+              `}
             >
               <span
-                className={`block h-1.5 rounded-full transition-all duration-300 ${
-                  i === dotActive
-                    ? "w-6 bg-[#0b57d0] dark:bg-[#a8c7fa]"
-                    : "w-1.5 bg-[#c4c7c5] group-hover:bg-[#747775] dark:bg-[#444746] dark:group-hover:bg-[#8e918f]"
-                }`}
+                className={`
+                  block h-1.5 rounded-full transition-all duration-300 ${EASE}
+                  ${
+                    i === dotActive
+                      ? "w-6 bg-[#0B57D0] dark:bg-[#A8C7FA]"
+                      : "w-1.5 bg-[#C4C7C5] group-hover:bg-[#747775] dark:bg-[#3C4043] dark:group-hover:bg-[#8E918F]"
+                  }
+                `}
               />
             </button>
           ))}

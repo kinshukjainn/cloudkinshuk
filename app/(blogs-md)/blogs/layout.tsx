@@ -11,10 +11,18 @@ export default function BlogLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-white text-[#1f1f1f] selection:bg-[#d3e3fd] selection:text-[#0842a0] dark:bg-[#1f1f1f] dark:text-[#e3e3e3] dark:selection:bg-[#004a77] dark:selection:text-[#d3e3fd]">
+    <div
+      className="
+        min-h-screen bg-[#F7F9FC] text-[#1F1F1F]
+        selection:bg-[#D3E3FD] selection:text-[#041E49]
+        dark:bg-[#141414] dark:text-[#E3E3E3]
+        dark:selection:bg-[#0842A0] dark:selection:text-[#D3E3FD]
+      "
+    >
       {/* 
-        Material 3 reading column — centered, comfortable line length,
-        generous vertical rhythm matching Google's content spacing.
+        Material 3 Expressive reading column — centred, comfortable
+        line length, generous vertical rhythm matching the homepage
+        and header surface tokens.
       */}
       <main className="mx-auto max-w-[768px] px-6 py-12 md:py-20 lg:px-8">
         {children}

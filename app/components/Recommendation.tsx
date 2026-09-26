@@ -24,19 +24,74 @@ export interface RecommendationProps {
   onSelect?: (post: BlogPost) => void;
 }
 
-/* ── Material 3 Expressive · Pixel UI tokens ────────────── */
+/* ── Surface tokens (mirrors header + home page) ────────── */
 const SURFACE =
   "bg-white dark:bg-[#1E1F20] " +
-  "border border-[#C4C7C5]/60 dark:border-[#3C4043] " +
   "shadow-[0_1px_3px_rgba(0,0,0,0.06),0_8px_24px_-16px_rgba(0,0,0,0.35)] " +
   "dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_8px_24px_-16px_rgba(0,0,0,0.9)]";
 
+const SUBTLE = "bg-[#F0F4F9] dark:bg-[#282A2C]";
+
 const EASE = "ease-[cubic-bezier(0.2,0,0,1)]";
+const SPRING = "ease-[cubic-bezier(0.34,1.56,0.64,1)]";
 
 const FOCUS =
   "focus-visible:outline-none focus-visible:ring-2 " +
-  "focus-visible:ring-[#0B57D0] dark:focus-visible:ring-[#A8C7FA] " +
+  "focus-visible:ring-[#1F1F1F] dark:focus-visible:ring-[#E3E3E3] " +
   "focus-visible:ring-offset-0";
+
+/* ── Neutral inverted tokens (same as home + header) ────── */
+const SOLID = "bg-[#1F1F1F] text-white dark:bg-[#E3E3E3] dark:text-[#1F1F1F]";
+
+/* Pixel / Material Expressive motion curves */
+const easeOut = [0.16, 1, 0.3, 1] as const;
+const easeEmphasized = [0.2, 0, 0, 1] as const;
+
+/* ────────────────────────────────────────────────────────────
+   Material 3 "Expressive" shape library for the active dot.
+   Each shape is defined with just 4 animated properties so the
+   shared layout indicator can morph fluidly between them.
+   ──────────────────────────────────────────────────────────── */
+type DotShape = {
+  borderRadius: string;
+  rotate: number;
+  scaleX: number;
+  scaleY: number;
+};
+
+const DOT_SHAPES: DotShape[] = [
+  // 0 · Circle — the timeless M3 base
+  { borderRadius: "50%", rotate: 0, scaleX: 1, scaleY: 1 },
+  // 1 · Squircle — the Material 3 signature shape
+  { borderRadius: "32%", rotate: 0, scaleX: 1.05, scaleY: 1.05 },
+  // 2 · Diamond — rotated soft square
+  { borderRadius: "16%", rotate: 45, scaleX: 1, scaleY: 1 },
+  // 3 · Leaf — opposing rounded corners, pointed tips
+  { borderRadius: "50% 4% 50% 4%", rotate: 0, scaleX: 1.1, scaleY: 1.1 },
+  // 4 · Pill — stretched horizontally
+  { borderRadius: "50%", rotate: 0, scaleX: 1.65, scaleY: 0.85 },
+  // 5 · Flower — petal form via rotated asymmetric radii
+  { borderRadius: "50% 22% 50% 22%", rotate: 45, scaleX: 1.1, scaleY: 1.1 },
+  // 6 · Blob — organic, hand-shaped
+  { borderRadius: "58% 42% 55% 45%", rotate: 0, scaleX: 1.05, scaleY: 1.05 },
+  // 7 · Rounded square — quiet counterpart to the circle
+  { borderRadius: "14%", rotate: 0, scaleX: 1, scaleY: 1 },
+];
+
+/* Shared spring configs — high stiffness, moderate damping = snappy but soft */
+const layoutSpring = {
+  type: "spring" as const,
+  stiffness: 480,
+  damping: 38,
+  mass: 0.8,
+};
+
+const shapeSpring = {
+  type: "spring" as const,
+  stiffness: 380,
+  damping: 26,
+  mass: 0.7,
+};
 
 export default function Recommendation({
   currentRoute,
@@ -101,10 +156,6 @@ export default function Recommendation({
   const showProgress =
     !paused && !reduceMotion && rotateMs > 0 && recs.length > 1;
 
-  // Shared framer-motion transition curves (Material-y, matches tailwind ease)
-  const easeOut = [0.16, 1, 0.3, 1] as const;
-  const easeInOut = [0.4, 0, 0.2, 1] as const;
-
   return (
     <section
       className={`w-full ${className}`.trim()}
@@ -121,20 +172,19 @@ export default function Recommendation({
       {/* ---------------------------- HEADER ---------------------------- */}
       <div className="mb-4 flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          {/* Section icon — squircle in solid tonal blue */}
+          {/* Section icon — solid inverted squircle, gentle idle rotation */}
           <motion.span
-            animate={reduceMotion ? undefined : { rotate: [0, 8, -8, 0] }}
+            animate={reduceMotion ? undefined : { rotate: [0, 6, -6, 0] }}
             transition={{
-              duration: 5,
+              duration: 6,
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="
+            className={`
               grid h-10 w-10 shrink-0 place-items-center rounded-[14px]
-              bg-[#0B57D0] text-white
+              ${SOLID}
               shadow-[0_2px_6px_rgba(0,0,0,0.12)]
-              dark:bg-[#A8C7FA] dark:text-[#041E49]
-            "
+            `}
           >
             <Sparkles className="h-4 w-4" aria-hidden="true" />
           </motion.span>
@@ -149,14 +199,14 @@ export default function Recommendation({
           </div>
         </div>
 
-        {/* Counter chip — matches site-wide chips */}
+        {/* Counter chip — monochrome, subtle slide */}
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.span
             key={active}
-            initial={{ opacity: 0, y: -4 }}
+            initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 4 }}
-            transition={{ duration: 0.22 }}
+            exit={{ opacity: 0, y: 6 }}
+            transition={{ duration: 0.28, ease: easeOut }}
             className={`
               inline-flex items-center gap-1 rounded-full
               py-1 pl-2.5 pr-3 ${SURFACE}
@@ -177,50 +227,47 @@ export default function Recommendation({
       {/* ---------------------------- CARD ---------------------------- */}
       <motion.div
         whileHover={reduceMotion ? undefined : { y: -2 }}
-        transition={{ duration: 0.25, ease: easeOut }}
+        transition={{ duration: 0.32, ease: easeOut }}
         className={`
           relative min-h-[280px] overflow-hidden rounded-[28px]
           ${SURFACE}
           transition-shadow duration-300 ${EASE}
-          hover:shadow-[0_2px_6px_rgba(0,0,0,0.1),0_18px_40px_-20px_rgba(11,87,208,0.5)]
-          dark:hover:shadow-[0_2px_6px_rgba(0,0,0,0.7),0_18px_40px_-20px_rgba(168,199,250,0.35)]
+          hover:shadow-[0_2px_6px_rgba(0,0,0,0.1),0_18px_40px_-20px_rgba(0,0,0,0.6)]
+          dark:hover:shadow-[0_2px_6px_rgba(0,0,0,0.7),0_18px_40px_-20px_rgba(255,255,255,0.3)]
           md:min-h-[240px]
         `}
       >
-        {/* Progress bar — Pixel blue gradient */}
+        {/* Progress bar — solid neutral fill */}
         <div className="absolute inset-x-0 top-0 z-10 h-1 bg-[#F0F4F9] dark:bg-[#282A2C]">
           <AnimatePresence initial={false}>
             {showProgress && (
               <motion.div
                 key={active}
-                initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
+                initial={{ scaleX: 0, opacity: 1 }}
+                animate={{ scaleX: 1, opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{
-                  width: {
+                  scaleX: {
                     duration: rotateMs / 1000,
                     ease: "linear",
                   },
-                  opacity: { duration: 0.2 },
+                  opacity: { duration: 0.25, ease: easeOut },
                 }}
-                className="
-                  h-full bg-gradient-to-r
-                  from-[#0B57D0] via-[#4A8FF0] to-[#A8C7FA]
-                  dark:from-[#A8C7FA] dark:via-[#D3E3FD] dark:to-[#E8F0FE]
-                "
+                style={{ transformOrigin: "left center" }}
+                className="h-full w-full bg-[#1F1F1F] dark:bg-[#E3E3E3]"
               />
             )}
           </AnimatePresence>
         </div>
 
-        {/* Card content with fade+blur slide transition */}
+        {/* Card content — Pixel-style fade + subtle blur + rise */}
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={active}
-            initial={{ opacity: 0, y: 16, filter: "blur(8px)" }}
+            initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -16, filter: "blur(8px)" }}
-            transition={{ duration: 0.4, ease: easeInOut }}
+            exit={{ opacity: 0, y: -12, filter: "blur(6px)" }}
+            transition={{ duration: 0.42, ease: easeEmphasized }}
             className="absolute inset-0"
           >
             <Link
@@ -229,38 +276,36 @@ export default function Recommendation({
               className={`
                 group flex h-full flex-col justify-between p-5
                 focus-visible:outline-2 focus-visible:outline-offset-[-2px]
-                focus-visible:outline-[#0B57D0] dark:focus-visible:outline-[#A8C7FA]
+                focus-visible:outline-[#1F1F1F] dark:focus-visible:outline-[#E3E3E3]
                 md:p-7
               `}
             >
               <div>
-                {/* Rank chip — round → squircle shape morph on hover */}
+                {/* Rank chip + match % — subtle stagger-in */}
                 <div className="mb-3 flex items-center gap-2">
                   <motion.span
-                    initial={{ scale: 0.8, opacity: 0 }}
+                    initial={{ scale: 0.86, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.08, ease: easeOut }}
-                    className="
+                    transition={{ delay: 0.06, duration: 0.32, ease: easeOut }}
+                    className={`
                       inline-flex items-center gap-2 rounded-full
                       py-1 pl-1 pr-2.5 text-[10px] font-bold uppercase tracking-wide
-                      bg-[#D3E3FD] ring-1 ring-inset ring-[#0B57D0]/25
-                      dark:bg-[#0B57D0]/25 dark:ring-[#A8C7FA]/35
-                    "
+                      ${SUBTLE}
+                    `}
                   >
                     <span
-                      className="
+                      className={`
                         grid h-5 w-5 shrink-0 place-items-center rounded-full
-                        bg-[#0B57D0] text-white
-                        dark:bg-[#A8C7FA] dark:text-[#041E49]
-                        transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                        ${SOLID}
+                        transition-all duration-300 ${SPRING}
                         group-hover:rounded-[6px]
-                      "
+                      `}
                     >
                       <span className="font-mono text-[9px] font-bold tabular-nums">
                         {String(active + 1).padStart(2, "0")}
                       </span>
                     </span>
-                    <span className="text-[#041E49] dark:text-[#D3E3FD]">
+                    <span className="text-[#1F1F1F] dark:text-[#E3E3E3]">
                       Rank
                     </span>
                   </motion.span>
@@ -268,26 +313,35 @@ export default function Recommendation({
                   <motion.span
                     initial={{ opacity: 0, x: -4 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.12 }}
+                    transition={{ delay: 0.1, duration: 0.32, ease: easeOut }}
                     className="
                       inline-flex items-center gap-1.5 text-[11px] font-bold
                       uppercase tracking-[0.14em]
-                      text-[#0B57D0] dark:text-[#A8C7FA]
+                      text-[#1F1F1F] dark:text-[#E3E3E3]
                     "
                   >
-                    <span
+                    <motion.span
                       aria-hidden="true"
+                      animate={
+                        reduceMotion
+                          ? undefined
+                          : { opacity: [1, 0.35, 1], scale: [1, 0.85, 1] }
+                      }
+                      transition={{
+                        duration: 1.8,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
                       className="
                         inline-block h-1.5 w-1.5 rounded-full
-                        bg-[#0B57D0] dark:bg-[#A8C7FA]
-                        animate-pulse
+                        bg-[#1F1F1F] dark:bg-[#E3E3E3]
                       "
                     />
                     {pct}% match
                   </motion.span>
                 </div>
 
-                {/* Topic pills — tonal, shape morph when matched */}
+                {/* Topic pills — matched = filled inverted, others = subtle */}
                 {topics.length > 0 && (
                   <div className="mb-3 flex flex-wrap gap-1.5">
                     {topics.map((t, i) => {
@@ -298,7 +352,8 @@ export default function Recommendation({
                           initial={{ opacity: 0, x: -8 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{
-                            delay: 0.1 + i * 0.05,
+                            delay: 0.08 + i * 0.045,
+                            duration: 0.32,
                             ease: easeOut,
                           }}
                           className={`
@@ -307,8 +362,8 @@ export default function Recommendation({
                             transition-colors duration-300 ${EASE}
                             ${
                               isMatch
-                                ? "bg-[#0B57D0] text-white dark:bg-[#A8C7FA] dark:text-[#041E49]"
-                                : "bg-[#F0F4F9] text-[#444746] ring-1 ring-inset ring-[#C4C7C5]/60 dark:bg-[#282A2C] dark:text-[#C4C7C5] dark:ring-[#3C4043]"
+                                ? `${SOLID}`
+                                : "bg-[#F0F4F9] text-[#444746] dark:bg-[#282A2C] dark:text-[#C4C7C5]"
                             }
                           `}
                         >
@@ -323,12 +378,11 @@ export default function Recommendation({
                 <motion.h3
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.15, ease: easeOut }}
+                  transition={{ delay: 0.14, duration: 0.36, ease: easeOut }}
                   className="
                     text-lg font-bold leading-snug tracking-tight
                     text-[#1F1F1F] transition-colors duration-300
-                    group-hover:text-[#0B57D0]
-                    dark:text-[#E3E3E3] dark:group-hover:text-[#A8C7FA]
+                    dark:text-[#E3E3E3]
                     md:text-2xl md:leading-[1.2]
                   "
                 >
@@ -340,7 +394,11 @@ export default function Recommendation({
                   <motion.p
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2, ease: easeOut }}
+                    transition={{
+                      delay: 0.18,
+                      duration: 0.36,
+                      ease: easeOut,
+                    }}
                     className="
                       mt-2 line-clamp-2 text-sm leading-6
                       text-[#444746] dark:text-[#C4C7C5]
@@ -352,47 +410,43 @@ export default function Recommendation({
                 )}
               </div>
 
-              {/* Match bar + CTA */}
+              {/* Match bar + arrow CTA */}
               <motion.div
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.25, ease: easeOut }}
+                transition={{ delay: 0.22, duration: 0.36, ease: easeOut }}
                 className="mt-5 flex items-center gap-3"
               >
                 <div className="h-1 flex-1 overflow-hidden rounded-full bg-[#F0F4F9] dark:bg-[#282A2C]">
                   <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${pct}%` }}
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: pct / 100 }}
                     transition={{
-                      duration: 0.8,
+                      duration: 0.9,
                       delay: 0.25,
-                      ease: easeOut,
+                      ease: easeEmphasized,
                     }}
-                    className="
-                      h-full rounded-full bg-gradient-to-r
-                      from-[#0B57D0] to-[#4A8FF0]
-                      dark:from-[#A8C7FA] dark:to-[#D3E3FD]
-                    "
+                    style={{ transformOrigin: "left center" }}
+                    className="h-full w-full rounded-full bg-[#1F1F1F] dark:bg-[#E3E3E3]"
                   />
                 </div>
 
-                {/* Arrow chip — circle → squircle on hover */}
+                {/* Arrow chip — circle → squircle, inverted fill on hover */}
                 <span
-                  className="
+                  className={`
                     grid h-8 w-8 shrink-0 place-items-center rounded-full
-                    bg-[#D3E3FD] text-[#0B57D0]
-                    dark:bg-[#0B57D0]/25 dark:text-[#A8C7FA]
-                    transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                    ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
+                    transition-all duration-300 ${SPRING}
                     group-hover:rounded-[10px]
-                    group-hover:bg-[#0B57D0] group-hover:text-white
-                    dark:group-hover:bg-[#A8C7FA] dark:group-hover:text-[#041E49]
-                  "
+                    group-hover:bg-[#1F1F1F] group-hover:text-white
+                    dark:group-hover:bg-[#E3E3E3] dark:group-hover:text-[#1F1F1F]
+                  `}
                 >
                   <ArrowRight
-                    className="
-                      h-4 w-4 transition-transform duration-300
+                    className={`
+                      h-4 w-4 transition-transform duration-300 ${EASE}
                       group-hover:translate-x-0.5
-                    "
+                    `}
                     aria-hidden="true"
                   />
                 </span>
@@ -402,33 +456,81 @@ export default function Recommendation({
         </AnimatePresence>
       </motion.div>
 
-      {/* ---------------------------- DOTS ---------------------------- */}
+      {/* ---------------------------- DOTS ----------------------------
+          M3 "Expressive" shape-morphing page indicator:
+          · A single shared layout indicator slides between positions
+          · At each position it morphs into a distinct shape
+          · Springs tuned so movement + morph feel simultaneous
+          -------------------------------------------------------------- */}
       {recs.length > 1 && (
-        <div className="mt-4 flex items-center justify-center gap-1.5">
-          {Array.from({ length: dotCount }).map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              aria-label={`Show article ${i + 1}`}
-              aria-current={i === dotActive}
-              onClick={() => setActive(i)}
-              className={`
-                group flex h-3 items-center px-0.5
-                rounded-full ${FOCUS}
-              `}
-            >
-              <span
+        <div className="mt-5 flex items-center justify-center gap-1.5">
+          {Array.from({ length: dotCount }).map((_, i) => {
+            const isActive = i === dotActive;
+            const shape = DOT_SHAPES[i % DOT_SHAPES.length];
+            return (
+              <button
+                key={i}
+                type="button"
+                aria-label={`Show article ${i + 1}`}
+                aria-current={isActive}
+                onClick={() => setActive(i)}
                 className={`
-                  block h-1.5 rounded-full transition-all duration-300 ${EASE}
-                  ${
-                    i === dotActive
-                      ? "w-6 bg-[#0B57D0] dark:bg-[#A8C7FA]"
-                      : "w-1.5 bg-[#C4C7C5] group-hover:bg-[#747775] dark:bg-[#3C4043] dark:group-hover:bg-[#8E918F]"
-                  }
+                  group relative grid h-7 w-7 place-items-center rounded-full
+                  ${FOCUS}
                 `}
-              />
-            </button>
-          ))}
+              >
+                {/* Inactive base dot — soft gray, grows + darkens on hover */}
+                <motion.span
+                  className="
+                    block h-1.5 w-1.5 rounded-full
+                    bg-[#C4C7C5] dark:bg-[#3C4043]
+                    transition-colors duration-300
+                    group-hover:bg-[#747775] dark:group-hover:bg-[#8E918F]
+                  "
+                  animate={{
+                    opacity: isActive ? 0 : 1,
+                    scale: isActive ? 0.3 : 1,
+                  }}
+                  transition={{ duration: 0.28, ease: easeOut }}
+                />
+
+                {/* Active shared indicator — morphs shape as it slides.
+                    Outer wrapper handles layout movement (uniform size).
+                    Inner span handles shape morph (border-radius / rotate /
+                    scaleX / scaleY) so the two animations don't fight. */}
+                {isActive && (
+                  <motion.span
+                    layoutId="recommendation-dot-indicator"
+                    transition={{ layout: layoutSpring }}
+                    className="
+                      pointer-events-none absolute inset-0 z-10
+                      grid place-items-center
+                    "
+                  >
+                    <motion.span
+                      initial={false}
+                      animate={{
+                        borderRadius: shape.borderRadius,
+                        rotate: shape.rotate,
+                        scaleX: shape.scaleX,
+                        scaleY: shape.scaleY,
+                      }}
+                      transition={{
+                        borderRadius: shapeSpring,
+                        rotate: shapeSpring,
+                        scaleX: shapeSpring,
+                        scaleY: shapeSpring,
+                      }}
+                      className="
+                        block h-4 w-4
+                        bg-[#1F1F1F] dark:bg-[#E3E3E3]
+                      "
+                    />
+                  </motion.span>
+                )}
+              </button>
+            );
+          })}
         </div>
       )}
     </section>

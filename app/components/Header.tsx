@@ -15,30 +15,13 @@ interface NavItem {
   href: string;
   label: string;
   icon: React.ReactNode;
-  /** icon container — idle (round) */
+  /** icon container — idle (round, blends into background) */
   tint: string;
   /** tile background — selected */
   soft: string;
-  /** icon container — selected (squircle) */
+  /** icon container — selected (squircle, on top of selected tile) */
   solid: string;
 }
-
-/* ── Material 3 Expressive · Pixel UI tokens ────────────── */
-const SURFACE =
-  "bg-white dark:bg-[#1E1F20] " +
-  "border border-[#C4C7C5] dark:border-[#3C4043] " +
-  "shadow-[0_1px_3px_rgba(0,0,0,0.10),0_8px_24px_-14px_rgba(0,0,0,0.45)] " +
-  "dark:shadow-[0_1px_3px_rgba(0,0,0,0.65),0_8px_24px_-14px_rgba(0,0,0,0.95)]";
-
-const EASE = "ease-[cubic-bezier(0.2,0,0,1)]";
-const SPRING = "ease-[cubic-bezier(0.34,1.56,0.64,1)]";
-
-const FOCUS =
-  "focus-visible:outline-none focus-visible:ring-2 " +
-  "focus-visible:ring-[#0B57D0] dark:focus-visible:ring-[#A8C7FA] " +
-  "focus-visible:ring-offset-0";
-
-const STATE = "hover:bg-[#0B57D0]/[0.08] dark:hover:bg-[#A8C7FA]/[0.14]";
 
 /* ── Mobile tile ────────────────────────────────────────── */
 interface MobileTileProps {
@@ -67,14 +50,14 @@ const MobileTile: React.FC<MobileTileProps> = ({
   onSelect,
 }) => {
   const className = `
-    group flex items-center gap-2.5 rounded-full p-1.5 pr-3
-    transition-all duration-300 ${EASE}
+    group flex items-center gap-2.5 rounded-full p-3 pr-3
+    transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)]
     active:scale-[0.96] active:rounded-[20px]
-    ${FOCUS}
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F1F1F] dark:focus-visible:ring-[#E3E3E3] focus-visible:ring-offset-0
     ${
       active
-        ? soft
-        : "bg-[#F0F4F9] hover:bg-[#E4E9F0] dark:bg-[#282A2C] dark:hover:bg-[#303134]"
+        ? `${soft} text-white dark:text-[#1F1F1F]`
+        : "bg-[#F0F4F9] hover:bg-[#E4E9F0] text-[#1F1F1F] dark:bg-[#282A2C] dark:hover:bg-[#303134] dark:text-[#E3E3E3]"
     }
   `;
 
@@ -83,14 +66,23 @@ const MobileTile: React.FC<MobileTileProps> = ({
       {/* Shape morph: circle → squircle when selected */}
       <span
         className={`
-          grid h-9 w-9 shrink-0 place-items-center
-          transition-all duration-300 ${SPRING}
-          ${active ? `rounded-[10px] ${solid}` : `rounded-full ${tint}`}
+          grid h-10 w-10 shrink-0 place-items-center
+          transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
+          ${active ? `rounded-xl ${solid}` : `rounded-full ${tint}`}
         `}
       >
         {icon}
       </span>
-      <span className="truncate text-[13px] font-semibold leading-none text-[#1F1F1F] dark:text-[#E3E3E3]">
+      <span
+        className={`
+          truncate text-[15px] font-semibold leading-none
+          ${
+            active
+              ? "text-white dark:text-[#1F1F1F]"
+              : "text-[#1F1F1F] dark:text-[#E3E3E3]"
+          }
+        `}
+      >
         {label}
       </span>
     </>
@@ -138,20 +130,20 @@ const Header: React.FC = () => {
       {
         href: "/blogs",
         label: "Blogs",
-        icon: <FileText className="h-4 w-4 shrink-0" aria-hidden="true" />,
-        tint: "bg-[#D3E3FD] text-[#0B57D0] dark:bg-[#0B57D0]/25 dark:text-[#A8C7FA]",
-        soft: "bg-[#D3E3FD] ring-1 ring-inset ring-[#0B57D0]/25 dark:bg-[#0B57D0]/25 dark:ring-[#A8C7FA]/35",
-        solid: "bg-[#0B57D0] text-white dark:bg-[#A8C7FA] dark:text-[#041E49]",
+        icon: <FileText className="h-5 w-5 shrink-0" aria-hidden="true" />,
+        tint: "bg-transparent text-[#1F1F1F] dark:text-[#E3E3E3]",
+        soft: "bg-[#1F1F1F] dark:bg-[#E3E3E3]",
+        solid: "bg-transparent text-white dark:text-[#1F1F1F]",
       },
       {
         href: "/git-track",
         label: "Commits",
         icon: (
-          <PiGithubLogoBold className="h-4 w-4 shrink-0" aria-hidden="true" />
+          <PiGithubLogoBold className="h-5 w-5 shrink-0" aria-hidden="true" />
         ),
-        tint: "bg-[#C8F0D4] text-[#146C2E] dark:bg-[#146C2E]/35 dark:text-[#6DD58C]",
-        soft: "bg-[#C8F0D4] ring-1 ring-inset ring-[#146C2E]/25 dark:bg-[#146C2E]/35 dark:ring-[#6DD58C]/35",
-        solid: "bg-[#146C2E] text-white dark:bg-[#6DD58C] dark:text-[#072711]",
+        tint: "bg-transparent text-[#1F1F1F] dark:text-[#E3E3E3]",
+        soft: "bg-[#1F1F1F] dark:bg-[#E3E3E3]",
+        solid: "bg-transparent text-white dark:text-[#1F1F1F]",
       },
     ],
     [],
@@ -162,19 +154,18 @@ const Header: React.FC = () => {
       {
         href: "https://brewrepo.cloudkinshuk.in",
         label: "Sponsor",
-        icon: <GiCoffeeMug className="h-4 w-4 shrink-0" aria-hidden="true" />,
-        tint: "bg-[#FFE8B8] text-[#7A4E00] dark:bg-[#F9AB00]/20 dark:text-[#FDD663]",
-        soft: "bg-[#FFE8B8] ring-1 ring-inset ring-[#F9AB00]/30 dark:bg-[#F9AB00]/20 dark:ring-[#FDD663]/35",
-        solid:
-          "bg-[#F9AB00] text-[#2A1800] dark:bg-[#FDD663] dark:text-[#2A1800]",
+        icon: <GiCoffeeMug className="h-5 w-5 shrink-0" aria-hidden="true" />,
+        tint: "bg-transparent text-[#1F1F1F] dark:text-[#E3E3E3]",
+        soft: "bg-[#1F1F1F] dark:bg-[#E3E3E3]",
+        solid: "bg-transparent text-white dark:text-[#1F1F1F]",
       },
       {
         href: "https://github.com/kinshukjainn/cloudkinshuk",
         label: "GitHub",
-        icon: <Github className="h-4 w-4 shrink-0" aria-hidden="true" />,
-        tint: "bg-[#EADDFF] text-[#6750A4] dark:bg-[#D0BCFF]/20 dark:text-[#D0BCFF]",
-        soft: "bg-[#EADDFF] ring-1 ring-inset ring-[#6750A4]/30 dark:bg-[#D0BCFF]/20 dark:ring-[#D0BCFF]/35",
-        solid: "bg-[#6750A4] text-white dark:bg-[#D0BCFF] dark:text-[#21005D]",
+        icon: <Github className="h-5 w-5 shrink-0" aria-hidden="true" />,
+        tint: "bg-transparent text-[#1F1F1F] dark:text-[#E3E3E3]",
+        soft: "bg-[#1F1F1F] dark:bg-[#E3E3E3]",
+        solid: "bg-transparent text-white dark:text-[#1F1F1F]",
       },
     ],
     [],
@@ -239,22 +230,25 @@ const Header: React.FC = () => {
             <Link
               href="/"
               aria-label="Cloudkinshuk — Home"
-              className={`
+              className="
                 group flex min-w-0 items-center gap-2.5 rounded-full
-                py-2 pl-2 pr-4 ${SURFACE}
-                transition-all duration-300 ${EASE}
-                hover:shadow-[0_1px_3px_rgba(0,0,0,0.14),0_14px_32px_-14px_rgba(11,87,208,0.55)]
-                dark:hover:shadow-[0_1px_3px_rgba(0,0,0,0.7),0_14px_32px_-14px_rgba(168,199,250,0.35)]
+                py-3 pl-2 pr-4
+                bg-white dark:bg-[#1E1F20]
+
+                shadow-[0_1px_3px_rgba(0,0,0,0.10),0_8px_24px_-14px_rgba(0,0,0,0.45)]
+                dark:shadow-[0_1px_3px_rgba(0,0,0,0.65),0_8px_24px_-14px_rgba(0,0,0,0.95)]
+                transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)]
+                hover:shadow-[0_1px_3px_rgba(0,0,0,0.14),0_14px_32px_-14px_rgba(0,0,0,0.55)]
+                dark:hover:shadow-[0_1px_3px_rgba(0,0,0,0.7),0_14px_32px_-14px_rgba(255,255,255,0.35)]
                 active:scale-[0.97] active:rounded-[22px]
-                lg:max-w-[230px] ${FOCUS}
-              `}
+                lg:max-w-[230px]
+                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F1F1F] dark:focus-visible:ring-[#E3E3E3] focus-visible:ring-offset-0
+              "
             >
               <span
                 className="
                   relative grid h-8 w-8 shrink-0 place-items-center overflow-hidden
-                  rounded-full bg-[#D3E3FD]
-                  ring-1 ring-inset ring-[#0B57D0]/20
-                  dark:bg-[#0842A0] dark:ring-[#A8C7FA]/25
+                  rounded-full bg-[#F0F4F9] dark:bg-[#282A2C]
                 "
               >
                 <Image
@@ -262,11 +256,11 @@ const Header: React.FC = () => {
                   alt=""
                   width={20}
                   height={20}
-                  className={`
+                  className="
                     h-5 w-5 object-contain transition-transform duration-500
-                    ${SPRING}
+                    ease-[cubic-bezier(0.34,1.56,0.64,1)]
                     group-hover:rotate-[10deg] group-hover:scale-110
-                  `}
+                  "
                 />
               </span>
               <span className="truncate text-[15px] font-bold tracking-[-0.01em] text-[#1F1F1F] dark:text-[#E3E3E3]">
@@ -277,10 +271,13 @@ const Header: React.FC = () => {
             {/* ── Desktop nav (absolutely centred) ───────────── */}
             <nav
               aria-label="Primary"
-              className={`
+              className="
                 absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2
-                items-center gap-1 rounded-full p-1.5 lg:flex ${SURFACE}
-              `}
+                items-center gap-1 rounded-full p-1 lg:flex
+                bg-white dark:bg-[#1E1F20]
+                shadow-[0_1px_3px_rgba(0,0,0,0.10),0_8px_24px_-14px_rgba(0,0,0,0.45)]
+                dark:shadow-[0_1px_3px_rgba(0,0,0,0.65),0_8px_24px_-14px_rgba(0,0,0,0.95)]
+              "
             >
               {navItems.map((item) => {
                 const active = isActive(item.href);
@@ -290,34 +287,33 @@ const Header: React.FC = () => {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={`
-                      group relative flex items-center gap-2 rounded-full
-                      py-1.5 pl-1.5 pr-4 text-sm font-semibold
-                      transition-all duration-300 ${EASE}
-                      active:scale-[0.95] active:rounded-[20px] ${FOCUS}
+                      group relative flex items-center gap-2 rounded-full 
+                      py-1.5 px-4 text-sm font-semibold
+                      transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)]
+                      active:scale-[0.95] active:rounded-[20px]
+                      focus-visible:outline-none focus-visible:ring-offset-0
                       ${
                         active
-                          ? item.soft
-                          : `text-[#444746] dark:text-[#C4C7C5] ${STATE} hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]`
+                          ? `${item.soft} text-white dark:text-[#1F1F1F]`
+                          : `text-[#1F1F1F] dark:text-[#E3E3E3] hover:bg-black/[0.06] dark:hover:bg-white/[0.10]`
                       }
                     `}
                   >
                     <span
                       className={`
-                        grid h-6 w-6 shrink-0 place-items-center
-                        transition-all duration-300 ${SPRING}
+                        grid h-10 w-10 shrink-0 place-items-center
+                        transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
                         ${
                           active
-                            ? `rounded-[7px] ${item.solid}`
-                            : `rounded-full ${active ? "" : "bg-transparent"}`
+                            ? `rounded-xl ${item.solid}`
+                            : `rounded-full ${item.tint}`
                         }
                       `}
                     >
                       {item.icon}
                     </span>
                     <span
-                      className={
-                        active ? "text-[#1F1F1F] dark:text-[#E3E3E3]" : ""
-                      }
+                      className={active ? "text-white dark:text-[#1F1F1F]" : ""}
                     >
                       {item.label}
                     </span>
@@ -333,19 +329,19 @@ const Header: React.FC = () => {
                 href="https://brewrepo.cloudkinshuk.in"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`
+                className="
                   hidden items-center gap-2 rounded-full lg:inline-flex
-                  bg-[#0B57D0] px-4 py-2.5 text-sm font-semibold text-white
-                  shadow-[0_1px_3px_rgba(0,0,0,0.16),0_8px_20px_-10px_rgba(11,87,208,0.9)]
-                  transition-all duration-300 ${EASE}
-                  hover:brightness-110
-                  hover:shadow-[0_1px_3px_rgba(0,0,0,0.2),0_12px_28px_-10px_rgba(11,87,208,1)]
+                  bg-[#1F1F1F] px-4 py-2.5 text-sm font-semibold text-white
+                  shadow-[0_1px_3px_rgba(0,0,0,0.16),0_8px_20px_-10px_rgba(0,0,0,0.9)]
+                  transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)]
+                  hover:brightness-125
+                  hover:shadow-[0_1px_3px_rgba(0,0,0,0.2),0_12px_28px_-10px_rgba(0,0,0,1)]
                   active:scale-[0.95] active:rounded-[18px]
-                  dark:bg-[#A8C7FA] dark:text-[#041E49]
-                  dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_8px_20px_-10px_rgba(168,199,250,0.75)]
-                  dark:hover:shadow-[0_1px_3px_rgba(0,0,0,0.7),0_12px_28px_-10px_rgba(168,199,250,0.95)]
-                  ${FOCUS}
-                `}
+                  dark:bg-[#E3E3E3] dark:text-[#1F1F1F]
+                  dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_8px_20px_-10px_rgba(255,255,255,0.55)]
+                  dark:hover:shadow-[0_1px_3px_rgba(0,0,0,0.7),0_12px_28px_-10px_rgba(255,255,255,0.75)]
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F1F1F] dark:focus-visible:ring-[#E3E3E3] focus-visible:ring-offset-0
+                "
               >
                 <GiCoffeeMug className="h-4 w-4 shrink-0" aria-hidden="true" />
                 <span>Sponsor</span>
@@ -353,7 +349,13 @@ const Header: React.FC = () => {
 
               {/* Icon cluster */}
               <div
-                className={`flex items-center gap-0.5 rounded-full p-1.5 ${SURFACE}`}
+                className="
+                  flex items-center gap-0.5 rounded-full py-1.5 px-3
+                  bg-white dark:bg-[#1E1F20]
+
+                  shadow-[0_1px_3px_rgba(0,0,0,0.10),0_8px_24px_-14px_rgba(0,0,0,0.45)]
+                  dark:shadow-[0_1px_3px_rgba(0,0,0,0.65),0_8px_24px_-14px_rgba(0,0,0,0.95)]
+                "
               >
                 {/* GitHub — hidden on tiny screens */}
                 <a
@@ -361,15 +363,16 @@ const Header: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub repository"
-                  className={`
-                    hidden h-9 w-9 place-items-center rounded-full sm:grid
-                    text-[#444746] dark:text-[#C4C7C5] ${STATE}
-                    hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]
-                    transition-all duration-300 ${EASE}
-                    active:scale-90 active:rounded-[10px] ${FOCUS}
-                  `}
+                  className="
+                    hidden h-12 w-12 place-items-center rounded-full sm:grid
+                    text-[#1F1F1F] dark:text-[#E3E3E3]
+                    hover:bg-black/[0.06] dark:hover:bg-white/[0.10]
+                    transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)]
+                    active:scale-90 active:rounded-[10px]
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F1F1F] dark:focus-visible:ring-[#E3E3E3] focus-visible:ring-offset-0
+                  "
                 >
-                  <Github className="h-[18px] w-[18px]" aria-hidden="true" />
+                  <Github className="h-[23px] w-[23px]" aria-hidden="true" />
                 </a>
 
                 {/* Theme toggle */}
@@ -379,20 +382,21 @@ const Header: React.FC = () => {
                   aria-label={
                     isDark ? "Switch to light theme" : "Switch to dark theme"
                   }
-                  className={`
-                    grid h-9 w-9 place-items-center rounded-full
-                    text-[#444746] dark:text-[#C4C7C5] ${STATE}
-                    hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]
-                    transition-all duration-300 ${EASE}
-                    active:scale-90 active:rounded-[10px] ${FOCUS}
-                  `}
+                  className="
+                    grid h-12 w-12 place-items-center rounded-full
+                    text-[#1F1F1F] dark:text-[#E3E3E3]
+                    hover:bg-black/[0.06] dark:hover:bg-white/[0.10]
+                    transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)]
+                    active:scale-90 active:rounded-[10px]
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F1F1F] dark:focus-visible:ring-[#E3E3E3] focus-visible:ring-offset-0
+                  "
                 >
                   {mounted ? (
                     <span className="relative grid h-[18px] w-[18px] place-items-center">
                       <Sun
                         aria-hidden="true"
                         className={`
-                          absolute h-[18px] w-[18px] transition-all duration-500 ${SPRING}
+                          absolute h-[23px] w-[23px] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]
                           ${
                             isDark
                               ? "rotate-0 scale-100 opacity-100"
@@ -403,7 +407,7 @@ const Header: React.FC = () => {
                       <Moon
                         aria-hidden="true"
                         className={`
-                          absolute h-[18px] w-[18px] transition-all duration-500 ${SPRING}
+                          absolute h-[23px] w-[23px] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]
                           ${
                             isDark
                               ? "rotate-90 scale-0 opacity-0"
@@ -424,19 +428,20 @@ const Header: React.FC = () => {
                   aria-label={isOpen ? "Close menu" : "Open menu"}
                   aria-expanded={isOpen}
                   aria-controls="mobile-menu"
-                  className={`
+                  className="
                     grid h-9 w-9 place-items-center rounded-full lg:hidden
-                    text-[#444746] dark:text-[#C4C7C5] ${STATE}
-                    hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]
-                    transition-all duration-300 ${EASE}
-                    active:scale-90 active:rounded-[10px] ${FOCUS}
-                  `}
+                    text-[#1F1F1F] dark:text-[#E3E3E3]
+                    hover:bg-black/[0.06] dark:hover:bg-white/[0.10]
+                    transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)]
+                    active:scale-90 active:rounded-[10px]
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F1F1F] dark:focus-visible:ring-[#E3E3E3] focus-visible:ring-offset-0
+                  "
                 >
                   <span className="relative grid h-5 w-5 place-items-center">
                     <Menu
                       aria-hidden="true"
                       className={`
-                        absolute h-5 w-5 transition-all duration-300 ${EASE}
+                        absolute h-5 w-5 transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)]
                         ${
                           isOpen
                             ? "rotate-90 scale-50 opacity-0"
@@ -447,7 +452,7 @@ const Header: React.FC = () => {
                     <X
                       aria-hidden="true"
                       className={`
-                        absolute h-5 w-5 transition-all duration-300 ${EASE}
+                        absolute h-5 w-5 transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)]
                         ${
                           isOpen
                             ? "rotate-0 scale-100 opacity-100"
@@ -470,8 +475,12 @@ const Header: React.FC = () => {
           aria-label="Mobile navigation"
           className={`
             absolute inset-x-3 top-full mt-2 origin-top overflow-hidden
-            rounded-[28px] p-2.5 sm:inset-x-5 lg:hidden ${SURFACE}
-            transition-all duration-300 ${EASE}
+            rounded-[38px] p-2.5 sm:inset-x-5 lg:hidden
+            bg-white dark:bg-[#1E1F20]
+
+            shadow-[0_1px_3px_rgba(0,0,0,0.10),0_8px_24px_-14px_rgba(0,0,0,0.45)]
+            dark:shadow-[0_1px_3px_rgba(0,0,0,0.65),0_8px_24px_-14px_rgba(0,0,0,0.95)]
+            transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)]
             ${
               isOpen
                 ? "visible translate-y-0 scale-100 opacity-100"

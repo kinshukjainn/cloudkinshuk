@@ -175,82 +175,40 @@ const CONFIG = {
   },
 };
 
-/* ── Material 3 Expressive · Pixel UI tokens ────────────── */
+/* ── Surface tokens (unchanged from header language) ───── */
 const SURFACE =
   "bg-white dark:bg-[#1E1F20] " +
-  "border border-[#C4C7C5]/60 dark:border-[#3C4043] " +
   "shadow-[0_1px_3px_rgba(0,0,0,0.06),0_8px_24px_-16px_rgba(0,0,0,0.35)] " +
   "dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_8px_24px_-16px_rgba(0,0,0,0.9)]";
+
+const SUBTLE = "bg-[#F0F4F9] dark:bg-[#282A2C]";
 
 const EASE = "ease-[cubic-bezier(0.2,0,0,1)]";
 const SPRING = "ease-[cubic-bezier(0.34,1.56,0.64,1)]";
 
 const FOCUS =
   "focus-visible:outline-none focus-visible:ring-2 " +
-  "focus-visible:ring-[#0B57D0] dark:focus-visible:ring-[#A8C7FA] " +
+  "focus-visible:ring-[#1F1F1F] dark:focus-visible:ring-[#E3E3E3] " +
   "focus-visible:ring-offset-0";
 
-const STATE = "hover:bg-[#0B57D0]/[0.08] dark:hover:bg-[#A8C7FA]/[0.14]";
+const STATE = "hover:bg-black/[0.06] dark:hover:bg-white/[0.10]";
 
-/* ── Colour tints (Material 3 tonal palette) ────────────── */
-const TINTS = {
-  blue: {
-    idle: "bg-[#D3E3FD] text-[#0B57D0] dark:bg-[#0B57D0]/25 dark:text-[#A8C7FA]",
-    solid: "bg-[#0B57D0] text-white dark:bg-[#A8C7FA] dark:text-[#041E49]",
-    soft: "bg-[#D3E3FD] ring-1 ring-inset ring-[#0B57D0]/25 dark:bg-[#0B57D0]/25 dark:ring-[#A8C7FA]/35",
-  },
-  green: {
-    idle: "bg-[#C8F0D4] text-[#146C2E] dark:bg-[#146C2E]/35 dark:text-[#6DD58C]",
-    solid: "bg-[#146C2E] text-white dark:bg-[#6DD58C] dark:text-[#072711]",
-    soft: "bg-[#C8F0D4] ring-1 ring-inset ring-[#146C2E]/25 dark:bg-[#146C2E]/35 dark:ring-[#6DD58C]/35",
-  },
-  amber: {
-    idle: "bg-[#FFE8B8] text-[#7A4E00] dark:bg-[#F9AB00]/20 dark:text-[#FDD663]",
-    solid: "bg-[#F9AB00] text-[#2A1800] dark:bg-[#FDD663] dark:text-[#2A1800]",
-    soft: "bg-[#FFE8B8] ring-1 ring-inset ring-[#F9AB00]/30 dark:bg-[#F9AB00]/20 dark:ring-[#FDD663]/35",
-  },
-  purple: {
-    idle: "bg-[#EADDFF] text-[#6750A4] dark:bg-[#D0BCFF]/25 dark:text-[#D0BCFF]",
-    solid: "bg-[#6750A4] text-white dark:bg-[#D0BCFF] dark:text-[#21005D]",
-    soft: "bg-[#EADDFF] ring-1 ring-inset ring-[#6750A4]/25 dark:bg-[#D0BCFF]/25 dark:ring-[#D0BCFF]/35",
-  },
-  cyan: {
-    idle: "bg-[#C2E7FF] text-[#00639B] dark:bg-[#004A77] dark:text-[#7FCFFF]",
-    solid: "bg-[#00639B] text-white dark:bg-[#7FCFFF] dark:text-[#00344F]",
-    soft: "bg-[#C2E7FF] ring-1 ring-inset ring-[#00639B]/25 dark:bg-[#004A77] dark:ring-[#7FCFFF]/35",
-  },
-  rose: {
-    idle: "bg-[#FFDAD6] text-[#B3261E] dark:bg-[#8C1D18]/40 dark:text-[#F2B8B5]",
-    solid: "bg-[#B3261E] text-white dark:bg-[#F2B8B5] dark:text-[#410E0B]",
-    soft: "bg-[#FFDAD6] ring-1 ring-inset ring-[#B3261E]/25 dark:bg-[#8C1D18]/40 dark:ring-[#F2B8B5]/35",
-  },
-  neutral: {
-    idle: "bg-[#E3E3E3] text-[#1F1F1F] dark:bg-[#C4C7C5]/20 dark:text-[#E3E3E3]",
-    solid: "bg-[#1F1F1F] text-white dark:bg-[#E3E3E3] dark:text-[#1F1F1F]",
-    soft: "bg-[#E3E3E3] ring-1 ring-inset ring-[#1F1F1F]/15 dark:bg-[#C4C7C5]/20 dark:ring-[#E3E3E3]/25",
-  },
+/* ── Neutral "tint" — mirrors the header's monochrome system ── */
+const NEUTRAL = {
+  /** transparent icon container, black/white icon */
+  idle: "bg-transparent text-[#1F1F1F] dark:text-[#E3E3E3]",
+  /** inverted fill — for selected icons & primary actions */
+  solid: "bg-[#1F1F1F] text-white dark:bg-[#E3E3E3] dark:text-[#1F1F1F]",
+  /** inverted fill — for selected tiles */
+  soft: "bg-[#1F1F1F] text-white dark:bg-[#E3E3E3] dark:text-[#1F1F1F]",
 } as const;
 
-type TintKey = keyof typeof TINTS;
-
-/* ── Social icon + tint mapping ─────────────────────────── */
-const SOCIAL_META: Record<string, { tint: TintKey; icon: React.ReactNode }> = {
-  GitHub: {
-    tint: "purple",
-    icon: <Github className="h-3.5 w-3.5" aria-hidden="true" />,
-  },
-  LinkedIn: {
-    tint: "blue",
-    icon: <Linkedin className="h-3.5 w-3.5" aria-hidden="true" />,
-  },
-  Gmail: {
-    tint: "rose",
-    icon: <Mail className="h-3.5 w-3.5" aria-hidden="true" />,
-  },
-  X: {
-    tint: "neutral",
-    icon: <Twitter className="h-3.5 w-3.5" aria-hidden="true" />,
-  },
+/* ── Social icon mapping (monochrome only) ──────────────── */
+const SOCIAL_ICONS: Record<string, React.ReactNode> = {
+  GitHub: <Github className="h-4.5 w-4.5" aria-hidden="true" />,
+  LinkedIn: <Linkedin className="h-4.5 w-4.5" aria-hidden="true" />,
+  Gmail: <Mail className="h-4.5 w-4.5" aria-hidden="true" />,
+  X: <Twitter className="h-4.5 w-4.5" aria-hidden="true" />,
 };
 
 /* ── CREDLY BADGE IDS ───────────────────────────────────── */
@@ -266,23 +224,20 @@ function Section({
   icon,
   title,
   subtitle,
-  tint = "blue",
   children,
 }: {
   icon: React.ReactNode;
   title: string;
   subtitle?: string;
-  tint?: TintKey;
   children: React.ReactNode;
 }) {
-  const t = TINTS[tint];
   return (
     <section className="space-y-5">
       <div className="flex items-center gap-3">
         <span
           className={`
             grid h-10 w-10 shrink-0 place-items-center rounded-[14px]
-            ${t.solid}
+            ${NEUTRAL.solid}
             shadow-[0_2px_6px_rgba(0,0,0,0.12)]
             transition-transform duration-300 ${SPRING}
           `}
@@ -311,9 +266,9 @@ export default function Home() {
     <div
       className="
         min-h-screen bg-[#F7F9FC] text-[#1F1F1F]
-        selection:bg-[#D3E3FD] selection:text-[#041E49]
+        selection:bg-[#1F1F1F] selection:text-white
         dark:bg-[#141414] dark:text-[#E3E3E3]
-        dark:selection:bg-[#0842A0] dark:selection:text-[#D3E3FD]
+        dark:selection:bg-[#E3E3E3] dark:selection:text-[#1F1F1F]
       "
     >
       <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 md:py-16 lg:px-8 lg:py-20">
@@ -324,19 +279,19 @@ export default function Home() {
             <span
               className={`
                 inline-flex items-center gap-1.5 rounded-full
-                py-1.5 pl-1.5 pr-3.5 ${SURFACE}
+                py-1.5 px-2 ${SURFACE}
               `}
             >
               <span
                 className={`
-                  grid h-6 w-6 shrink-0 place-items-center rounded-full
-                  ${TINTS.green.idle}
+                  grid h-8 w-8 shrink-0 place-items-center rounded-full
+                  ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
                   transition-all duration-300 ${SPRING}
                 `}
               >
                 <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
               </span>
-              <span className="text-[11px] font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
+              <span className="text-[13px] font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
                 Available for collaboration
               </span>
             </span>
@@ -344,19 +299,19 @@ export default function Home() {
             <span
               className={`
                 inline-flex items-center gap-1.5 rounded-full
-                py-1.5 pl-1.5 pr-3.5 ${SURFACE}
+                py-1.5 px-2 ${SURFACE}
               `}
             >
               <span
                 className={`
-                  grid h-6 w-6 shrink-0 place-items-center rounded-full
-                  ${TINTS.amber.idle}
+                  grid h-8 w-8 shrink-0 place-items-center rounded-full
+                  ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
                   transition-all duration-300 ${SPRING}
                 `}
               >
-                <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+                <MapPin className="h-4 w-4" aria-hidden="true" />
               </span>
-              <span className="text-[11px] font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
+              <span className="text-[13px] font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
                 {CONFIG.personal.location}
               </span>
             </span>
@@ -384,11 +339,9 @@ export default function Home() {
             {/* Social links — shape-morph chips */}
             <div className="flex flex-wrap gap-2">
               {CONFIG.social.map((s) => {
-                const meta = SOCIAL_META[s.platform] ?? {
-                  tint: "neutral" as TintKey,
-                  icon: <span className="text-[10px] font-bold">@</span>,
-                };
-                const t = TINTS[meta.tint];
+                const icon = SOCIAL_ICONS[s.platform] ?? (
+                  <span className="text-[10px] font-bold">@</span>
+                );
                 return (
                   <a
                     key={s.platform}
@@ -397,25 +350,25 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className={`
                       group inline-flex items-center gap-2 rounded-full
-                      py-1.5 pl-1.5 pr-3.5 ${SURFACE}
+                      py-2 pl-2 pr-4 ${SURFACE}
                       transition-all duration-300 ${EASE}
-                      hover:shadow-[0_1px_3px_rgba(0,0,0,0.12),0_12px_28px_-14px_rgba(11,87,208,0.5)]
-                      dark:hover:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_12px_28px_-14px_rgba(168,199,250,0.4)]
-                      active:scale-[0.96] active:rounded-[18px]
+                      hover:shadow-[0_1px_3px_rgba(0,0,0,0.12),0_12px_28px_-14px_rgba(0,0,0,0.55)]
+                      dark:hover:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_12px_28px_-14px_rgba(255,255,255,0.35)]
+                      active:scale-[0.96] active:rounded-xl
                       ${FOCUS}
                     `}
                   >
                     <span
                       className={`
-                        grid h-6 w-6 shrink-0 place-items-center rounded-full
-                        ${t.idle}
+                        grid h-8 w-8 shrink-0 place-items-center rounded-full
+                        ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
                         transition-all duration-300 ${SPRING}
                         group-hover:rounded-[8px]
                       `}
                     >
-                      {meta.icon}
+                      {icon}
                     </span>
-                    <span className="text-xs font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
+                    <span className="text-sm font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
                       {s.platform}
                     </span>
                   </a>
@@ -429,15 +382,15 @@ export default function Home() {
                 href="/myresumekinshuk.pdf"
                 className={`
                   inline-flex items-center gap-2 rounded-full
-                  bg-[#0B57D0] px-4 py-2.5 text-sm font-semibold text-white
-                  shadow-[0_1px_3px_rgba(0,0,0,0.16),0_8px_20px_-10px_rgba(11,87,208,0.9)]
+                  bg-[#1F1F1F] px-4 py-2.5 text-sm font-semibold text-white
+                  shadow-[0_1px_3px_rgba(0,0,0,0.16),0_8px_20px_-10px_rgba(0,0,0,0.9)]
                   transition-all duration-300 ${EASE}
-                  hover:brightness-110
-                  hover:shadow-[0_1px_3px_rgba(0,0,0,0.2),0_12px_28px_-10px_rgba(11,87,208,1)]
+                  hover:brightness-125
+                  hover:shadow-[0_1px_3px_rgba(0,0,0,0.2),0_12px_28px_-10px_rgba(0,0,0,1)]
                   active:scale-[0.95] active:rounded-[18px]
-                  dark:bg-[#A8C7FA] dark:text-[#041E49]
-                  dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_8px_20px_-10px_rgba(168,199,250,0.75)]
-                  dark:hover:shadow-[0_1px_3px_rgba(0,0,0,0.7),0_12px_28px_-10px_rgba(168,199,250,0.95)]
+                  dark:bg-[#E3E3E3] dark:text-[#1F1F1F]
+                  dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_8px_20px_-10px_rgba(255,255,255,0.55)]
+                  dark:hover:shadow-[0_1px_3px_rgba(0,0,0,0.7),0_12px_28px_-10px_rgba(255,255,255,0.75)]
                   ${FOCUS}
                 `}
               >
@@ -449,10 +402,9 @@ export default function Home() {
                 href="/blogs"
                 className={`
                   inline-flex items-center gap-2 rounded-full px-4 py-2.5
-                  text-sm font-semibold text-[#0B57D0] dark:text-[#A8C7FA]
+                  text-sm font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]
                   ${SURFACE} ${STATE}
                   transition-all duration-300 ${EASE}
-                  hover:text-[#0842A0] dark:hover:text-[#D3E3FD]
                   active:scale-[0.95] active:rounded-[18px]
                   ${FOCUS}
                 `}
@@ -476,7 +428,6 @@ export default function Home() {
             icon={<Briefcase className="h-4 w-4" aria-hidden="true" />}
             title="Experience"
             subtitle="Where I've worked"
-            tint="blue"
           >
             <div
               className={`${SURFACE} rounded-[28px] p-5 md:p-6 transition-all duration-300 ${EASE} hover:-translate-y-0.5`}
@@ -489,7 +440,7 @@ export default function Home() {
                   className={`
                     inline-flex w-fit items-center rounded-full px-2.5 py-1
                     text-[10px] font-semibold uppercase tracking-wide
-                    ${TINTS.blue.idle}
+                    ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
                   `}
                 >
                   Jul 2025 – Aug 2025
@@ -509,143 +460,133 @@ export default function Home() {
             icon={<FolderGit2 className="h-4 w-4" aria-hidden="true" />}
             title="Shipped Stuff"
             subtitle="Selected projects"
-            tint="green"
           >
             <div className="grid gap-4 md:grid-cols-2">
-              {CONFIG.projects.map((project, idx) => {
-                const isLive = project.status === "Live";
-                const statusTint = isLive ? TINTS.green : TINTS.neutral;
-                return (
-                  <article
-                    key={idx}
-                    className={`
-                      ${SURFACE} rounded-[28px] p-5 md:p-6
-                      flex flex-col gap-4
-                      transition-all duration-300 ${EASE}
-                      hover:-translate-y-1
-                      hover:shadow-[0_2px_6px_rgba(0,0,0,0.1),0_18px_40px_-20px_rgba(11,87,208,0.5)]
-                      dark:hover:shadow-[0_2px_6px_rgba(0,0,0,0.7),0_18px_40px_-20px_rgba(168,199,250,0.35)]
-                      ${idx === 0 ? "md:col-span-2" : ""}
-                    `}
-                  >
-                    <div className="space-y-2.5">
-                      <div className="flex flex-wrap items-center gap-2">
+              {CONFIG.projects.map((project, idx) => (
+                <article
+                  key={idx}
+                  className={`
+                    ${SURFACE} rounded-[28px] p-5 md:p-6
+                    flex flex-col gap-4
+                    transition-all duration-300 ${EASE}
+                    hover:-translate-y-1
+                    hover:shadow-[0_2px_6px_rgba(0,0,0,0.1),0_18px_40px_-20px_rgba(0,0,0,0.6)]
+                    dark:hover:shadow-[0_2px_6px_rgba(0,0,0,0.7),0_18px_40px_-20px_rgba(255,255,255,0.3)]
+                    ${idx === 0 ? "md:col-span-2" : ""}
+                  `}
+                >
+                  <div className="space-y-2.5">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span
+                        className={`
+                          inline-flex items-center gap-1.5 rounded-full
+                          py-1 pl-1 pr-2.5 text-[10px] font-bold uppercase tracking-wide
+                          ${SUBTLE}
+                        `}
+                      >
                         <span
                           className={`
-                            inline-flex items-center gap-1.5 rounded-full
-                            py-1 pl-1 pr-2.5 text-[10px] font-bold uppercase tracking-wide
-                            ${statusTint.soft}
+                            grid h-4 w-4 place-items-center rounded-full
+                            ${NEUTRAL.solid}
                           `}
                         >
-                          <span
-                            className={`
-                              grid h-4 w-4 place-items-center rounded-full
-                              ${statusTint.solid}
-                            `}
-                          >
-                            <CheckCircle2
-                              className="h-2.5 w-2.5"
-                              aria-hidden="true"
-                            />
-                          </span>
-                          <span className="text-[#1F1F1F] dark:text-[#E3E3E3]">
-                            {project.status}
-                          </span>
-                        </span>
-                        <span className="text-[11px] font-medium text-[#747775] dark:text-[#8E918F]">
-                          {project.year} · {project.type}
-                        </span>
-                      </div>
-
-                      <h3 className="text-base font-semibold leading-snug text-[#1F1F1F] dark:text-[#E3E3E3] md:text-lg">
-                        {project.title}
-                      </h3>
-
-                      <div className="space-y-2 text-sm leading-7 text-[#444746] dark:text-[#C4C7C5]">
-                        {project.description.map((p, i) => (
-                          <p key={i}>{p}</p>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Tech chips */}
-                    <div className="flex flex-wrap gap-1.5">
-                      {project.technologies.slice(0, 6).map((t, i) => (
-                        <span
-                          key={i}
-                          className="
-                            rounded-full border border-[#C4C7C5]/60
-                            bg-[#F0F4F9] px-2.5 py-1 text-[11px] font-medium
-                            text-[#444746]
-                            dark:border-[#3C4043] dark:bg-[#282A2C] dark:text-[#C4C7C5]
-                          "
-                        >
-                          {t}
-                        </span>
-                      ))}
-                      {project.technologies.length > 6 && (
-                        <span
-                          className="
-                            rounded-full border border-[#C4C7C5]/60
-                            bg-[#F0F4F9] px-2.5 py-1 text-[11px] font-medium
-                            text-[#747775]
-                            dark:border-[#3C4043] dark:bg-[#282A2C] dark:text-[#8E918F]
-                          "
-                        >
-                          +{project.technologies.length - 6}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Action row */}
-                    <div className="mt-auto flex flex-wrap gap-2 pt-1">
-                      {project.links.live && (
-                        <a
-                          href={project.links.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`
-                            inline-flex items-center gap-1.5 rounded-full
-                            bg-[#0B57D0] px-3.5 py-2 text-xs font-semibold text-white
-                            shadow-[0_1px_3px_rgba(0,0,0,0.16),0_6px_16px_-8px_rgba(11,87,208,0.9)]
-                            transition-all duration-300 ${EASE}
-                            hover:brightness-110
-                            active:scale-[0.95] active:rounded-[14px]
-                            dark:bg-[#A8C7FA] dark:text-[#041E49]
-                            dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_6px_16px_-8px_rgba(168,199,250,0.7)]
-                            ${FOCUS}
-                          `}
-                        >
-                          <ExternalLink
-                            className="h-3.5 w-3.5"
+                          <CheckCircle2
+                            className="h-2.5 w-2.5"
                             aria-hidden="true"
                           />
-                          Live
-                        </a>
-                      )}
-                      {project.links.repo && (
-                        <a
-                          href={project.links.repo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`
-                            inline-flex items-center gap-1.5 rounded-full px-3.5 py-2
-                            text-xs font-semibold text-[#444746] dark:text-[#C4C7C5]
-                            ${SURFACE} ${STATE}
-                            transition-all duration-300 ${EASE}
-                            hover:text-[#0B57D0] dark:hover:text-[#A8C7FA]
-                            active:scale-[0.95] active:rounded-[14px]
-                            ${FOCUS}
-                          `}
-                        >
-                          <Github className="h-3.5 w-3.5" aria-hidden="true" />
-                          Source
-                        </a>
-                      )}
+                        </span>
+                        <span className="text-[#1F1F1F] dark:text-[#E3E3E3]">
+                          {project.status}
+                        </span>
+                      </span>
+                      <span className="text-[11px] font-medium text-[#747775] dark:text-[#8E918F]">
+                        {project.year} · {project.type}
+                      </span>
                     </div>
-                  </article>
-                );
-              })}
+
+                    <h3 className="text-base font-semibold leading-snug text-[#1F1F1F] dark:text-[#E3E3E3] md:text-lg">
+                      {project.title}
+                    </h3>
+
+                    <div className="space-y-2 text-sm leading-7 text-[#444746] dark:text-[#C4C7C5]">
+                      {project.description.map((p, i) => (
+                        <p key={i}>{p}</p>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Tech chips */}
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.technologies.slice(0, 6).map((t, i) => (
+                      <span
+                        key={i}
+                        className={`
+                          rounded-full px-2.5 py-1 text-[11px] font-medium
+                          ${SUBTLE} text-[#444746] dark:text-[#C4C7C5]
+                        `}
+                      >
+                        {t}
+                      </span>
+                    ))}
+                    {project.technologies.length > 6 && (
+                      <span
+                        className={`
+                          rounded-full px-2.5 py-1 text-[11px] font-medium
+                          ${SUBTLE} text-[#747775] dark:text-[#8E918F]
+                        `}
+                      >
+                        +{project.technologies.length - 6}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Action row */}
+                  <div className="mt-auto flex flex-wrap gap-2 pt-1">
+                    {project.links.live && (
+                      <a
+                        href={project.links.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`
+                          inline-flex items-center gap-1.5 rounded-full
+                          bg-[#1F1F1F] px-3.5 py-2 text-xs font-semibold text-white
+                          shadow-[0_1px_3px_rgba(0,0,0,0.16),0_6px_16px_-8px_rgba(0,0,0,0.9)]
+                          transition-all duration-300 ${EASE}
+                          hover:brightness-125
+                          active:scale-[0.95] active:rounded-[14px]
+                          dark:bg-[#E3E3E3] dark:text-[#1F1F1F]
+                          dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_6px_16px_-8px_rgba(255,255,255,0.5)]
+                          ${FOCUS}
+                        `}
+                      >
+                        <ExternalLink
+                          className="h-3.5 w-3.5"
+                          aria-hidden="true"
+                        />
+                        Live
+                      </a>
+                    )}
+                    {project.links.repo && (
+                      <a
+                        href={project.links.repo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`
+                          inline-flex items-center gap-1.5 rounded-full px-3.5 py-2
+                          text-xs font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]
+                          ${SURFACE} ${STATE}
+                          transition-all duration-300 ${EASE}
+                          active:scale-[0.95] active:rounded-[14px]
+                          ${FOCUS}
+                        `}
+                      >
+                        <Github className="h-3.5 w-3.5" aria-hidden="true" />
+                        Source
+                      </a>
+                    )}
+                  </div>
+                </article>
+              ))}
             </div>
           </Section>
 
@@ -654,7 +595,6 @@ export default function Home() {
             icon={<Wrench className="h-4 w-4" aria-hidden="true" />}
             title="Tools & Technologies"
             subtitle="What I build with"
-            tint="amber"
           >
             <div className="grid gap-3 sm:grid-cols-2">
               {Object.entries(CONFIG.skills).map(([category, skills]) => (
@@ -673,12 +613,10 @@ export default function Home() {
                     {skills.map((s, i) => (
                       <span
                         key={i}
-                        className="
-                          rounded-full border border-[#C4C7C5]/60
-                          bg-[#F0F4F9] px-2.5 py-1 text-[11px] font-medium
-                          text-[#444746]
-                          dark:border-[#3C4043] dark:bg-[#282A2C] dark:text-[#C4C7C5]
-                        "
+                        className={`
+                          rounded-full px-2.5 py-1 text-[11px] font-medium
+                          ${SUBTLE} text-[#444746] dark:text-[#C4C7C5]
+                        `}
                       >
                         {s}
                       </span>
@@ -694,7 +632,6 @@ export default function Home() {
             icon={<Award className="h-4 w-4" aria-hidden="true" />}
             title="Certifications"
             subtitle="Verified badges & exams"
-            tint="purple"
           >
             <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
               {CREDLY_BADGES.map((badgeId) => (
@@ -702,12 +639,11 @@ export default function Home() {
                   key={badgeId}
                   className={`
                     group flex min-w-0 items-center justify-center overflow-hidden
-                    rounded-[28px] bg-white p-3 ring-1 ring-[#C4C7C5]/60
+                    rounded-[28px] p-3 ${SURFACE}
                     transition-all duration-300 ${EASE}
                     hover:-translate-y-1
-                    hover:shadow-[0_2px_6px_rgba(0,0,0,0.1),0_18px_40px_-20px_rgba(103,80,164,0.5)]
-                    dark:bg-[#1E1F20] dark:ring-[#3C4043]
-                    dark:hover:shadow-[0_2px_6px_rgba(0,0,0,0.7),0_18px_40px_-20px_rgba(208,188,255,0.35)]
+                    hover:shadow-[0_2px_6px_rgba(0,0,0,0.1),0_18px_40px_-20px_rgba(0,0,0,0.6)]
+                    dark:hover:shadow-[0_2px_6px_rgba(0,0,0,0.7),0_18px_40px_-20px_rgba(255,255,255,0.3)]
                   `}
                 >
                   <div
@@ -732,7 +668,6 @@ export default function Home() {
             icon={<GraduationCap className="h-4 w-4" aria-hidden="true" />}
             title="Education"
             subtitle="Academic background"
-            tint="cyan"
           >
             <div
               className={`${SURFACE} rounded-[28px] p-5 md:p-6 transition-all duration-300 ${EASE} hover:-translate-y-0.5`}
@@ -745,14 +680,14 @@ export default function Home() {
                   className={`
                     inline-flex w-fit items-center rounded-full px-2.5 py-1
                     text-[10px] font-semibold uppercase tracking-wide
-                    ${TINTS.cyan.idle}
+                    ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
                   `}
                 >
                   {CONFIG.education.period}
                 </span>
               </div>
 
-              <p className="mt-2 text-sm font-semibold text-[#0B57D0] dark:text-[#A8C7FA]">
+              <p className="mt-2 text-sm font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
                 {CONFIG.education.degree} — {CONFIG.education.field}
               </p>
               <p className="text-xs text-[#747775] dark:text-[#8E918F]">
@@ -768,20 +703,18 @@ export default function Home() {
                   className={`
                     inline-flex items-center gap-1.5 rounded-full
                     py-1 pl-1 pr-3 text-[11px] font-semibold
-                    ${TINTS.green.soft}
+                    ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
                   `}
                 >
                   <span
                     className={`
                       grid h-5 w-5 place-items-center rounded-full
-                      ${TINTS.green.solid}
+                      ${NEUTRAL.solid}
                     `}
                   >
                     <CheckCircle2 className="h-3 w-3" aria-hidden="true" />
                   </span>
-                  <span className="text-[#1F1F1F] dark:text-[#E3E3E3]">
-                    Degree Completed
-                  </span>
+                  <span>Degree Completed</span>
                 </span>
 
                 <a
@@ -791,7 +724,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className={`
                     inline-flex items-center gap-1.5 rounded-full px-3 py-1.5
-                    text-[11px] font-semibold text-[#0B57D0] dark:text-[#A8C7FA]
+                    text-[11px] font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]
                     ${SURFACE} ${STATE}
                     transition-all duration-300 ${EASE}
                     active:scale-[0.95] active:rounded-[12px]
@@ -808,7 +741,7 @@ export default function Home() {
       </main>
 
       {/* FOOTER */}
-      <footer className="border-t border-[#C4C7C5]/50 py-8 text-center text-xs text-[#747775] dark:border-[#3C4043] dark:text-[#8E918F]">
+      <footer className="py-10 text-center text-xs text-[#747775] dark:text-[#8E918F]">
         <p>© {new Date().getFullYear()} Kinshuk Jain. All rights reserved.</p>
       </footer>
     </div>

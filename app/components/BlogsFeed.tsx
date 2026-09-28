@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { Search, FileText, ArrowUpRight, X } from "lucide-react";
 
@@ -55,6 +55,8 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
     0,
   );
 
+  const hasContent = search.length > 0;
+
   return (
     <div
       className="
@@ -66,7 +68,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
     >
       <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 md:py-20 lg:px-8">
         {/* ═══════════════ HEADER ═══════════════ */}
-        <header className="mb-12 md:mb-16">
+        <header className="mb-6 md:mb-8">
           {/* Status chip */}
           <div className="mb-5 flex flex-wrap items-center gap-2">
             <span
@@ -102,39 +104,51 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
           </h1>
           <p
             className="
-              mb-8 max-w-3xl text-sm leading-7
+              max-w-3xl text-sm leading-7
               text-[#444746] dark:text-[#C4C7C5]
               md:text-base
             "
           >
             Read my latest project descriptions, updates, and thoughts.
           </p>
+        </header>
 
-          {/* ═══════════════ SEARCH BAR ═══════════════ */}
+        {/* ═══════════════ STICKY SEARCH ═══════════════
+            Pinned below the fixed header. No backdrop strip —
+            the pill's own opaque surface is what floats above
+            the feed while scrolling. */}
+        <div role="search" className="sticky top-20 z-40 sm:top-24">
           <div className="max-w-xl">
             <div
+              data-has-content={hasContent ? "true" : undefined}
               className={`
-                group relative flex items-center gap-2 rounded-full
-                py-1.5 pl-1.5 pr-2 ${SURFACE}
-                transition-all duration-300 ${EASE}
-                focus-within:shadow-[0_1px_3px_rgba(0,0,0,0.12),0_12px_28px_-14px_rgba(0,0,0,0.55)]
-                dark:focus-within:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_12px_28px_-14px_rgba(255,255,255,0.35)]
+                group relative flex items-center gap-2 overflow-hidden
+                rounded-full py-1.5 pl-1.5 pr-2 ${SURFACE}
+                transition-all duration-500 ${EASE}
+                max-md:w-[62px]
+                max-md:focus-within:w-full
+                max-md:data-[has-content=true]:w-full
+                md:w-full
               `}
             >
-              {/* Leading icon chip — circle → squircle on focus */}
-              <span
+              {/* Leading icon chip. The <label htmlFor> forwards the
+                  tap to the input, so even when the bar is collapsed
+                  to 62px wide on mobile the icon is the tap target. */}
+              <label
+                htmlFor="blog-search"
                 className={`
-                  grid h-10 w-10 shrink-0 place-items-center rounded-full
-                  ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
+                  grid h-10 w-10 shrink-0 cursor-text place-items-center
+                  rounded-full ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
                   transition-all duration-300 ${SPRING}
                   group-focus-within:rounded-[12px]
                 `}
               >
                 <Search className="h-[18px] w-[18px]" aria-hidden="true" />
-              </span>
+              </label>
 
               {/* Input */}
               <input
+                id="blog-search"
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -196,10 +210,10 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
               </p>
             )}
           </div>
-        </header>
+        </div>
 
         {/* ═══════════════ FEED ═══════════════ */}
-        <div className="space-y-12 md:space-y-16">
+        <div className="mt-8 space-y-12 md:mt-10 md:space-y-16">
           {filteredSections.length > 0 ? (
             filteredSections.map((section) => (
               <section key={section.title}>

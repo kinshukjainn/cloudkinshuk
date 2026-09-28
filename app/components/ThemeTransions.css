@@ -1,0 +1,30 @@
+/* ==========================================================================
+   Theme change — Material You circular reveal (View Transitions API)
+   ========================================================================== */
+
+/* Kill the default crossfade on both snapshots. We animate manually. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none !important;
+  mix-blend-mode: normal !important;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+/* Pre-hide the incoming frame so there's no 1-frame flash before
+   the WAAPI animation kicks in. `fill: forwards` keeps it visible. */
+::view-transition-new(root) {
+  z-index: 2;
+  clip-path: circle(0px at 50% 50%);
+  will-change: clip-path;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+    clip-path: none !important;
+  }
+}

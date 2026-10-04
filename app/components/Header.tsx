@@ -35,11 +35,37 @@ function spawnRipple(event: React.PointerEvent<HTMLElement>) {
   });
 }
 
-/* ── Material You circular reveal ───────────────────────────
-   next-themes applies its class inside a useEffect that fires
-   AFTER startViewTransition would capture the "new" snapshot.
-   So we write the class synchronously on <html> inside the
-   callback, then call setTheme() to keep state in sync. */
+/* ── Theme-transition contract ────────────────────────────────
+   This component and ThemeTransitions.css agree on a tiny API:
+
+     JS  →  CSS      --vt-x / --vt-y   click origin, in viewport px
+     JS  →  CSS      .light / .dark    on <html> (+ [data-theme])
+     JS  →  browser  document.startViewTransition(...)
+
+   Everything else — duration, easing, reveal radius, push-back
+   scale / blur / dim, the void colour — is declared in the
+   stylesheet. Tweak it there and the header follows automatically;
+   there is nothing to keep in sync by hand.
+
+   Motion is owned entirely by ThemeTransitions.css. JS only:
+     1. writes the click origin into --vt-x / --vt-y on <html>,
+     2. synchronously swaps the theme class inside the transition
+        callback so the "new" snapshot is captured correctly.
+
+   next-themes applies its class inside an effect that fires AFTER
+   startViewTransition() would capture the "new" snapshot, so we
+   write the class ourselves inside the callback and then call
+   setTheme() to keep React state in sync.
+
+   The stylesheet then runs the fluid reveal (expanding circle on
+   the new layer) and the push-back recede (scale + blur + dim on
+   the old layer) using the iOS-flavoured curves defined there. */
+
+/** Custom-property names written here and read by ThemeTransitions.css. */
+const VT_ORIGIN_X = "--vt-x";
+const VT_ORIGIN_Y = "--vt-y";
+
+type ThemeName = "light" | "dark";
 
 type ViewTransitionLike = {
   ready: Promise<void>;
@@ -57,20 +83,31 @@ function getVTDocument(): DocumentWithVT {
   return document as unknown as DocumentWithVT;
 }
 
-function applyThemeToDom(theme: "light" | "dark") {
+function applyThemeToDom(theme: ThemeName) {
   const root = document.documentElement;
   root.classList.remove("light", "dark");
   root.classList.add(theme);
+  // Mirror onto [data-theme] so the stylesheet can key off either
+  // attribute without the header caring which one is used.
+  root.dataset.theme = theme;
   root.style.colorScheme = theme;
 }
 
 function runThemeTransition(
   origin: { x: number; y: number },
-  nextTheme: "light" | "dark",
+  nextTheme: ThemeName,
   syncState: () => void,
 ) {
+  const root = document.documentElement;
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const doc = getVTDocument();
+
+  /* Hand the click origin to CSS. The keyframes in ThemeTransitions.css
+     read these variables to anchor the expanding circle. Setting them
+     BEFORE startViewTransition() guarantees the snapshot capture and
+     the subsequent pseudo-element animation both see the same origin. */
+  root.style.setProperty(VT_ORIGIN_X, `${origin.x}px`);
+  root.style.setProperty(VT_ORIGIN_Y, `${origin.y}px`);
 
   if (reduced || typeof doc.startViewTransition !== "function") {
     applyThemeToDom(nextTheme);
@@ -78,36 +115,10 @@ function runThemeTransition(
     return;
   }
 
-  const endRadius = Math.hypot(
-    Math.max(origin.x, window.innerWidth - origin.x),
-    Math.max(origin.y, window.innerHeight - origin.y),
-  );
-
-  const transition = doc.startViewTransition(() => {
+  doc.startViewTransition(() => {
     applyThemeToDom(nextTheme);
     syncState();
   });
-
-  transition.ready
-    .then(() => {
-      document.documentElement.animate(
-        {
-          clipPath: [
-            `circle(0px at ${origin.x}px ${origin.y}px)`,
-            `circle(${endRadius}px at ${origin.x}px ${origin.y}px)`,
-          ],
-        },
-        {
-          duration: 640,
-          easing: "cubic-bezier(0.32, 0.72, 0, 1)",
-          fill: "forwards",
-          pseudoElement: "::view-transition-new(root)",
-        },
-      );
-    })
-    .catch(() => {
-      /* A newer transition superseded this one — safe to ignore. */
-    });
 }
 
 /* ── Primary navigation model ─────────────────────────────────
@@ -175,8 +186,7 @@ const Header: React.FC = () => {
         x: rect.left + rect.width / 2,
         y: rect.top + rect.height / 2,
       };
-      const next: "light" | "dark" =
-        resolvedTheme === "dark" ? "light" : "dark";
+      const next: ThemeName = resolvedTheme === "dark" ? "light" : "dark";
 
       runThemeTransition(origin, next, () => setTheme(next));
     },

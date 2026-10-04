@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "SEO Insights - Cloudkinshuk",
+  title: "Github Commits Track - Cloudkinshuk",
   description:
     "SEO tips, strategies, and best practices to enhance your online presence and search engine rankings.",
 };

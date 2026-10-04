@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Search, FileText, ArrowUpRight, X } from "lucide-react";
+import { Search, FileText, X, Pencil } from "lucide-react";
 
 type Article = {
   title: string;
@@ -16,10 +16,7 @@ type Section = {
 };
 
 /* ── Surface tokens (mirrors header + home page) ────────── */
-const SURFACE =
-  "bg-white dark:bg-[#1E1F20] " +
-  "shadow-[0_1px_3px_rgba(0,0,0,0.06),0_8px_24px_-16px_rgba(0,0,0,0.35)] " +
-  "dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_8px_24px_-16px_rgba(0,0,0,0.9)]";
+const SURFACE = "bg-white dark:bg-[#1E1F20] " + "shadow-sm dark:shadow-none";
 
 const SUBTLE = "bg-[#F0F4F9] dark:bg-[#282A2C]";
 
@@ -66,7 +63,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
         dark:selection:bg-[#E3E3E3] dark:selection:text-[#1F1F1F]
       "
     >
-      <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 md:py-20 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 md:py-20 lg:px-8">
         {/* ═══════════════ HEADER ═══════════════ */}
         <header className="mb-6 md:mb-8">
           {/* Status chip */}
@@ -113,17 +110,14 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
           </p>
         </header>
 
-        {/* ═══════════════ STICKY SEARCH ═══════════════
-            Pinned below the fixed header. No backdrop strip —
-            the pill's own opaque surface is what floats above
-            the feed while scrolling. */}
+        {/* ═══════════════ STICKY SEARCH ═══════════════ */}
         <div role="search" className="sticky top-20 z-40 sm:top-24">
           <div className="max-w-xl">
             <div
               data-has-content={hasContent ? "true" : undefined}
               className={`
-                group relative flex items-center gap-2 overflow-hidden
-                rounded-full py-1.5 pl-1.5 pr-2 ${SURFACE}
+                group relative flex items-center gap-3 overflow-hidden
+                rounded-full py-1.5 pl-1.5 pr-1.5 ${SURFACE}
                 transition-all duration-500 ${EASE}
                 max-md:w-[62px]
                 max-md:focus-within:w-full
@@ -131,9 +125,6 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
                 md:w-full
               `}
             >
-              {/* Leading icon chip. The <label htmlFor> forwards the
-                  tap to the input, so even when the bar is collapsed
-                  to 62px wide on mobile the icon is the tap target. */}
               <label
                 htmlFor="blog-search"
                 className={`
@@ -143,10 +134,9 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
                   group-focus-within:rounded-[12px]
                 `}
               >
-                <Search className="h-[18px] w-[18px]" aria-hidden="true" />
+                <Search className="h-[22px] w-[22px]" aria-hidden="true" />
               </label>
 
-              {/* Input */}
               <input
                 id="blog-search"
                 type="text"
@@ -163,7 +153,6 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
                 "
               />
 
-              {/* Trailing: clear button + result count */}
               {search ? (
                 <button
                   type="button"
@@ -196,7 +185,6 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
               )}
             </div>
 
-            {/* Live result hint */}
             {search && (
               <p
                 className="
@@ -217,7 +205,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
           {filteredSections.length > 0 ? (
             filteredSections.map((section) => (
               <section key={section.title}>
-                {/* Section header with icon chip */}
+                {/* Section header */}
                 <div className="mb-5 flex items-center gap-3">
                   <span
                     className={`
@@ -246,75 +234,45 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
                   </div>
                 </div>
 
-                {/* Article cards */}
-                <div className="space-y-3">
+                {/* ═══════════════ REDESIGNED ARTICLE CARDS (Material/Pixel UI) ═══════════════ */}
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {section.items.map((item) => (
                     <Link
                       key={item.slug}
                       href={`/blogs/${item.slug}`}
                       className={`
-                        group block ${SURFACE} rounded-[24px] p-5
+                        group relative flex flex-col items-center justify-between
+                        overflow-hidden rounded-[32px] p-8 text-center
+                        ${SURFACE}
+                        
                         transition-all duration-300 ${EASE}
-                        hover:-translate-y-1
-                        hover:shadow-[0_2px_6px_rgba(0,0,0,0.1),0_18px_40px_-20px_rgba(0,0,0,0.6)]
-                        dark:hover:shadow-[0_2px_6px_rgba(0,0,0,0.7),0_18px_40px_-20px_rgba(255,255,255,0.3)]
-                        active:scale-[0.99] active:rounded-[20px]
+                        hover:-translate-y-1 hover:shadow-md
+                        active:scale-[0.98]
                         ${FOCUS}
                       `}
                     >
-                      <div className="flex items-start gap-4">
-                        {/* Leading neutral chip */}
-                        <span
-                          className={`
-                            mt-0.5 grid h-11 w-11 shrink-0 place-items-center
-                            rounded-full ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
-                            transition-all duration-300 ${SPRING}
-                            group-hover:rounded-[12px]
-                          `}
-                        >
-                          <FileText className="h-5 w-5" aria-hidden="true" />
-                        </span>
+                      {/* Blue Accent Bar (Matches Image) */}
+                      <div className="absolute left-1 top-1/2 h-16 w-1.5 -translate-y-1/2 rounded-full dark:bg-blue-500 bg-[#531313]" />
 
-                        {/* Text block */}
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-start justify-between gap-3">
-                            <h3
-                              className="
-                                text-base font-bold leading-snug tracking-tight
-                                text-[#1F1F1F] dark:text-[#E3E3E3]
-                                transition-colors duration-300
-                                md:text-lg
-                              "
-                            >
-                              {item.title}
-                            </h3>
-                            <span
-                              className={`
-                                mt-0.5 grid h-8 w-8 shrink-0 place-items-center
-                                rounded-full text-[#1F1F1F] dark:text-[#E3E3E3]
-                                transition-all duration-300 ${SPRING}
-                                group-hover:rounded-[10px]
-                                group-hover:bg-[#1F1F1F] group-hover:text-white
-                                dark:group-hover:bg-[#E3E3E3] dark:group-hover:text-[#1F1F1F]
-                              `}
-                            >
-                              <ArrowUpRight
-                                className="h-4 w-4"
-                                aria-hidden="true"
-                              />
-                            </span>
-                          </div>
+                      {/* Text Content */}
+                      <div className="flex w-full flex-col items-center">
+                        <h3 className="mb-3 text-xl font-bold h-font tracking-tight text-[#1F1F1F] dark:text-[#E3E3E3]">
+                          {item.title}
+                        </h3>
+                        <p className="mb-8 line-clamp-4 max-w-sm text-md font-normal leading-relaxed text-[#444746] dark:text-[#C4C7C5]">
+                          {item.description}
+                        </p>
+                      </div>
 
-                          {item.description && (
-                            <p
-                              className="
-                                mt-1.5 line-clamp-2 text-sm leading-7
-                                text-[#444746] dark:text-[#C4C7C5]
-                              "
-                            >
-                              {item.description}
-                            </p>
-                          )}
+                      {/* Buttons (Matches Image Exactly - No Glow) */}
+                      <div className="mt-auto flex items-center justify-center gap-1">
+                        {/* Pencil Icon Button */}
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-l-2xl rounded-r-md bg-[#531313] dark:bg-blue-500 dark:text-black text-gray-100 transition-colors duration-200  active:scale-95">
+                          <Pencil className="h-5 w-5" aria-hidden="true" />
+                        </div>
+                        {/* Read Button */}
+                        <div className="flex h-12 items-center justify-center rounded-r-2xl dark:bg-blue-500 dark:text-black rounded-l-md bg-[#531313] px-8 text-base font-bold text-gray-100 transition-colors duration-200  active:scale-95">
+                          Read
                         </div>
                       </div>
                     </Link>
@@ -364,10 +322,9 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
                 className={`
                   mt-6 inline-flex items-center gap-2 rounded-full
                   ${SOLID} px-4 py-2.5 text-sm font-semibold
-                  shadow-[0_1px_3px_rgba(0,0,0,0.16),0_8px_20px_-10px_rgba(0,0,0,0.9)]
-                  dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_8px_20px_-10px_rgba(255,255,255,0.5)]
+                  shadow-sm
                   transition-all duration-300 ${EASE}
-                  hover:brightness-125
+                  hover:brightness-110
                   active:scale-[0.95] active:rounded-[18px]
                   ${FOCUS}
                 `}

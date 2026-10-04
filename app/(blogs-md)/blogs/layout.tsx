@@ -24,7 +24,7 @@ export default function BlogLayout({
         line length, generous vertical rhythm matching the homepage
         and header surface tokens.
       */}
-      <main className="mx-auto max-w-[768px] px-6 py-12 md:py-20 lg:px-8">
+      <main className="mx-auto max-w-[2000px] px-6 py-12 md:py-20 lg:px-8">
         {children}
       </main>
     </div>

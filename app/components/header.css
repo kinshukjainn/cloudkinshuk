@@ -15,7 +15,7 @@
 
 /* ---------------------------------------------------------------- 1 · TOKENS */
 .ck-header {
-  --ck-surface: #ffffff;
+  --ck-surface: #f9e7e7;
   --ck-surface-container: #f0f4f9;
   --ck-surface-container-hover: #e4e9f0;
 
@@ -23,8 +23,8 @@
   --ck-on-inverse: #ffffff;
   --ck-on-surface: #1f1f1f;
 
-  --ck-active-bg: #1f1f1f;
-  --ck-active-fg: #ffffff;
+  --ck-active-bg: #531313;
+  --ck-active-fg: #faf5f5;
   --ck-active-indicator: rgba(255, 255, 255, 0.14);
 
   --ck-state-hover: rgba(0, 0, 0, 0.055);
@@ -61,16 +61,16 @@
 
 .dark .ck-header,
 [data-theme="dark"] .ck-header {
-  --ck-surface: #1e1f20;
+  --ck-surface: #0c0c0c;
   --ck-surface-container: #282a2c;
   --ck-surface-container-hover: #303134;
 
-  --ck-inverse: #e3e3e3;
+  --ck-inverse: #e8e9f1;
   --ck-on-inverse: #1f1f1f;
   --ck-on-surface: #e3e3e3;
 
-  --ck-active-bg: #e3e3e3;
-  --ck-active-fg: #1f1f1f;
+  --ck-active-bg: #a8b9ef;
+  --ck-active-fg: #050505;
   --ck-active-indicator: rgba(31, 31, 31, 0.1);
 
   --ck-state-hover: rgba(255, 255, 255, 0.07);

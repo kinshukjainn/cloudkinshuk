@@ -162,7 +162,7 @@ const ShapeIcon: React.FC<ShapeIconProps> = ({
   const shape = SHAPES[shapeIndex % SHAPES.length];
   const target = active
     ? shape
-    : { borderRadius: "50%", rotate: 0, scaleX: 1, scaleY: 1 };
+    : { borderRadius: "80%", rotate: 0, scaleX: 1, scaleY: 1 };
 
   return (
     <motion.span

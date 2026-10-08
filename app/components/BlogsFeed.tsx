@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Search, FileText, X, Pencil } from "lucide-react";
+import { Search, X, BookOpen, ArrowRight } from "lucide-react";
 
 type Article = {
   title: string;
@@ -14,22 +14,6 @@ type Section = {
   title: string;
   items: Article[];
 };
-
-/* ── Surface tokens (mirrors header + home page) ────────── */
-const SURFACE = "bg-white dark:bg-[#1E1F20] " + "shadow-sm dark:shadow-none";
-
-const SUBTLE = "bg-[#F0F4F9] dark:bg-[#282A2C]";
-
-const EASE = "ease-[cubic-bezier(0.2,0,0,1)]";
-const SPRING = "ease-[cubic-bezier(0.34,1.56,0.64,1)]";
-
-const FOCUS =
-  "focus-visible:outline-none focus-visible:ring-2 " +
-  "focus-visible:ring-[#1F1F1F] dark:focus-visible:ring-[#E3E3E3] " +
-  "focus-visible:ring-offset-0";
-
-/* ── Neutral inverted tokens (same as header + home) ────── */
-const SOLID = "bg-[#1F1F1F] text-white dark:bg-[#E3E3E3] dark:text-[#1F1F1F]";
 
 export default function BlogFeed({ sections }: { sections: Section[] }) {
   const [search, setSearch] = useState("");
@@ -47,294 +31,136 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
     }))
     .filter((section) => section.items.length > 0);
 
+  const totalArticles = sections.reduce((acc, s) => acc + s.items.length, 0);
   const totalResults = filteredSections.reduce(
     (acc, s) => acc + s.items.length,
     0,
   );
 
-  const hasContent = search.length > 0;
-
   return (
-    <div
-      className="
-        min-h-screen bg-[#F7F9FC] text-[#1F1F1F]
-        selection:bg-[#1F1F1F] selection:text-white
-        dark:bg-[#141414] dark:text-[#E3E3E3]
-        dark:selection:bg-[#E3E3E3] dark:selection:text-[#1F1F1F]
-      "
-    >
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 md:py-20 lg:px-8">
-        {/* ═══════════════ HEADER ═══════════════ */}
-        <header className="mb-6 md:mb-8">
-          {/* Status chip */}
-          <div className="mb-5 flex flex-wrap items-center gap-2">
-            <span
-              className={`
-                inline-flex items-center gap-1.5 rounded-full
-                py-1.5 pl-1.5 pr-3.5 ${SURFACE}
-              `}
-            >
-              <span
-                className={`
-                  grid h-6 w-6 shrink-0 place-items-center rounded-full
-                  ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
-                  transition-all duration-300 ${SPRING}
-                `}
-              >
-                <FileText className="h-3.5 w-3.5" aria-hidden="true" />
-              </span>
-              <span className="text-[11px] font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
-                {sections.reduce((acc, s) => acc + s.items.length, 0)} Articles
-              </span>
-            </span>
+    <div className="min-h-screen bg-[#FAFAFA] text-[#111] selection:bg-[#111] selection:text-white dark:bg-black dark:text-[#eee] dark:selection:bg-[#eee] dark:selection:text-[#111]">
+      <main className="mx-auto max-w-3xl px-6 py-12 md:py-20">
+        {/* ============ HEADER ============ */}
+        <header className="mb-10 space-y-4">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#555] dark:text-[#aaa]">
+            <BookOpen className="h-4 w-4" aria-hidden="true" />
+            <span>{totalArticles} Articles Published</span>
           </div>
 
-          <h1
-            className="
-              h-font mb-4 text-3xl font-bold tracking-tight
-              text-[#1F1F1F] dark:text-[#E3E3E3]
-              sm:text-4xl md:text-5xl md:leading-[1.1]
-            "
-          >
-            Blogs, Project Descriptions,{" "}
-            <span className="text-[#0B57D0] dark:text-[#A8C7FA]">Thoughts</span>
+          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
+            Blogs, Notes &{" "}
+            <span className="text-blue-700 dark:text-blue-400">Thoughts</span>
           </h1>
-          <p
-            className="
-              max-w-3xl text-sm leading-7
-              text-[#444746] dark:text-[#C4C7C5]
-              md:text-base
-            "
-          >
-            Read my latest project descriptions, updates, and thoughts.
+
+          <p className="text-base text-[#444] dark:text-[#ccc] md:text-lg leading-relaxed">
+            Read my latest project descriptions, technical notes, and updates.
           </p>
         </header>
 
-        {/* ═══════════════ STICKY SEARCH ═══════════════ */}
-        <div role="search" className="sticky top-20 z-40 sm:top-24">
-          <div className="max-w-xl">
-            <div
-              data-has-content={hasContent ? "true" : undefined}
-              className={`
-                group relative flex items-center gap-3 overflow-hidden
-                rounded-full py-1.5 pl-1.5 pr-1.5 ${SURFACE}
-                transition-all duration-500 ${EASE}
-                max-md:w-[62px]
-                max-md:focus-within:w-full
-                max-md:data-[has-content=true]:w-full
-                md:w-full
-              `}
-            >
-              <label
-                htmlFor="blog-search"
-                className={`
-                  grid h-10 w-10 shrink-0 cursor-text place-items-center
-                  rounded-full ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
-                  transition-all duration-300 ${SPRING}
-                  group-focus-within:rounded-[12px]
-                `}
-              >
-                <Search className="h-[22px] w-[22px]" aria-hidden="true" />
-              </label>
-
-              <input
-                id="blog-search"
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search articles, keywords, titles…"
-                aria-label="Search articles"
-                className="
-                  min-w-0 flex-1 bg-transparent py-2 text-sm font-medium
-                  text-[#1F1F1F] outline-none
-                  placeholder:text-[#747775]
-                  dark:text-[#E3E3E3] dark:placeholder:text-[#8E918F]
-                  sm:text-base
-                "
+        {/* ============ SEARCH BAR ============ */}
+        <div className="mb-12">
+          <div className="relative flex items-center">
+            <div className="dark:bg-[#141414] bg-gray-200 px-1 py-2.5 mr-2 rounded ">
+              <Search
+                className="mr-3 ml-2 h-5 w-5 text-black dark:text-white"
+                aria-hidden="true"
               />
-
-              {search ? (
-                <button
-                  type="button"
-                  onClick={() => setSearch("")}
-                  aria-label="Clear search"
-                  className={`
-                    grid h-8 w-8 shrink-0 place-items-center rounded-full
-                    text-[#1F1F1F] dark:text-[#E3E3E3]
-                    hover:bg-black/[0.06] dark:hover:bg-white/[0.10]
-                    transition-all duration-300 ${EASE}
-                    active:scale-90 active:rounded-[10px]
-                    ${FOCUS}
-                  `}
-                >
-                  <X className="h-4 w-4" aria-hidden="true" />
-                </button>
-              ) : (
-                <span
-                  className={`
-                    hidden shrink-0 items-center gap-1.5 rounded-full
-                    ${SUBTLE} px-3 py-1.5 text-[11px] font-semibold
-                    text-[#444746] dark:text-[#C4C7C5]
-                    sm:inline-flex
-                  `}
-                >
-                  <kbd className="font-sans text-[10px] tracking-wider">
-                    Type to filter
-                  </kbd>
-                </span>
-              )}
             </div>
-
+            <input
+              id="blog-search"
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search articles, keywords, titles…"
+              aria-label="Search articles"
+              className="w-full dark:bg-[#141414] bg-gray-200 px-2 py-2 rounded text-base font-medium text-[#111] placeholder:text-[#777] focus:outline-none dark:text-[#eee] dark:placeholder:text-[#888] md:text-lg"
+            />
             {search && (
-              <p
-                className="
-                  mt-3 pl-2 text-xs font-medium
-                  text-[#747775] dark:text-[#8E918F]
-                "
+              <button
+                type="button"
+                onClick={() => setSearch("")}
+                aria-label="Clear search"
+                className="ml-2 text-[#555] hover:text-[#111] dark:text-[#aaa] dark:hover:text-[#eee]"
               >
-                {totalResults === 0
-                  ? "No matching results"
-                  : `${totalResults} result${totalResults === 1 ? "" : "s"} found`}
-              </p>
+                <X className="h-5 w-5" aria-hidden="true" />
+              </button>
             )}
           </div>
+
+          {search && (
+            <p className="mt-2 text-xs font-bold text-[#555] dark:text-[#aaa]">
+              {totalResults === 0
+                ? "No matching articles found."
+                : `Found ${totalResults} result${totalResults === 1 ? "" : "s"}.`}
+            </p>
+          )}
         </div>
 
-        {/* ═══════════════ FEED ═══════════════ */}
-        <div className="mt-8 space-y-12 md:mt-10 md:space-y-16">
+        {/* ============ FEED ============ */}
+        <div className="space-y-14">
           {filteredSections.length > 0 ? (
             filteredSections.map((section) => (
               <section key={section.title}>
-                {/* Section header */}
-                <div className="mb-5 flex items-center gap-3">
-                  <span
-                    className={`
-                      grid h-10 w-10 shrink-0 place-items-center rounded-[14px]
-                      ${SOLID}
-                      shadow-[0_2px_6px_rgba(0,0,0,0.12)]
-                      transition-transform duration-300 ${SPRING}
-                    `}
-                  >
-                    <FileText className="h-4 w-4" aria-hidden="true" />
-                  </span>
-                  <div className="min-w-0">
-                    <h2
-                      className="
-                        h-font truncate text-xl font-bold tracking-tight
-                        text-[#1F1F1F] dark:text-[#E3E3E3]
-                        md:text-2xl
-                      "
-                    >
+                {/* Section Header */}
+                <div className="mb-6">
+                  <div className="flex items-baseline justify-between">
+                    <h2 className="text-xl font-bold  tracking-widest text-[#1F1F1F] dark:text-[#E3E3E3]">
                       {section.title}
                     </h2>
-                    <p className="text-[11px] font-medium text-[#747775] dark:text-[#8E918F]">
+                    <span className="text-xs font-bold text-[#555] dark:text-[#aaa]">
                       {section.items.length}{" "}
                       {section.items.length === 1 ? "article" : "articles"}
-                    </p>
+                    </span>
                   </div>
                 </div>
 
-                {/* ═══════════════ REDESIGNED ARTICLE CARDS (Material/Pixel UI) ═══════════════ */}
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {/* Article Items */}
+                <div className="space-y-8">
                   {section.items.map((item) => (
-                    <Link
-                      key={item.slug}
-                      href={`/blogs/${item.slug}`}
-                      className={`
-                        group relative flex flex-col items-center justify-between
-                        overflow-hidden rounded-[32px] p-8 text-center
-                        ${SURFACE}
-                        
-                        transition-all duration-300 ${EASE}
-                        hover:-translate-y-1 hover:shadow-md
-                        active:scale-[0.98]
-                        ${FOCUS}
-                      `}
-                    >
-                      {/* Blue Accent Bar (Matches Image) */}
-                      <div className="absolute left-1 top-1/2 h-16 w-1.5 -translate-y-1/2 rounded-full dark:bg-blue-500 bg-[#531313]" />
+                    <article key={item.slug} className="group block">
+                      <h3 className="text-xl font-bold text-[#111] dark:text-[#eee] group-hover:text-blue-700 dark:group-hover:text-blue-400">
+                        <Link href={`/blogs/${item.slug}`}>{item.title}</Link>
+                      </h3>
 
-                      {/* Text Content */}
-                      <div className="flex w-full flex-col items-center">
-                        <h3 className="mb-3 text-xl font-bold h-font tracking-tight text-[#1F1F1F] dark:text-[#E3E3E3]">
-                          {item.title}
-                        </h3>
-                        <p className="mb-8 line-clamp-4 max-w-sm text-md font-normal leading-relaxed text-[#444746] dark:text-[#C4C7C5]">
-                          {item.description}
-                        </p>
-                      </div>
+                      <p className="mt-2 text-base leading-relaxed text-[#444] dark:text-[#ccc]">
+                        {item.description}
+                      </p>
 
-                      {/* Buttons (Matches Image Exactly - No Glow) */}
-                      <div className="mt-auto flex items-center justify-center gap-1">
-                        {/* Pencil Icon Button */}
-                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-l-2xl rounded-r-md bg-[#531313] dark:bg-blue-500 dark:text-black text-gray-100 transition-colors duration-200  active:scale-95">
-                          <Pencil className="h-5 w-5" aria-hidden="true" />
-                        </div>
-                        {/* Read Button */}
-                        <div className="flex h-12 items-center justify-center rounded-r-2xl dark:bg-blue-500 dark:text-black rounded-l-md bg-[#531313] px-8 text-base font-bold text-gray-100 transition-colors duration-200  active:scale-95">
-                          Read
-                        </div>
+                      <div className="mt-3">
+                        <Link
+                          href={`/blogs/${item.slug}`}
+                          className="inline-flex items-center gap-1.5 text-sm font-bold text-blue-700 underline hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+                        >
+                          Read Article{" "}
+                          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        </Link>
                       </div>
-                    </Link>
+                    </article>
                   ))}
                 </div>
               </section>
             ))
           ) : (
-            /* ═══════════════ EMPTY STATE ═══════════════ */
-            <div
-              className={`
-                ${SURFACE} rounded-[28px] p-10 text-center
-                sm:p-14
-              `}
-            >
-              <span
-                className={`
-                  mx-auto mb-4 grid h-14 w-14 place-items-center rounded-[18px]
-                  ${SOLID}
-                `}
-              >
-                <Search className="h-6 w-6" aria-hidden="true" />
-              </span>
-              <h3
-                className="
-                  h-font text-lg font-bold tracking-tight
-                  text-[#1F1F1F] dark:text-[#E3E3E3]
-                "
-              >
-                No results found
+            /* ============ EMPTY STATE ============ */
+            <div className="py-12 text-center">
+              <h3 className="text-xl font-bold text-[#111] dark:text-[#eee]">
+                No matching articles found
               </h3>
-              <p
-                className="
-                  mx-auto mt-2 max-w-sm text-sm leading-7
-                  text-[#444746] dark:text-[#C4C7C5]
-                "
-              >
-                Nothing matches{" "}
-                <span className="font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
-                  &ldquo;{search}&rdquo;
-                </span>
-                . Try a different keyword.
+              <p className="mt-2 text-base text-[#555] dark:text-[#aaa]">
+                Nothing matched your search for &ldquo;{search}&rdquo;. Try
+                using different keywords.
               </p>
               <button
                 type="button"
                 onClick={() => setSearch("")}
-                className={`
-                  mt-6 inline-flex items-center gap-2 rounded-full
-                  ${SOLID} px-4 py-2.5 text-sm font-semibold
-                  shadow-sm
-                  transition-all duration-300 ${EASE}
-                  hover:brightness-110
-                  active:scale-[0.95] active:rounded-[18px]
-                  ${FOCUS}
-                `}
+                className="mt-6 font-bold text-blue-700 underline hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 text-sm"
               >
-                Clear search
+                Clear search filter
               </button>
             </div>
           )}
         </div>
-      </div>
+      </main>
     </div>
   );
 }

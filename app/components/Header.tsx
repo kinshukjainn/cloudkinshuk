@@ -5,63 +5,24 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
-import { FileText, Github, Sun, Moon } from "lucide-react";
-import { PiGithubLogoBold } from "react-icons/pi";
+import { Github, Sun, Moon } from "lucide-react";
 import { GiCoffeeMug } from "react-icons/gi";
 import { useMounted } from "./hooks/useMounted";
-import "./header.css";
-import "./ThemeTransions.css";
+import { LuFolderTree } from "react-icons/lu";
+import { MdOutlineTipsAndUpdates } from "react-icons/md";
+import { TbPencilCode } from "react-icons/tb";
 
-/* ── Ripple helper ────────────────────────────────────────── */
-function spawnRipple(event: React.PointerEvent<HTMLElement>) {
-  const el = event.currentTarget;
-  const rect = el.getBoundingClientRect();
-  if (!rect.width || !rect.height) return;
+/* ─────────────────────────────────────────────────────────────
+   Editorial Header · matches BlogFeed / DocPage exactly
 
-  const size = Math.max(rect.width, rect.height) * 2.2;
-  const x = event.clientX - rect.left - size / 2;
-  const y = event.clientY - rect.top - size / 2;
+   · Flat, high-contrast, bold uppercase type — no soft cards.
+   · Section rules use border-b-2 in the ink colour.
+   · One accent: blue-700 / blue-400 — active nav + focus rings.
+   · Fully responsive: 320 px → ultra-wide.
+   · Motion: 300 ms cubic-bezier(0.2,0,0,1).
+   ───────────────────────────────────────────────────────────── */
 
-  const ripple = document.createElement("span");
-  ripple.className = "ck-ripple";
-  ripple.style.width = `${size}px`;
-  ripple.style.height = `${size}px`;
-  ripple.style.left = `${x}px`;
-  ripple.style.top = `${y}px`;
-
-  el.appendChild(ripple);
-  ripple.addEventListener("animationend", () => ripple.remove(), {
-    once: true,
-  });
-}
-
-/* ── Theme-transition contract ────────────────────────────────
-   This component and ThemeTransitions.css agree on a tiny API:
-
-     JS  →  CSS      --vt-x / --vt-y   click origin, in viewport px
-     JS  →  CSS      .light / .dark    on <html> (+ [data-theme])
-     JS  →  browser  document.startViewTransition(...)
-
-   Everything else — duration, easing, reveal radius, push-back
-   scale / blur / dim, the void colour — is declared in the
-   stylesheet. Tweak it there and the header follows automatically;
-   there is nothing to keep in sync by hand.
-
-   Motion is owned entirely by ThemeTransitions.css. JS only:
-     1. writes the click origin into --vt-x / --vt-y on <html>,
-     2. synchronously swaps the theme class inside the transition
-        callback so the "new" snapshot is captured correctly.
-
-   next-themes applies its class inside an effect that fires AFTER
-   startViewTransition() would capture the "new" snapshot, so we
-   write the class ourselves inside the callback and then call
-   setTheme() to keep React state in sync.
-
-   The stylesheet then runs the fluid reveal (expanding circle on
-   the new layer) and the push-back recede (scale + blur + dim on
-   the old layer) using the iOS-flavoured curves defined there. */
-
-/** Custom-property names written here and read by ThemeTransitions.css. */
+/* ── Theme-transition contract (unchanged) ─────────────────── */
 const VT_ORIGIN_X = "--vt-x";
 const VT_ORIGIN_Y = "--vt-y";
 
@@ -77,9 +38,6 @@ type DocumentWithVT = {
 };
 
 function getVTDocument(): DocumentWithVT {
-  // Cast through `unknown` — the native `Document.startViewTransition`
-  // signature differs across TS lib versions, so we sidestep the
-  // structural check entirely.
   return document as unknown as DocumentWithVT;
 }
 
@@ -87,8 +45,6 @@ function applyThemeToDom(theme: ThemeName) {
   const root = document.documentElement;
   root.classList.remove("light", "dark");
   root.classList.add(theme);
-  // Mirror onto [data-theme] so the stylesheet can key off either
-  // attribute without the header caring which one is used.
   root.dataset.theme = theme;
   root.style.colorScheme = theme;
 }
@@ -102,10 +58,6 @@ function runThemeTransition(
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const doc = getVTDocument();
 
-  /* Hand the click origin to CSS. The keyframes in ThemeTransitions.css
-     read these variables to anchor the expanding circle. Setting them
-     BEFORE startViewTransition() guarantees the snapshot capture and
-     the subsequent pseudo-element animation both see the same origin. */
   root.style.setProperty(VT_ORIGIN_X, `${origin.x}px`);
   root.style.setProperty(VT_ORIGIN_Y, `${origin.y}px`);
 
@@ -121,10 +73,7 @@ function runThemeTransition(
   });
 }
 
-/* ── Primary navigation model ─────────────────────────────────
-   One source of truth for both the desktop pill nav and the
-   mobile bottom dock. `short` is the dock label so the pill
-   stays compact on narrow screens. */
+/* ── Nav model ─────────────────────────────────────────────── */
 type NavEntry = {
   href: string;
   label: string;
@@ -133,26 +82,37 @@ type NavEntry = {
 };
 
 const NAV_ENTRIES: NavEntry[] = [
-  { href: "/blogs", label: "Blogs", short: "Blogs", Icon: FileText },
+  { href: "/blogs", label: "Blogs", short: "Blogs", Icon: TbPencilCode },
   {
     href: "/git-track",
-    label: "Commits",
-    short: "Commits",
-    Icon: PiGithubLogoBold,
+    label: "Logs",
+    short: "Logs",
+    Icon: MdOutlineTipsAndUpdates,
   },
   {
     href: "/git-tree",
     label: "Project Tree",
     short: "Tree",
-    Icon: PiGithubLogoBold,
+    Icon: LuFolderTree,
   },
 ];
+
+/* ── Shared tokens (match BlogsFeed) ───────────────────────── */
+const TEXT = "text-[#111] dark:text-[#eee]";
+const TEXT_SUBTLE = "text-[#555] dark:text-[#aaa]";
+const ACCENT = "text-blue-700 dark:text-blue-400";
+const RULE_INK = "border-[#1f1f1f] dark:border-[#e3e3e3]";
+const EASE = "ease-[cubic-bezier(0.2,0,0,1)]";
+
+const FOCUS =
+  "focus-visible:outline-none focus-visible:ring-2 " +
+  "focus-visible:ring-blue-700/60 dark:focus-visible:ring-blue-400/60";
 
 /* ── Header ───────────────────────────────────────────────── */
 const Header: React.FC = () => {
   const pathname = usePathname();
   const { setTheme, resolvedTheme } = useTheme();
-  const [scrolled, setScrolled] = useState<boolean>(false);
+  const [scrolled, setScrolled] = useState(false);
   const mounted = useMounted();
   const isDark = mounted && resolvedTheme === "dark";
 
@@ -177,7 +137,21 @@ const Header: React.FC = () => {
     };
   }, []);
 
-  /* Theme toggle — Material You circular reveal from the button center. */
+  /* Reserve space for the fixed mobile dock so content isn't hidden. */
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const update = () => {
+      document.body.style.paddingBottom = mq.matches ? "5rem" : "";
+    };
+    update();
+    mq.addEventListener("change", update);
+    return () => {
+      mq.removeEventListener("change", update);
+      document.body.style.paddingBottom = "";
+    };
+  }, []);
+
+  /* Theme toggle — circular reveal anchored at the button's centre. */
   const toggleTheme = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       const btn = event.currentTarget;
@@ -187,7 +161,6 @@ const Header: React.FC = () => {
         y: rect.top + rect.height / 2,
       };
       const next: ThemeName = resolvedTheme === "dark" ? "light" : "dark";
-
       runThemeTransition(origin, next, () => setTheme(next));
     },
     [resolvedTheme, setTheme],
@@ -195,122 +168,198 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header className={`ck-header${scrolled ? " is-scrolled" : ""}`}>
-        <div className="ck-header__inner">
-          <div className="ck-header__row">
-            {/* ── Brand chip ─────────────────────────────────── */}
-            <Link
-              href="/"
-              aria-label="Cloudkinshuk — Home"
-              onPointerDown={spawnRipple}
-              className="ck-brand"
+      {/* ═══════════════ TOP BAR ═══════════════ */}
+      <header
+        className={`
+          sticky top-0 z-50
+          border-b-2 transition-[background-color,border-color] duration-300 ${EASE}
+          ${
+            scrolled
+              ? "border-[#1f1f1f]/15 bg-[#FAFAFA]/80 backdrop-blur-md dark:border-[#e3e3e3]/15 dark:bg-[#0a0a0a]/80"
+              : "border-transparent bg-transparent"
+          }
+        `}
+      >
+        <div
+          className="
+            mx-auto flex h-16 max-w-3xl items-center justify-between gap-2
+            px-4 sm:gap-3 sm:px-6 md:h-18
+          "
+        >
+          {/* ── Brand ─────────────────────────────────────── */}
+          <Link
+            href="/"
+            aria-label="Cloudkinshuk — Home"
+            className={`group flex min-w-0 shrink items-center gap-2 rounded-md ${FOCUS}`}
+          >
+            <span
+              className="
+                grid h-8 w-8 shrink-0 place-items-center rounded-md
+                bg-[#1f1f1f] text-white
+                dark:bg-[#e3e3e3] dark:text-[#111]
+              "
             >
-              <span className="ck-brand__mark">
-                <Image
-                  src="/corelogo.png"
-                  alt=""
-                  width={20}
-                  height={20}
-                  className="ck-brand__logo"
-                  priority
+              <Image
+                src="/corelogo.png"
+                alt=""
+                width={18}
+                height={18}
+                className="h-[18px] w-[18px]"
+                priority
+              />
+            </span>
+            <span
+              className={`
+                truncate text-xs font-extrabold uppercase tracking-wider
+                sm:text-sm ${TEXT}
+              `}
+            >
+              Cloudkinshuk
+            </span>
+          </Link>
+
+          {/* ── Desktop nav ───────────────────────────────── */}
+          <nav
+            aria-label="Primary"
+            className="hidden items-center gap-0.5 md:flex"
+          >
+            {NAV_ENTRIES.map(({ href, label, Icon }) => {
+              const active = isActive(href);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  aria-current={active ? "page" : undefined}
+                  className={`
+                    group relative inline-flex items-center gap-1.5
+                    rounded-md px-2.5 py-2
+                    text-xs font-bold uppercase tracking-wider
+                    transition-colors duration-300 ${EASE} ${FOCUS}
+                    ${
+                      active
+                        ? ACCENT
+                        : `${TEXT_SUBTLE} hover:text-[#111] dark:hover:text-[#eee]`
+                    }
+                  `}
+                >
+                  <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                  <span>{label}</span>
+                  {/* Editorial underline — matches BlogFeed's section rules */}
+                  <span
+                    aria-hidden="true"
+                    className={`
+                      pointer-events-none absolute inset-x-2.5 bottom-0.5 h-0.5
+                      origin-left rounded-full
+                      bg-blue-700 dark:bg-blue-400
+                      transition-transform duration-300 ${EASE}
+                      ${
+                        active
+                          ? "scale-x-100"
+                          : "scale-x-0 group-hover:scale-x-100"
+                      }
+                    `}
+                  />
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* ── Right action cluster ──────────────────────── */}
+          <div className="flex shrink-0 items-center gap-1 sm:gap-1.5">
+            {/* Sponsor — icon-only on small, full CTA on md+ */}
+            <a
+              href="https://brewrepo.cloudkinshuk.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Sponsor this project"
+              className={`
+                hidden h-9 w-9 place-items-center rounded-md ${TEXT}
+                transition-colors duration-300 ${EASE} ${FOCUS}
+                hover:bg-black/[0.06] dark:hover:bg-white/[0.08]
+                sm:grid
+                md:inline-flex md:h-auto md:w-auto md:gap-1.5 md:rounded-md
+                md:px-3 md:py-1.5
+                md:text-xs md:font-bold md:uppercase md:tracking-wider
+                md:hover:bg-[#1f1f1f] md:hover:text-white
+                 dark:md:hover:text-[#111]
+              `}
+            >
+              <GiCoffeeMug className="h-4 w-4" aria-hidden="true" />
+              <span className="hidden md:inline">Sponsor</span>
+            </a>
+
+            {/* GitHub — always visible */}
+            <a
+              href="https://github.com/kinshukjainn/cloudkinshuk"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub repository"
+              className={`
+                grid h-9 w-9 place-items-center rounded-md ${TEXT}
+                transition-colors duration-300 ${EASE} ${FOCUS}
+                hover:bg-black/[0.06] dark:hover:bg-white/[0.08]
+              `}
+            >
+              <Github className="h-4 w-4" aria-hidden="true" />
+            </a>
+
+            {/* Theme toggle — origin of the circular reveal */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={
+                isDark ? "Switch to light theme" : "Switch to dark theme"
+              }
+              className={`
+                grid h-9 w-9 place-items-center rounded-md ${TEXT}
+                transition-colors duration-300 ${EASE} ${FOCUS}
+                hover:bg-black/[0.06] dark:hover:bg-white/[0.08]
+              `}
+            >
+              <span className="relative block h-4 w-4" aria-hidden="true">
+                <Sun
+                  className={`
+                    absolute inset-0 h-4 w-4 transition-all duration-300 ${EASE}
+                    ${
+                      isDark
+                        ? "rotate-0 scale-100 opacity-100"
+                        : "-rotate-90 scale-0 opacity-0"
+                    }
+                  `}
+                />
+                <Moon
+                  className={`
+                    absolute inset-0 h-4 w-4 transition-all duration-300 ${EASE}
+                    ${
+                      isDark
+                        ? "rotate-90 scale-0 opacity-0"
+                        : "rotate-0 scale-100 opacity-100"
+                    }
+                  `}
                 />
               </span>
-              <span className="ck-brand__name">Cloudkinshuk</span>
-            </Link>
-
-            {/* ── Desktop nav ────────────────────────────────── */}
-            <nav aria-label="Primary" className="ck-nav">
-              {NAV_ENTRIES.map(({ href, label, Icon }) => {
-                const active = isActive(href);
-                return (
-                  <Link
-                    key={href}
-                    href={href}
-                    aria-current={active ? "page" : undefined}
-                    onPointerDown={spawnRipple}
-                    className={`ck-nav__item${active ? " is-active" : ""}`}
-                  >
-                    <span className="ck-nav__icon">
-                      <Icon aria-hidden="true" />
-                    </span>
-                    <span className="ck-nav__label">{label}</span>
-                  </Link>
-                );
-              })}
-            </nav>
-
-            {/* ── Right action cluster ───────────────────────── */}
-            <div className="ck-actions">
-              {/* Sponsor — full CTA on desktop */}
-              <a
-                href="https://brewrepo.cloudkinshuk.in"
-                target="_blank"
-                rel="noopener noreferrer"
-                onPointerDown={spawnRipple}
-                className="ck-cta"
-              >
-                <GiCoffeeMug aria-hidden="true" />
-                <span>Sponsor</span>
-              </a>
-
-              {/* Icon cluster — the only actions on small screens */}
-              <div className="ck-cluster">
-                {/* Sponsor — icon form, mirrors the desktop CTA */}
-                <a
-                  href="https://brewrepo.cloudkinshuk.in"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Sponsor this project"
-                  onPointerDown={spawnRipple}
-                  className="ck-iconbtn ck-iconbtn--sponsor"
-                >
-                  <GiCoffeeMug aria-hidden="true" />
-                </a>
-
-                {/* GitHub — always available */}
-                <a
-                  href="https://github.com/kinshukjainn/cloudkinshuk"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub repository"
-                  onPointerDown={spawnRipple}
-                  className="ck-iconbtn ck-iconbtn--github"
-                >
-                  <Github aria-hidden="true" />
-                </a>
-
-                {/* Theme toggle — origin of the circular reveal */}
-                <button
-                  type="button"
-                  onClick={toggleTheme}
-                  onPointerDown={spawnRipple}
-                  aria-label={
-                    isDark ? "Switch to light theme" : "Switch to dark theme"
-                  }
-                  className="ck-iconbtn"
-                >
-                  {mounted ? (
-                    <span className="ck-iconbtn__stack">
-                      <Sun
-                        aria-hidden="true"
-                        className={isDark ? "is-shown" : "is-hidden--reverse"}
-                      />
-                      <Moon
-                        aria-hidden="true"
-                        className={isDark ? "is-hidden" : "is-shown"}
-                      />
-                    </span>
-                  ) : (
-                    <span className="ck-iconbtn__stack" aria-hidden="true" />
-                  )}
-                </button>
-              </div>
-            </div>
+            </button>
           </div>
         </div>
+      </header>
 
-        {/* ── Mobile bottom dock (replaces the old drawer) ───── */}
-        <nav aria-label="Mobile" className="ck-dock">
+      {/* ═══════════════ MOBILE BOTTOM DOCK ═══════════════ */}
+      <nav
+        aria-label="Mobile"
+        className={`
+          fixed inset-x-0 bottom-0 z-40 md:hidden
+           ${RULE_INK}
+          bg-[#FAFAFA]/40 backdrop-blur-md
+          dark:bg-[#0a0a0a]/40
+        `}
+      >
+        <div
+          className="
+            mx-auto grid max-w-md grid-cols-3
+            px-2 pt-1.5
+            pb-[max(env(safe-area-inset-bottom),0.375rem)]
+          "
+        >
           {NAV_ENTRIES.map(({ href, short, Icon }) => {
             const active = isActive(href);
             return (
@@ -318,20 +367,31 @@ const Header: React.FC = () => {
                 key={href}
                 href={href}
                 aria-current={active ? "page" : undefined}
-                onPointerDown={spawnRipple}
-                className={`ck-dock__item${active ? " is-active" : ""}`}
+                className={`
+                  group flex flex-col items-center gap-0.5
+                  rounded-md px-2 py-1.5
+                  transition-colors duration-300 ${EASE} ${FOCUS}
+                  ${active ? ACCENT : TEXT_SUBTLE}
+                `}
               >
-                <span className="ck-dock__icon">
-                  <Icon aria-hidden="true" />
+                <Icon className="h-4 w-4" aria-hidden="true" />
+                <span className="text-[10px] font-bold uppercase tracking-wider">
+                  {short}
                 </span>
-                <span className="ck-dock__label">{short}</span>
+                <span
+                  aria-hidden="true"
+                  className={`
+                    mt-0.5 h-0.5 w-4 rounded-full
+                    bg-blue-700 dark:bg-blue-400
+                    transition-transform duration-300 ${EASE}
+                    ${active ? "scale-x-100" : "scale-x-0"}
+                  `}
+                />
               </Link>
             );
           })}
-        </nav>
-      </header>
-
-      <div className="ck-spacer" aria-hidden="true" />
+        </div>
+      </nav>
     </>
   );
 };

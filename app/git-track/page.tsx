@@ -17,10 +17,17 @@ import {
   RotateCcw,
 } from "lucide-react";
 
-// ============================================================================
-// Types
-// ============================================================================
+/* ─────────────────────────────────────────────────────────────
+   Editorial Changelog · matches BlogFeed / DocPage / Header
 
+   · Flat, high-contrast, bold uppercase type — no soft cards.
+   · `border-b-2` ink rules mark every section.
+   · One accent: blue-700 / blue-400 — active + focus only.
+   · Fully responsive: 320 px → ultra-wide.
+   · Motion: 300 ms cubic-bezier(0.2,0,0,1) — colour, lift.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── Types ─────────────────────────────────────────────── */
 interface CommitAuthor {
   name: string;
   email: string;
@@ -36,16 +43,10 @@ interface GithubCommit {
   sha: string;
   html_url: string;
   commit: CommitData;
-  author: {
-    login: string;
-    avatar_url: string;
-  } | null;
+  author: { login: string; avatar_url: string } | null;
 }
 
-// ============================================================================
-// Configuration
-// ============================================================================
-
+/* ── Config ────────────────────────────────────────────── */
 const GITHUB_CONFIG = {
   username: "kinshukjainn",
   repository: "cloudkinshuk",
@@ -54,10 +55,7 @@ const GITHUB_CONFIG = {
   maxPages: 20,
 };
 
-// ============================================================================
-// Utility Functions
-// ============================================================================
-
+/* ── Utilities ─────────────────────────────────────────── */
 const timeAgo = (dateString: string) => {
   const date = new Date(dateString);
   const now = new Date();
@@ -106,199 +104,57 @@ const getDayGroup = (dateString: string): string => {
   }).format(d);
 };
 
-/* ────────────────────────────────────────────────────────────
-   Theme tokens — monochrome, borderless (matches header/home)
-   ──────────────────────────────────────────────────────────── */
-const SURFACE =
-  "bg-white dark:bg-[#1E1F20] " +
-  "shadow-[0_1px_3px_rgba(0,0,0,0.06),0_8px_24px_-16px_rgba(0,0,0,0.35)] " +
-  "dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_8px_24px_-16px_rgba(0,0,0,0.9)]";
+/* ── Design tokens ────────────────────────────────────── */
+const SHELL =
+  "min-h-screen bg-[#FAFAFA] text-[#111] " +
+  "selection:bg-[#111] selection:text-white " +
+  "dark:bg-[#0a0a0a] dark:text-[#eee] " +
+  "dark:selection:bg-[#eee] dark:selection:text-[#111]";
 
-const SUBTLE = "bg-[#F0F4F9] dark:bg-[#282A2C]";
-const SOLID = "bg-[#1F1F1F] text-white dark:bg-[#E3E3E3] dark:text-[#1F1F1F]";
+const TEXT = "text-[#111] dark:text-[#eee]";
+const TEXT_SUBTLE = "text-[#555] dark:text-[#aaa]";
+
+const RULE_INK = "border-[#1f1f1f] dark:border-[#e3e3e3]";
+const RULE_SOFT = "border-black/[0.12] dark:border-white/[0.18]";
 
 const EASE = "ease-[cubic-bezier(0.2,0,0,1)]";
-const SPRING = "ease-[cubic-bezier(0.34,1.56,0.64,1)]";
 
 const FOCUS =
   "focus-visible:outline-none focus-visible:ring-2 " +
-  "focus-visible:ring-[#1F1F1F] dark:focus-visible:ring-[#E3E3E3] " +
-  "focus-visible:ring-offset-0";
+  "focus-visible:ring-blue-700/60 dark:focus-visible:ring-blue-400/60";
 
-/* ────────────────────────────────────────────────────────────
-   Framer Motion curves + springs (Material 3 Expressive)
-   ──────────────────────────────────────────────────────────── */
+/* ── Motion curves ────────────────────────────────────── */
 const easeOut = [0.16, 1, 0.3, 1] as const;
 const easeEmphasized = [0.2, 0, 0, 1] as const;
 
-const shapeSpring = {
-  type: "spring" as const,
-  stiffness: 420,
-  damping: 28,
-  mass: 0.7,
-};
-
-/* ────────────────────────────────────────────────────────────
-   Shape library — one shape per commit type. Keeps the whole
-   UI monochrome while still visually differentiating types.
-   ──────────────────────────────────────────────────────────── */
-type Shape = {
-  borderRadius: string;
-  rotate: number;
-  scaleX: number;
-  scaleY: number;
-};
-
-const SHAPES: Shape[] = [
-  { borderRadius: "50%", rotate: 0, scaleX: 1, scaleY: 1 }, // 0 · circle   (all)
-  { borderRadius: "32%", rotate: 0, scaleX: 1, scaleY: 1 }, // 1 · squircle (feat)
-  { borderRadius: "16%", rotate: 45, scaleX: 1, scaleY: 1 }, // 2 · diamond  (fix)
-  { borderRadius: "50% 4% 50% 4%", rotate: 0, scaleX: 1, scaleY: 1 }, // 3 · leaf (chore)
-  { borderRadius: "50%", rotate: 0, scaleX: 1.7, scaleY: 0.8 }, // 4 · pill     (docs)
-  { borderRadius: "14%", rotate: 0, scaleX: 1, scaleY: 1 }, // 5 · square   (refactor)
-];
-
+/* ── Commit type classifier ──────────────────────────── */
 const COMMIT_TYPES = [
-  { id: "all", label: "All", shapeIndex: 0 },
-  { id: "feat", label: "Features", shapeIndex: 1 },
-  { id: "fix", label: "Fixes", shapeIndex: 2 },
-  { id: "chore", label: "Chores", shapeIndex: 3 },
-  { id: "docs", label: "Docs", shapeIndex: 4 },
-  { id: "refactor", label: "Refactors", shapeIndex: 5 },
+  { id: "all", label: "All" },
+  { id: "feat", label: "Features" },
+  { id: "fix", label: "Fixes" },
+  { id: "chore", label: "Chores" },
+  { id: "docs", label: "Docs" },
+  { id: "refactor", label: "Refactors" },
 ];
 
-function commitTypeShapeIndex(message: string): number {
+function commitTypeId(message: string): string {
   const msg = message.toLowerCase();
-  if (msg.startsWith("feat")) return 1;
-  if (msg.startsWith("fix")) return 2;
-  if (msg.startsWith("chore")) return 3;
-  if (msg.startsWith("docs")) return 4;
-  if (msg.startsWith("refactor")) return 5;
-  return 0;
+  if (msg.startsWith("feat")) return "feat";
+  if (msg.startsWith("fix")) return "fix";
+  if (msg.startsWith("chore")) return "chore";
+  if (msg.startsWith("docs")) return "docs";
+  if (msg.startsWith("refactor")) return "refactor";
+  return "other";
 }
 
-/* ────────────────────────────────────────────────────────────
-   ShapeDot — the atomic shape indicator used across the UI
-   ──────────────────────────────────────────────────────────── */
-interface ShapeDotProps {
-  shapeIndex: number;
-  active: boolean;
-  size?: number;
-  animate?: boolean;
+function commitTypeLabel(message: string): string {
+  const id = commitTypeId(message);
+  return id === "other" ? "commit" : id;
 }
 
-const ShapeDot: React.FC<ShapeDotProps> = ({
-  shapeIndex,
-  active,
-  size = 14,
-  animate = true,
-}) => {
-  const reduceMotion = useReducedMotion();
-  const shape = SHAPES[shapeIndex % SHAPES.length];
-  const target = active
-    ? shape
-    : { borderRadius: "50%", rotate: 0, scaleX: 1, scaleY: 1 };
-
-  return (
-    <motion.span
-      aria-hidden="true"
-      initial={false}
-      animate={
-        animate && !reduceMotion
-          ? {
-              borderRadius: target.borderRadius,
-              rotate: target.rotate,
-              scaleX: target.scaleX,
-              scaleY: target.scaleY,
-            }
-          : undefined
-      }
-      transition={shapeSpring}
-      style={{
-        width: size,
-        height: size,
-        borderRadius: target.borderRadius,
-        transform: `rotate(${target.rotate}deg) scale(${target.scaleX}, ${target.scaleY})`,
-      }}
-      className={`block shrink-0 ${active ? SOLID : SUBTLE}`}
-    />
-  );
-};
-
-/* ────────────────────────────────────────────────────────────
-   FilterChip — shape-morphing, monochrome filter pill
-   ──────────────────────────────────────────────────────────── */
-interface FilterChipProps {
-  label: string;
-  active: boolean;
-  shapeIndex: number;
-  onClick: () => void;
-}
-
-const FilterChip: React.FC<FilterChipProps> = ({
-  label,
-  active,
-  shapeIndex,
-  onClick,
-}) => {
-  const reduceMotion = useReducedMotion();
-  const shape = SHAPES[shapeIndex % SHAPES.length];
-  const target = active
-    ? shape
-    : { borderRadius: "50%", rotate: 0, scaleX: 1, scaleY: 1 };
-
-  return (
-    <motion.button
-      type="button"
-      onClick={onClick}
-      aria-pressed={active}
-      whileTap={reduceMotion ? undefined : { scale: 0.94 }}
-      transition={shapeSpring}
-      className={`
-        group inline-flex items-center gap-2 rounded-full
-        py-1.5 pl-1.5 pr-3 text-xs font-semibold
-        transition-colors duration-300 ${EASE}
-        ${FOCUS}
-        ${
-          active
-            ? `${SOLID}`
-            : `${SURFACE} text-[#444746] dark:text-[#C4C7C5] hover:text-[#1F1F1F] dark:hover:text-[#E3E3E3]`
-        }
-      `}
-    >
-      <motion.span
-        aria-hidden="true"
-        initial={false}
-        animate={
-          reduceMotion
-            ? undefined
-            : {
-                borderRadius: target.borderRadius,
-                rotate: target.rotate,
-                scaleX: target.scaleX,
-                scaleY: target.scaleY,
-              }
-        }
-        transition={shapeSpring}
-        style={{
-          borderRadius: target.borderRadius,
-          transform: `rotate(${target.rotate}deg) scale(${target.scaleX}, ${target.scaleY})`,
-        }}
-        className={`
-          grid h-4 w-4 shrink-0 place-items-center
-          ${active ? "bg-white/25 dark:bg-black/20" : SUBTLE}
-        `}
-      />
-      <span className={active ? "text-white dark:text-[#1F1F1F]" : ""}>
-        {label}
-      </span>
-    </motion.button>
-  );
-};
-
-// ============================================================================
-// Main Component
-// ============================================================================
+/* ============================================================================
+   Main Component
+   ============================================================================ */
 
 export default function ChangelogTracker() {
   const reduceMotion = useReducedMotion();
@@ -307,13 +163,27 @@ export default function ChangelogTracker() {
   const [error, setError] = useState<string | null>(null);
   const [fetchingProgress, setFetchingProgress] = useState<number>(0);
 
-  // Filter States
   const [searchQuery, setSearchQuery] = useState("");
   const [authorFilter, setAuthorFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  /* ── Reserve space for the fixed mobile dock ─────────── */
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const update = () => {
+      document.body.style.paddingBottom = mq.matches ? "5rem" : "";
+    };
+    update();
+    mq.addEventListener("change", update);
+    return () => {
+      mq.removeEventListener("change", update);
+      document.body.style.paddingBottom = "";
+    };
+  }, []);
+
+  /* ── Fetch commits ───────────────────────────────────── */
   const fetchCommits = async () => {
     setLoading(true);
     setError(null);
@@ -332,11 +202,7 @@ export default function ChangelogTracker() {
 
         const response = await fetch(
           `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}/commits?sha=${GITHUB_CONFIG.branch}&per_page=${GITHUB_CONFIG.perPage}&page=${page}`,
-          {
-            headers: {
-              Accept: "application/vnd.github.v3+json",
-            },
-          },
+          { headers: { Accept: "application/vnd.github.v3+json" } },
         );
 
         if (!response.ok) {
@@ -349,7 +215,6 @@ export default function ChangelogTracker() {
         }
 
         const data: GithubCommit[] = await response.json();
-
         if (data.length === 0) break;
 
         allCommits = [...allCommits, ...data];
@@ -358,11 +223,8 @@ export default function ChangelogTracker() {
           data[data.length - 1].commit.author.date,
         );
 
-        if (oldestDateInBatch < oneYearAgo) {
-          shouldFetchMore = false;
-        } else {
-          page++;
-        }
+        if (oldestDateInBatch < oneYearAgo) shouldFetchMore = false;
+        else page++;
       }
 
       setCommits(allCommits);
@@ -379,13 +241,11 @@ export default function ChangelogTracker() {
     fetchCommits();
   }, []);
 
-  // --------------------------------------------------------------------------
-  // Data Processing & Filtering
-  // --------------------------------------------------------------------------
-
-  const uniqueAuthors = useMemo(() => {
-    return Array.from(new Set(commits.map((c) => c.commit.author.name)));
-  }, [commits]);
+  /* ── Data processing ─────────────────────────────────── */
+  const uniqueAuthors = useMemo(
+    () => Array.from(new Set(commits.map((c) => c.commit.author.name))),
+    [commits],
+  );
 
   const displayCommits = useMemo(() => {
     return commits.filter((commit) => {
@@ -425,66 +285,66 @@ export default function ChangelogTracker() {
     (authorFilter !== "all" ? 1 : 0) +
     (typeFilter !== "all" ? 1 : 0);
 
-  // --------------------------------------------------------------------------
-  // Render
-  // --------------------------------------------------------------------------
+  const clearAll = () => {
+    setSearchQuery("");
+    setAuthorFilter("all");
+    setTypeFilter("all");
+  };
 
+  /* ========================================================================
+     RENDER
+     ======================================================================== */
   return (
-    <div
-      className="
-        min-h-screen bg-[#F7F9FC] text-[#1F1F1F]
-        selection:bg-[#1F1F1F] selection:text-white
-        dark:bg-[#141414] dark:text-[#E3E3E3]
-        dark:selection:bg-[#E3E3E3] dark:selection:text-[#1F1F1F]
-      "
-    >
-      {/* ═══════════════════════════════════════════════════════════
-          STICKY HEADER
-      ═══════════════════════════════════════════════════════════ */}
+    <div className={SHELL}>
+      {/* ═══════════════ STICKY SUB-HEADER ═══════════════ */}
       <header
         className={`
-          sticky top-16 z-30 mx-auto w-[calc(100%-1.5rem)] max-w-4xl
-          rounded-[28px] ${SURFACE}
+          sticky top-16 z-30
+          border-b ${RULE_SOFT}
+          bg-[#FAFAFA]/90 backdrop-blur-md
+          dark:bg-[#0a0a0a]/90
         `}
       >
-        <div className="px-4 sm:px-6 md:px-8">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6">
           {/* Row 1 — identity + actions */}
           <div className="flex h-14 items-center gap-2">
             {/* Branch chip */}
             <span
               className={`
-                hidden shrink-0 items-center gap-1.5 rounded-full
-                py-1 pl-1 pr-2.5 text-[11px] font-semibold
-                sm:inline-flex ${SUBTLE}
+                hidden shrink-0 items-center gap-1.5 rounded-md
+                border ${RULE_SOFT} px-2 py-1
+                text-[10px] font-bold uppercase tracking-wider
+                ${TEXT_SUBTLE} sm:inline-flex
               `}
             >
-              <span
-                className={`
-                  grid h-5 w-5 shrink-0 place-items-center rounded-full
-                  ${SOLID}
-                `}
-              >
-                <GitBranch className="h-3 w-3" aria-hidden="true" />
-              </span>
-              <span className="text-[#1F1F1F] dark:text-[#E3E3E3]">
-                {GITHUB_CONFIG.branch}
-              </span>
+              <GitBranch className="h-3 w-3" aria-hidden="true" />
+              <span>{GITHUB_CONFIG.branch}</span>
             </span>
 
             {/* Repo name */}
-            <h1 className="truncate text-sm font-semibold tracking-tight text-[#1F1F1F] dark:text-[#E3E3E3] md:text-[15px]">
+            <h1
+              className={`
+                truncate text-xs font-extrabold uppercase tracking-wider
+                sm:text-sm ${TEXT}
+              `}
+            >
               {GITHUB_CONFIG.repository}
             </h1>
 
             {/* Record count */}
-            <span className="hidden shrink-0 text-xs tabular-nums text-[#747775] dark:text-[#8E918F] md:inline">
+            <span
+              className={`
+                hidden shrink-0 text-xs font-bold tabular-nums
+                ${TEXT_SUBTLE} md:inline
+              `}
+            >
               · {displayCommits.length} records
             </span>
 
             {/* Desktop inline search */}
             <div className="relative ml-auto hidden w-full max-w-xs lg:block">
               <Search
-                className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#747775] dark:text-[#8E918F]"
+                className={`pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 ${TEXT_SUBTLE}`}
                 aria-hidden="true"
               />
               <input
@@ -493,15 +353,12 @@ export default function ChangelogTracker() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search commits…"
                 className={`
-                  h-9 w-full rounded-full ${SUBTLE}
-                  pl-9 pr-8 text-[13px] text-[#1F1F1F]
-                  placeholder:text-[#747775]
-                  transition-shadow duration-300 ${EASE}
-                  focus:bg-white focus:outline-none
-                  focus:shadow-[0_0_0_2px_rgba(31,31,31,0.35)]
-                  dark:text-[#E3E3E3] dark:placeholder:text-[#8E918F]
-                  dark:focus:bg-[#1E1F20]
-                  dark:focus:shadow-[0_0_0_2px_rgba(227,227,227,0.35)]
+                  h-9 w-full rounded-md border ${RULE_SOFT}
+                  bg-transparent pl-9 pr-8
+                  text-[13px] font-medium ${TEXT}
+                  placeholder:text-[#777] dark:placeholder:text-[#888]
+                  transition-colors duration-300 ${EASE} ${FOCUS}
+                  focus:border-blue-700 dark:focus:border-blue-400
                 `}
               />
               <AnimatePresence>
@@ -515,11 +372,9 @@ export default function ChangelogTracker() {
                     onClick={() => setSearchQuery("")}
                     aria-label="Clear search"
                     className={`
-                      absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-1
-                      text-[#747775] dark:text-[#8E918F]
-                      transition-colors duration-200 ${EASE}
-                      hover:text-[#1F1F1F] dark:hover:text-[#E3E3E3]
-                      ${FOCUS}
+                      absolute right-2 top-1/2 -translate-y-1/2 rounded-md p-1
+                      ${TEXT_SUBTLE} hover:${TEXT} ${FOCUS}
+                      transition-colors duration-300 ${EASE}
                     `}
                   >
                     <X className="h-3.5 w-3.5" aria-hidden="true" />
@@ -541,26 +396,17 @@ export default function ChangelogTracker() {
                 onClick={() => setShowFilters((s) => !s)}
                 aria-expanded={showFilters}
                 className={`
-                  relative inline-flex h-9 items-center gap-1.5 rounded-full
-                  px-3 text-[13px] font-semibold
-                  transition-colors duration-300 ${EASE}
-                  ${FOCUS}
+                  inline-flex h-9 items-center gap-1.5 rounded-md border px-3
+                  text-[11px] font-bold uppercase tracking-wider
+                  transition-colors duration-300 ${EASE} ${FOCUS}
                   ${
                     showFilters || activeFilterCount > 0
-                      ? `${SOLID}`
-                      : `${SURFACE} text-[#444746] dark:text-[#C4C7C5] hover:text-[#1F1F1F] dark:hover:text-[#E3E3E3]`
+                      ? "border-blue-700 bg-blue-700 text-white dark:border-blue-400 dark:bg-blue-400 dark:text-[#0a0a0a]"
+                      : `border-transparent ${TEXT_SUBTLE} hover:text-[#111] dark:hover:text-[#eee]`
                   }
                 `}
               >
-                <motion.span
-                  animate={
-                    reduceMotion ? undefined : { rotate: showFilters ? 180 : 0 }
-                  }
-                  transition={shapeSpring}
-                  className="grid place-items-center"
-                >
-                  <Filter className="h-4 w-4" aria-hidden="true" />
-                </motion.span>
+                <Filter className="h-3.5 w-3.5" aria-hidden="true" />
                 <span className="hidden sm:inline">Filters</span>
                 <AnimatePresence>
                   {activeFilterCount > 0 && (
@@ -568,16 +414,12 @@ export default function ChangelogTracker() {
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       exit={{ scale: 0, opacity: 0 }}
-                      transition={shapeSpring}
-                      className={`
+                      transition={{ duration: 0.2, ease: easeOut }}
+                      className="
                         inline-flex h-4 min-w-4 items-center justify-center
-                        rounded-full px-1 text-[10px] font-bold
-                        ${
-                          showFilters || activeFilterCount > 0
-                            ? "bg-white/25 text-white dark:bg-black/20 dark:text-[#1F1F1F]"
-                            : "bg-[#1F1F1F] text-white dark:bg-[#E3E3E3] dark:text-[#1F1F1F]"
-                        }
-                      `}
+                        rounded-sm bg-white/25 px-1 text-[10px] font-bold
+                        dark:bg-black/20
+                      "
                     >
                       {activeFilterCount}
                     </motion.span>
@@ -593,13 +435,12 @@ export default function ChangelogTracker() {
                 aria-label="More options"
                 aria-expanded={mobileMenuOpen}
                 className={`
-                  inline-flex h-9 w-9 items-center justify-center rounded-full
-                  transition-colors duration-300 ${EASE}
-                  lg:hidden ${FOCUS}
+                  inline-flex h-9 w-9 items-center justify-center rounded-md border
+                  transition-colors duration-300 ${EASE} ${FOCUS} lg:hidden
                   ${
                     mobileMenuOpen
-                      ? `${SOLID}`
-                      : `${SURFACE} text-[#444746] dark:text-[#C4C7C5] hover:text-[#1F1F1F] dark:hover:text-[#E3E3E3]`
+                      ? "border-blue-700 bg-blue-700 text-white dark:border-blue-400 dark:bg-blue-400 dark:text-[#0a0a0a]"
+                      : `border-transparent ${TEXT_SUBTLE} hover:text-[#111] dark:hover:text-[#eee]`
                   }
                 `}
               >
@@ -612,41 +453,41 @@ export default function ChangelogTracker() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`
-                  hidden h-9 items-center gap-1.5 rounded-full px-3
-                  text-[13px] font-semibold lg:inline-flex
-                  text-[#444746] dark:text-[#C4C7C5] ${SURFACE}
-                  transition-colors duration-300 ${EASE}
-                  hover:text-[#1F1F1F] dark:hover:text-[#E3E3E3]
-                  ${FOCUS}
+                  hidden h-9 items-center gap-1.5 rounded-md border ${RULE_SOFT}
+                  px-3 text-[11px] font-bold uppercase tracking-wider
+                  ${TEXT_SUBTLE} hover:${TEXT}
+                  transition-colors duration-300 ${EASE} ${FOCUS}
+                  lg:inline-flex
                 `}
               >
-                <Github className="h-4 w-4" aria-hidden="true" />
+                <Github className="h-3.5 w-3.5" aria-hidden="true" />
                 <span className="hidden xl:inline">Repo</span>
               </a>
 
               {/* Desktop: View Tree */}
               <Link
-                href="/git-track/tree"
+                href="/git-tree"
                 className={`
-                  hidden h-9 items-center gap-1.5 rounded-full px-3
-                  text-[13px] font-semibold lg:inline-flex
-                  ${SOLID}
-                  transition-all duration-300 ${EASE}
-                  hover:brightness-125
-                  ${FOCUS}
+                  hidden h-9 items-center gap-1.5 rounded-md
+                  bg-[#1f1f1f] px-3
+                  text-[11px] font-bold uppercase tracking-wider text-white
+                  transition-colors duration-300 ${EASE} ${FOCUS}
+                  hover:bg-[#111]
+                  dark:bg-[#e3e3e3] dark:text-[#111] dark:hover:bg-white
+                  lg:inline-flex
                 `}
               >
-                <FileCode2 className="h-4 w-4" aria-hidden="true" />
+                <FileCode2 className="h-3.5 w-3.5" aria-hidden="true" />
                 <span className="hidden xl:inline">Tree</span>
               </Link>
             </div>
           </div>
 
           {/* Row 2 — mobile search */}
-          <div className="pb-2.5 lg:hidden">
+          <div className="pb-3 lg:hidden">
             <div className="relative">
               <Search
-                className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#747775] dark:text-[#8E918F]"
+                className={`pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 ${TEXT_SUBTLE}`}
                 aria-hidden="true"
               />
               <input
@@ -655,15 +496,12 @@ export default function ChangelogTracker() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search commits…"
                 className={`
-                  h-9 w-full rounded-full ${SUBTLE}
-                  pl-9 pr-8 text-[13px] text-[#1F1F1F]
-                  placeholder:text-[#747775]
-                  transition-shadow duration-300 ${EASE}
-                  focus:bg-white focus:outline-none
-                  focus:shadow-[0_0_0_2px_rgba(31,31,31,0.35)]
-                  dark:text-[#E3E3E3] dark:placeholder:text-[#8E918F]
-                  dark:focus:bg-[#1E1F20]
-                  dark:focus:shadow-[0_0_0_2px_rgba(227,227,227,0.35)]
+                  h-9 w-full rounded-md border ${RULE_SOFT}
+                  bg-transparent pl-9 pr-8
+                  text-[13px] font-medium ${TEXT}
+                  placeholder:text-[#777] dark:placeholder:text-[#888]
+                  transition-colors duration-300 ${EASE} ${FOCUS}
+                  focus:border-blue-700 dark:focus:border-blue-400
                 `}
               />
               <AnimatePresence>
@@ -677,11 +515,9 @@ export default function ChangelogTracker() {
                     onClick={() => setSearchQuery("")}
                     aria-label="Clear search"
                     className={`
-                      absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-1
-                      text-[#747775] dark:text-[#8E918F]
-                      transition-colors duration-200 ${EASE}
-                      hover:text-[#1F1F1F] dark:hover:text-[#E3E3E3]
-                      ${FOCUS}
+                      absolute right-2 top-1/2 -translate-y-1/2 rounded-md p-1
+                      ${TEXT_SUBTLE} hover:${TEXT} ${FOCUS}
+                      transition-colors duration-300 ${EASE}
                     `}
                   >
                     <X className="h-3.5 w-3.5" aria-hidden="true" />
@@ -701,35 +537,33 @@ export default function ChangelogTracker() {
                 transition={{ duration: 0.28, ease: easeOut }}
                 className="overflow-hidden lg:hidden"
               >
-                <div className="flex gap-2 pb-2.5">
+                <div className="flex gap-2 pb-3">
                   <a
                     href={`https://github.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`
                       inline-flex h-9 flex-1 items-center justify-center gap-1.5
-                      rounded-full text-[13px] font-semibold
-                      text-[#444746] dark:text-[#C4C7C5] ${SURFACE}
-                      transition-colors duration-300 ${EASE}
-                      hover:text-[#1F1F1F] dark:hover:text-[#E3E3E3]
-                      ${FOCUS}
+                      rounded-md border ${RULE_SOFT}
+                      text-[11px] font-bold uppercase tracking-wider ${TEXT_SUBTLE}
+                      hover:${TEXT} transition-colors duration-300 ${EASE} ${FOCUS}
                     `}
                   >
-                    <Github className="h-4 w-4" aria-hidden="true" />
+                    <Github className="h-3.5 w-3.5" aria-hidden="true" />
                     Repository
                   </a>
                   <Link
-                    href="/git-track/tree"
+                    href="/git-tree"
                     className={`
                       inline-flex h-9 flex-1 items-center justify-center gap-1.5
-                      rounded-full text-[13px] font-semibold
-                      ${SOLID}
-                      transition-all duration-300 ${EASE}
-                      hover:brightness-125
-                      ${FOCUS}
+                      rounded-md bg-[#1f1f1f] px-3
+                      text-[11px] font-bold uppercase tracking-wider text-white
+                      transition-colors duration-300 ${EASE} ${FOCUS}
+                      hover:bg-[#111]
+                      dark:bg-[#e3e3e3] dark:text-[#111] dark:hover:bg-white
                     `}
                   >
-                    <FileCode2 className="h-4 w-4" aria-hidden="true" />
+                    <FileCode2 className="h-3.5 w-3.5" aria-hidden="true" />
                     View Tree
                   </Link>
                 </div>
@@ -737,7 +571,7 @@ export default function ChangelogTracker() {
             )}
           </AnimatePresence>
 
-          {/* Filter panel — animated expand/collapse */}
+          {/* Filter panel */}
           <AnimatePresence initial={false}>
             {showFilters && (
               <motion.div
@@ -747,46 +581,79 @@ export default function ChangelogTracker() {
                 transition={{ duration: 0.32, ease: easeEmphasized }}
                 className="overflow-hidden"
               >
-                <div className="pb-3">
-                  <div
-                    className={`
-                      max-h-[55vh] space-y-4 overflow-y-auto rounded-[20px]
-                      ${SUBTLE} p-4
-                    `}
-                  >
+                <div className={`border-t ${RULE_SOFT} py-4`}>
+                  <div className="max-h-[55vh] space-y-5 overflow-y-auto">
                     {/* Type chips */}
                     <div className="space-y-2.5">
-                      <p className="text-[11px] font-bold uppercase tracking-wider text-[#747775] dark:text-[#8E918F]">
+                      <p
+                        className={`text-[10px] font-bold uppercase tracking-widest ${TEXT_SUBTLE}`}
+                      >
                         Type
                       </p>
                       <div className="flex flex-wrap gap-1.5">
-                        {COMMIT_TYPES.map((t) => (
-                          <FilterChip
-                            key={t.id}
-                            label={t.label}
-                            active={typeFilter === t.id}
-                            shapeIndex={t.shapeIndex}
-                            onClick={() => setTypeFilter(t.id)}
-                          />
-                        ))}
+                        {COMMIT_TYPES.map((t) => {
+                          const active = typeFilter === t.id;
+                          return (
+                            <motion.button
+                              key={t.id}
+                              type="button"
+                              onClick={() => setTypeFilter(t.id)}
+                              aria-pressed={active}
+                              whileTap={
+                                reduceMotion ? undefined : { scale: 0.94 }
+                              }
+                              className={`
+                                inline-flex items-center rounded-md border px-2.5 py-1
+                                text-[11px] font-bold uppercase tracking-wider
+                                transition-colors duration-300 ${EASE} ${FOCUS}
+                                ${
+                                  active
+                                    ? "border-blue-700 bg-blue-700 text-white dark:border-blue-400 dark:bg-blue-400 dark:text-[#0a0a0a]"
+                                    : `border-black/[0.12] ${TEXT_SUBTLE} hover:${TEXT} dark:border-white/[0.18]`
+                                }
+                              `}
+                            >
+                              {t.label}
+                            </motion.button>
+                          );
+                        })}
                       </div>
                     </div>
 
                     {/* Author chips */}
                     <div className="space-y-2.5">
-                      <p className="text-[11px] font-bold uppercase tracking-wider text-[#747775] dark:text-[#8E918F]">
+                      <p
+                        className={`text-[10px] font-bold uppercase tracking-widest ${TEXT_SUBTLE}`}
+                      >
                         Author
                       </p>
                       <div className="flex flex-wrap gap-1.5">
-                        {["all", ...uniqueAuthors].map((a, i) => (
-                          <FilterChip
-                            key={a}
-                            label={a === "all" ? "All" : a}
-                            active={authorFilter === a}
-                            shapeIndex={i % SHAPES.length}
-                            onClick={() => setAuthorFilter(a)}
-                          />
-                        ))}
+                        {["all", ...uniqueAuthors].map((a) => {
+                          const active = authorFilter === a;
+                          return (
+                            <motion.button
+                              key={a}
+                              type="button"
+                              onClick={() => setAuthorFilter(a)}
+                              aria-pressed={active}
+                              whileTap={
+                                reduceMotion ? undefined : { scale: 0.94 }
+                              }
+                              className={`
+                                inline-flex items-center rounded-md border px-2.5 py-1
+                                text-[11px] font-bold uppercase tracking-wider
+                                transition-colors duration-300 ${EASE} ${FOCUS}
+                                ${
+                                  active
+                                    ? "border-blue-700 bg-blue-700 text-white dark:border-blue-400 dark:bg-blue-400 dark:text-[#0a0a0a]"
+                                    : `border-black/[0.12] ${TEXT_SUBTLE} hover:${TEXT} dark:border-white/[0.18]`
+                                }
+                              `}
+                            >
+                              {a === "all" ? "All" : a}
+                            </motion.button>
+                          );
+                        })}
                       </div>
                     </div>
 
@@ -799,29 +666,18 @@ export default function ChangelogTracker() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -4 }}
                           transition={{ duration: 0.24, ease: easeOut }}
-                          onClick={() => {
-                            setSearchQuery("");
-                            setAuthorFilter("all");
-                            setTypeFilter("all");
-                          }}
+                          onClick={clearAll}
                           whileTap={reduceMotion ? undefined : { scale: 0.95 }}
                           className={`
-                            inline-flex items-center gap-1.5 rounded-full
-                            py-1.5 pl-1.5 pr-3.5 text-xs font-semibold
-                            ${SURFACE} text-[#1F1F1F] dark:text-[#E3E3E3]
-                            transition-colors duration-300 ${EASE}
-                            hover:text-[#1F1F1F] dark:hover:text-[#E3E3E3]
-                            ${FOCUS}
+                            inline-flex items-center gap-1.5 rounded-md border
+                            ${RULE_SOFT} px-2.5 py-1
+                            text-[11px] font-bold uppercase tracking-wider ${TEXT}
+                            transition-colors duration-300 ${EASE} ${FOCUS}
+                            hover:border-blue-700 hover:text-blue-700
+                            dark:hover:border-blue-400 dark:hover:text-blue-400
                           `}
                         >
-                          <span
-                            className={`
-                              grid h-5 w-5 shrink-0 place-items-center rounded-full
-                              ${SOLID}
-                            `}
-                          >
-                            <RotateCcw className="h-3 w-3" aria-hidden="true" />
-                          </span>
+                          <RotateCcw className="h-3 w-3" aria-hidden="true" />
                           Clear all filters
                         </motion.button>
                       )}
@@ -834,14 +690,11 @@ export default function ChangelogTracker() {
         </div>
       </header>
 
-      {/* ═══════════════════════════════════════════════════════════
-          CONTENT
-      ═══════════════════════════════════════════════════════════ */}
-      <div className="mx-auto max-w-4xl px-4 pt-6 pb-16 sm:px-6 lg:px-8">
+      {/* ═══════════════ CONTENT ═══════════════ */}
+      <div className="mx-auto max-w-3xl px-4 pt-8 pb-16 sm:px-6 lg:pt-12 lg:pb-20">
         {/* ── STATUS STATES ── */}
-
-        {/* Loading */}
         <AnimatePresence mode="wait">
+          {/* Loading */}
           {loading && (
             <motion.div
               key="loading"
@@ -851,29 +704,27 @@ export default function ChangelogTracker() {
               transition={{ duration: 0.3, ease: easeOut }}
               className={`
                 flex flex-col items-center justify-center space-y-4
-                rounded-[28px] p-10 ${SURFACE}
+                border-2 ${RULE_INK} px-6 py-14
               `}
             >
               <motion.span
                 animate={reduceMotion ? undefined : { rotate: 360 }}
-                transition={{
-                  duration: 2.4,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
+                transition={{ duration: 2.4, repeat: Infinity, ease: "linear" }}
                 className={`
-                  grid h-14 w-14 place-items-center rounded-[18px]
-                  ${SOLID}
-                  shadow-[0_2px_6px_rgba(0,0,0,0.12)]
+                  grid h-12 w-12 place-items-center rounded-md
+                  bg-[#1f1f1f] text-white
+                  dark:bg-[#e3e3e3] dark:text-[#111]
                 `}
               >
-                <Clock className="h-6 w-6" aria-hidden="true" />
+                <Clock className="h-5 w-5" aria-hidden="true" />
               </motion.span>
               <div className="text-center">
-                <p className="text-sm font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
+                <p
+                  className={`text-xs font-bold uppercase tracking-widest ${TEXT}`}
+                >
                   Fetching commits
                 </p>
-                <p className="mt-0.5 text-xs text-[#747775] dark:text-[#8E918F]">
+                <p className={`mt-1 text-xs font-medium ${TEXT_SUBTLE}`}>
                   Page {fetchingProgress}
                 </p>
               </div>
@@ -889,22 +740,23 @@ export default function ChangelogTracker() {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.3, ease: easeOut }}
               className={`
-                flex flex-col gap-4 rounded-[28px] p-5
+                flex flex-col gap-4 border-2 ${RULE_INK} px-5 py-5
                 sm:flex-row sm:items-center sm:justify-between
-                ${SURFACE}
               `}
             >
               <div className="flex items-center gap-3">
                 <span
                   className={`
-                    grid h-10 w-10 shrink-0 place-items-center rounded-[14px]
-                    ${SOLID}
-                    shadow-[0_2px_6px_rgba(0,0,0,0.12)]
+                    grid h-10 w-10 shrink-0 place-items-center rounded-md
+                    bg-[#1f1f1f] text-white
+                    dark:bg-[#e3e3e3] dark:text-[#111]
                   `}
                 >
                   <AlertCircle className="h-5 w-5" aria-hidden="true" />
                 </span>
-                <span className="text-sm font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
+                <span
+                  className={`text-sm font-bold uppercase tracking-wider ${TEXT}`}
+                >
                   {error}
                 </span>
               </div>
@@ -913,11 +765,12 @@ export default function ChangelogTracker() {
                 onClick={fetchCommits}
                 whileTap={reduceMotion ? undefined : { scale: 0.95 }}
                 className={`
-                  inline-flex shrink-0 items-center gap-1.5 rounded-full
-                  ${SOLID} px-4 py-2 text-xs font-semibold
-                  transition-all duration-300 ${EASE}
-                  hover:brightness-125
-                  ${FOCUS}
+                  inline-flex shrink-0 items-center gap-1.5 rounded-md
+                  bg-[#1f1f1f] px-4 py-2
+                  text-[11px] font-bold uppercase tracking-wider text-white
+                  transition-colors duration-300 ${EASE} ${FOCUS}
+                  hover:bg-[#111]
+                  dark:bg-[#e3e3e3] dark:text-[#111] dark:hover:bg-white
                 `}
               >
                 <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
@@ -934,20 +787,22 @@ export default function ChangelogTracker() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.3, ease: easeOut }}
-              className={`rounded-[28px] p-10 text-center ${SURFACE}`}
+              className={`border-2 ${RULE_INK} px-6 py-12 text-center`}
             >
               <span
                 className={`
-                  mx-auto mb-3 grid h-12 w-12 place-items-center rounded-[16px]
-                  ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
+                  mx-auto mb-4 grid h-12 w-12 place-items-center rounded-md
+                  border ${RULE_SOFT} ${TEXT}
                 `}
               >
                 <Search className="h-5 w-5" aria-hidden="true" />
               </span>
-              <p className="text-sm font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
+              <p
+                className={`text-sm font-bold uppercase tracking-wider ${TEXT}`}
+              >
                 No matching commits
               </p>
-              <p className="mt-0.5 text-xs text-[#747775] dark:text-[#8E918F]">
+              <p className={`mt-1.5 text-xs font-medium ${TEXT_SUBTLE}`}>
                 Try adjusting your filters or search query.
               </p>
             </motion.div>
@@ -956,209 +811,178 @@ export default function ChangelogTracker() {
 
         {/* ── TIMELINE ── */}
         {!loading && !error && displayCommits.length > 0 && (
-          <div className="space-y-8">
+          <div className="space-y-10">
             {grouped.map(([group, items]) => (
               <section key={group}>
-                {/* Group header */}
-                <div className="mb-3 flex items-center gap-3">
-                  <span
+                {/* Group header — mirrors BlogFeed's section rule */}
+                <div className="mb-5">
+                  <div
                     className={`
-                      inline-flex items-center gap-1.5 rounded-full
-                      py-1 pl-1 pr-2.5 text-[10px] font-bold uppercase tracking-wider
-                      ${SUBTLE}
+                      flex items-baseline justify-between
+                      border-b-2 ${RULE_INK} pb-2
                     `}
                   >
-                    <span
+                    <h2
                       className={`
-                        grid h-4 w-4 place-items-center rounded-full
-                        ${SOLID}
+                        text-sm font-extrabold uppercase tracking-widest
+                        sm:text-base ${TEXT}
                       `}
                     >
-                      <span className="h-1 w-1 rounded-full bg-current" />
-                    </span>
-                    <span className="text-[#1F1F1F] dark:text-[#E3E3E3]">
                       {group}
+                    </h2>
+                    <span
+                      className={`
+                        text-[11px] font-bold uppercase tracking-wider
+                        tabular-nums ${TEXT_SUBTLE}
+                      `}
+                    >
+                      {items.length} {items.length === 1 ? "commit" : "commits"}
                     </span>
-                  </span>
-                  <span className="h-px flex-1 bg-[#C4C7C5]/40 dark:bg-[#3C4043]" />
-                  <span className="text-[11px] font-semibold tabular-nums text-[#747775] dark:text-[#8E918F]">
-                    {items.length}
-                  </span>
+                  </div>
                 </div>
 
-                {/* Commits in this group — staggered entrance */}
+                {/* Commit rows */}
                 <motion.ol
                   initial="hidden"
                   animate="visible"
                   variants={{
                     hidden: {},
-                    visible: {
-                      transition: { staggerChildren: 0.04 },
-                    },
+                    visible: { transition: { staggerChildren: 0.04 } },
                   }}
-                  className="relative space-y-2.5 pl-6"
+                  className={`border-t ${RULE_SOFT}`}
                 >
-                  <span
-                    aria-hidden="true"
-                    className="
-                      absolute left-[7px] top-2 bottom-2 w-px
-                      bg-[#C4C7C5]/50 dark:bg-[#3C4043]
-                    "
-                  />
-
                   {items.map((commit) => {
                     const title = getCommitTitle(commit.commit.message);
                     const shortSha = commit.sha.substring(0, 7);
                     const isHead = commits[0]?.sha === commit.sha;
-                    const shapeIndex = commitTypeShapeIndex(
-                      commit.commit.message,
-                    );
+                    const typeLabel = commitTypeLabel(commit.commit.message);
 
                     return (
                       <motion.li
                         key={commit.sha}
                         variants={{
-                          hidden: { opacity: 0, y: 10 },
+                          hidden: { opacity: 0, y: 8 },
                           visible: {
                             opacity: 1,
                             y: 0,
-                            transition: { duration: 0.36, ease: easeOut },
+                            transition: { duration: 0.32, ease: easeOut },
                           },
                         }}
-                        className="relative"
+                        className={`border-b ${RULE_SOFT}`}
                       >
-                        {/* Timeline dot — morphs into commit type shape */}
-                        <span
-                          aria-hidden="true"
-                          className={`
-                            absolute -left-6 top-5 z-[1] grid h-4 w-4 place-items-center
-                            rounded-full ring-2 ring-[#F7F9FC]
-                            dark:ring-[#141414]
-                          `}
-                        >
-                          <ShapeDot shapeIndex={shapeIndex} active size={14} />
-                        </span>
-
                         <motion.a
                           href={commit.html_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          whileHover={reduceMotion ? undefined : { y: -2 }}
+                          whileHover={reduceMotion ? undefined : { x: 2 }}
                           transition={{ duration: 0.22, ease: easeOut }}
                           className={`
-                            group block rounded-[24px] ${SURFACE}
-                            p-4
-                            transition-shadow duration-300 ${EASE}
-                            hover:shadow-[0_2px_6px_rgba(0,0,0,0.1),0_18px_40px_-20px_rgba(0,0,0,0.6)]
-                            dark:hover:shadow-[0_2px_6px_rgba(0,0,0,0.7),0_18px_40px_-20px_rgba(255,255,255,0.3)]
-                            ${FOCUS}
+                            group flex flex-col gap-2 py-4 sm:gap-3
+                            transition-colors duration-300 ${EASE} ${FOCUS}
+                            sm:flex-row sm:items-start
                           `}
                         >
-                          <div className="flex flex-col gap-2.5 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-                            <div className="min-w-0 flex-1">
-                              {/* Meta row */}
-                              <div className="mb-2 flex flex-wrap items-center gap-2">
-                                <span
-                                  className={`
-                                    inline-flex items-center gap-1.5 rounded-full
-                                    py-1 pl-1 pr-2.5 text-[10px] font-bold
-                                    tabular-nums ${SUBTLE}
-                                  `}
-                                >
-                                  <span
-                                    className="
-                                      grid h-4 w-4 place-items-center rounded-full
-                                      overflow-hidden
-                                    "
-                                  >
-                                    <ShapeDot
-                                      shapeIndex={shapeIndex}
-                                      active
-                                      size={10}
-                                    />
-                                  </span>
-                                  <span className="text-[#1F1F1F] dark:text-[#E3E3E3]">
-                                    {shortSha}
-                                  </span>
-                                </span>
-                                {isHead && (
-                                  <span
-                                    className={`
-                                      inline-flex items-center gap-1.5 rounded-full
-                                      py-1 pl-1 pr-2.5 text-[10px] font-bold uppercase tracking-wider
-                                      ${SOLID}
-                                    `}
-                                  >
-                                    <span
-                                      className={`
-                                        grid h-4 w-4 place-items-center rounded-full
-                                        bg-white/25 dark:bg-black/20
-                                      `}
-                                    >
-                                      <span className="h-1 w-1 rounded-full bg-current" />
-                                    </span>
-                                    <span>HEAD</span>
-                                  </span>
-                                )}
-                                <span className="text-[11px] font-medium text-[#747775] dark:text-[#8E918F]">
-                                  {timeAgo(commit.commit.author.date)}
-                                </span>
-                              </div>
-
-                              {/* Commit title */}
-                              <p
-                                className="
-                                  line-clamp-2 text-sm font-semibold leading-snug
-                                  text-[#1F1F1F] dark:text-[#E3E3E3]
-                                "
+                          {/* ── Left column — type + sha ── */}
+                          <div className="flex shrink-0 items-center gap-2 sm:w-32 sm:flex-col sm:items-start sm:gap-1">
+                            <span
+                              className={`
+                                inline-flex items-center rounded-md border
+                                border-black/[0.12] px-1.5 py-0.5
+                                text-[10px] font-bold uppercase tracking-wider
+                                ${TEXT_SUBTLE}
+                                dark:border-white/[0.18]
+                                transition-colors duration-300 ${EASE}
+                                group-hover:border-blue-700 group-hover:text-blue-700
+                                dark:group-hover:border-blue-400 dark:group-hover:text-blue-400
+                              `}
+                            >
+                              {typeLabel}
+                            </span>
+                            <span
+                              className={`
+                                text-[10px] font-bold uppercase tracking-wider
+                                tabular-nums ${TEXT_SUBTLE}
+                              `}
+                            >
+                              {shortSha}
+                            </span>
+                            {isHead && (
+                              <span
+                                className={`
+                                  inline-flex items-center rounded-md
+                                  bg-[#1f1f1f] px-1.5 py-0.5
+                                  text-[10px] font-bold uppercase tracking-wider
+                                  text-white
+                                  dark:bg-[#e3e3e3] dark:text-[#111]
+                                `}
                               >
-                                {title}
-                              </p>
+                                HEAD
+                              </span>
+                            )}
+                          </div>
 
-                              {/* Author row */}
-                              <div className="mt-2.5 flex items-center gap-2">
+                          {/* ── Middle column — title + meta ── */}
+                          <div className="min-w-0 flex-1">
+                            <p
+                              className={`
+                                line-clamp-2 text-sm font-bold leading-snug
+                                ${TEXT}
+                                transition-colors duration-300 ${EASE}
+                                group-hover:text-blue-700
+                                dark:group-hover:text-blue-400
+                                sm:text-[15px]
+                              `}
+                            >
+                              {title}
+                            </p>
+                            <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1">
+                              <span
+                                className={`
+                                  flex items-center gap-1.5
+                                  text-[11px] font-bold uppercase tracking-wider
+                                  ${TEXT_SUBTLE}
+                                `}
+                              >
                                 <span
                                   className={`
-                                    grid h-5 w-5 shrink-0 place-items-center rounded-full
-                                    text-[9px] font-bold uppercase
-                                    ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
+                                    grid h-5 w-5 place-items-center rounded-sm
+                                    border ${RULE_SOFT}
+                                    text-[9px] font-extrabold ${TEXT}
                                   `}
                                 >
                                   {commit.commit.author.name.charAt(0)}
                                 </span>
-                                <span className="truncate text-xs font-medium text-[#444746] dark:text-[#C4C7C5]">
+                                <span className="truncate">
                                   {commit.commit.author.name}
                                 </span>
-                              </div>
-                            </div>
-
-                            {/* Diff chip — morphs on hover */}
-                            <span
-                              className={`
-                                inline-flex shrink-0 items-center gap-1.5
-                                self-start rounded-full py-1.5 pl-1.5 pr-3
-                                text-[11px] font-semibold
-                                ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
-                                transition-all duration-300 ${EASE}
-                              `}
-                            >
+                              </span>
                               <span
                                 className={`
-                                  grid h-5 w-5 shrink-0 place-items-center rounded-full
-                                  transition-all duration-300 ${SPRING}
-                                  group-hover:rounded-[6px]
-                                  group-hover:bg-[#1F1F1F] group-hover:text-white
-                                  dark:group-hover:bg-[#E3E3E3] dark:group-hover:text-[#1F1F1F]
+                                  text-[11px] font-bold uppercase tracking-wider
+                                  tabular-nums ${TEXT_SUBTLE}
                                 `}
                               >
-                                <ExternalLink
-                                  className="h-3 w-3"
-                                  aria-hidden="true"
-                                />
+                                · {timeAgo(commit.commit.author.date)}
                               </span>
-                              Diff
-                            </span>
+                            </div>
                           </div>
+
+                          {/* ── Right column — arrow ── */}
+                          <span
+                            aria-hidden="true"
+                            className={`
+                              hidden shrink-0 items-center gap-1
+                              text-[11px] font-bold uppercase tracking-wider
+                              ${TEXT_SUBTLE}
+                              transition-colors duration-300 ${EASE}
+                              group-hover:text-blue-700
+                              dark:group-hover:text-blue-400
+                              sm:inline-flex
+                            `}
+                          >
+                            Diff
+                            <ExternalLink className="h-3.5 w-3.5" />
+                          </span>
                         </motion.a>
                       </motion.li>
                     );

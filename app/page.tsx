@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Github,
   ExternalLink,
@@ -13,13 +14,15 @@ import {
   GraduationCap,
   Wrench,
   Sparkles,
-  Linkedin,
   Mail,
   Twitter,
+  CalendarDays,
+  Fingerprint,
+  Cloud,
 } from "lucide-react";
 import Link from "next/link";
-import Script from "next/script";
 import Recommendation from "./components/Recommendation";
+import { TbBrandLinkedinFilled } from "react-icons/tb";
 
 // --- CONFIGURATION ---
 const CONFIG = {
@@ -43,7 +46,7 @@ const CONFIG = {
     {
       platform: "LinkedIn",
       url: "https://linkedin.com/in/kinshukjainn/",
-      icon: "linkedin",
+      icon: "TbBrandLinkedinFilled",
       handle: "@kinshukjainn",
     },
     {
@@ -175,48 +178,34 @@ const CONFIG = {
   },
 };
 
-/* ── Surface tokens (unchanged from header language) ───── */
-const SURFACE =
-  "bg-white dark:bg-[#1E1F20] " +
-  "shadow-[0_1px_3px_rgba(0,0,0,0.06),0_8px_24px_-16px_rgba(0,0,0,0.35)] " +
-  "dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_8px_24px_-16px_rgba(0,0,0,0.9)]";
-
-const SUBTLE = "bg-[#F0F4F9] dark:bg-[#282A2C]";
-
-const EASE = "ease-[cubic-bezier(0.2,0,0,1)]";
-const SPRING = "ease-[cubic-bezier(0.34,1.56,0.64,1)]";
-
-const FOCUS =
-  "focus-visible:outline-none focus-visible:ring-2 " +
-  "focus-visible:ring-[#1F1F1F] dark:focus-visible:ring-[#E3E3E3] " +
-  "focus-visible:ring-offset-0";
-
-const STATE = "hover:bg-black/[0.06] dark:hover:bg-white/[0.10]";
-
-/* ── Neutral "tint" — mirrors the header's monochrome system ── */
-const NEUTRAL = {
-  /** transparent icon container, black/white icon */
-  idle: "bg-transparent text-[#1F1F1F] dark:text-[#E3E3E3]",
-  /** inverted fill — for selected icons & primary actions */
-  solid: "bg-[#1F1F1F] text-white dark:bg-[#E3E3E3] dark:text-[#1F1F1F]",
-  /** inverted fill — for selected tiles */
-  soft: "bg-[#1F1F1F] text-white dark:bg-[#E3E3E3] dark:text-[#1F1F1F]",
-} as const;
-
-/* ── Social icon mapping (monochrome only) ──────────────── */
 const SOCIAL_ICONS: Record<string, React.ReactNode> = {
-  GitHub: <Github className="h-4.5 w-4.5" aria-hidden="true" />,
-  LinkedIn: <Linkedin className="h-4.5 w-4.5" aria-hidden="true" />,
-  Gmail: <Mail className="h-4.5 w-4.5" aria-hidden="true" />,
-  X: <Twitter className="h-4.5 w-4.5" aria-hidden="true" />,
+  GitHub: <Github className="h-4 w-4" aria-hidden="true" />,
+  LinkedIn: <TbBrandLinkedinFilled className="h-4 w-4" aria-hidden="true" />,
+  Gmail: <Mail className="h-4 w-4" aria-hidden="true" />,
+  X: <Twitter className="h-4 w-4" aria-hidden="true" />,
 };
 
-/* ── CREDLY BADGE IDS ───────────────────────────────────── */
-const CREDLY_BADGES = [
-  "f42e01a4-b2d6-4069-8038-db78a81c81b5",
-  "a4406a81-77da-4003-b153-9e36582f7877",
-  "a0042ec2-cc6e-4a99-84de-a1516ee5775a",
-  "0bcd1190-2d68-45ff-91d9-32b65aa93ed8",
+type Certification = {
+  title: string;
+  issuer: string;
+  issued: string;
+  credentialId: string;
+  skills: string[];
+  verifyUrl: string;
+  icon: React.ReactNode;
+};
+
+const CERTIFICATIONS: Certification[] = [
+  {
+    title: "AWS Certified Cloud Practitioner",
+    issuer: "Amazon Web Services",
+    issued: "Issued September 2026",
+    credentialId: "f42e01a4-b2d6-4069-8038-db78a81c81b5",
+    skills: ["Cloud Concepts", "AWS Core Services", "Billing & Pricing"],
+    verifyUrl:
+      "https://www.credly.com/badges/f42e01a4-b2d6-4069-8038-db78a81c81b5/public",
+    icon: <Cloud className="h-5 w-5" aria-hidden="true" />,
+  },
 ];
 
 /* ── SECTION WRAPPER ────────────────────────────────────── */
@@ -232,221 +221,210 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="space-y-5">
-      <div className="flex items-center gap-3">
-        <span
-          className={`
-            grid h-10 w-10 shrink-0 place-items-center rounded-[14px]
-            ${NEUTRAL.solid}
-            shadow-[0_2px_6px_rgba(0,0,0,0.12)]
-            transition-transform duration-300 ${SPRING}
-          `}
-        >
+    <section className="mb-14">
+      <div className="mb-6 border-b-2 border-[#1f1f1f] pb-2 dark:border-[#e3e3e3]">
+        <h2 className="flex items-center gap-2 text-xl font-bold uppercase tracking-widest text-[#1F1F1F] dark:text-[#E3E3E3]">
           {icon}
-        </span>
-        <div>
-          <h2 className="text-lg font-semibold tracking-tight text-[#1F1F1F] dark:text-[#E3E3E3] md:text-xl">
-            {title}
-          </h2>
-          {subtitle && (
-            <p className="text-xs text-[#747775] dark:text-[#8E918F]">
-              {subtitle}
-            </p>
-          )}
-        </div>
+          {title}
+        </h2>
+        {subtitle && (
+          <p className="mt-1 text-sm italic text-[#555] dark:text-[#aaa]">
+            {subtitle}
+          </p>
+        )}
       </div>
       {children}
     </section>
   );
 }
 
+/* ── CERTIFICATION CARD ─────────────────────────────────── */
+function CertificationCard({ cert }: { cert: Certification }) {
+  return (
+    <div className="mb-8 block">
+      <h3 className="flex items-center gap-2 text-lg font-bold text-[#1F1F1F] dark:text-[#E3E3E3]">
+        {cert.icon} {cert.title}
+        <span className="bg-[#1f1f1f] px-1.5 py-0.5 text-[10px] font-bold uppercase text-white dark:bg-[#e3e3e3] dark:text-[#1f1f1f]">
+          Verified
+        </span>
+      </h3>
+      <p className="mt-1 text-base font-bold text-[#444] dark:text-[#ccc]">
+        {cert.issuer}
+      </p>
+
+      <div className="mt-2 flex flex-col gap-1 text-sm text-[#555] dark:text-[#aaa]">
+        <span className="flex items-center gap-1.5">
+          <CalendarDays className="h-4 w-4" /> {cert.issued}
+        </span>
+        <span className="flex items-center gap-1.5">
+          <Fingerprint className="h-4 w-4" /> Credential ID: {cert.credentialId}
+        </span>
+      </div>
+
+      <p className="mt-3 text-sm text-[#444] dark:text-[#ccc]">
+        <strong>Skills evaluated:</strong> {cert.skills.join(", ")}
+      </p>
+
+      <a
+        href={cert.verifyUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-3 inline-flex items-center gap-1 font-bold text-blue-700 underline hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+      >
+        <ExternalLink className="h-4 w-4" /> Verify on official portal
+      </a>
+    </div>
+  );
+}
+
 /* ── PAGE ───────────────────────────────────────────────── */
 export default function Home() {
+  /* Track image load failures so we can fall back to a gradient
+     banner and an initial-letter avatar gracefully. */
+  const [bannerOk, setBannerOk] = useState(true);
+  const [profileOk, setProfileOk] = useState(true);
+
   return (
-    <div
-      className="
-        min-h-screen bg-[#F7F9FC] text-[#1F1F1F]
-        selection:bg-[#1F1F1F] selection:text-white
-        dark:bg-[#141414] dark:text-[#E3E3E3]
-        dark:selection:bg-[#E3E3E3] dark:selection:text-[#1F1F1F]
-      "
-    >
-      <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 md:py-16 lg:px-8 lg:py-20">
+    <div className="min-h-screen bg-[#FAFAFA] text-[#111] selection:bg-[#111] selection:text-white dark:bg-black dark:text-[#eee] dark:selection:bg-[#eee] dark:selection:text-[#111]">
+      <main className="mx-auto max-w-3xl px-6 py-12 md:py-20">
         {/* ============ HERO ============ */}
-        <header className="mb-10 space-y-7 md:mb-14">
-          {/* Status chips */}
-          <div className="flex flex-wrap items-center gap-2">
-            <span
-              className={`
-                inline-flex items-center gap-1.5 rounded-full
-                py-1.5 px-2 ${SURFACE}
-              `}
-            >
-              <span
-                className={`
-                  grid h-8 w-8 shrink-0 place-items-center rounded-full
-                  ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
-                  transition-all duration-300 ${SPRING}
-                `}
-              >
-                <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-              </span>
-              <span className="text-[13px] font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
-                Available for collaboration
-              </span>
-            </span>
-
-            <span
-              className={`
-                inline-flex items-center gap-1.5 rounded-full
-                py-1.5 px-2 ${SURFACE}
-              `}
-            >
-              <span
-                className={`
-                  grid h-8 w-8 shrink-0 place-items-center rounded-full
-                  ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
-                  transition-all duration-300 ${SPRING}
-                `}
-              >
-                <MapPin className="h-4 w-4" aria-hidden="true" />
-              </span>
-              <span className="text-[13px] font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
-                {CONFIG.personal.location}
-              </span>
-            </span>
+        <header className="mb-14">
+          {/* ── BANNER ──────────────────────────────────────── */}
+          <div
+            className="
+              relative aspect-[3/1] w-full overflow-hidden 
+              bg-gradient-to-br from-[#1f1f1f] via-[#2a2a2a] to-[#4a4a4a]
+              dark:from-[#e3e3e3] dark:via-[#bbb] dark:to-[#888]
+              sm:aspect-[4/1]
+            "
+          >
+            {bannerOk && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src="/banner.png"
+                alt=""
+                className="absolute inset-0 h-full w-full object-cover"
+                onError={() => setBannerOk(false)}
+              />
+            )}
           </div>
 
-          {/* Heading + bio */}
-          <div className="space-y-3">
-            <h1 className="h-font text-3xl font-bold tracking-tight text-[#1F1F1F] dark:text-[#E3E3E3] sm:text-4xl md:text-5xl md:leading-[1.1]">
-              Hi, I&apos;m{" "}
-              <span className="text-[#0B57D0] dark:text-[#A8C7FA]">
-                Kinshuk
-              </span>
-              .
-            </h1>
-            <p className="max-w-2xl text-base leading-7 text-[#444746] dark:text-[#C4C7C5] md:text-lg">
-              {CONFIG.personal.bio[0]}
-            </p>
-            <p className="max-w-3xl text-sm leading-7 text-[#444746] dark:text-[#C4C7C5] md:text-base">
-              {CONFIG.personal.bio[1]}
-            </p>
+          {/* ── PROFILE PHOTO (overlaps banner) ─────────────── */}
+          <div
+            className="
+              relative -mt-14 ml-3 h-24 w-24 overflow-hidden rounded-full
+              border-4 border-[#FAFAFA] bg-[#1f1f1f]
+              dark:border-black dark:bg-[#e3e3e3]
+              sm:-mt-16 sm:ml-4 sm:h-28 sm:w-28
+              md:-mt-20 md:ml-6 md:h-32 md:w-32
+            "
+          >
+            {/* Fallback initial — hidden once photo loads */}
+            <span
+              aria-hidden="true"
+              className="
+                absolute inset-0 grid place-items-center
+                text-3xl font-extrabold text-white
+                dark:text-[#111]
+                sm:text-4xl md:text-5xl
+              "
+            >
+              K
+            </span>
+
+            {profileOk && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src="/profile.jpg"
+                alt="Kinshuk Jain"
+                className="absolute inset-0 h-full w-full object-cover"
+                onError={() => setProfileOk(false)}
+              />
+            )}
           </div>
 
-          {/* Social + CTA row */}
-          <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-            {/* Social links — shape-morph chips */}
-            <div className="flex flex-wrap gap-2">
-              {CONFIG.social.map((s) => {
-                const icon = SOCIAL_ICONS[s.platform] ?? (
-                  <span className="text-[10px] font-bold">@</span>
-                );
-                return (
-                  <a
-                    key={s.platform}
-                    href={s.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`
-                      group inline-flex items-center gap-2 rounded-full
-                      py-2 pl-2 pr-4 ${SURFACE}
-                      transition-all duration-300 ${EASE}
-                      hover:shadow-[0_1px_3px_rgba(0,0,0,0.12),0_12px_28px_-14px_rgba(0,0,0,0.55)]
-                      dark:hover:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_12px_28px_-14px_rgba(255,255,255,0.35)]
-                      active:scale-[0.96] active:rounded-xl
-                      ${FOCUS}
-                    `}
-                  >
-                    <span
-                      className={`
-                        grid h-8 w-8 shrink-0 place-items-center rounded-full
-                        ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
-                        transition-all duration-300 ${SPRING}
-                        group-hover:rounded-[8px]
-                      `}
-                    >
-                      {icon}
-                    </span>
-                    <span className="text-sm font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
-                      {s.platform}
-                    </span>
-                  </a>
-                );
-              })}
+          {/* ── HERO CONTENT ────────────────────────────────── */}
+          <div className="mt-6 space-y-6">
+            <div className="flex flex-col gap-2 text-sm font-bold sm:flex-row sm:gap-6">
+              <span className="flex items-center gap-1.5">
+                <MapPin className="h-4 w-4" /> {CONFIG.personal.location}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Sparkles className="h-4 w-4" /> Available for collaboration
+              </span>
+            </div>
+
+            <div className="space-y-4 text-base leading-relaxed md:text-lg">
+              {CONFIG.personal.bio.map((paragraph, idx) => (
+                <p key={idx}>{paragraph}</p>
+              ))}
+            </div>
+
+            {/* Social Links — editorial chip style */}
+            <div className="flex flex-wrap gap-3 pt-2">
+              {CONFIG.social.map((s) => (
+                <a
+                  key={s.platform}
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="
+                    inline-flex items-center gap-1.5 rounded-md
+                    bg-blue-900 px-2.5 py-1.5
+                    text-xs font-bold  tracking-wider text-white
+                    transition-colors duration-300
+                    
+                    dark:bg-[#e3e3e3] dark:text-[#111]
+                    dark:hover:bg-blue-400 dark:hover:text-[#0a0a0a]
+                  "
+                >
+                  {SOCIAL_ICONS[s.platform]} {s.platform}
+                </a>
+              ))}
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-6 pt-2 font-bold">
               <Link
                 href="/myresumekinshuk.pdf"
-                className={`
-                  inline-flex items-center gap-2 rounded-full
-                  bg-[#1F1F1F] px-4 py-2.5 text-sm font-semibold text-white
-                  shadow-[0_1px_3px_rgba(0,0,0,0.16),0_8px_20px_-10px_rgba(0,0,0,0.9)]
-                  transition-all duration-300 ${EASE}
-                  hover:brightness-125
-                  hover:shadow-[0_1px_3px_rgba(0,0,0,0.2),0_12px_28px_-10px_rgba(0,0,0,1)]
-                  active:scale-[0.95] active:rounded-[18px]
-                  dark:bg-[#E3E3E3] dark:text-[#1F1F1F]
-                  dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_8px_20px_-10px_rgba(255,255,255,0.55)]
-                  dark:hover:shadow-[0_1px_3px_rgba(0,0,0,0.7),0_12px_28px_-10px_rgba(255,255,255,0.75)]
-                  ${FOCUS}
-                `}
+                className="flex items-center gap-1.5 text-black px-2 py-1/2 dark:bg-yellow-400  bg-yellow-500 dark:text-black rounded"
               >
-                <Download className="h-4 w-4" aria-hidden="true" />
-                Download My Resume
+                <Download className="h-4 w-4" /> Download My Resume
               </Link>
 
               <Link
                 href="/blogs"
-                className={`
-                  inline-flex items-center gap-2 rounded-full px-4 py-2.5
-                  text-sm font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]
-                  ${SURFACE} ${STATE}
-                  transition-all duration-300 ${EASE}
-                  active:scale-[0.95] active:rounded-[18px]
-                  ${FOCUS}
-                `}
+                className="flex items-center gap-1.5 text-black px-2 py-1/2 bg-blue-500 dark:bg-blue-400  dark:text-black rounded"
               >
-                <BookOpen className="h-4 w-4" aria-hidden="true" />
-                Read my blogs, thoughts…
+                <BookOpen className="h-4 w-4" /> Read my blogs, thoughts…
               </Link>
             </div>
           </div>
         </header>
 
         {/* ============ RECOMMENDATION ============ */}
-        <div className="mb-10 md:mb-14">
+        <div className="mb-14">
           <Recommendation />
         </div>
 
         {/* ============ CONTENT STACK ============ */}
-        <div className="space-y-10 md:space-y-14">
+        <div className="space-y-16">
           {/* EXPERIENCE */}
           <Section
-            icon={<Briefcase className="h-4 w-4" aria-hidden="true" />}
+            icon={<Briefcase className="h-5 w-5" />}
             title="Experience"
             subtitle="Where I've worked"
           >
-            <div
-              className={`${SURFACE} rounded-[28px] p-5 md:p-6 transition-all duration-300 ${EASE} hover:-translate-y-0.5`}
-            >
-              <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                <h3 className="text-base font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
+            <div className="block">
+              <div className="mb-2 flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
+                <h3 className="text-lg font-bold">
                   UPPTCL — Uttar Pradesh Power Transmission Corporation Limited
                 </h3>
-                <span
-                  className={`
-                    inline-flex w-fit items-center rounded-full px-2.5 py-1
-                    text-[10px] font-semibold uppercase tracking-wide
-                    ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
-                  `}
-                >
+                <span className="shrink-0 text-sm font-bold text-[#555] dark:text-[#aaa]">
                   Jul 2025 – Aug 2025
                 </span>
               </div>
-              <p className="mt-3 text-sm leading-7 text-[#444746] dark:text-[#C4C7C5]">
+              <p className="text-base leading-relaxed">
                 Worked with the transmission division to understand the
                 operation, protection, and maintenance of 132kV and 220kV
                 substations. Prepared technical documentation and maintained
@@ -457,113 +435,47 @@ export default function Home() {
 
           {/* PROJECTS */}
           <Section
-            icon={<FolderGit2 className="h-4 w-4" aria-hidden="true" />}
+            icon={<FolderGit2 className="h-5 w-5" />}
             title="Shipped Stuff"
             subtitle="Selected projects"
           >
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-10">
               {CONFIG.projects.map((project, idx) => (
-                <article
-                  key={idx}
-                  className={`
-                    ${SURFACE} rounded-[28px] p-5 md:p-6
-                    flex flex-col gap-4
-                    transition-all duration-300 ${EASE}
-                    hover:-translate-y-1
-                    hover:shadow-[0_2px_6px_rgba(0,0,0,0.1),0_18px_40px_-20px_rgba(0,0,0,0.6)]
-                    dark:hover:shadow-[0_2px_6px_rgba(0,0,0,0.7),0_18px_40px_-20px_rgba(255,255,255,0.3)]
-                    ${idx === 0 ? "md:col-span-2" : ""}
-                  `}
-                >
-                  <div className="space-y-2.5">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span
-                        className={`
-                          inline-flex items-center gap-1.5 rounded-full
-                          py-1 pl-1 pr-2.5 text-[10px] font-bold uppercase tracking-wide
-                          ${SUBTLE}
-                        `}
-                      >
-                        <span
-                          className={`
-                            grid h-4 w-4 place-items-center rounded-full
-                            ${NEUTRAL.solid}
-                          `}
-                        >
-                          <CheckCircle2
-                            className="h-2.5 w-2.5"
-                            aria-hidden="true"
-                          />
-                        </span>
-                        <span className="text-[#1F1F1F] dark:text-[#E3E3E3]">
-                          {project.status}
-                        </span>
+                <div key={idx} className="block">
+                  <div className="mb-2 flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
+                    <h3 className="text-xl font-bold">
+                      {project.title}{" "}
+                      <span className="text-sm font-bold text-blue-700 dark:text-blue-400">
+                        [{project.status.toUpperCase()}]
                       </span>
-                      <span className="text-[11px] font-medium text-[#747775] dark:text-[#8E918F]">
-                        {project.year} · {project.type}
-                      </span>
-                    </div>
-
-                    <h3 className="text-base font-semibold leading-snug text-[#1F1F1F] dark:text-[#E3E3E3] md:text-lg">
-                      {project.title}
                     </h3>
-
-                    <div className="space-y-2 text-sm leading-7 text-[#444746] dark:text-[#C4C7C5]">
-                      {project.description.map((p, i) => (
-                        <p key={i}>{p}</p>
-                      ))}
-                    </div>
+                    <span className="shrink-0 text-sm font-bold text-[#555] dark:text-[#aaa]">
+                      {project.year} • {project.type}
+                    </span>
                   </div>
 
-                  {/* Tech chips */}
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.technologies.slice(0, 6).map((t, i) => (
-                      <span
-                        key={i}
-                        className={`
-                          rounded-full px-2.5 py-1 text-[11px] font-medium
-                          ${SUBTLE} text-[#444746] dark:text-[#C4C7C5]
-                        `}
-                      >
-                        {t}
-                      </span>
+                  <div className="mb-4 space-y-3 text-base leading-relaxed">
+                    {project.description.map((p, i) => (
+                      <p key={i}>{p}</p>
                     ))}
-                    {project.technologies.length > 6 && (
-                      <span
-                        className={`
-                          rounded-full px-2.5 py-1 text-[11px] font-medium
-                          ${SUBTLE} text-[#747775] dark:text-[#8E918F]
-                        `}
-                      >
-                        +{project.technologies.length - 6}
-                      </span>
-                    )}
                   </div>
 
-                  {/* Action row */}
-                  <div className="mt-auto flex flex-wrap gap-2 pt-1">
+                  <p className="mb-4 text-sm text-[#444] dark:text-[#ccc]">
+                    <strong className="text-[#111] dark:text-[#eee]">
+                      Technologies:
+                    </strong>{" "}
+                    {project.technologies.join(" • ")}
+                  </p>
+
+                  <div className="flex gap-6 text-sm font-bold">
                     {project.links.live && (
                       <a
                         href={project.links.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`
-                          inline-flex items-center gap-1.5 rounded-full
-                          bg-[#1F1F1F] px-3.5 py-2 text-xs font-semibold text-white
-                          shadow-[0_1px_3px_rgba(0,0,0,0.16),0_6px_16px_-8px_rgba(0,0,0,0.9)]
-                          transition-all duration-300 ${EASE}
-                          hover:brightness-125
-                          active:scale-[0.95] active:rounded-[14px]
-                          dark:bg-[#E3E3E3] dark:text-[#1F1F1F]
-                          dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_6px_16px_-8px_rgba(255,255,255,0.5)]
-                          ${FOCUS}
-                        `}
+                        className="flex items-center gap-1.5 dark:text-white text-white dark:bg-red-800 bg-red-700 px-2 py-1 rounded-xs dark:text-white"
                       >
-                        <ExternalLink
-                          className="h-3.5 w-3.5"
-                          aria-hidden="true"
-                        />
-                        Live
+                        <ExternalLink className="h-4 w-4" /> Live
                       </a>
                     )}
                     {project.links.repo && (
@@ -571,57 +483,32 @@ export default function Home() {
                         href={project.links.repo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`
-                          inline-flex items-center gap-1.5 rounded-full px-3.5 py-2
-                          text-xs font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]
-                          ${SURFACE} ${STATE}
-                          transition-all duration-300 ${EASE}
-                          active:scale-[0.95] active:rounded-[14px]
-                          ${FOCUS}
-                        `}
+                        className="flex items-center gap-1.5 dark:text-white text-white dark:bg-blue-800 bg-blue-800 px-2 py-1 rounded-xs dark:text-white"
                       >
-                        <Github className="h-3.5 w-3.5" aria-hidden="true" />
-                        Source
+                        <Github className="h-4 w-4" /> Source
                       </a>
                     )}
                   </div>
-                </article>
+                </div>
               ))}
             </div>
           </Section>
 
           {/* SKILLS */}
           <Section
-            icon={<Wrench className="h-4 w-4" aria-hidden="true" />}
+            icon={<Wrench className="h-5 w-5" />}
             title="Tools & Technologies"
             subtitle="What I build with"
           >
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-6 sm:grid-cols-2">
               {Object.entries(CONFIG.skills).map(([category, skills]) => (
-                <div
-                  key={category}
-                  className={`
-                    ${SURFACE} rounded-[28px] p-5
-                    transition-all duration-300 ${EASE}
-                    hover:-translate-y-0.5
-                  `}
-                >
-                  <h3 className="mb-3 text-sm font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
+                <div key={category}>
+                  <h3 className="mb-1 text-base font-bold uppercase tracking-wide">
                     {category}
                   </h3>
-                  <div className="flex flex-wrap gap-1.5">
-                    {skills.map((s, i) => (
-                      <span
-                        key={i}
-                        className={`
-                          rounded-full px-2.5 py-1 text-[11px] font-medium
-                          ${SUBTLE} text-[#444746] dark:text-[#C4C7C5]
-                        `}
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
+                  <p className="text-sm leading-relaxed text-[#444] dark:text-[#ccc]">
+                    {skills.join(", ")}
+                  </p>
                 </div>
               ))}
             </div>
@@ -629,121 +516,64 @@ export default function Home() {
 
           {/* CERTIFICATIONS */}
           <Section
-            icon={<Award className="h-4 w-4" aria-hidden="true" />}
+            icon={<Award className="h-5 w-5" />}
             title="Certifications"
             subtitle="Verified badges & exams"
           >
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-              {CREDLY_BADGES.map((badgeId) => (
-                <div
-                  key={badgeId}
-                  className={`
-                    group flex min-w-0 items-center justify-center overflow-hidden
-                    rounded-[28px] p-3 ${SURFACE}
-                    transition-all duration-300 ${EASE}
-                    hover:-translate-y-1
-                    hover:shadow-[0_2px_6px_rgba(0,0,0,0.1),0_18px_40px_-20px_rgba(0,0,0,0.6)]
-                    dark:hover:shadow-[0_2px_6px_rgba(0,0,0,0.7),0_18px_40px_-20px_rgba(255,255,255,0.3)]
-                  `}
-                >
-                  <div
-                    data-iframe-width="150"
-                    data-iframe-height="270"
-                    data-share-badge-id={badgeId}
-                    data-share-badge-host="https://www.credly.com"
-                  />
-                </div>
+            <div className="space-y-8">
+              {CERTIFICATIONS.map((cert) => (
+                <CertificationCard key={cert.credentialId} cert={cert} />
               ))}
             </div>
-
-            <Script
-              id="credly-embed-script"
-              src="https://cdn.credly.com/assets/utilities/embed.js"
-              strategy="afterInteractive"
-            />
           </Section>
 
           {/* EDUCATION */}
           <Section
-            icon={<GraduationCap className="h-4 w-4" aria-hidden="true" />}
+            icon={<GraduationCap className="h-5 w-5" />}
             title="Education"
             subtitle="Academic background"
           >
-            <div
-              className={`${SURFACE} rounded-[28px] p-5 md:p-6 transition-all duration-300 ${EASE} hover:-translate-y-0.5`}
-            >
-              <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                <h3 className="text-base font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
+            <div className="block">
+              <div className="mb-2 flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
+                <h3 className="text-lg font-bold">
                   {CONFIG.education.institution}
                 </h3>
-                <span
-                  className={`
-                    inline-flex w-fit items-center rounded-full px-2.5 py-1
-                    text-[10px] font-semibold uppercase tracking-wide
-                    ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
-                  `}
-                >
+                <span className="shrink-0 text-sm font-bold text-[#555] dark:text-[#aaa]">
                   {CONFIG.education.period}
                 </span>
               </div>
 
-              <p className="mt-2 text-sm font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]">
+              <p className="mb-1 text-base font-bold text-[#333] dark:text-[#bbb]">
                 {CONFIG.education.degree} — {CONFIG.education.field}
               </p>
-              <p className="text-xs text-[#747775] dark:text-[#8E918F]">
+
+              <p className="mb-4 text-sm italic text-[#555] dark:text-[#aaa]">
                 {CONFIG.education.location}
               </p>
 
-              <p className="mt-3 text-sm leading-7 text-[#444746] dark:text-[#C4C7C5]">
+              <p className="mb-5 text-base leading-relaxed">
                 {CONFIG.education.description}
               </p>
 
-              <div className="mt-4 flex flex-wrap items-center gap-3">
-                <span
-                  className={`
-                    inline-flex items-center gap-1.5 rounded-full
-                    py-1 pl-1 pr-3 text-[11px] font-semibold
-                    ${SUBTLE} text-[#1F1F1F] dark:text-[#E3E3E3]
-                  `}
-                >
-                  <span
-                    className={`
-                      grid h-5 w-5 place-items-center rounded-full
-                      ${NEUTRAL.solid}
-                    `}
-                  >
-                    <CheckCircle2 className="h-3 w-3" aria-hidden="true" />
-                  </span>
-                  <span>Degree Completed</span>
+              <div className="flex flex-wrap items-center gap-4 text-sm font-bold">
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4" /> Degree Completed
                 </span>
-
+                <span className="text-[#aaa]">|</span>
                 <a
                   href="/2200910200015.pdf"
                   download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`
-                    inline-flex items-center gap-1.5 rounded-full px-3 py-1.5
-                    text-[11px] font-semibold text-[#1F1F1F] dark:text-[#E3E3E3]
-                    ${SURFACE} ${STATE}
-                    transition-all duration-300 ${EASE}
-                    active:scale-[0.95] active:rounded-[12px]
-                    ${FOCUS}
-                  `}
+                  className="flex items-center gap-1.5 text-blue-700 underline hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
                 >
-                  <Download className="h-3.5 w-3.5" aria-hidden="true" />
-                  Download PDC
+                  <Download className="h-4 w-4" /> Download PDF Transcript
                 </a>
               </div>
             </div>
           </Section>
         </div>
       </main>
-
-      {/* FOOTER */}
-      <footer className="py-10 text-center text-xs text-[#747775] dark:text-[#8E918F]">
-        <p>© {new Date().getFullYear()} Kinshuk Jain. All rights reserved.</p>
-      </footer>
     </div>
   );
 }

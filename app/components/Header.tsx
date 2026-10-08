@@ -6,7 +6,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { Github, Sun, Moon } from "lucide-react";
-import { GiCoffeeMug } from "react-icons/gi";
 import { useMounted } from "./hooks/useMounted";
 import { LuFolderTree } from "react-icons/lu";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
@@ -266,28 +265,6 @@ const Header: React.FC = () => {
 
           {/* ── Right action cluster ──────────────────────── */}
           <div className="flex shrink-0 items-center gap-1 sm:gap-1.5">
-            {/* Sponsor — icon-only on small, full CTA on md+ */}
-            <a
-              href="https://brewrepo.cloudkinshuk.in"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Sponsor this project"
-              className={`
-                hidden h-9 w-9 place-items-center rounded-md ${TEXT}
-                transition-colors duration-300 ${EASE} ${FOCUS}
-                hover:bg-black/[0.06] dark:hover:bg-white/[0.08]
-                sm:grid
-                md:inline-flex md:h-auto md:w-auto md:gap-1.5 md:rounded-md
-                md:px-3 md:py-1.5
-                md:text-xs md:font-bold md:uppercase md:tracking-wider
-                md:hover:bg-[#1f1f1f] md:hover:text-white
-                 dark:md:hover:text-[#111]
-              `}
-            >
-              <GiCoffeeMug className="h-4 w-4" aria-hidden="true" />
-              <span className="hidden md:inline">Sponsor</span>
-            </a>
-
             {/* GitHub — always visible */}
             <a
               href="https://github.com/kinshukjainn/cloudkinshuk"

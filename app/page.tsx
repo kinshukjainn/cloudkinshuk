@@ -222,8 +222,8 @@ function Section({
 }) {
   return (
     <section className="mb-14">
-      <div className="mb-6 border-b-2 border-[#1f1f1f] pb-2 dark:border-[#e3e3e3]">
-        <h2 className="flex items-center gap-2 text-xl font-bold uppercase tracking-widest text-[#1F1F1F] dark:text-[#E3E3E3]">
+      <div className="mb-6 ">
+        <h2 className="flex items-center gap-2 text-xl font-extrabold uppercase tracking-widest text-blue-800 dark:text-[#ff9100]">
           {icon}
           {title}
         </h2>
@@ -269,7 +269,7 @@ function CertificationCard({ cert }: { cert: Certification }) {
         href={cert.verifyUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-3 inline-flex items-center gap-1 font-bold text-blue-700 underline hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+        className="mt-3 inline-flex items-center gap-1 font-semibold text-sm text-white bg-blue-800 px-2 py-1 rounded  dark:text-white"
       >
         <ExternalLink className="h-4 w-4" /> Verify on official portal
       </a>
@@ -387,14 +387,14 @@ export default function Home() {
             <div className="flex flex-wrap gap-6 pt-2 font-bold">
               <Link
                 href="/myresumekinshuk.pdf"
-                className="flex items-center gap-1.5 text-black px-2 py-1/2 dark:bg-yellow-400  bg-yellow-500 dark:text-black rounded"
+                className="flex items-center gap-1.5 text-white px-2 py-1 dark:bg-slate-800 text-sm bg-slate-800 dark:text-white rounded"
               >
                 <Download className="h-4 w-4" /> Download My Resume
               </Link>
 
               <Link
                 href="/blogs"
-                className="flex items-center gap-1.5 text-black px-2 py-1/2 bg-blue-500 dark:bg-blue-400  dark:text-black rounded"
+                className="flex items-center gap-1.5 text-white text-sm px-2 py-1/2 bg-blue-800 dark:bg-blue-800  dark:text-white rounded"
               >
                 <BookOpen className="h-4 w-4" /> Read my blogs, thoughts…
               </Link>

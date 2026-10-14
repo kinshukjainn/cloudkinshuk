@@ -137,13 +137,13 @@ export default function Recommendation({
           />
           <div className="min-w-0">
             <p
-              className={`text-[10px] font-bold uppercase tracking-widest ${TEXT_SUBTLE}`}
+              className={`text-[10px] font-semibold uppercase tracking-widest ${TEXT_SUBTLE}`}
             >
               For you
             </p>
             <h2
               className={`
-                truncate text-sm font-extrabold uppercase tracking-widest
+                truncate text-sm font-semibold uppercase tracking-widest
                 sm:text-base ${TEXT}
               `}
             >
@@ -154,7 +154,7 @@ export default function Recommendation({
 
         <span
           className={`
-            shrink-0 font-mono text-[11px] font-bold uppercase
+            shrink-0 font-mono text-[11px] font-semibold uppercase
             tracking-wider tabular-nums ${TEXT_SUBTLE}
           `}
         >
@@ -183,7 +183,7 @@ export default function Recommendation({
             <span
               className={`
                 inline-flex items-center gap-1.5 rounded-md border
-                px-1.5 py-0.5 text-[10px] font-bold uppercase
+                px-1.5 py-0.5 text-[10px] font-semibold uppercase
                 tracking-wider ${CHIP_IDLE}
               `}
             >
@@ -194,7 +194,7 @@ export default function Recommendation({
             </span>
             <span
               className={`
-                text-[10px] font-bold uppercase tracking-widest ${TEXT_SUBTLE}
+                text-[10px] font-semibold uppercase tracking-widest ${TEXT_SUBTLE}
               `}
             >
               {pct}% match
@@ -211,7 +211,7 @@ export default function Recommendation({
                     key={t}
                     className={`
                       inline-flex items-center rounded-md border px-2 py-0.5
-                      text-[10px] font-bold uppercase tracking-wider
+                      text-[10px] font-semibold uppercase tracking-wider
                       transition-colors duration-300 ${EASE}
                       ${isMatch ? CHIP_ACTIVE : CHIP_IDLE}
                     `}
@@ -226,7 +226,7 @@ export default function Recommendation({
           {/* Title */}
           <h3
             className={`
-              text-lg font-extrabold tracking-tight md:text-2xl ${TEXT}
+              text-lg font-semibold tracking-tight md:text-2xl ${TEXT}
               transition-colors duration-300 ${EASE}
               group-hover:text-blue-700 dark:group-hover:text-blue-400
             `}
@@ -263,7 +263,7 @@ export default function Recommendation({
             <span
               className={`
                 ml-auto inline-flex shrink-0 items-center gap-1.5
-                text-[11px] font-bold uppercase tracking-wider ${ACCENT}
+                text-[11px] font-semibold uppercase tracking-wider ${ACCENT}
                 transition-colors duration-300 ${EASE}
                 group-hover:underline group-hover:decoration-2
                 group-hover:underline-offset-4

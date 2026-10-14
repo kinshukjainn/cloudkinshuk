@@ -17,11 +17,9 @@ import {
   Mail,
   Twitter,
   CalendarDays,
-  Fingerprint,
-  Cloud,
 } from "lucide-react";
 import Link from "next/link";
-import Recommendation from "./components/Recommendation";
+import { FaAws } from "react-icons/fa";
 import { TbBrandLinkedinFilled } from "react-icons/tb";
 
 // --- CONFIGURATION ---
@@ -189,7 +187,6 @@ type Certification = {
   title: string;
   issuer: string;
   issued: string;
-  credentialId: string;
   skills: string[];
   verifyUrl: string;
   icon: React.ReactNode;
@@ -199,81 +196,299 @@ const CERTIFICATIONS: Certification[] = [
   {
     title: "AWS Certified Cloud Practitioner",
     issuer: "Amazon Web Services",
-    issued: "Issued September 2026",
-    credentialId: "f42e01a4-b2d6-4069-8038-db78a81c81b5",
+    issued: "September 2026",
     skills: ["Cloud Concepts", "AWS Core Services", "Billing & Pricing"],
     verifyUrl:
-      "https://www.credly.com/badges/f42e01a4-b2d6-4069-8038-db78a81c81b5/public",
-    icon: <Cloud className="h-5 w-5" aria-hidden="true" />,
+      "https://www.credly.com/badges/f42e01a4-b2d6-4069-8038-db78a81c81b5/public_url",
+    icon: <FaAws className="h-6 w-6" aria-hidden="true" />,
   },
 ];
 
-/* ── SECTION WRAPPER ────────────────────────────────────── */
-function Section({
-  icon,
-  title,
-  subtitle,
-  children,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  subtitle?: string;
-  children: React.ReactNode;
-}) {
+/* ── SHARED STYLES ──────────────────────────────────────── */
+const CARD = "bg-white p-5  dark:bg-black";
+
+const CHIP =
+  " border rounded-sm border-[#e6e6e6] bg-[#FAFAFA] px-2 py-2 text-[13px] font-normal text-black dark:border-[#3a3536] dark:bg-[#121212] dark:text-white";
+
+/* ── TABS ───────────────────────────────────────────────── */
+type TabId =
+  | "experience"
+  | "projects"
+  | "skills"
+  | "certifications"
+  | "education";
+
+const TABS: { id: TabId; label: string; icon: React.ReactNode }[] = [
+  {
+    id: "experience",
+    label: "Experience",
+    icon: <Briefcase className="h-4 w-4" aria-hidden="true" />,
+  },
+  {
+    id: "projects",
+    label: "Projects",
+    icon: <FolderGit2 className="h-4 w-4" aria-hidden="true" />,
+  },
+  {
+    id: "skills",
+    label: "Skills",
+    icon: <Wrench className="h-4 w-4" aria-hidden="true" />,
+  },
+  {
+    id: "certifications",
+    label: "Certifications",
+    icon: <Award className="h-4 w-4" aria-hidden="true" />,
+  },
+  {
+    id: "education",
+    label: "Education",
+    icon: <GraduationCap className="h-4 w-4" aria-hidden="true" />,
+  },
+];
+
+/* ── SMALL BUILDING BLOCKS ──────────────────────────────── */
+function Meta({ children }: { children: React.ReactNode }) {
   return (
-    <section className="mb-14">
-      <div className="mb-6 ">
-        <h2 className="flex items-center gap-2 text-xl font-extrabold uppercase tracking-widest text-blue-800 dark:text-[#ff9100]">
-          {icon}
-          {title}
-        </h2>
-        {subtitle && (
-          <p className="mt-1 text-sm italic text-[#555] dark:text-[#aaa]">
-            {subtitle}
-          </p>
-        )}
-      </div>
+    <span className="shrink-0 text-xs font-semibold text-[#666] sm:text-sm dark:text-[#a5a5a5]">
       {children}
-    </section>
+    </span>
+  );
+}
+
+function PanelNote({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="mb-5 text-sm text-[#666] dark:text-[#a5a5a5]">{children}</p>
   );
 }
 
 /* ── CERTIFICATION CARD ─────────────────────────────────── */
 function CertificationCard({ cert }: { cert: Certification }) {
   return (
-    <div className="mb-8 block">
-      <h3 className="flex items-center gap-2 text-lg font-bold text-[#1F1F1F] dark:text-[#E3E3E3]">
-        {cert.icon} {cert.title}
-        <span className="bg-[#1f1f1f] px-1.5 py-0.5 text-[10px] font-bold uppercase text-white dark:bg-[#e3e3e3] dark:text-[#1f1f1f]">
+    <div className={CARD}>
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+        <h3 className="flex items-center gap-2 text-base font-semibold text-[#1F1F1F] sm:text-lg dark:text-[#E3E3E3]">
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-[#181818] text-white">
+            {cert.icon}
+          </span>
+          {cert.title}
+        </h3>
+        <span className="w-fit shrink-0 rounded-full border border-emerald-300 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-emerald-700 dark:border-emerald-800 dark:text-emerald-400">
           Verified
-        </span>
-      </h3>
-      <p className="mt-1 text-base font-bold text-[#444] dark:text-[#ccc]">
-        {cert.issuer}
-      </p>
-
-      <div className="mt-2 flex flex-col gap-1 text-sm text-[#555] dark:text-[#aaa]">
-        <span className="flex items-center gap-1.5">
-          <CalendarDays className="h-4 w-4" /> {cert.issued}
-        </span>
-        <span className="flex items-center gap-1.5">
-          <Fingerprint className="h-4 w-4" /> Credential ID: {cert.credentialId}
         </span>
       </div>
 
+      <p className="mt-3 text-sm font-semibold text-[#333] dark:text-[#ccc]">
+        {cert.issuer}
+      </p>
+
+      <span className="mt-1 flex items-center gap-1.5 text-xs text-[#666] dark:text-[#a5a5a5]">
+        <CalendarDays className="h-3.5 w-3.5" aria-hidden="true" />{" "}
+        {cert.issued}
+      </span>
+
       <p className="mt-3 text-sm text-[#444] dark:text-[#ccc]">
-        <strong>Skills evaluated:</strong> {cert.skills.join(", ")}
+        <strong className="text-[#111] dark:text-[#eee]">
+          Skills evaluated:
+        </strong>{" "}
+        {cert.skills.join(", ")}
       </p>
 
       <a
         href={cert.verifyUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-3 inline-flex items-center gap-1 font-semibold text-sm text-white bg-blue-800 px-2 py-1 rounded  dark:text-white"
+        className="mt-4 inline-flex items-center gap-1.5 rounded bg-blue-800 px-2.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-blue-900 dark:bg-blue-800 dark:hover:bg-blue-700"
       >
-        <ExternalLink className="h-4 w-4" /> Verify on official portal
+        <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" /> Verify on
+        official portal
       </a>
     </div>
+  );
+}
+
+/* ── PANELS ─────────────────────────────────────────────── */
+function ExperiencePanel() {
+  return (
+    <>
+      <PanelNote>Where I&apos;ve worked</PanelNote>
+      <div className={CARD}>
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+          <h3 className="text-base font-semibold text-[#111] sm:text-lg dark:text-[#eee]">
+            UPPTCL — Uttar Pradesh Power Transmission Corporation Limited
+          </h3>
+          <Meta>Jul 2025 – Aug 2025</Meta>
+        </div>
+        <p className="mt-3 text-sm leading-relaxed text-[#333] sm:text-base dark:text-[#cfcfcf]">
+          Worked with the transmission division to understand the operation,
+          protection, and maintenance of 132kV and 220kV substations. Prepared
+          technical documentation and maintained logs on equipment performance
+          and safety checks.
+        </p>
+      </div>
+    </>
+  );
+}
+
+function ProjectsPanel() {
+  return (
+    <>
+      <PanelNote>Selected projects — designed, built and shipped</PanelNote>
+      <div className="space-y-5">
+        {CONFIG.projects.map((project, idx) => (
+          <div key={idx} className={CARD}>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+              <h3 className="text-base font-semibold text-[#111] sm:text-lg dark:text-[#eee]">
+                {project.title}
+              </h3>
+              <div className="flex shrink-0 items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#e0e0e0] px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[#555] dark:border-[#3d3839] dark:text-[#bbb]">
+                  <span
+                    className={`h-1.5 w-1.5 rounded-full ${
+                      project.status.toLowerCase() === "live"
+                        ? "bg-emerald-500"
+                        : "bg-amber-500"
+                    }`}
+                  />
+                  {project.status}
+                </span>
+                <Meta>
+                  {project.year} • {project.type}
+                </Meta>
+              </div>
+            </div>
+
+            <div className="mt-3 space-y-2 text-sm leading-relaxed text-[#333] sm:text-base dark:text-[#cfcfcf]">
+              {project.description.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
+
+            <div className="mt-4">
+              <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[#666] dark:text-[#a5a5a5]">
+                Technologies
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {project.technologies.map((t, i) => (
+                  <span key={i} className={CHIP}>
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-5 flex flex-wrap gap-2.5 text-sm font-semibold">
+              {project.links.live && (
+                <a
+                  href={project.links.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded bg-red-700 px-2.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-red-800 dark:bg-red-800 dark:hover:bg-red-700"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />{" "}
+                  Live
+                </a>
+              )}
+              {project.links.repo && (
+                <a
+                  href={project.links.repo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded bg-blue-800 px-2.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-blue-900 dark:bg-blue-800 dark:hover:bg-blue-700"
+                >
+                  <Github className="h-3.5 w-3.5" aria-hidden="true" /> Source
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function SkillsPanel() {
+  return (
+    <>
+      <PanelNote>What I build with</PanelNote>
+      <div className="grid gap-5 sm:grid-cols-2">
+        {Object.entries(CONFIG.skills).map(([category, skills]) => (
+          <div key={category} className={CARD}>
+            <h3 className="mb-3 text-md font-semibold uppercase tracking-wide text-[#111] dark:text-[#eee]">
+              {category}
+            </h3>
+            <div className="flex flex-wrap gap-1.5">
+              {skills.map((s, i) => (
+                <span key={i} className={CHIP}>
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function CertificationsPanel() {
+  return (
+    <>
+      <PanelNote>Verified badges &amp; exams</PanelNote>
+      <div className="space-y-5">
+        {CERTIFICATIONS.map((cert) => (
+          <CertificationCard key={cert.verifyUrl} cert={cert} />
+        ))}
+      </div>
+    </>
+  );
+}
+
+function EducationPanel() {
+  const e = CONFIG.education;
+  return (
+    <>
+      <PanelNote>Academic background</PanelNote>
+      <div className={CARD}>
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+          <h3 className="text-base font-semibold text-[#111] sm:text-lg dark:text-[#eee]">
+            {e.institution}
+          </h3>
+          <Meta>{e.period}</Meta>
+        </div>
+
+        <p className="mt-2 text-sm font-semibold text-[#333] dark:text-[#bbb]">
+          {e.degree} — {e.field}
+        </p>
+
+        <p className="mt-0.5 text-xs italic text-[#666] dark:text-[#a5a5a5]">
+          {e.location}
+        </p>
+
+        <p className="mt-3 text-sm leading-relaxed text-[#333] sm:text-base dark:text-[#cfcfcf]">
+          {e.description}
+        </p>
+
+        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm font-semibold">
+          <span className="flex items-center gap-1.5 text-[#333] dark:text-[#ccc]">
+            <CheckCircle2 className="h-4 w-4" aria-hidden="true" /> Degree
+            Completed
+          </span>
+          <span className="hidden text-[#ccc] sm:inline dark:text-[#555]">
+            |
+          </span>
+          <a
+            href="/2200910200015.pdf"
+            download
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 text-blue-700 underline hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+          >
+            <Download className="h-4 w-4" aria-hidden="true" /> Download PDF
+            Transcript
+          </a>
+        </div>
+      </div>
+    </>
   );
 }
 
@@ -283,16 +498,19 @@ export default function Home() {
      banner and an initial-letter avatar gracefully. */
   const [bannerOk, setBannerOk] = useState(true);
   const [profileOk, setProfileOk] = useState(true);
+  const [tab, setTab] = useState<TabId>("experience");
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] text-[#111] selection:bg-[#111] selection:text-white dark:bg-black dark:text-[#eee] dark:selection:bg-[#eee] dark:selection:text-[#111]">
+    <div className="min-h-screen bg-white text-[#111] selection:bg-[#111] selection:text-white dark:bg-black dark:text-[#eee] dark:selection:bg-[#eee] dark:selection:text-[#111]">
+      <style>{`@keyframes panelIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}`}</style>
+
       <main className="mx-auto max-w-3xl px-6 py-12 md:py-20">
         {/* ============ HERO ============ */}
-        <header className="mb-14">
+        <header className="mb-12">
           {/* ── BANNER ──────────────────────────────────────── */}
           <div
             className="
-              relative aspect-[3/1] w-full overflow-hidden 
+              relative aspect-[3/1] w-full overflow-hidden
               bg-gradient-to-br from-[#1f1f1f] via-[#2a2a2a] to-[#4a4a4a]
               dark:from-[#e3e3e3] dark:via-[#bbb] dark:to-[#888]
               sm:aspect-[4/1]
@@ -324,7 +542,7 @@ export default function Home() {
               aria-hidden="true"
               className="
                 absolute inset-0 grid place-items-center
-                text-3xl font-extrabold text-white
+                text-3xl font-semibold text-white
                 dark:text-[#111]
                 sm:text-4xl md:text-5xl
               "
@@ -345,12 +563,14 @@ export default function Home() {
 
           {/* ── HERO CONTENT ────────────────────────────────── */}
           <div className="mt-6 space-y-6">
-            <div className="flex flex-col gap-2 text-sm font-bold sm:flex-row sm:gap-6">
+            <div className="flex flex-col gap-2 text-sm font-semibold sm:flex-row sm:gap-6">
               <span className="flex items-center gap-1.5">
-                <MapPin className="h-4 w-4" /> {CONFIG.personal.location}
+                <MapPin className="h-4 w-4" aria-hidden="true" />{" "}
+                {CONFIG.personal.location}
               </span>
               <span className="flex items-center gap-1.5">
-                <Sparkles className="h-4 w-4" /> Available for collaboration
+                <Sparkles className="h-4 w-4" aria-hidden="true" /> Available
+                for collaboration
               </span>
             </div>
 
@@ -361,7 +581,7 @@ export default function Home() {
             </div>
 
             {/* Social Links — editorial chip style */}
-            <div className="flex flex-wrap gap-3 pt-2">
+            <div className="flex flex-wrap gap-2.5 pt-2">
               {CONFIG.social.map((s) => (
                 <a
                   key={s.platform}
@@ -371,9 +591,9 @@ export default function Home() {
                   className="
                     inline-flex items-center gap-1.5 rounded-md
                     bg-blue-900 px-2.5 py-1.5
-                    text-xs font-bold  tracking-wider text-white
+                    text-xs font-semibold tracking-wider text-white
                     transition-colors duration-300
-                    
+                    hover:bg-blue-800
                     dark:bg-[#e3e3e3] dark:text-[#111]
                     dark:hover:bg-blue-400 dark:hover:text-[#0a0a0a]
                   "
@@ -384,194 +604,80 @@ export default function Home() {
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-6 pt-2 font-bold">
+            <div className="flex flex-wrap gap-3 pt-2 text-sm font-semibold">
               <Link
                 href="/myresumekinshuk.pdf"
-                className="flex items-center gap-1.5 text-white px-2 py-1 dark:bg-slate-800 text-sm bg-slate-800 dark:text-white rounded"
+                className="flex items-center gap-1.5 rounded bg-slate-800 px-2.5 py-1.5 text-white transition-colors hover:bg-slate-900 dark:bg-slate-800 dark:hover:bg-slate-700"
               >
-                <Download className="h-4 w-4" /> Download My Resume
+                <Download className="h-4 w-4" aria-hidden="true" /> Download My
+                Resume
               </Link>
 
               <Link
                 href="/blogs"
-                className="flex items-center gap-1.5 text-white text-sm px-2 py-1/2 bg-blue-800 dark:bg-blue-800  dark:text-white rounded"
+                className="flex items-center gap-1.5 rounded bg-blue-800 px-2.5 py-1.5 text-white transition-colors hover:bg-blue-900 dark:bg-blue-800 dark:hover:bg-blue-700"
               >
-                <BookOpen className="h-4 w-4" /> Read my blogs, thoughts…
+                <BookOpen className="h-4 w-4" aria-hidden="true" /> Read my
+                blogs, thoughts…
               </Link>
             </div>
           </div>
         </header>
 
-        {/* ============ RECOMMENDATION ============ */}
-        <div className="mb-14">
-          <Recommendation />
-        </div>
-
-        {/* ============ CONTENT STACK ============ */}
-        <div className="space-y-16">
-          {/* EXPERIENCE */}
-          <Section
-            icon={<Briefcase className="h-5 w-5" />}
-            title="Experience"
-            subtitle="Where I've worked"
-          >
-            <div className="block">
-              <div className="mb-2 flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
-                <h3 className="text-lg font-bold">
-                  UPPTCL — Uttar Pradesh Power Transmission Corporation Limited
-                </h3>
-                <span className="shrink-0 text-sm font-bold text-[#555] dark:text-[#aaa]">
-                  Jul 2025 – Aug 2025
-                </span>
-              </div>
-              <p className="text-base leading-relaxed">
-                Worked with the transmission division to understand the
-                operation, protection, and maintenance of 132kV and 220kV
-                substations. Prepared technical documentation and maintained
-                logs on equipment performance and safety checks.
-              </p>
-            </div>
-          </Section>
-
-          {/* PROJECTS */}
-          <Section
-            icon={<FolderGit2 className="h-5 w-5" />}
-            title="Shipped Stuff"
-            subtitle="Selected projects"
-          >
-            <div className="space-y-10">
-              {CONFIG.projects.map((project, idx) => (
-                <div key={idx} className="block">
-                  <div className="mb-2 flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
-                    <h3 className="text-xl font-bold">
-                      {project.title}{" "}
-                      <span className="text-sm font-bold text-blue-700 dark:text-blue-400">
-                        [{project.status.toUpperCase()}]
-                      </span>
-                    </h3>
-                    <span className="shrink-0 text-sm font-bold text-[#555] dark:text-[#aaa]">
-                      {project.year} • {project.type}
-                    </span>
-                  </div>
-
-                  <div className="mb-4 space-y-3 text-base leading-relaxed">
-                    {project.description.map((p, i) => (
-                      <p key={i}>{p}</p>
-                    ))}
-                  </div>
-
-                  <p className="mb-4 text-sm text-[#444] dark:text-[#ccc]">
-                    <strong className="text-[#111] dark:text-[#eee]">
-                      Technologies:
-                    </strong>{" "}
-                    {project.technologies.join(" • ")}
-                  </p>
-
-                  <div className="flex gap-6 text-sm font-bold">
-                    {project.links.live && (
-                      <a
-                        href={project.links.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 dark:text-white text-white dark:bg-red-800 bg-red-700 px-2 py-1 rounded-xs dark:text-white"
-                      >
-                        <ExternalLink className="h-4 w-4" /> Live
-                      </a>
-                    )}
-                    {project.links.repo && (
-                      <a
-                        href={project.links.repo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 dark:text-white text-white dark:bg-blue-800 bg-blue-800 px-2 py-1 rounded-xs dark:text-white"
-                      >
-                        <Github className="h-4 w-4" /> Source
-                      </a>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Section>
-
-          {/* SKILLS */}
-          <Section
-            icon={<Wrench className="h-5 w-5" />}
-            title="Tools & Technologies"
-            subtitle="What I build with"
-          >
-            <div className="grid gap-6 sm:grid-cols-2">
-              {Object.entries(CONFIG.skills).map(([category, skills]) => (
-                <div key={category}>
-                  <h3 className="mb-1 text-base font-bold uppercase tracking-wide">
-                    {category}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-[#444] dark:text-[#ccc]">
-                    {skills.join(", ")}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </Section>
-
-          {/* CERTIFICATIONS */}
-          <Section
-            icon={<Award className="h-5 w-5" />}
-            title="Certifications"
-            subtitle="Verified badges & exams"
-          >
-            <div className="space-y-8">
-              {CERTIFICATIONS.map((cert) => (
-                <CertificationCard key={cert.credentialId} cert={cert} />
-              ))}
-            </div>
-          </Section>
-
-          {/* EDUCATION */}
-          <Section
-            icon={<GraduationCap className="h-5 w-5" />}
-            title="Education"
-            subtitle="Academic background"
-          >
-            <div className="block">
-              <div className="mb-2 flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
-                <h3 className="text-lg font-bold">
-                  {CONFIG.education.institution}
-                </h3>
-                <span className="shrink-0 text-sm font-bold text-[#555] dark:text-[#aaa]">
-                  {CONFIG.education.period}
-                </span>
-              </div>
-
-              <p className="mb-1 text-base font-bold text-[#333] dark:text-[#bbb]">
-                {CONFIG.education.degree} — {CONFIG.education.field}
-              </p>
-
-              <p className="mb-4 text-sm italic text-[#555] dark:text-[#aaa]">
-                {CONFIG.education.location}
-              </p>
-
-              <p className="mb-5 text-base leading-relaxed">
-                {CONFIG.education.description}
-              </p>
-
-              <div className="flex flex-wrap items-center gap-4 text-sm font-bold">
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-4 w-4" /> Degree Completed
-                </span>
-                <span className="text-[#aaa]">|</span>
-                <a
-                  href="/2200910200015.pdf"
-                  download
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-blue-700 underline hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+        {/* ============ NAVIGATION ============ */}
+        <nav
+          role="tablist"
+          aria-label="Portfolio sections"
+          className="
+            sticky top-0 z-20 mb-8
+            bg-white border-b border-black dark:border-[#444444] backdrop-blur
+            dark:bg-black/90
+          "
+        >
+          <div className="flex gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {TABS.map((t) => {
+              const active = tab === t.id;
+              return (
+                <button
+                  key={t.id}
+                  role="tab"
+                  type="button"
+                  aria-selected={active}
+                  aria-controls={`panel-${t.id}`}
+                  id={`tab-${t.id}`}
+                  onClick={() => setTab(t.id)}
+                  className={`
+                    -mb-px flex shrink-0 items-center gap-2 whitespace-nowrap
+                     rounded-t-2xl px-2 py-1.5 text-md font-semibold
+                    transition-colors duration-150
+                    ${
+                      active
+                        ? "  text-black bg-gray-200 dark:bg-[#121212] dark:text-white"
+                        : "border-transparent text-[#666] hover:text-[#111] dark:text-[#a5a5a5] dark:hover:text-[#eee]"
+                    }
+                  `}
                 >
-                  <Download className="h-4 w-4" /> Download PDF Transcript
-                </a>
-              </div>
-            </div>
-          </Section>
+                  {t.icon}
+                  {t.label}
+                </button>
+              );
+            })}
+          </div>
+        </nav>
+
+        {/* ============ ACTIVE PANEL ============ */}
+        <div
+          key={tab}
+          role="tabpanel"
+          id={`panel-${tab}`}
+          aria-labelledby={`tab-${tab}`}
+          style={{ animation: "panelIn 0.18s ease-out" }}
+        >
+          {tab === "experience" && <ExperiencePanel />}
+          {tab === "projects" && <ProjectsPanel />}
+          {tab === "skills" && <SkillsPanel />}
+          {tab === "certifications" && <CertificationsPanel />}
+          {tab === "education" && <EducationPanel />}
         </div>
       </main>
     </div>

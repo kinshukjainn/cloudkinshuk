@@ -76,7 +76,7 @@ const components: Components = {
   /* ── Headings ─────────────────────────────────────────── */
   h1: (p) => (
     <h1
-      className={`mt-12 mb-6 scroll-mt-24 text-3xl font-extrabold tracking-tight sm:text-4xl ${TEXT}`}
+      className={`mt-12 mb-6 scroll-mt-24 text-3xl font-semibold tracking-tight sm:text-4xl ${TEXT}`}
       {...omitNode(p)}
     />
   ),
@@ -85,7 +85,7 @@ const components: Components = {
     <h2
       className={`
         mt-14 mb-6 scroll-mt-24 border-b-2 ${RULE_STRONG} pb-3
-        text-xl font-bold uppercase tracking-widest
+        text-xl font-semibold uppercase tracking-widest
         sm:text-2xl ${TEXT}
       `}
       {...omitNode(p)}
@@ -94,25 +94,25 @@ const components: Components = {
 
   h3: (p) => (
     <h3
-      className={`mt-10 mb-4 scroll-mt-24 text-lg font-bold tracking-tight sm:text-xl ${TEXT}`}
+      className={`mt-10 mb-4 scroll-mt-24 text-lg font-semibold tracking-tight sm:text-xl ${TEXT}`}
       {...omitNode(p)}
     />
   ),
   h4: (p) => (
     <h4
-      className={`mt-8 mb-3 scroll-mt-24 text-base font-bold tracking-tight ${TEXT}`}
+      className={`mt-8 mb-3 scroll-mt-24 text-base font-semibold tracking-tight ${TEXT}`}
       {...omitNode(p)}
     />
   ),
   h5: (p) => (
     <h5
-      className={`mt-6 mb-2 scroll-mt-24 text-sm font-bold uppercase tracking-wider ${TEXT}`}
+      className={`mt-6 mb-2 scroll-mt-24 text-sm font-semibold uppercase tracking-wider ${TEXT}`}
       {...omitNode(p)}
     />
   ),
   h6: (p) => (
     <h6
-      className={`mt-6 mb-2 scroll-mt-24 text-xs font-bold uppercase tracking-widest ${TEXT_SUBTLE}`}
+      className={`mt-6 mb-2 scroll-mt-24 text-xs font-semibold uppercase tracking-widest ${TEXT_SUBTLE}`}
       {...omitNode(p)}
     />
   ),
@@ -124,7 +124,9 @@ const components: Components = {
       {...omitNode(p)}
     />
   ),
-  strong: (p) => <strong className={`font-bold ${TEXT}`} {...omitNode(p)} />,
+  strong: (p) => (
+    <strong className={`font-semibold ${TEXT}`} {...omitNode(p)} />
+  ),
   em: (p) => <em className="italic" {...omitNode(p)} />,
   del: (p) => (
     <del
@@ -135,7 +137,7 @@ const components: Components = {
   a: (p) => (
     <a
       className={`
-        font-bold underline decoration-2 underline-offset-4
+        font-semibold underline decoration-2 underline-offset-4
         ${ACCENT_TEXT} ${ACCENT_HOVER}
         transition-colors duration-300 ${EASE}
       `}
@@ -159,7 +161,7 @@ const components: Components = {
       className={`
         my-5 list-outside list-decimal space-y-2 pl-6
         text-base leading-relaxed md:text-lg ${TEXT_MUTED}
-        marker:font-bold marker:text-[#1f1f1f] dark:marker:text-[#e3e3e3]
+        marker:font-semibold marker:text-[#1f1f1f] dark:marker:text-[#e3e3e3]
       `}
       {...omitNode(p)}
     />
@@ -223,7 +225,7 @@ const components: Components = {
   th: (p) => (
     <th
       className={`
-        whitespace-nowrap px-4 py-3 text-left text-xs font-bold
+        whitespace-nowrap px-4 py-3 text-left text-xs font-semibold
         uppercase tracking-wider ${TEXT}
       `}
       {...omitNode(p)}
@@ -303,7 +305,7 @@ export default async function DocPage({ params }: Props) {
             aria-label="Return to all articles"
             className={`
               group inline-flex items-center gap-2
-              text-xs font-bold uppercase tracking-wider
+              text-xs font-semibold uppercase tracking-wider
               ${TEXT_SUBTLE} hover:text-[#111]
               dark:hover:text-[#eee]
               transition-colors duration-300 ${EASE}
@@ -329,7 +331,7 @@ export default async function DocPage({ params }: Props) {
               {/* Kicker — matches "N Articles Published" row */}
               <div
                 className={`
-                  flex items-center gap-2 text-xs font-bold
+                  flex items-center gap-2 text-xs font-semibold
                   uppercase tracking-wider ${TEXT_SUBTLE}
                 `}
               >
@@ -340,7 +342,7 @@ export default async function DocPage({ params }: Props) {
               {doc.meta.title && (
                 <h1
                   className={`
-                    text-3xl font-extrabold tracking-tight
+                    text-3xl font-semibold tracking-tight
                     sm:text-4xl md:text-5xl ${TEXT}
                     break-words
                   `}
@@ -382,7 +384,7 @@ export default async function DocPage({ params }: Props) {
       <footer
         className={`
           mx-auto max-w-3xl px-4 pb-10 pt-6 text-center
-          text-xs font-bold uppercase tracking-wider
+          text-xs font-semibold uppercase tracking-wider
           sm:px-6 ${TEXT_SUBTLE}
         `}
       >

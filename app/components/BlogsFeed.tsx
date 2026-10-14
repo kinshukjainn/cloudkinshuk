@@ -42,12 +42,12 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
       <main className="mx-auto max-w-3xl px-6 py-12 md:py-20">
         {/* ============ HEADER ============ */}
         <header className="mb-10 space-y-4">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#555] dark:text-[#aaa]">
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#555] dark:text-[#aaa]">
             <BookOpen className="h-4 w-4" aria-hidden="true" />
             <span>{totalArticles} Articles Published</span>
           </div>
 
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
+          <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
             Blogs, Notes &{" "}
             <span className="text-blue-700 dark:text-blue-400">Thoughts</span>
           </h1>
@@ -88,7 +88,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
           </div>
 
           {search && (
-            <p className="mt-2 text-xs font-bold text-[#555] dark:text-[#aaa]">
+            <p className="mt-2 text-xs font-semibold text-[#555] dark:text-[#aaa]">
               {totalResults === 0
                 ? "No matching articles found."
                 : `Found ${totalResults} result${totalResults === 1 ? "" : "s"}.`}
@@ -104,10 +104,10 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
                 {/* Section Header */}
                 <div className="mb-6">
                   <div className="flex items-baseline justify-between">
-                    <h2 className="text-xl font-bold  tracking-widest text-[#1F1F1F] dark:text-[#E3E3E3]">
+                    <h2 className="text-xl font-semibold  tracking-widest text-[#1F1F1F] dark:text-[#E3E3E3]">
                       {section.title}
                     </h2>
-                    <span className="text-xs font-bold text-[#555] dark:text-[#aaa]">
+                    <span className="text-xs font-semibold text-[#555] dark:text-[#aaa]">
                       {section.items.length}{" "}
                       {section.items.length === 1 ? "article" : "articles"}
                     </span>
@@ -118,7 +118,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
                 <div className="space-y-8">
                   {section.items.map((item) => (
                     <article key={item.slug} className="group block">
-                      <h3 className="text-xl font-bold text-[#111] dark:text-[#eee] group-hover:text-blue-700 dark:group-hover:text-blue-400">
+                      <h3 className="text-xl font-semibold text-[#111] dark:text-[#eee] group-hover:text-blue-700 dark:group-hover:text-blue-400">
                         <Link href={`/blogs/${item.slug}`}>{item.title}</Link>
                       </h3>
 
@@ -129,7 +129,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
                       <div className="mt-3">
                         <Link
                           href={`/blogs/${item.slug}`}
-                          className="inline-flex items-center gap-1.5 text-sm font-bold text-blue-700 underline hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+                          className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 underline hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
                         >
                           Read Article{" "}
                           <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -143,7 +143,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
           ) : (
             /* ============ EMPTY STATE ============ */
             <div className="py-12 text-center">
-              <h3 className="text-xl font-bold text-[#111] dark:text-[#eee]">
+              <h3 className="text-xl font-semibold text-[#111] dark:text-[#eee]">
                 No matching articles found
               </h3>
               <p className="mt-2 text-base text-[#555] dark:text-[#aaa]">
@@ -153,7 +153,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
               <button
                 type="button"
                 onClick={() => setSearch("")}
-                className="mt-6 font-bold text-blue-700 underline hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 text-sm"
+                className="mt-6 font-semibold text-blue-700 underline hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 text-sm"
               >
                 Clear search filter
               </button>

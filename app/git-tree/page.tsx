@@ -259,10 +259,10 @@ export default function RepositoryViewer() {
         {/* ═══════════ HEADER ═══════════ */}
         <header className="mb-8 flex flex-wrap items-center justify-between gap-3 md:mb-10">
           <Link
-            href="/git-track"
+            href="/"
             className={`
               group inline-flex items-center gap-2
-              text-xs font-bold uppercase tracking-wider
+              text-xs font-semibold uppercase tracking-wider
               ${TEXT_SUBTLE} ${HOVER_TO_INK}
               transition-colors duration-300 ${EASE}
               focus-visible:outline-none focus-visible:underline
@@ -276,7 +276,7 @@ export default function RepositoryViewer() {
               `}
               aria-hidden="true"
             />
-            <span>Back to commits</span>
+            <span>Back to home</span>
           </Link>
 
           <div className="flex flex-wrap items-center gap-2">
@@ -284,7 +284,7 @@ export default function RepositoryViewer() {
               className={`
                 inline-flex items-center gap-1.5 rounded-md
                 border ${RULE_SOFT} px-2 py-1
-                text-[10px] font-bold uppercase tracking-wider ${TEXT_SUBTLE}
+                text-[10px] font-semibold uppercase tracking-wider ${TEXT_SUBTLE}
               `}
             >
               <FolderCode className="h-3 w-3" aria-hidden="true" />
@@ -294,7 +294,7 @@ export default function RepositoryViewer() {
               className={`
                 inline-flex items-center gap-1.5 rounded-md
                 border ${RULE_SOFT} px-2 py-1
-                text-[10px] font-bold uppercase tracking-wider ${TEXT_SUBTLE}
+                text-[10px] font-semibold uppercase tracking-wider ${TEXT_SUBTLE}
               `}
             >
               <GitBranch className="h-3 w-3" aria-hidden="true" />
@@ -307,7 +307,7 @@ export default function RepositoryViewer() {
         <section className="mb-8 space-y-3 md:mb-10">
           <div
             className={`
-              flex items-center gap-2 text-xs font-bold uppercase
+              flex items-center gap-2 text-xs font-semibold uppercase
               tracking-wider ${TEXT_SUBTLE}
             `}
           >
@@ -317,7 +317,7 @@ export default function RepositoryViewer() {
 
           <h1
             className={`
-              text-3xl font-extrabold tracking-tight break-words
+              text-3xl font-semibold tracking-tight break-words
               sm:text-4xl md:text-5xl ${TEXT}
             `}
           >
@@ -346,7 +346,7 @@ export default function RepositoryViewer() {
             onClick={() => jumpToPath("")}
             className={`
               shrink-0 rounded-md border px-2.5 py-1
-              text-[11px] font-bold uppercase tracking-wider
+              text-[11px] font-semibold uppercase tracking-wider
               transition-colors duration-300 ${EASE} ${FOCUS}
               ${pathBreadcrumbs.length === 0 ? CHIP_ACTIVE : CHIP_IDLE}
             `}
@@ -382,7 +382,7 @@ export default function RepositoryViewer() {
                   disabled={isFile}
                   className={`
                     shrink-0 rounded-md border px-2.5 py-1
-                    text-[11px] font-bold uppercase tracking-wider
+                    text-[11px] font-semibold uppercase tracking-wider
                     transition-colors duration-300 ${EASE} ${FOCUS}
                     ${chipClass}
                   `}
@@ -418,7 +418,7 @@ export default function RepositoryViewer() {
                 <Terminal className="h-3.5 w-3.5" aria-hidden="true" />
               </span>
               <span
-                className={`text-sm font-bold uppercase tracking-wider ${TEXT}`}
+                className={`text-sm font-semibold uppercase tracking-wider ${TEXT}`}
               >
                 {error}
               </span>
@@ -449,7 +449,7 @@ export default function RepositoryViewer() {
               )}
               <span
                 className={`
-                  truncate text-xs font-extrabold uppercase tracking-widest
+                  truncate text-xs font-semibold uppercase tracking-widest
                   sm:text-sm ${TEXT}
                 `}
               >
@@ -467,7 +467,7 @@ export default function RepositoryViewer() {
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.22, ease: easeOut }}
                   className={`
-                    shrink-0 text-[11px] font-bold uppercase tracking-wider
+                    shrink-0 text-[11px] font-semibold uppercase tracking-wider
                     tabular-nums ${TEXT_SUBTLE}
                   `}
                 >
@@ -489,7 +489,7 @@ export default function RepositoryViewer() {
                   `}
                 >
                   <p
-                    className={`text-xs font-bold uppercase tracking-widest ${TEXT}`}
+                    className={`text-xs font-semibold uppercase tracking-widest ${TEXT}`}
                   >
                     Fetching repository structure…
                   </p>
@@ -534,7 +534,7 @@ export default function RepositoryViewer() {
                           </span>
                           <span
                             className={`
-                              text-[11px] font-bold uppercase tracking-wider
+                              text-[11px] font-semibold uppercase tracking-wider
                               ${TEXT_SUBTLE}
                               transition-colors duration-300 ${EASE}
                               group-hover:text-blue-700
@@ -551,7 +551,7 @@ export default function RepositoryViewer() {
                   {currentItems.length === 0 && (
                     <li
                       className={`
-                        py-14 text-center text-xs font-bold uppercase
+                        py-14 text-center text-xs font-semibold uppercase
                         tracking-widest ${TEXT_SUBTLE}
                       `}
                     >
@@ -607,7 +607,7 @@ export default function RepositoryViewer() {
                           {/* Name */}
                           <span
                             className={`
-                              min-w-0 flex-1 truncate text-sm font-bold
+                              min-w-0 flex-1 truncate text-sm font-semibold
                               ${TEXT}
                               transition-colors duration-300 ${EASE}
                               group-hover:text-blue-700
@@ -621,7 +621,7 @@ export default function RepositoryViewer() {
                           <span className="hidden shrink-0 items-center gap-3 sm:flex">
                             <span
                               className={`
-                                text-[10px] font-bold uppercase tracking-wider
+                                text-[10px] font-semibold uppercase tracking-wider
                                 ${TEXT_SUBTLE}
                               `}
                             >
@@ -668,7 +668,7 @@ export default function RepositoryViewer() {
                   <div
                     className={`
                       border-b ${RULE_SOFT} py-14 text-center
-                      text-xs font-bold uppercase tracking-widest ${TEXT}
+                      text-xs font-semibold uppercase tracking-widest ${TEXT}
                     `}
                   >
                     Loading file contents…
@@ -699,7 +699,7 @@ export default function RepositoryViewer() {
                     }}
                     className={`
                       group inline-flex items-center gap-2
-                      text-xs font-bold uppercase tracking-wider
+                      text-xs font-semibold uppercase tracking-wider
                       ${TEXT_SUBTLE} ${HOVER_TO_INK}
                       transition-colors duration-300 ${EASE}
                       focus-visible:outline-none focus-visible:underline
@@ -726,7 +726,7 @@ export default function RepositoryViewer() {
       <footer
         className={`
           mx-auto max-w-3xl px-4 pt-6 pb-10 text-center
-          text-xs font-bold uppercase tracking-wider
+          text-xs font-semibold uppercase tracking-wider
           sm:px-6 ${TEXT_SUBTLE}
         `}
       >

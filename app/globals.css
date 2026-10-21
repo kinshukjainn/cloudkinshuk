@@ -153,7 +153,7 @@
 }
 
 :root {
-  --background: #f7f9fc;
+  --background: white;
 }
 
 .dark {
@@ -162,7 +162,7 @@
 
 body {
   background-color: var(--background);
-  font-family: var(--font-source-serif), serif;
+  font-family: var(--font-geist-mono), monospace;
 }
 
 .h-font {

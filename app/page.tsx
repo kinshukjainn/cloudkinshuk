@@ -13,7 +13,6 @@ import {
   Award,
   GraduationCap,
   Wrench,
-  Sparkles,
   Mail,
   Twitter,
   CalendarDays,
@@ -205,10 +204,19 @@ const CERTIFICATIONS: Certification[] = [
 ];
 
 /* ── SHARED STYLES ──────────────────────────────────────── */
-const CARD = "bg-white p-5  dark:bg-black";
+const CARD = "p-6";
 
 const CHIP =
-  " border rounded-sm border-[#e6e6e6] bg-[#FAFAFA] px-2 py-2 text-[13px] font-normal text-black dark:border-[#3a3536] dark:bg-[#121212] dark:text-white";
+  "rounded border border-[#D6D6D0] bg-[#F2F2EF] px-2.5 py-1 text-[13px] font-semibold text-[#1A1A1A] dark:border-[#2B2B2E] dark:bg-[#121212] dark:text-[#E6E6E6]";
+
+const BTN =
+  "inline-flex items-center gap-2 px-4 py-2.5 text-[13px] font-bold  tracking-[0.08em] transition-colors";
+
+const BTN_SOLID =
+  "border border-gray-500  dark:text-white hover:border-2  hover:border-blue-800 dark:hover:border-blue-400 bg-white dark:bg-[#121214]  dark:border-[#2B2B2E]  text-black";
+
+const BTN_GHOST =
+  "border border-gray-500border border-gray-500 bg-transparent dark:text-white hover:border-2  hover:border-blue-800 dark:hover:border-blue-400 text-[#111]  bg-white dark:bg-[#121214] dark:border-[#2B2B2E] dark:text-[#E6E6E6] ";
 
 /* ── TABS ───────────────────────────────────────────────── */
 type TabId =
@@ -249,7 +257,7 @@ const TABS: { id: TabId; label: string; icon: React.ReactNode }[] = [
 /* ── SMALL BUILDING BLOCKS ──────────────────────────────── */
 function Meta({ children }: { children: React.ReactNode }) {
   return (
-    <span className="shrink-0 text-xs font-semibold text-[#666] sm:text-sm dark:text-[#a5a5a5]">
+    <span className="shrink-0 rounded border border-[#D6D6D0] px-2.5 py-1 text-[11px] font-bold  tracking-[0.14em] text-[#555] dark:border-[#2B2B2E] dark:text-[#A8A8A8]">
       {children}
     </span>
   );
@@ -257,7 +265,10 @@ function Meta({ children }: { children: React.ReactNode }) {
 
 function PanelNote({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mb-5 text-sm text-[#666] dark:text-[#a5a5a5]">{children}</p>
+    <p className="mb-6 flex items-center gap-2.5 text-[15px] font-bold  tracking-[0.22em] text-[#555] dark:text-[#A8A8A8]">
+      <span className="text-[#111] dark:text-[#F2F2F2]">$</span>
+      {children}
+    </p>
   );
 }
 
@@ -265,42 +276,44 @@ function PanelNote({ children }: { children: React.ReactNode }) {
 function CertificationCard({ cert }: { cert: Certification }) {
   return (
     <div className={CARD}>
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-        <h3 className="flex items-center gap-2 text-base font-semibold text-[#1F1F1F] sm:text-lg dark:text-[#E3E3E3]">
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-[#181818] text-white">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <h3 className="flex items-center gap-3 text-lg font-bold leading-snug text-[#111] sm:text-xl dark:text-[#F2F2F2]">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-[#111] text-white dark:bg-[#F2F2F2] dark:text-[#0B0B0C]">
             {cert.icon}
           </span>
           {cert.title}
         </h3>
-        <span className="w-fit shrink-0 rounded-full border border-emerald-300 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-emerald-700 dark:border-emerald-800 dark:text-emerald-400">
+        <span className="w-fit shrink-0 rounded border border-emerald-600/40 px-2.5 py-1 text-[11px] font-bold  tracking-[0.14em] text-emerald-700 dark:border-emerald-500/40 dark:text-emerald-400">
           Verified
         </span>
       </div>
 
-      <p className="mt-3 text-sm font-semibold text-[#333] dark:text-[#ccc]">
-        {cert.issuer}
-      </p>
+      <div className="mt-5 border-t border-dashed border-[#D6D6D0] pt-5 dark:border-[#2B2B2E]">
+        <p className="text-base font-bold text-[#111] dark:text-[#F2F2F2]">
+          {cert.issuer}
+        </p>
 
-      <span className="mt-1 flex items-center gap-1.5 text-xs text-[#666] dark:text-[#a5a5a5]">
-        <CalendarDays className="h-3.5 w-3.5" aria-hidden="true" />{" "}
-        {cert.issued}
-      </span>
+        <span className="mt-2 flex items-center gap-2 text-sm font-semibold text-[#555] dark:text-[#A8A8A8]">
+          <CalendarDays className="h-4 w-4" aria-hidden="true" />
+          {cert.issued}
+        </span>
 
-      <p className="mt-3 text-sm text-[#444] dark:text-[#ccc]">
-        <strong className="text-[#111] dark:text-[#eee]">
-          Skills evaluated:
-        </strong>{" "}
-        {cert.skills.join(", ")}
-      </p>
+        <p className="mt-4 text-base leading-relaxed text-[#333] dark:text-[#CFCFCF]">
+          <strong className="text-[#111] dark:text-[#F2F2F2]">
+            Skills evaluated:
+          </strong>{" "}
+          {cert.skills.join(", ")}
+        </p>
+      </div>
 
       <a
         href={cert.verifyUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-4 inline-flex items-center gap-1.5 rounded bg-blue-800 px-2.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-blue-900 dark:bg-blue-800 dark:hover:bg-blue-700"
+        className={`${BTN} ${BTN_SOLID} mt-6`}
       >
-        <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" /> Verify on
-        official portal
+        <ExternalLink className="h-4 w-4" aria-hidden="true" />
+        Verify on official portal
       </a>
     </div>
   );
@@ -312,13 +325,13 @@ function ExperiencePanel() {
     <>
       <PanelNote>Where I&apos;ve worked</PanelNote>
       <div className={CARD}>
-        <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-          <h3 className="text-base font-semibold text-[#111] sm:text-lg dark:text-[#eee]">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+          <h3 className="text-lg font-bold leading-snug text-[#111] sm:text-xl dark:text-[#F2F2F2]">
             UPPTCL — Uttar Pradesh Power Transmission Corporation Limited
           </h3>
           <Meta>Jul 2025 – Aug 2025</Meta>
         </div>
-        <p className="mt-3 text-sm leading-relaxed text-[#333] sm:text-base dark:text-[#cfcfcf]">
+        <p className="mt-5 border-t border-dashed border-[#D6D6D0] pt-5 text-base leading-relaxed text-[#333] sm:text-[17px] dark:border-[#2B2B2E] dark:text-[#CFCFCF]">
           Worked with the transmission division to understand the operation,
           protection, and maintenance of 132kV and 220kV substations. Prepared
           technical documentation and maintained logs on equipment performance
@@ -333,15 +346,15 @@ function ProjectsPanel() {
   return (
     <>
       <PanelNote>Selected projects — designed, built and shipped</PanelNote>
-      <div className="space-y-5">
+      <div className="space-y-6">
         {CONFIG.projects.map((project, idx) => (
           <div key={idx} className={CARD}>
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
-              <h3 className="text-base font-semibold text-[#111] sm:text-lg dark:text-[#eee]">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+              <h3 className="text-lg font-bold leading-snug text-[#111] sm:text-xl dark:text-[#F2F2F2]">
                 {project.title}
               </h3>
-              <div className="flex shrink-0 items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#e0e0e0] px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[#555] dark:border-[#3d3839] dark:text-[#bbb]">
+              <div className="flex shrink-0 flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-2 rounded border border-[#D6D6D0] px-2.5 py-1 text-[11px] font-bold  tracking-[0.14em] text-[#555] dark:border-[#2B2B2E] dark:text-[#A8A8A8]">
                   <span
                     className={`h-1.5 w-1.5 rounded-full ${
                       project.status.toLowerCase() === "live"
@@ -357,17 +370,17 @@ function ProjectsPanel() {
               </div>
             </div>
 
-            <div className="mt-3 space-y-2 text-sm leading-relaxed text-[#333] sm:text-base dark:text-[#cfcfcf]">
+            <div className="mt-5 space-y-3 border-t border-dashed border-[#D6D6D0] pt-5 text-base leading-relaxed text-[#333] sm:text-[17px] dark:border-[#2B2B2E] dark:text-[#CFCFCF]">
               {project.description.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
             </div>
 
-            <div className="mt-4">
-              <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[#666] dark:text-[#a5a5a5]">
+            <div className="mt-6">
+              <p className="mb-3 text-[11px] font-bold  tracking-[0.22em] text-[#555] dark:text-[#A8A8A8]">
                 Technologies
               </p>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-2">
                 {project.technologies.map((t, i) => (
                   <span key={i} className={CHIP}>
                     {t}
@@ -376,15 +389,15 @@ function ProjectsPanel() {
               </div>
             </div>
 
-            <div className="mt-5 flex flex-wrap gap-2.5 text-sm font-semibold">
+            <div className="mt-6 flex flex-wrap gap-3">
               {project.links.live && (
                 <a
                   href={project.links.live}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded bg-red-700 px-2.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-red-800 dark:bg-red-800 dark:hover:bg-red-700"
+                  className={`${BTN} ${BTN_SOLID}`}
                 >
-                  <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />{" "}
+                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
                   Live
                 </a>
               )}
@@ -393,9 +406,10 @@ function ProjectsPanel() {
                   href={project.links.repo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded bg-blue-800 px-2.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-blue-900 dark:bg-blue-800 dark:hover:bg-blue-700"
+                  className={`${BTN} ${BTN_GHOST}`}
                 >
-                  <Github className="h-3.5 w-3.5" aria-hidden="true" /> Source
+                  <Github className="h-4 w-4" aria-hidden="true" />
+                  Source
                 </a>
               )}
             </div>
@@ -410,13 +424,13 @@ function SkillsPanel() {
   return (
     <>
       <PanelNote>What I build with</PanelNote>
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-6 sm:grid-cols-2">
         {Object.entries(CONFIG.skills).map(([category, skills]) => (
           <div key={category} className={CARD}>
-            <h3 className="mb-3 text-md font-semibold uppercase tracking-wide text-[#111] dark:text-[#eee]">
+            <h3 className="mb-4 border-b border-dashed border-[#D6D6D0] pb-3 text-sm font-bold  tracking-[0.16em] text-[#111] dark:border-[#2B2B2E] dark:text-[#F2F2F2]">
               {category}
             </h3>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {skills.map((s, i) => (
                 <span key={i} className={CHIP}>
                   {s}
@@ -434,7 +448,7 @@ function CertificationsPanel() {
   return (
     <>
       <PanelNote>Verified badges &amp; exams</PanelNote>
-      <div className="space-y-5">
+      <div className="space-y-6">
         {CERTIFICATIONS.map((cert) => (
           <CertificationCard key={cert.verifyUrl} cert={cert} />
         ))}
@@ -449,42 +463,43 @@ function EducationPanel() {
     <>
       <PanelNote>Academic background</PanelNote>
       <div className={CARD}>
-        <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-          <h3 className="text-base font-semibold text-[#111] sm:text-lg dark:text-[#eee]">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+          <h3 className="text-lg font-bold leading-snug text-[#111] sm:text-xl dark:text-[#F2F2F2]">
             {e.institution}
           </h3>
           <Meta>{e.period}</Meta>
         </div>
 
-        <p className="mt-2 text-sm font-semibold text-[#333] dark:text-[#bbb]">
-          {e.degree} — {e.field}
-        </p>
+        <div className="mt-5 border-t border-dashed border-[#D6D6D0] pt-5 dark:border-[#2B2B2E]">
+          <p className="text-base font-bold text-[#111] sm:text-[17px] dark:text-[#F2F2F2]">
+            {e.degree} — {e.field}
+          </p>
 
-        <p className="mt-0.5 text-xs italic text-[#666] dark:text-[#a5a5a5]">
-          {e.location}
-        </p>
+          <p className="mt-1.5 flex items-center gap-2 text-sm font-semibold text-[#555] dark:text-[#A8A8A8]">
+            <MapPin className="h-4 w-4" aria-hidden="true" />
+            {e.location}
+          </p>
 
-        <p className="mt-3 text-sm leading-relaxed text-[#333] sm:text-base dark:text-[#cfcfcf]">
-          {e.description}
-        </p>
+          <p className="mt-4 text-base leading-relaxed text-[#333] sm:text-[17px] dark:text-[#CFCFCF]">
+            {e.description}
+          </p>
+        </div>
 
-        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm font-semibold">
-          <span className="flex items-center gap-1.5 text-[#333] dark:text-[#ccc]">
-            <CheckCircle2 className="h-4 w-4" aria-hidden="true" /> Degree
-            Completed
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <span className="flex items-center gap-2 rounded border border-emerald-600/40 px-2.5 py-1 text-[11px] font-bold  tracking-[0.14em] text-emerald-700 dark:border-emerald-500/40 dark:text-emerald-400">
+            <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+            Degree Completed
           </span>
-          <span className="hidden text-[#ccc] sm:inline dark:text-[#555]">
-            |
-          </span>
+
           <a
             href="/2200910200015.pdf"
             download
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-blue-700 underline hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+            className={`${BTN} ${BTN_GHOST}`}
           >
-            <Download className="h-4 w-4" aria-hidden="true" /> Download PDF
-            Transcript
+            <Download className="h-4 w-4" aria-hidden="true" />
+            Download PDF Transcript
           </a>
         </div>
       </div>
@@ -494,24 +509,36 @@ function EducationPanel() {
 
 /* ── PAGE ───────────────────────────────────────────────── */
 export default function Home() {
-  /* Track image load failures so we can fall back to a gradient
-     banner and an initial-letter avatar gracefully. */
   const [bannerOk, setBannerOk] = useState(true);
   const [profileOk, setProfileOk] = useState(true);
   const [tab, setTab] = useState<TabId>("experience");
 
   return (
-    <div className="min-h-screen bg-white text-[#111] selection:bg-[#111] selection:text-white dark:bg-black dark:text-[#eee] dark:selection:bg-[#eee] dark:selection:text-[#111]">
-      <style>{`@keyframes panelIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}`}</style>
+    <div className="min-h-screen bg-white text-[#111] selection:bg-[#111] selection:text-white dark:bg-zinc-950 dark:text-[#F2F2F2] dark:selection:bg-[#F2F2F2] dark:selection:text-[#0B0B0C]">
+      <style>{`@keyframes panelIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}`}</style>
 
-      <main className="mx-auto max-w-3xl px-6 py-12 md:py-20">
+      <main className="mx-auto max-w-5xl px-5 py-10 md:px-8 md:py-16">
+        {/* ============ TOP STRIP ============ */}
+        <div className="mb-10 flex flex-wrap items-center justify-between gap-3 text-[11px] font-bold  tracking-[0.24em] text-[#555] dark:text-[#A8A8A8]">
+          <span>~/kinshuk-jain</span>
+          <span className="flex items-center gap-2">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-70" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-600" />
+            </span>
+            available for collaboration
+          </span>
+        </div>
+
         {/* ============ HERO ============ */}
-        <header className="mb-12">
+        <header className="mb-14">
           {/* ── BANNER ──────────────────────────────────────── */}
           <div
             className="
-              relative aspect-[3/1] w-full overflow-hidden
+              relative aspect-[3/1] w-full overflow-hidden rounded-md
+              border border-[#D6D6D0]
               bg-gradient-to-br from-[#1f1f1f] via-[#2a2a2a] to-[#4a4a4a]
+              dark:border-[#2B2B2E]
               dark:from-[#e3e3e3] dark:via-[#bbb] dark:to-[#888]
               sm:aspect-[4/1]
             "
@@ -527,61 +554,67 @@ export default function Home() {
             )}
           </div>
 
-          {/* ── PROFILE PHOTO (overlaps banner) ─────────────── */}
-          <div
-            className="
-              relative -mt-14 ml-3 h-24 w-24 overflow-hidden rounded-full
-              border-4 border-[#FAFAFA] bg-[#1f1f1f]
-              dark:border-black dark:bg-[#e3e3e3]
-              sm:-mt-16 sm:ml-4 sm:h-28 sm:w-28
-              md:-mt-20 md:ml-6 md:h-32 md:w-32
-            "
-          >
-            {/* Fallback initial — hidden once photo loads */}
-            <span
-              aria-hidden="true"
+          {/* ── IDENTITY ROW ────────────────────────────────── */}
+          <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-end sm:gap-8">
+            {/* Profile photo (overlaps banner) */}
+            <div
               className="
-                absolute inset-0 grid place-items-center
-                text-3xl font-semibold text-white
-                dark:text-[#111]
-                sm:text-4xl md:text-5xl
+                relative -mt-20 h-28 w-28 shrink-0 overflow-hidden rounded-full
+                border-4 border-[#F2F2EF] bg-[#1f1f1f]
+                dark:border-[#0B0B0C] dark:bg-[#e3e3e3]
+                sm:-mt-24 sm:h-32 sm:w-32
               "
             >
-              K
-            </span>
-
-            {profileOk && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src="/profile.jpg"
-                alt="Kinshuk Jain"
-                className="absolute inset-0 h-full w-full object-cover"
-                onError={() => setProfileOk(false)}
-              />
-            )}
-          </div>
-
-          {/* ── HERO CONTENT ────────────────────────────────── */}
-          <div className="mt-6 space-y-6">
-            <div className="flex flex-col gap-2 text-sm font-semibold sm:flex-row sm:gap-6">
-              <span className="flex items-center gap-1.5">
-                <MapPin className="h-4 w-4" aria-hidden="true" />{" "}
-                {CONFIG.personal.location}
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 grid place-items-center text-4xl font-bold text-white dark:text-[#111] sm:text-5xl"
+              >
+                K
               </span>
-              <span className="flex items-center gap-1.5">
-                <Sparkles className="h-4 w-4" aria-hidden="true" /> Available
-                for collaboration
-              </span>
+
+              {profileOk && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src="/profile.jpg"
+                  alt="Kinshuk Jain"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  onError={() => setProfileOk(false)}
+                />
+              )}
             </div>
 
-            <div className="space-y-4 text-base leading-relaxed md:text-lg">
+            {/* Name + location */}
+            <div className="flex flex-col gap-3">
+              <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-[42px]">
+                Kinshuk Jain
+              </h1>
+              <span className="flex items-center gap-2 text-sm font-bold  tracking-[0.14em] text-[#555] dark:text-[#A8A8A8]">
+                <MapPin className="h-4 w-4" aria-hidden="true" />
+                {CONFIG.personal.location}
+              </span>
+            </div>
+          </div>
+
+          {/* ── BIO ─────────────────────────────────────────── */}
+          <div className="mt-10">
+            <p className="mb-4 flex items-center gap-2.5 text-[12px] font-bold  tracking-[0.22em] text-[#555] dark:text-[#A8A8A8]">
+              <span className="text-[#111] dark:text-[#F2F2F2]">$</span>
+              whoami
+            </p>
+            <div className="space-y-4 text-lg leading-relaxed text-[#1A1A1A] sm:text-[19px] dark:text-[#E2E2E2]">
               {CONFIG.personal.bio.map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
               ))}
             </div>
+          </div>
 
-            {/* Social Links — editorial chip style */}
-            <div className="flex flex-wrap gap-2.5 pt-2">
+          {/* ── SOCIALS ─────────────────────────────────────── */}
+          <div className="mt-8">
+            <p className="mb-4 flex items-center gap-2.5 text-[15px] font-bold  tracking-[0.22em] text-[#555] dark:text-[#A8A8A8]">
+              <span className="text-[#111] dark:text-[#F2F2F2]">$</span>
+              connect
+            </p>
+            <div className="flex flex-wrap gap">
               {CONFIG.social.map((s) => (
                 <a
                   key={s.platform}
@@ -589,52 +622,42 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="
-                    inline-flex items-center gap-1.5 rounded-md
-                    bg-blue-900 px-2.5 py-1.5
-                    text-xs font-semibold tracking-wider text-white
-                    transition-colors duration-300
-                    hover:bg-blue-800
-                    dark:bg-[#e3e3e3] dark:text-[#111]
-                    dark:hover:bg-blue-400 dark:hover:text-[#0a0a0a]
+                    inline-flex items-center gap-2 
+                    border border-[#D6D6D0] bg-white px-3.5 py-2.5
+                    text-[15px] font-bold  tracking-[0.08em] text-[#111] dark:hover:border-blue-400 hover:border-blue-800
+                    transition-colors
+                    dark:border-[#2B2B2E] dark:bg-[#121214] dark:text-[#E6E6E6]
                   "
                 >
-                  {SOCIAL_ICONS[s.platform]} {s.platform}
+                  {SOCIAL_ICONS[s.platform]}
+                  {s.platform}
                 </a>
               ))}
             </div>
+          </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-3 pt-2 text-sm font-semibold">
-              <Link
-                href="/myresumekinshuk.pdf"
-                className="flex items-center gap-1.5 rounded bg-slate-800 px-2.5 py-1.5 text-white transition-colors hover:bg-slate-900 dark:bg-slate-800 dark:hover:bg-slate-700"
-              >
-                <Download className="h-4 w-4" aria-hidden="true" /> Download My
-                Resume
-              </Link>
+          {/* ── CTAs ────────────────────────────────────────── */}
+          <div className="mt-8 flex flex-wrap ">
+            <Link href="/myresumekinshuk.pdf" className={`${BTN} ${BTN_SOLID}`}>
+              <Download className="h-4 w-4" aria-hidden="true" />
+              Download My Resume
+            </Link>
 
-              <Link
-                href="/blogs"
-                className="flex items-center gap-1.5 rounded bg-blue-800 px-2.5 py-1.5 text-white transition-colors hover:bg-blue-900 dark:bg-blue-800 dark:hover:bg-blue-700"
-              >
-                <BookOpen className="h-4 w-4" aria-hidden="true" /> Read my
-                blogs, thoughts…
-              </Link>
-            </div>
+            <Link href="/blogs" className={`${BTN} ${BTN_GHOST}`}>
+              <BookOpen className="h-4 w-4" aria-hidden="true" />
+              Read my blogs, thoughts…
+            </Link>
           </div>
         </header>
-
         {/* ============ NAVIGATION ============ */}
         <nav
           role="tablist"
           aria-label="Portfolio sections"
           className="
-            sticky top-0 z-20 mb-8
-            bg-white border-b border-black dark:border-[#444444] backdrop-blur
-            dark:bg-black/90
-          "
+    sticky top-22 z-20 mb-10
+     bg-transparent"
         >
-          <div className="flex gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex  overflow-x-auto py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {TABS.map((t) => {
               const active = tab === t.id;
               return (
@@ -647,15 +670,15 @@ export default function Home() {
                   id={`tab-${t.id}`}
                   onClick={() => setTab(t.id)}
                   className={`
-                    -mb-px flex shrink-0 items-center gap-2 whitespace-nowrap
-                     rounded-t-2xl px-2 py-1.5 text-md font-semibold
-                    transition-colors duration-150
-                    ${
-                      active
-                        ? "  text-black bg-gray-200 dark:bg-[#121212] dark:text-white"
-                        : "border-transparent text-[#666] hover:text-[#111] dark:text-[#a5a5a5] dark:hover:text-[#eee]"
-                    }
-                  `}
+            flex shrink-0 items-center gap-2 whitespace-nowrap
+            border px-3.5 py-2.5 text-[18px] font-bold tracking-[0.1em]
+            transition-colors
+            ${
+              active
+                ? "border-2 border-blue-800 bg-white text-black dark:border-blue-400 dark:bg-[#121214] dark:text-white"
+                : "border-gray-400 bg-white text-[#555] hover:bg-gray-300 hover:text-[#111] dark:border-[#444444] dark:bg-[#121214] dark:text-[#A8A8A8] dark:hover:bg-[#1A1A1C] dark:hover:text-[#F2F2F2]"
+            }
+          `}
                 >
                   {t.icon}
                   {t.label}
@@ -671,7 +694,7 @@ export default function Home() {
           role="tabpanel"
           id={`panel-${tab}`}
           aria-labelledby={`tab-${tab}`}
-          style={{ animation: "panelIn 0.18s ease-out" }}
+          style={{ animation: "panelIn 0.2s ease-out" }}
         >
           {tab === "experience" && <ExperiencePanel />}
           {tab === "projects" && <ProjectsPanel />}
@@ -679,6 +702,12 @@ export default function Home() {
           {tab === "certifications" && <CertificationsPanel />}
           {tab === "education" && <EducationPanel />}
         </div>
+
+        {/* ============ FOOTER STRIP ============ */}
+        <footer className="mt-16 flex flex-wrap items-center justify-between gap-3 border-t border-[#D6D6D0] pt-6 text-[11px] font-bold  tracking-[0.24em] text-[#555] dark:border-[#2B2B2E] dark:text-[#A8A8A8]">
+          <span>Kinshuk Jain © {new Date().getFullYear()}</span>
+          <span>Built with intent</span>
+        </footer>
       </main>
     </div>
   );

@@ -13,9 +13,9 @@ export default function BlogLayout({
   return (
     <div
       className="
-        min-h-screen bg-[#F7F9FC] text-[#1F1F1F]
+        min-h-screen bg-white text-[#1F1F1F]
         selection:bg-[#D3E3FD] selection:text-[#041E49]
-        dark:bg-black dark:text-[#E3E3E3]
+        dark:bg-zinc-950 dark:text-[#E3E3E3]
         dark:selection:bg-[#0842A0] dark:selection:text-[#D3E3FD]
       "
     >

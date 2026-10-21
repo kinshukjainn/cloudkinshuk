@@ -4,37 +4,61 @@ import { isValidElement, useRef, useState, type ReactNode } from "react";
 import { IoCheckmark, IoCopyOutline } from "react-icons/io5";
 
 /* ─────────────────────────────────────────────────────────────
-   Pixel UI · Android 17 · Surface system
-   (identical token language to the home page)
+   Modern CodeBlock
 
-   · Soft elevated surface. No hard borders, no pure black.
-   · Chrome bar carries the language chip + copy action.
-   · Neutral inverted fill marks the "copied" confirmation state.
-   · Motion: 300 ms cubic-bezier(0.2,0,0,1) — colour, shadow, lift.
+   · Hairline borders, refined radius, quiet surfaces.
+   · Chrome bar carries a language dot + label, copy on the right.
+   · Copy affordance: ghost → solid on success.
+   · Motion: 200 ms cubic-bezier(0.2,0,0,1).
    ───────────────────────────────────────────────────────────── */
-
-const SURFACE =
-  "bg-white dark:bg-[#1E1F20] " +
-  "shadow-[0_1px_3px_rgba(0,0,0,0.06),0_8px_24px_-16px_rgba(0,0,0,0.35)] " +
-  "dark:shadow-[0_1px_3px_rgba(0,0,0,0.6),0_8px_24px_-16px_rgba(0,0,0,0.9)]";
-
-const SUBTLE = "bg-[#F0F4F9] dark:bg-[#282A2C]";
 
 const EASE = "ease-[cubic-bezier(0.2,0,0,1)]";
 const SPRING = "ease-[cubic-bezier(0.34,1.56,0.64,1)]";
 
 const FOCUS =
   "focus-visible:outline-none focus-visible:ring-2 " +
-  "focus-visible:ring-[#1F1F1F] dark:focus-visible:ring-[#E3E3E3] " +
+  "focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 " +
   "focus-visible:ring-offset-0";
 
-const NEUTRAL_SOLID =
-  "bg-[#1F1F1F] text-white dark:bg-[#E3E3E3] dark:text-[#1F1F1F]";
+/* ── Language dot palette ─────────────────────────────────── */
+const LANGUAGE_DOTS: Record<string, string> = {
+  js: "bg-yellow-400",
+  javascript: "bg-yellow-400",
+  mjs: "bg-yellow-400",
+  cjs: "bg-yellow-400",
+  ts: "bg-blue-500",
+  typescript: "bg-blue-500",
+  jsx: "bg-cyan-400",
+  tsx: "bg-cyan-400",
+  py: "bg-emerald-500",
+  python: "bg-emerald-500",
+  html: "bg-orange-500",
+  css: "bg-pink-500",
+  scss: "bg-pink-500",
+  sass: "bg-pink-500",
+  json: "bg-amber-500",
+  yaml: "bg-rose-500",
+  yml: "bg-rose-500",
+  bash: "bg-zinc-400",
+  shell: "bg-zinc-400",
+  sh: "bg-zinc-400",
+  zsh: "bg-zinc-400",
+  md: "bg-zinc-400",
+  markdown: "bg-zinc-400",
+  rust: "bg-orange-600",
+  rs: "bg-orange-600",
+  go: "bg-cyan-500",
+  sql: "bg-indigo-500",
+  graphql: "bg-fuchsia-500",
+  gql: "bg-fuchsia-500",
+};
 
-const TEXT = "text-[#1F1F1F] dark:text-[#E3E3E3]";
-const TEXT_SUBTLE = "text-[#747775] dark:text-[#8E918F]";
-
-const HAIRLINE = "border-black/[0.06] dark:border-white/[0.08]";
+function dotClass(language: string | null): string {
+  if (!language) return "bg-zinc-400 dark:bg-zinc-600";
+  return (
+    LANGUAGE_DOTS[language.toLowerCase()] ?? "bg-zinc-400 dark:bg-zinc-600"
+  );
+}
 
 type CodeBlockProps = {
   children: ReactNode;
@@ -100,61 +124,60 @@ export default function CodeBlock({ children }: CodeBlockProps) {
   return (
     <div
       className={`
-        group relative my-8 overflow-hidden rounded-[24px] ${SURFACE}
-        transition-shadow duration-300 ${EASE}
+        group relative my-8 overflow-hidden rounded-xl
+        border border-zinc-200 bg-white
+        shadow-[0_1px_2px_rgba(0,0,0,0.03),0_12px_32px_-24px_rgba(0,0,0,0.12)]
+        transition-shadow duration-200 ${EASE}
+        hover:shadow-[0_1px_2px_rgba(0,0,0,0.04),0_16px_40px_-24px_rgba(0,0,0,0.16)]
+        dark:border-zinc-800 dark:bg-zinc-950
+        dark:shadow-[0_1px_2px_rgba(0,0,0,0.4),0_12px_32px_-24px_rgba(0,0,0,0.7)]
+        dark:hover:shadow-[0_1px_2px_rgba(0,0,0,0.5),0_16px_40px_-24px_rgba(0,0,0,0.85)]
       `}
     >
       {/* ── Chrome bar ─────────────────────────────────────── */}
       <div
-        className={`
+        className="
           flex items-center justify-between gap-3
-          border-b ${HAIRLINE}
-          px-3 py-2 ${SUBTLE}
-        `}
+          border-b border-zinc-200 bg-zinc-50/80
+          px-3 py-2
+          dark:border-zinc-800 dark:bg-zinc-900/60
+        "
       >
-        {/* Language indicator */}
-        <span className="inline-flex min-w-0 items-center gap-2 pl-1.5">
+        {/* Language */}
+        <div className="flex min-w-0 items-center gap-2 pl-1">
           <span
             aria-hidden="true"
-            className="
-              h-1.5 w-1.5 shrink-0 rounded-full
-              bg-[#1F1F1F] dark:bg-[#E3E3E3]
-              opacity-55
-            "
+            className={`h-2 w-2 shrink-0 rounded-full ${dotClass(language)}`}
           />
           <span
-            className={`
-              truncate text-[11px] font-semibold uppercase tracking-[0.09em]
-              ${TEXT_SUBTLE}
-            `}
+            className="
+              truncate text-[11px] font-semibold uppercase tracking-wider
+              text-zinc-500 dark:text-zinc-400
+            "
           >
             {language ?? "code"}
           </span>
-        </span>
+        </div>
 
-        {/* Copy chip */}
+        {/* Copy */}
         <button
           type="button"
           onClick={handleCopy}
           aria-label={copied ? "Code copied" : "Copy code"}
           aria-live="polite"
           className={`
-            inline-flex shrink-0 items-center gap-1.5 rounded-full
-            px-3 py-1.5 text-[11px] font-semibold
-            transition-all duration-300 ${EASE}
-            active:scale-[0.95] active:rounded-[10px]
+            inline-flex shrink-0 items-center gap-1.5 rounded-md
+            px-2.5 py-1.5 text-[11px] font-medium tracking-wide
+            transition-all duration-200 ${EASE}
+            active:scale-[0.96]
             ${FOCUS}
             ${
               copied
-                ? NEUTRAL_SOLID
-                : `bg-white dark:bg-[#1E1F20] ${TEXT}
-                   shadow-[0_1px_2px_rgba(0,0,0,0.05),0_2px_8px_-4px_rgba(0,0,0,0.28)]
-                   dark:shadow-[0_1px_2px_rgba(0,0,0,0.5),0_2px_8px_-4px_rgba(0,0,0,0.85)]
-                   hover:bg-black/[0.03] dark:hover:bg-white/[0.05]`
+                ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
+                : "text-zinc-500 hover:bg-zinc-200/70 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
             }
           `}
         >
-          {/* Icon swap — cross-fade + spring scale */}
           <span className="relative grid h-3.5 w-3.5 place-items-center">
             <IoCheckmark
               aria-hidden="true"
@@ -180,14 +203,14 @@ export default function CodeBlock({ children }: CodeBlockProps) {
       {/* ── Code area ──────────────────────────────────────── */}
       <pre
         ref={preRef}
-        className={`
+        className="
           m-0 overflow-x-auto
           px-5 py-5
           font-mono text-[13.5px] leading-[1.75]
-          ${TEXT}
+          text-zinc-800 dark:text-zinc-200
           scrollbar-thin scrollbar-track-transparent
-          scrollbar-thumb-black/20 dark:scrollbar-thumb-white/20
-        `}
+          scrollbar-thumb-zinc-300 dark:scrollbar-thumb-zinc-700
+        "
       >
         {children}
       </pre>

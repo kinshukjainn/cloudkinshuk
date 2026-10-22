@@ -6,6 +6,10 @@ export const navigation: NavSection[] = [
     title: "Blogs",
     items: [
       {
+        title: "How i use ai in my development and workspace",
+        slug: "ai-view",
+      },
+      {
         title:
           "Different archietecture in aws i have been using for my projects",
         slug: "infra-service",

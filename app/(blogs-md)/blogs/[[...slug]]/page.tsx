@@ -250,7 +250,7 @@ const components: Components = {
       /language-/.test(className ?? "") || /hljs/.test(className ?? "");
     if (isBlock) {
       return (
-        <code className={`font-mono ${className ?? ""}`} {...omitNode(rest)}>
+        <code className={`monofont ${className ?? ""}`} {...omitNode(rest)}>
           {children}
         </code>
       );
@@ -259,7 +259,7 @@ const components: Components = {
       <code
         className="
           break-words rounded border border-zinc-200/80 bg-zinc-100 px-1.5 py-0.5
-          font-mono text-[0.85em] font-medium text-zinc-900
+          monofont text-[0.85em] font-medium text-zinc-900
           dark:border-zinc-800 dark:bg-zinc-800/80 dark:text-zinc-100
         "
         {...omitNode(rest)}
@@ -394,7 +394,7 @@ export default async function DocPage({ params }: Props) {
           {hasToc && (
             <aside aria-label="Table of contents" className="hidden lg:block">
               <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-2">
-                <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                <p className="mb-3 text-md font-bold  tracking-wider text-zinc-900 dark:text-zinc-100">
                   On this page
                 </p>
                 <ul className="space-y-2 text-sm">

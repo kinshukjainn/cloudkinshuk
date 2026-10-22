@@ -15,6 +15,9 @@ type Section = {
   items: Article[];
 };
 
+const FOCUS =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700/40 dark:focus-visible:ring-blue-400/40";
+
 export default function BlogFeed({ sections }: { sections: Section[] }) {
   const [search, setSearch] = useState("");
   const query = search.toLowerCase().trim();
@@ -38,29 +41,31 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
 
   return (
     <div className="min-h-screen bg-white text-zinc-900 selection:bg-zinc-900 selection:text-white dark:bg-zinc-950 dark:text-zinc-50 dark:selection:bg-zinc-50 dark:selection:text-zinc-900">
-      <main className="mx-auto max-w-5xl px-5 py-14 sm:px-8 sm:py-20 md:py-24">
+      <main className="mx-auto max-w-5xl px-5 py-12 sm:px-8 sm:py-16">
         {/* ── Header ───────────────────────────────────── */}
-        <header className="mb-14 space-y-8 sm:mb-16">
-          <div className="inline-flex items-center gap-2.5 border border-zinc-200 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:border-zinc-800 dark:text-zinc-400 sm:text-sm">
+        <header className="mb-12 space-y-6">
+          <div className="inline-flex items-center gap-2.5 rounded-md border border-zinc-300 bg-white px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-zinc-700 shadow-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
             <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
             <span>{totalArticles} Articles</span>
           </div>
 
-          <div className="space-y-5">
-            <h1 className="text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl">
+          <div className="space-y-4">
+            <h1 className="text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl">
               Blogs, Notes &{" "}
               <span className="text-zinc-400 dark:text-zinc-500">Thoughts</span>
             </h1>
-            <p className="max-w-2xl text-lg leading-8 text-zinc-500 dark:text-zinc-400 sm:text-xl sm:leading-9">
+            <p className="max-w-2xl text-lg leading-8 text-zinc-600 dark:text-zinc-400">
               Read my latest project descriptions, technical notes, and updates.
             </p>
           </div>
         </header>
 
         {/* ── Search ───────────────────────────────────── */}
-        <div className="mb-14 sm:mb-16">
-          <div className="group flex items-stretch border border-zinc-200 bg-white transition-colors focus-within:border-zinc-900 dark:border-zinc-800 dark:bg-zinc-950 dark:focus-within:border-zinc-50">
-            <div className="flex items-center justify-center border-r border-zinc-200 px-4 text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+        <div className="mb-12">
+          <div
+            className={`group flex items-center overflow-hidden rounded-md border-2 border-zinc-300 bg-white shadow-sm transition-colors focus-within:border-blue-700 hover:border-zinc-400 dark:border-zinc-700 dark:bg-zinc-950 dark:focus-within:border-blue-400 dark:hover:border-zinc-600 ${FOCUS}`}
+          >
+            <div className="flex items-center justify-center pl-4 pr-3 text-zinc-500 dark:text-zinc-400">
               <Search className="h-5 w-5" aria-hidden="true" />
             </div>
             <input
@@ -70,21 +75,21 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search articles, keywords, titles…"
               aria-label="Search articles"
-              className="w-full bg-transparent px-4 py-4 text-base text-zinc-900 placeholder:text-zinc-400 focus:outline-none dark:text-zinc-50 dark:placeholder:text-zinc-500 sm:text-lg"
+              className="w-full bg-transparent py-3.5 pr-4 text-base text-zinc-900 placeholder:text-zinc-400 focus:outline-none dark:text-zinc-50 dark:placeholder:text-zinc-500"
             />
             {search && (
               <button
                 type="button"
                 onClick={() => setSearch("")}
                 aria-label="Clear search"
-                className="flex items-center justify-center border-l border-zinc-200 px-4 text-zinc-400 transition-colors hover:text-zinc-900 dark:border-zinc-800 dark:text-zinc-500 dark:hover:text-zinc-50"
+                className={`mr-2 flex h-9 w-9 items-center justify-center rounded-md text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50 ${FOCUS}`}
               >
-                <X className="h-5 w-5" aria-hidden="true" />
+                <X className="h-4 w-4" aria-hidden="true" />
               </button>
             )}
           </div>
           {search && (
-            <p className="mt-3 text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 sm:text-sm">
+            <p className="mt-3 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
               {totalResults === 0
                 ? "// no results"
                 : `// ${totalResults} result${totalResults === 1 ? "" : "s"}`}
@@ -93,56 +98,56 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
         </div>
 
         {/* ── Feed ─────────────────────────────────────── */}
-        <div className="space-y-16 sm:space-y-20">
+        <div className="space-y-12">
           {filteredSections.length > 0 ? (
             filteredSections.map((section) => (
               <section key={section.title}>
-                {/* Section header */}
-                <div className="mb-7 flex items-end justify-between gap-4 border-b border-zinc-200 pb-4 dark:border-zinc-800 sm:mb-9">
-                  <h2 className="text-sm font-semibold uppercase tracking-widest text-zinc-900 dark:text-zinc-50 sm:text-base">
+                {/* Section header — bordered strip (Fluent style) */}
+                <div className="mb-5 flex items-center justify-between gap-4 rounded-md border border-zinc-300 bg-zinc-50 px-4 py-3 dark:border-zinc-700 dark:bg-zinc-900">
+                  <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-900 dark:text-zinc-50">
                     {section.title}
                   </h2>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 sm:text-sm">
+                  <span className="rounded-md border border-zinc-300 bg-white px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-400">
                     {String(section.items.length).padStart(2, "0")}{" "}
                     {section.items.length === 1 ? "entry" : "entries"}
                   </span>
                 </div>
 
-                {/* Cards grid */}
-                <div className="grid gap-5 sm:gap-6 md:grid-cols-2">
+                {/* Cards */}
+                <div className="grid gap-4 sm:grid-cols-2">
                   {section.items.map((item, index) => (
                     <Link
                       key={item.slug}
                       href={`/blogs/${item.slug}`}
-                      className="group relative flex flex-col border border-zinc-200 bg-white p-7 transition-all hover:border-zinc-900 hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-50 dark:hover:bg-zinc-900/40 sm:p-9"
+                      className={`group relative flex flex-col rounded-md border border-zinc-300 bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-blue-700 hover:shadow-md dark:border-zinc-700 dark:bg-zinc-950 dark:hover:border-blue-400 dark:hover:bg-zinc-900/40 ${FOCUS}`}
                     >
                       {/* Top: index + arrow */}
-                      <div className="mb-5 flex items-center justify-between">
-                        <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 sm:text-sm">
+                      <div className="mb-4 flex items-center justify-between">
+                        <span className="rounded-md border border-zinc-300 bg-zinc-50 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400">
                           {String(index + 1).padStart(2, "0")}
                         </span>
                         <ArrowUpRight
-                          className="h-5 w-5 text-zinc-300 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-zinc-900 dark:text-zinc-600 dark:group-hover:text-zinc-50"
+                          className="h-5 w-5 text-zinc-400 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-700 dark:text-zinc-500 dark:group-hover:text-blue-400"
                           aria-hidden="true"
                         />
                       </div>
 
                       {/* Title */}
-                      <h3 className="mb-3 text-xl font-semibold leading-8 tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-2xl sm:leading-9">
+                      <h3 className="mb-2 text-lg font-semibold leading-7 tracking-tight text-zinc-900 dark:text-zinc-50">
                         {item.title}
                       </h3>
 
                       {/* Description */}
-                      <p className="mb-7 line-clamp-4 flex-1 text-base leading-8 text-zinc-500 dark:text-zinc-400 sm:text-lg sm:leading-8">
+                      <p className="mb-6 line-clamp-3 flex-1 text-base leading-7 text-zinc-600 dark:text-zinc-400">
                         {item.description}
                       </p>
 
-                      {/* Bottom action */}
-                      <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 sm:text-sm">
-                        <span className="transition-colors group-hover:text-zinc-900 dark:group-hover:text-zinc-50">
+                      {/* Divider then action */}
+                      <div className="mt-auto flex items-center gap-2 border-t border-zinc-200 pt-4 text-xs font-bold uppercase tracking-wider text-zinc-600 dark:border-zinc-800 dark:text-zinc-400">
+                        <span className="transition-colors group-hover:text-blue-700 dark:group-hover:text-blue-400">
                           Read article
                         </span>
-                        <span className="inline-block h-px w-8 bg-zinc-300 transition-all duration-200 group-hover:w-12 group-hover:bg-zinc-900 dark:bg-zinc-700 dark:group-hover:bg-zinc-50" />
+                        <span className="inline-block h-px w-8 bg-zinc-400 transition-all duration-200 group-hover:w-12 group-hover:bg-blue-700 dark:bg-zinc-600 dark:group-hover:bg-blue-400" />
                       </div>
                     </Link>
                   ))}
@@ -151,17 +156,17 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
             ))
           ) : (
             /* Empty state */
-            <div className="border border-dashed border-zinc-300 py-20 text-center dark:border-zinc-700">
-              <p className="text-sm font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 sm:text-base">
+            <div className="rounded-md border-2 border-dashed border-zinc-300 py-20 text-center dark:border-zinc-700">
+              <p className="text-sm font-bold uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
                 no matching articles
               </p>
-              <p className="mt-4 text-base leading-8 text-zinc-500 dark:text-zinc-400 sm:text-lg">
+              <p className="mt-3 text-base leading-7 text-zinc-600 dark:text-zinc-400">
                 Nothing matched &ldquo;{search}&rdquo;.
               </p>
               <button
                 type="button"
                 onClick={() => setSearch("")}
-                className="mt-8 border border-zinc-200 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-500 transition-colors hover:border-zinc-900 hover:text-zinc-900 dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-zinc-50 dark:hover:text-zinc-50 sm:text-sm"
+                className={`mt-6 rounded-md border-2 border-zinc-300 px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-600 transition-colors hover:border-blue-700 hover:bg-zinc-50 hover:text-blue-700 dark:border-zinc-700 dark:text-zinc-400 dark:hover:border-blue-400 dark:hover:bg-zinc-900 dark:hover:text-blue-400 ${FOCUS}`}
               >
                 Clear filter
               </button>

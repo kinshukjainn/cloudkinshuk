@@ -206,7 +206,7 @@ export default function CodeBlock({ children }: CodeBlockProps) {
         className="
           m-0 overflow-x-auto
           px-5 py-5
-          font-mono text-[13.5px] leading-[1.75]
+          monofont text-[13.5px] leading-[1.75]
           text-zinc-800 dark:text-zinc-200
           scrollbar-thin scrollbar-track-transparent
           scrollbar-thumb-zinc-300 dark:scrollbar-thumb-zinc-700

@@ -56,7 +56,11 @@ const NAV: NavEntry[] = [
   { href: "/blogs-fd", label: "Feedbacks", short: "Feedbacks" },
 ];
 
-/* ── Cell — flat, one right divider, active = bright text ─ */
+/* ── Shared ────────────────────────────────────────────── */
+const FOCUS =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700/40 dark:focus-visible:ring-blue-400/40";
+
+/* ── Cell — rounded, bordered, VSCode-docs-style ───────── */
 type CellProps = {
   children: React.ReactNode;
   active?: boolean;
@@ -75,15 +79,14 @@ function Cell({
   ariaLabel,
 }: CellProps) {
   const cls = [
-    "inline-flex items-center justify-center whitespace-nowrap",
-    "px-2 sm:px-4",
-    "text-md font-semibold tracking-tight sm:text-",
-    "border-r border-zinc-200 dark:border-zinc-800",
+    "inline-flex h-8 items-center justify-center whitespace-nowrap",
+    "rounded-md border px-2.5",
+    "text-[12px] font-bold tracking-[0.06em]",
     "transition-colors duration-150",
+    FOCUS,
     active
-      ? "text-zinc-900 dark:text-white"
-      : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:text-white dark:hover:bg-white/5",
-    "focus-visible:outline-none focus-visible:bg-zinc-100 dark:focus-visible:bg-zinc-900",
+      ? "border-blue-800 text-zinc-900 dark:border-blue-400 dark:text-white"
+      : "border-zinc-200 text-zinc-600 hover:border-blue-800 hover:bg-zinc-50 hover:text-zinc-900 dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-blue-400 dark:hover:bg-white/5 dark:hover:text-white",
   ].join(" ");
 
   if (href) {
@@ -124,15 +127,6 @@ function Cell({
   );
 }
 
-/* ── Group — one leading left border, no top/bottom ────── */
-function Group({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex border-l border-zinc-200 dark:border-zinc-800">
-      {children}
-    </div>
-  );
-}
-
 /* ── Header ────────────────────────────────────────────── */
 export default function Header() {
   const pathname = usePathname();
@@ -155,52 +149,37 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
-      <div className="mx-auto flex h-12 max-w-5xl items-stretch px-3 sm:h-14 sm:px-6">
-        {/* Left — title pushed aside */}
-        <div className="flex shrink-0">
-          <Group>
-            <Cell href="/" active={pathname === "/"} ariaLabel="Home">
-              <span className="hidden sm:inline">Cloudkinshuk</span>
-              <span className="sm:hidden">Cloudkinshuk</span>
-            </Cell>
-          </Group>
-        </div>
+      <div className="mx-auto flex h-11 max-w-5xl items-center gap-1.5 px-3 sm:h-12 sm:px-6">
+        {/* Brand */}
+        <Cell href="/" active={pathname === "/"} ariaLabel="Home">
+          <span className="hidden sm:inline">Cloudkinshuk</span>
+          <span className="sm:hidden">CK</span>
+        </Cell>
 
-        {/* Center — routes */}
+        {/* Nav — centered */}
         <nav
           aria-label="Primary"
-          className="flex min-w-0 flex-1 justify-center"
+          className="flex min-w-0 flex-1 justify-center overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
-          <div className="flex max-w-full overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <Group>
-              {NAV.map(({ href, label, short }) => (
-                <Cell
-                  key={href}
-                  href={href}
-                  active={isActive(href)}
-                  ariaLabel={label}
-                >
-                  <span className="hidden sm:inline">{label}</span>
-                  <span className="sm:hidden">{short}</span>
-                </Cell>
-              ))}
-            </Group>
+          <div className="flex gap-1.5">
+            {NAV.map(({ href, label, short }) => (
+              <Cell
+                key={href}
+                href={href}
+                active={isActive(href)}
+                ariaLabel={label}
+              >
+                <span className="hidden sm:inline">{label}</span>
+                <span className="sm:hidden">{short}</span>
+              </Cell>
+            ))}
           </div>
         </nav>
 
-        {/* Right — GitHub + theme */}
-        <div className="flex shrink-0">
-          <Group>
-            <Cell onClick={toggleTheme} ariaLabel="Toggle theme">
-              <span className="hidden md:inline">
-                {mounted ? (isDark ? "Light" : "Dark") : "Theme"}
-              </span>
-              <span className="md:hidden">
-                {mounted ? (isDark ? "Light" : "Dark") : "Theme"}
-              </span>
-            </Cell>
-          </Group>
-        </div>
+        {/* Theme toggle */}
+        <Cell onClick={toggleTheme} ariaLabel="Toggle theme">
+          {mounted ? (isDark ? "Light" : "Dark") : "Theme"}
+        </Cell>
       </div>
     </header>
   );

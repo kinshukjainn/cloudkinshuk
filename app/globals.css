@@ -162,11 +162,15 @@
 
 body {
   background-color: var(--background);
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-roboto), sans-serif;
 }
 
 .h-font {
   font-family: var(--font-varela-round), sans-serif;
+}
+
+.monofont {
+  font-family: var(--font-geist-mono), monospace;
 }
 
 .prose pre code {

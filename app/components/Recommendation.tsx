@@ -154,7 +154,7 @@ export default function Recommendation({
 
         <span
           className={`
-            shrink-0 font-mono text-[11px] font-semibold uppercase
+            shrink-0 monofont text-[11px] font-semibold uppercase
             tracking-wider tabular-nums ${TEXT_SUBTLE}
           `}
         >
@@ -187,7 +187,7 @@ export default function Recommendation({
                 tracking-wider ${CHIP_IDLE}
               `}
             >
-              <span className="font-mono tabular-nums">
+              <span className="monofont tabular-nums">
                 {String(active + 1).padStart(2, "0")}
               </span>
               Rank

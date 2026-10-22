@@ -93,7 +93,7 @@ export default function FeedbackPage() {
               </span>
               Error executing command
             </p>
-            <p className="mt-4 text-sm font-mono text-red-700 dark:text-red-300">
+            <p className="mt-4 text-sm monofont text-red-700 dark:text-red-300">
               {error}
             </p>
           </div>

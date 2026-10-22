@@ -53,7 +53,7 @@ type NavEntry = { href: string; label: string; short: string };
 
 const NAV: NavEntry[] = [
   { href: "/blogs", label: "Blogs", short: "Blogs" },
-  { href: "/git-tree", label: "Project Tree", short: "Tree" },
+  { href: "/blogs-fd", label: "Feedbacks", short: "Feedbacks" },
 ];
 
 /* ── Cell — flat, one right divider, active = bright text ─ */
@@ -76,13 +76,13 @@ function Cell({
 }: CellProps) {
   const cls = [
     "inline-flex items-center justify-center whitespace-nowrap",
-    "px-3 sm:px-4",
-    "text-xs font-semibold tracking-tight sm:text-sm",
+    "px-2 sm:px-4",
+    "text-md font-semibold tracking-tight sm:text-",
     "border-r border-zinc-200 dark:border-zinc-800",
     "transition-colors duration-150",
     active
       ? "text-zinc-900 dark:text-white"
-      : "text-zinc-400 hover:text-zinc-900 hover:bg-zinc-50 dark:text-zinc-500 dark:hover:text-white dark:hover:bg-white/5",
+      : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:text-white dark:hover:bg-white/5",
     "focus-visible:outline-none focus-visible:bg-zinc-100 dark:focus-visible:bg-zinc-900",
   ].join(" ");
 
@@ -161,7 +161,7 @@ export default function Header() {
           <Group>
             <Cell href="/" active={pathname === "/"} ariaLabel="Home">
               <span className="hidden sm:inline">Cloudkinshuk</span>
-              <span className="sm:hidden">CK</span>
+              <span className="sm:hidden">Cloudkinshuk</span>
             </Cell>
           </Group>
         </div>
@@ -191,20 +191,12 @@ export default function Header() {
         {/* Right — GitHub + theme */}
         <div className="flex shrink-0">
           <Group>
-            <Cell
-              href="https://github.com/kinshukjainn/cloudkinshuk"
-              external
-              ariaLabel="GitHub repository"
-            >
-              <span className="hidden md:inline">GitHub</span>
-              <span className="md:hidden">GH</span>
-            </Cell>
             <Cell onClick={toggleTheme} ariaLabel="Toggle theme">
               <span className="hidden md:inline">
                 {mounted ? (isDark ? "Light" : "Dark") : "Theme"}
               </span>
               <span className="md:hidden">
-                {mounted ? (isDark ? "L" : "D") : "T"}
+                {mounted ? (isDark ? "Light" : "Dark") : "Theme"}
               </span>
             </Cell>
           </Group>

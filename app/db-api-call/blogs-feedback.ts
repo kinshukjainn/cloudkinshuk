@@ -3,8 +3,8 @@
 import { neon } from "@neondatabase/serverless";
 
 const getDb = () => {
-  const url = process.env.DATABASE_URL_SECOND;
-  if (!url) throw new Error("DATABASE_URL_SECOND is not configured.");
+  const url = process.env.DATABASE_URL;
+  if (!url) throw new Error("DATABASE_URL is not configured.");
   return neon(url);
 };
 

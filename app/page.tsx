@@ -398,7 +398,6 @@ function ProjectsPanel() {
                   className={`${BTN} ${BTN_SOLID}`}
                 >
                   <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                  Live
                 </a>
               )}
               {project.links.repo && (
@@ -409,7 +408,6 @@ function ProjectsPanel() {
                   className={`${BTN} ${BTN_GHOST}`}
                 >
                   <Github className="h-4 w-4" aria-hidden="true" />
-                  Source
                 </a>
               )}
             </div>
@@ -535,12 +533,8 @@ export default function Home() {
           {/* ── BANNER ──────────────────────────────────────── */}
           <div
             className="
-              relative aspect-[3/1] w-full overflow-hidden rounded-md
-              border border-[#D6D6D0]
-              bg-gradient-to-br from-[#1f1f1f] via-[#2a2a2a] to-[#4a4a4a]
-              dark:border-[#2B2B2E]
-              dark:from-[#e3e3e3] dark:via-[#bbb] dark:to-[#888]
-              sm:aspect-[4/1]
+              relative aspect-[3/1] w-full overflow-hidden 
+              sm:aspect-[3/1]
             "
           >
             {bannerOk && (
@@ -585,9 +579,6 @@ export default function Home() {
 
             {/* Name + location */}
             <div className="flex flex-col gap-3">
-              <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-[42px]">
-                Kinshuk Jain
-              </h1>
               <span className="flex items-center gap-2 text-sm font-bold  tracking-[0.14em] text-[#555] dark:text-[#A8A8A8]">
                 <MapPin className="h-4 w-4" aria-hidden="true" />
                 {CONFIG.personal.location}
@@ -654,7 +645,7 @@ export default function Home() {
           role="tablist"
           aria-label="Portfolio sections"
           className="
-    sticky top-22 z-20 mb-10
+     mb-10
      bg-transparent"
         >
           <div className="flex  overflow-x-auto py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -671,7 +662,7 @@ export default function Home() {
                   onClick={() => setTab(t.id)}
                   className={`
             flex shrink-0 items-center gap-2 whitespace-nowrap
-            border px-3.5 py-2.5 text-[18px] font-bold tracking-[0.1em]
+            border px-3 py-2 text-[14px] font-bold tracking-[0.1em]
             transition-colors
             ${
               active

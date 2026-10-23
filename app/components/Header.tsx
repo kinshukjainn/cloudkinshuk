@@ -1,185 +1,139 @@
 "use client";
 
-import React, { useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTheme } from "next-themes";
-import { useMounted } from "./hooks/useMounted";
 
-/* ── Theme transition ──────────────────────────────────── */
-type ThemeName = "light" | "dark";
+/* ── Icons ─────────────────────────────────────────────── */
+type IconProps = { className?: string };
 
-type VTDocument = Document & {
-  startViewTransition?: (cb: () => void | Promise<void>) => {
-    ready: Promise<void>;
-    finished: Promise<void>;
-  };
-};
-
-function applyTheme(theme: ThemeName) {
-  const root = document.documentElement;
-  root.classList.remove("light", "dark");
-  root.classList.add(theme);
-  root.dataset.theme = theme;
-  root.style.colorScheme = theme;
+function BlogIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
+      aria-hidden="true"
+    >
+      <path
+        d="M6 4h9l3 3v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9 10h6M9 13.5h6M9 17h3.5"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
 }
 
-function transitionTheme(
-  origin: { x: number; y: number },
-  next: ThemeName,
-  commit: () => void,
-) {
-  const doc = document as VTDocument;
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  if (reduced || typeof doc.startViewTransition !== "function") {
-    applyTheme(next);
-    commit();
-    return;
-  }
-
-  const root = document.documentElement;
-  root.style.setProperty("--vt-x", `${origin.x}px`);
-  root.style.setProperty("--vt-y", `${origin.y}px`);
-
-  doc.startViewTransition(() => {
-    applyTheme(next);
-    commit();
-  });
+function FeedbackIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
+      aria-hidden="true"
+    >
+      <path
+        d="M4 5.5h16v10a1 1 0 0 1-1 1H9l-4 3.5v-3.5H5a1 1 0 0 1-1-1v-10Z"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8 9.5h8M8 12.5h5"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
 }
 
 /* ── Nav model ─────────────────────────────────────────── */
-type NavEntry = { href: string; label: string; short: string };
-
-const NAV: NavEntry[] = [
-  { href: "/blogs", label: "Blogs", short: "Blogs" },
-  { href: "/blogs-fd", label: "Feedbacks", short: "Feedbacks" },
-];
-
-/* ── Shared ────────────────────────────────────────────── */
-const FOCUS =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700/40 dark:focus-visible:ring-blue-400/40";
-
-/* ── Cell — rounded, bordered, VSCode-docs-style ───────── */
-type CellProps = {
-  children: React.ReactNode;
-  active?: boolean;
-  href?: string;
-  external?: boolean;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  ariaLabel?: string;
+type NavEntry = {
+  href: string;
+  label: string;
+  icon: (props: IconProps) => React.JSX.Element;
 };
 
-function Cell({
-  children,
-  active = false,
-  href,
-  external = false,
-  onClick,
-  ariaLabel,
-}: CellProps) {
-  const cls = [
-    "inline-flex h-8 items-center justify-center whitespace-nowrap",
-    "rounded-md border px-2.5",
-    "text-[12px] font-bold tracking-[0.06em]",
-    "transition-colors duration-150",
-    FOCUS,
-    active
-      ? "border-blue-800 text-zinc-900 dark:border-blue-400 dark:text-white"
-      : "border-zinc-200 text-zinc-600 hover:border-blue-800 hover:bg-zinc-50 hover:text-zinc-900 dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-blue-400 dark:hover:bg-white/5 dark:hover:text-white",
-  ].join(" ");
+const NAV: NavEntry[] = [
+  { href: "/blogs", label: "Blogs", icon: BlogIcon },
+  { href: "/blogs-fd", label: "Feedbacks", icon: FeedbackIcon },
+];
 
-  if (href) {
-    if (external) {
-      return (
-        <a
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={cls}
-          aria-label={ariaLabel}
-        >
-          {children}
-        </a>
-      );
-    }
-    return (
-      <Link
-        href={href}
-        className={cls}
-        aria-label={ariaLabel}
-        aria-current={active ? "page" : undefined}
-      >
-        {children}
-      </Link>
-    );
-  }
+/* ── Design tokens (match the homepage) ────────────────── */
+const TOKENS = {
+  "--bg": "#0d0d0c",
+  "--fg": "#d6d1c6",
+  "--head": "#f2eee5",
+  "--muted": "#8b867c",
+  "--accent": "#d0a869",
+  "--accent-hover": "#e8c98f",
+  "--rule": "#272521",
+} as React.CSSProperties;
 
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cls}
-      aria-label={ariaLabel}
-    >
-      {children}
-    </button>
-  );
-}
+const FOCUS =
+  "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--bg)]";
 
 /* ── Header ────────────────────────────────────────────── */
 export default function Header() {
   const pathname = usePathname();
-  const { setTheme, resolvedTheme } = useTheme();
-  const mounted = useMounted();
-  const isDark = mounted && resolvedTheme === "dark";
-
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`);
 
-  const toggleTheme = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      const r = e.currentTarget.getBoundingClientRect();
-      const origin = { x: r.left + r.width / 2, y: r.top + r.height / 2 };
-      const next: ThemeName = resolvedTheme === "dark" ? "light" : "dark";
-      transitionTheme(origin, next, () => setTheme(next));
-    },
-    [resolvedTheme, setTheme],
-  );
-
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
-      <div className="mx-auto flex h-11 max-w-5xl items-center gap-1.5 px-3 sm:h-12 sm:px-6">
-        {/* Brand */}
-        <Cell href="/" active={pathname === "/"} ariaLabel="Home">
-          <span className="hidden sm:inline">Cloudkinshuk</span>
-          <span className="sm:hidden">CK</span>
-        </Cell>
+    <header
+      style={TOKENS}
+      className="sticky top-0 z-50 w-full border-b border-[var(--rule)] bg-[var(--bg)]/85 backdrop-blur-md"
+    >
+      <div className="mx-auto flex h-14 w-full max-w-[680px] items-center gap-2 px-4 sm:h-16 sm:gap-4 sm:px-8">
+        {/* Brand — serif, tilde prefix matches the homepage shell vibe */}
+        <Link
+          href="/"
+          aria-label="Home"
+          className={[
+            "inline-flex shrink-0 items-baseline gap-1  text-[15px] text-[var(--head)] font-bold  transition-colors hover:text-[var(--accent-hover)] sm:text-lg",
+            FOCUS,
+          ].join(" ")}
+        >
+          <span className="hidden min-[400px]:inline">cloudkinshuk</span>
+          <span className="min-[400px]:hidden">ck</span>
+        </Link>
 
-        {/* Nav — centered */}
+        {/* Nav — flat links, underline marks the active page */}
         <nav
           aria-label="Primary"
-          className="flex min-w-0 flex-1 justify-center overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="ml-auto flex min-w-0 items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-2"
         >
-          <div className="flex gap-1.5">
-            {NAV.map(({ href, label, short }) => (
-              <Cell
-                key={href}
-                href={href}
-                active={isActive(href)}
-                ariaLabel={label}
+          {NAV.map((entry) => {
+            const active = isActive(entry.href);
+            const Icon = entry.icon;
+            return (
+              <Link
+                key={entry.href}
+                href={entry.href}
+                aria-current={active ? "page" : undefined}
+                className={[
+                  "inline-flex h-9 shrink-0 items-center gap-1.5 px-2 text-[13px] transition-colors sm:px-3",
+                  FOCUS,
+                  active
+                    ? "text-[var(--accent)] underline decoration-1 underline-offset-[6px]"
+                    : "text-[var(--muted)] hover:text-[var(--fg)]",
+                ].join(" ")}
               >
-                <span className="hidden sm:inline">{label}</span>
-                <span className="sm:hidden">{short}</span>
-              </Cell>
-            ))}
-          </div>
+                <Icon className="h-[15px] w-[15px] shrink-0" />
+                <span>{entry.label}</span>
+              </Link>
+            );
+          })}
         </nav>
-
-        {/* Theme toggle */}
-        <Cell onClick={toggleTheme} ariaLabel="Toggle theme">
-          {mounted ? (isDark ? "Light" : "Dark") : "Theme"}
-        </Cell>
       </div>
     </header>
   );

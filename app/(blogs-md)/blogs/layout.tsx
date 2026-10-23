@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blogs , Article | Cloudkinshuk",
+  title: "Blogs, Articles | Cloudkinshuk",
   description: "Read our latest thoughts and articles.",
 };
 
@@ -13,20 +13,18 @@ export default function BlogLayout({
   return (
     <div
       className="
-        min-h-screen bg-white text-[#1F1F1F]
-        selection:bg-[#D3E3FD] selection:text-[#041E49]
-        dark:bg-zinc-950 dark:text-[#E3E3E3]
-        dark:selection:bg-[#0842A0] dark:selection:text-[#D3E3FD]
+        min-h-screen bg-[#0d0d0c] text-[#d6d1c6]
+        selection:bg-[#d0a869] selection:text-[#0d0d0c]
       "
     >
-      {/* 
-        Material 3 Expressive reading column — centred, comfortable
-        line length, generous vertical rhythm matching the homepage
-        and header surface tokens.
+      {/*
+        Thin pass-through shell. The blog feed and article pages
+        define their own inner `max-w` reading columns (680px),
+        so this wrapper stays unconstrained to avoid double
+        gutters. Padding is only here as a fallback for any page
+        that doesn't supply its own.
       */}
-      <main className="mx-auto max-w-[2000px] px-6 py-12 md:py-20 lg:px-8">
-        {children}
-      </main>
+      <main className="mx-auto w-full px-0 py-0">{children}</main>
     </div>
   );
 }

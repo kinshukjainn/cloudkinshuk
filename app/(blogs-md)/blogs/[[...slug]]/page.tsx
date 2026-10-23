@@ -7,7 +7,6 @@ import type { Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import { IoArrowBack } from "react-icons/io5";
-import { FileText, Clock } from "lucide-react";
 import { getDoc, getAllSlugs } from "@/lib/blogs";
 import { navigation } from "@/lib/navigation";
 import BlogFeed from "@/app/components/BlogsFeed";
@@ -15,26 +14,29 @@ import CodeBlock from "@/app/components/CodeBlock";
 
 type Props = { params: Promise<{ slug?: string[] }> };
 
-/* ─────────────────────────────────────────────────────────────
-   Docs-style article page
+/* ── Palette (hardcoded, matches homepage) ─────────────── */
+const BG = "#0d0d0c";
+const FG = "#d6d1c6";
+const HEAD = "#f2eee5";
+const MUTED = "#8b867c";
+const ACCENT = "#d0a869";
+const ACCENT_HOVER = "#e8c98f";
+const RULE = "#272521";
+const CODE_BG = "#171715";
 
-   Layout:
-     lg+   →  [TOC 200px]  [Article ≤720px]  (left-aligned grid)
-     < lg  →  [Article full-width, centered]
+const SHELL = `min-h-screen bg-[${BG}] text-[${FG}] selection:bg-[${ACCENT}] selection:text-[${BG}]`;
 
-   Type:     17px body / 1.75 line-height on ≥ sm
-   Anchors:  Hover-revealed `#` links on H2 & H3
-   Callouts: Blockquotes become tinted quote blocks
-   ───────────────────────────────────────────────────────────── */
+const FOCUS = `focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[${ACCENT}] focus-visible:ring-offset-4 focus-visible:ring-offset-[${BG}]`;
 
-/* ── Shell ─────────────────────────────────────────────────── */
-const SHELL =
-  "min-h-screen bg-white text-zinc-900 " +
-  "selection:bg-zinc-900 selection:text-white " +
-  "dark:bg-zinc-950 dark:text-zinc-50 " +
-  "dark:selection:bg-zinc-50 dark:selection:text-zinc-900";
+const LINK = `text-[${ACCENT}] underline decoration-1 underline-offset-4 transition-colors hover:text-[${ACCENT_HOVER}] ${FOCUS}`;
 
-/* ── Slug helpers ─────────────────────────────────────────── */
+const MONO = ` text-[11px] uppercase tracking-[0.16em] text-[${MUTED}]`;
+
+const PROSE = `my-5 break-words text-[15px] leading-7 text-[${FG}] sm:text-base sm:leading-8`;
+
+const HEAD_ID_OFFSET = "scroll-mt-24";
+
+/* ── Slug helpers ──────────────────────────────────────── */
 function slugify(text: string): string {
   return text
     .toLowerCase()
@@ -81,16 +83,7 @@ function extractHeadings(markdown: string): Heading[] {
   return headings;
 }
 
-/* ── Small type helpers ───────────────────────────────────── */
-const EASE = "ease-[cubic-bezier(0.2,0,0,1)]";
-const HEAD_ID_OFFSET = "scroll-mt-24";
-
-const ANCHOR_CLASS =
-  "absolute -left-7 hidden text-zinc-300 opacity-0 transition-opacity duration-150 " +
-  "hover:text-zinc-900 group-hover:opacity-100 lg:block " +
-  "dark:text-zinc-600 dark:hover:text-zinc-100";
-
-/* ── Metadata ─────────────────────────────────────────────── */
+/* ── Metadata ──────────────────────────────────────────── */
 export function generateStaticParams() {
   const paths = getAllSlugs().map((slug) => ({ slug: [slug] }));
   paths.push({ slug: [] });
@@ -106,7 +99,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: doc?.meta.title, description: doc?.meta.description };
 }
 
-/* ── Strip markdown `node` prop ──────────────────────────── */
+/* ── Strip markdown `node` prop ────────────────────────── */
 function omitNode<T extends object>(props: T): Omit<T, "node"> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { node, ...rest } = props as T & { node?: unknown };
@@ -121,24 +114,24 @@ const anchorHeading = (Tag: "h1" | "h2" | "h3" | "h4") =>
 
     const baseClass =
       Tag === "h1"
-        ? `mt-14 mb-6 ${HEAD_ID_OFFSET} text-3xl font-semibold tracking-tight sm:text-4xl`
+        ? `mt-14 mb-6 ${HEAD_ID_OFFSET}  text-3xl tracking-tight sm:text-4xl`
         : Tag === "h2"
-          ? `group relative mt-16 mb-6 ${HEAD_ID_OFFSET} text-2xl font-semibold tracking-tight sm:text-[1.75rem]`
+          ? `group relative mt-14 mb-5 ${HEAD_ID_OFFSET}  text-2xl tracking-tight sm:text-[1.6rem]`
           : Tag === "h3"
-            ? `group relative mt-10 mb-4 ${HEAD_ID_OFFSET} text-xl font-semibold tracking-tight`
-            : `mt-8 mb-3 ${HEAD_ID_OFFSET} text-base font-semibold tracking-tight`;
+            ? `group relative mt-10 mb-4 ${HEAD_ID_OFFSET}  text-xl tracking-tight`
+            : `mt-8 mb-3 ${HEAD_ID_OFFSET}  text-base font-semibold`;
 
     return (
       <Tag
         id={id}
-        className={`${baseClass} text-zinc-900 dark:text-zinc-50`}
+        className={`${baseClass} text-[${HEAD}]`}
         {...omitNode(rest)}
       >
         {showAnchor && id && (
           <a
             href={`#${id}`}
             aria-label={`Link to ${text}`}
-            className={ANCHOR_CLASS}
+            className={`absolute -left-6 hidden text-[${RULE}] opacity-0 transition-opacity duration-150 hover:text-[${ACCENT}] group-hover:opacity-100 lg:block`}
           >
             #
           </a>
@@ -148,99 +141,51 @@ const anchorHeading = (Tag: "h1" | "h2" | "h3" | "h4") =>
     );
   };
 
-/* ─────────────────────────────────────────────────────────
-   Markdown components · docs register
-   ───────────────────────────────────────────────────────── */
+/* ── Markdown components ───────────────────────────────── */
 const components: Components = {
-  /* ── Headings ─────────────────────────────────────────── */
   h1: anchorHeading("h1"),
   h2: anchorHeading("h2"),
   h3: anchorHeading("h3"),
   h4: anchorHeading("h4"),
   h5: (p) => (
-    <h5
-      className={`mt-6 mb-2 ${HEAD_ID_OFFSET} text-sm font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400`}
-      {...omitNode(p)}
-    />
+    <h5 className={`mt-6 mb-2 ${HEAD_ID_OFFSET} ${MONO}`} {...omitNode(p)} />
   ),
   h6: (p) => (
-    <h6
-      className={`mt-6 mb-2 ${HEAD_ID_OFFSET} text-xs font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400`}
-      {...omitNode(p)}
-    />
+    <h6 className={`mt-6 mb-2 ${HEAD_ID_OFFSET} ${MONO}`} {...omitNode(p)} />
   ),
 
-  /* ── Text ─────────────────────────────────────────────── */
-  p: (p) => (
-    <p
-      className="my-5 break-words text-base leading-7 text-zinc-700 dark:text-zinc-300 sm:text-[17px] sm:leading-[1.75]"
-      {...omitNode(p)}
-    />
-  ),
+  p: (p) => <p className={PROSE} {...omitNode(p)} />,
   strong: (p) => (
-    <strong
-      className="font-semibold text-zinc-900 dark:text-zinc-50"
-      {...omitNode(p)}
-    />
+    <strong className={`font-semibold text-[${HEAD}]`} {...omitNode(p)} />
   ),
   em: (p) => <em className="italic" {...omitNode(p)} />,
   del: (p) => (
-    <del
-      className="line-through decoration-2 text-zinc-500 dark:text-zinc-400"
-      {...omitNode(p)}
-    />
+    <del className={`text-[${MUTED}] line-through`} {...omitNode(p)} />
   ),
-  a: (p) => (
-    <a
-      className="
-        font-medium underline decoration-zinc-400 decoration-[1.5px] underline-offset-[3px]
-        text-zinc-900 transition-colors duration-150 hover:decoration-zinc-900
-        dark:text-zinc-100 dark:decoration-zinc-500 dark:hover:decoration-zinc-100
-      "
-      {...omitNode(p)}
-    />
-  ),
+  a: (p) => <a className={LINK} {...omitNode(p)} />,
 
-  /* ── Lists ────────────────────────────────────────────── */
   ul: (p) => (
     <ul
-      className="
-        my-5 list-outside list-disc space-y-2 pl-6
-        text-base leading-7 text-zinc-700 sm:text-[17px] sm:leading-[1.75]
-        dark:text-zinc-300 marker:text-zinc-400 dark:marker:text-zinc-500
-      "
+      className={`my-5 list-outside list-disc space-y-2 pl-6 text-[15px] leading-7 text-[${FG}] marker:text-[${MUTED}] sm:text-base sm:leading-8`}
       {...omitNode(p)}
     />
   ),
   ol: (p) => (
     <ol
-      className="
-        my-5 list-outside list-decimal space-y-2 pl-6
-        text-base leading-7 text-zinc-700 sm:text-[17px] sm:leading-[1.75]
-        dark:text-zinc-300 marker:font-medium marker:text-zinc-500 dark:marker:text-zinc-400
-      "
+      className={`my-5 list-outside list-decimal space-y-2 pl-6 text-[15px] leading-7 text-[${FG}] marker:text-[${MUTED}] sm:text-base sm:leading-8`}
       {...omitNode(p)}
     />
   ),
   li: (p) => <li className="pl-1 leading-7" {...omitNode(p)} />,
 
-  /* ── Blockquote → tinted callout ───────────────────────── */
   blockquote: (p) => (
     <blockquote
-      className="
-        my-8 border-l-2 border-zinc-900 bg-zinc-50 py-4 pl-5 pr-4
-        text-base leading-7 text-zinc-700 sm:text-[17px] sm:leading-[1.75]
-        dark:border-zinc-100 dark:bg-zinc-900/50 dark:text-zinc-300
-        [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2
-      "
+      className={`my-8 border-l-2 border-[${ACCENT}] py-1 pl-5 italic text-[${MUTED}] [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2`}
       {...omitNode(p)}
     />
   ),
-  hr: () => (
-    <hr className="my-14 border-0 border-t border-zinc-200 dark:border-zinc-800" />
-  ),
+  hr: () => <hr className={`my-12 border-0 border-t border-[${RULE}]`} />,
 
-  /* ── Code ─────────────────────────────────────────────── */
   pre: (p) => {
     const { children } = omitNode(p);
     return <CodeBlock>{children}</CodeBlock>;
@@ -257,11 +202,7 @@ const components: Components = {
     }
     return (
       <code
-        className="
-          break-words rounded border border-zinc-200/80 bg-zinc-100 px-1.5 py-0.5
-          monofont text-[0.85em] font-medium text-zinc-900
-          dark:border-zinc-800 dark:bg-zinc-800/80 dark:text-zinc-100
-        "
+        className={`break-words border border-[${RULE}] bg-[${CODE_BG}] px-1.5 py-0.5 monofont text-[0.85em] text-[${HEAD}]`}
         {...omitNode(rest)}
       >
         {children}
@@ -269,9 +210,8 @@ const components: Components = {
     );
   },
 
-  /* ── Tables ───────────────────────────────────────────── */
   table: (p) => (
-    <div className="my-8 w-full overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
+    <div className="my-8 w-full overflow-x-auto">
       <table
         className="w-full min-w-[560px] border-collapse text-[0.9375rem]"
         {...omitNode(p)}
@@ -279,56 +219,39 @@ const components: Components = {
     </div>
   ),
   thead: (p) => (
-    <thead
-      className="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/50"
-      {...omitNode(p)}
-    />
+    <thead className={`border-b border-[${RULE}]`} {...omitNode(p)} />
   ),
   tbody: (p) => <tbody {...omitNode(p)} />,
   tr: (p) => (
     <tr
-      className="border-b border-zinc-200 last:border-b-0 dark:border-zinc-800"
+      className={`border-b border-[${RULE}] last:border-b-0`}
       {...omitNode(p)}
     />
   ),
   th: (p) => (
     <th
-      className="
-        whitespace-nowrap px-4 py-3 text-left text-xs font-semibold
-        uppercase tracking-wider text-zinc-900 dark:text-zinc-50
-      "
+      className={`whitespace-nowrap px-4 py-3 text-left ${MONO} text-[${HEAD}]`}
       {...omitNode(p)}
     />
   ),
   td: (p) => (
-    <td
-      className="px-4 py-3 align-top text-zinc-700 dark:text-zinc-300"
-      {...omitNode(p)}
-    />
+    <td className={`px-4 py-3 align-top text-[${FG}]`} {...omitNode(p)} />
   ),
 
-  /* ── Media ────────────────────────────────────────────── */
   img: (p) => (
     // eslint-disable-next-line @next/next/no-img-element
-    <img
-      className="my-8 h-auto w-full rounded-lg border border-zinc-200 dark:border-zinc-800"
-      alt=""
-      {...omitNode(p)}
-    />
+    <img className="my-8 h-auto w-full" alt="" {...omitNode(p)} />
   ),
 
-  /* ── Task-list checkbox ───────────────────────────────── */
   input: (p) => (
     <input
-      className="mr-2 h-4 w-4 translate-y-[2px] accent-zinc-900 dark:accent-zinc-100"
+      className={`mr-2 h-4 w-4 translate-y-[2px] accent-[${ACCENT}]`}
       {...omitNode(p)}
     />
   ),
 };
 
-/* ─────────────────────────────────────────────────────────
-   PAGE
-   ───────────────────────────────────────────────────────── */
+/* ── PAGE ──────────────────────────────────────────────── */
 export default async function DocPage({ params }: Props) {
   const { slug } = await params;
 
@@ -359,54 +282,74 @@ export default async function DocPage({ params }: Props) {
   const wordCount = doc.content.trim().split(/\s+/).length;
   const readTime = Math.max(1, Math.ceil(wordCount / 200));
 
+  const article = (
+    <article
+      className={`min-w-0 max-w-[680px] ${hasToc ? "mx-auto lg:mx-0" : "mx-auto"}`}
+    >
+      <header
+        className={`mb-10 border-b border-[${RULE}] pb-8 sm:mb-12 sm:pb-10`}
+      >
+        <p className={MONO}>blog post · {readTime} min read</p>
+
+        {doc.meta.title && (
+          <h1
+            className={`mt-4 break-words  text-3xl leading-[1.15] tracking-tight text-[${HEAD}] sm:text-4xl md:text-5xl`}
+          >
+            {doc.meta.title}
+          </h1>
+        )}
+
+        {doc.meta.description && (
+          <p
+            className={`mt-4 max-w-2xl text-base leading-7 text-[${MUTED}] sm:text-lg sm:leading-8`}
+          >
+            {doc.meta.description}
+          </p>
+        )}
+      </header>
+
+      <div className="[&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
+        <Markdown
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeHighlight]}
+          components={components}
+        >
+          {doc.content}
+        </Markdown>
+      </div>
+    </article>
+  );
+
   return (
     <div className={SHELL}>
-      <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 md:py-14 lg:px-8 lg:py-20">
-        {/* ── Back link ───────────────────────────────── */}
+      <main className="mx-auto w-full max-w-[980px] px-5 py-12 sm:px-8 sm:py-16">
+        {/* Back link */}
         <nav className="mb-10">
           <Link
             href="/blogs"
-            className={`
-              group inline-flex items-center gap-2
-              text-xs font-semibold uppercase tracking-wider
-              text-zinc-500 transition-colors duration-200 ${EASE}
-              hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100
-              focus-visible:outline-none focus-visible:underline
-              focus-visible:decoration-2 focus-visible:underline-offset-4
-            `}
+            className={`group inline-flex items-center gap-2 text-[13px] text-[${ACCENT}] transition-colors hover:text-[${ACCENT_HOVER}] ${FOCUS}`}
           >
             <IoArrowBack
               className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5"
               aria-hidden="true"
             />
-            <span>Back to all articles</span>
+            <span>back to all articles</span>
           </Link>
         </nav>
 
-        <div
-          className={
-            hasToc
-              ? "lg:grid lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-16 xl:grid-cols-[220px_minmax(0,1fr)] xl:gap-20"
-              : ""
-          }
-        >
-          {/* ── TOC sidebar (desktop only) ──────────────── */}
-          {hasToc && (
+        {hasToc ? (
+          <div className="lg:grid lg:grid-cols-[180px_minmax(0,1fr)] lg:gap-10">
             <aside aria-label="Table of contents" className="hidden lg:block">
               <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-2">
-                <p className="mb-3 text-md font-bold  tracking-wider text-zinc-900 dark:text-zinc-100">
-                  On this page
-                </p>
+                <p className={`mb-3 ${MONO}`}>on this page</p>
                 <ul className="space-y-2 text-sm">
                   {headings.map((h) => (
                     <li key={h.id}>
                       <a
                         href={`#${h.id}`}
-                        className={`
-                          block leading-snug text-zinc-500 transition-colors duration-150
-                          hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100
-                          ${h.level === 3 ? "pl-4" : ""}
-                        `}
+                        className={`block leading-snug text-[${MUTED}] transition-colors hover:text-[${ACCENT}] ${
+                          h.level === 3 ? "pl-4" : ""
+                        }`}
                       >
                         {h.text}
                       </a>
@@ -415,60 +358,23 @@ export default async function DocPage({ params }: Props) {
                 </ul>
               </div>
             </aside>
-          )}
 
-          {/* ── Article ──────────────────────────────────── */}
-          <article className="min-w-0 max-w-[720px]">
-            {/* Article header */}
-            <header className="mb-12 border-b border-zinc-200 pb-10 dark:border-zinc-800 sm:mb-14 sm:pb-12">
-              {/* Meta row */}
-              <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                <span className="inline-flex items-center gap-1.5">
-                  <FileText className="h-3.5 w-3.5" aria-hidden="true" />
-                  Blog Post
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="h-3.5 w-px bg-zinc-300 dark:bg-zinc-700"
-                />
-                <span className="inline-flex items-center gap-1.5">
-                  <Clock className="h-3.5 w-3.5" aria-hidden="true" />
-                  {readTime} min read
-                </span>
-              </div>
-
-              {/* Title */}
-              {doc.meta.title && (
-                <h1 className="break-words text-3xl font-semibold leading-[1.15] tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl md:text-5xl">
-                  {doc.meta.title}
-                </h1>
-              )}
-
-              {/* Description */}
-              {doc.meta.description && (
-                <p className="mt-5 max-w-2xl text-lg leading-8 text-zinc-600 dark:text-zinc-400 sm:text-xl sm:leading-9">
-                  {doc.meta.description}
-                </p>
-              )}
-            </header>
-
-            {/* Body */}
-            <div className="[&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
-              <Markdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeHighlight]}
-                components={components}
-              >
-                {doc.content}
-              </Markdown>
-            </div>
-          </article>
-        </div>
+            {article}
+          </div>
+        ) : (
+          article
+        )}
       </main>
 
-      {/* ── Footer ──────────────────────────────────────── */}
-      <footer className="mx-auto max-w-6xl border-t border-zinc-200 px-4 py-8 text-center text-xs font-medium text-zinc-500 dark:border-zinc-800 dark:text-zinc-400 sm:px-6 lg:px-8">
-        <p>© {new Date().getFullYear()} Kinshuk Jain. All rights reserved.</p>
+      <footer
+        className={`mx-auto w-full max-w-[980px] border-t border-[${RULE}] px-5 py-6 sm:px-8`}
+      >
+        <div
+          className={`flex flex-wrap items-center justify-between gap-x-4 gap-y-2 ${MONO}`}
+        >
+          <span>kinshuk jain © {new Date().getFullYear()}</span>
+          <span>hand-coded · no templates</span>
+        </div>
       </footer>
     </div>
   );

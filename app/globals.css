@@ -152,17 +152,9 @@
   background-color: var(--hljs-deletion-bg);
 }
 
-:root {
-  --background: white;
-}
-
-.dark {
-  --background: black;
-}
-
 body {
-  background-color: var(--background);
-  font-family: var(--font-roboto), sans-serif;
+  background-color: #0d0d0c;
+  font-family: sans-serif;
 }
 
 .h-font {

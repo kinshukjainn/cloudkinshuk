@@ -22,7 +22,6 @@ import {
 import "./globals.css";
 import Header from "./components/Header";
 import localFont from "next/font/local";
-import { ThemeProvider } from "./components/providers/Themeprovider";
 
 export const inter = Inter({
   subsets: ["latin"],
@@ -169,10 +168,8 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${openSans.variable} ${sourceSerif.variable} ${ibmPlexSans.variable} ${varelaRound.variable} ${rubik.variable} ${dmSans.variable} ${verdana.variable} ${cabinSketch.variable} ${publicSans.variable} ${geistMono.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >
-        <ThemeProvider>
-          <Header />
-          {children}
-        </ThemeProvider>
+        <Header />
+        {children}
       </body>
     </html>
   );

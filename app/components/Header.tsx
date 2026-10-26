@@ -121,11 +121,11 @@ export default function Header() {
                 href={entry.href}
                 aria-current={active ? "page" : undefined}
                 className={[
-                  "inline-flex h-9 shrink-0 items-center gap-1.5 px-2 text-[13px] transition-colors sm:px-3",
+                  "inline-flex h-9 shrink-0 items-center gap-1.5 px-2 text-[15px] transition-colors sm:px-3",
                   FOCUS,
                   active
-                    ? "text-[var(--accent)] underline decoration-1 underline-offset-[6px]"
-                    : "text-[var(--muted)] hover:text-[var(--fg)]",
+                    ? "text-blue-300  underline decoration-2 font-medium underline-offset-[6px]"
+                    : "text-gray-400 hover:text-blue-200",
                 ].join(" ")}
               >
                 <Icon className="h-[15px] w-[15px] shrink-0" />

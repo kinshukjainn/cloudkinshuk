@@ -154,18 +154,6 @@ const CERTIFICATIONS: Certification[] = [
   },
 ];
 
-/* ── SHARED STYLES (hardcoded colors, no vars) ──────────── */
-const LINK =
-  "text-[#d0a869] underline decoration-1 underline-offset-4 transition-colors hover:text-[#e8c98f] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d0a869] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d0d0c]";
-
-const MONO_LABEL = " text-[11px] uppercase tracking-[0.16em] text-[#8b867c]";
-
-const PROSE = "text-[15px] leading-7 sm:text-base sm:leading-8";
-
-const H2 = "text-xl font-bold leading-snug text-[#f2eee5]";
-
-const RULE = "border-[#272521]";
-
 /* ── TABS ───────────────────────────────────────────────── */
 type TabId =
   | "experience"
@@ -186,11 +174,13 @@ const TABS: { id: TabId; label: string }[] = [
 function ExperiencePanel() {
   return (
     <div>
-      <h2 className={H2}>
+      <h2 className="text-xl font-bold leading-snug text-[#f2eee5]">
         UPPTCL — Uttar Pradesh Power Transmission Corporation Limited
       </h2>
-      <p className={`mt-1.5 ${MONO_LABEL}`}>Jul 2025 – Aug 2025</p>
-      <p className={`mt-3 ${PROSE}`}>
+      <p className="mt-1.5 text-[13px] font-normal tracking-[0.16em] text-[#8b867c]">
+        Jul 2025 – Aug 2025
+      </p>
+      <p className="mt-3 text-[15px] leading-7 text-[#d6d1c6] sm:text-base sm:leading-8">
         Worked with the transmission division to understand the operation,
         protection, and maintenance of 132kV and 220kV substations. Prepared
         technical documentation and maintained logs on equipment performance and
@@ -202,15 +192,17 @@ function ExperiencePanel() {
 
 function ProjectsPanel() {
   return (
-    <div className="space-y-10 divide-y divide-[#272521]">
+    <div className="space-y-10 ">
       {CONFIG.projects.map((project) => (
         <article key={project.title}>
-          <h2 className={H2}>{project.title}</h2>
-          <p className={`mt-1.5 ${MONO_LABEL}`}>
+          <h2 className="text-xl font-bold leading-snug text-[#f2eee5]">
+            {project.title}
+          </h2>
+          <p className="mt-1.5 text-[13px] font-normal tracking-[0.16em] text-[#8b867c]">
             {project.year} · {project.type} · {project.status}
           </p>
 
-          <div className={`mt-3 space-y-3 ${PROSE}`}>
+          <div className="mt-3 space-y-3 text-[15px] leading-7 text-[#d6d1c6] sm:text-base sm:leading-8">
             {project.description.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
@@ -227,7 +219,7 @@ function ProjectsPanel() {
                 href={project.links.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={LINK}
+                className="font-semibold text-blue-500 underline decoration-1 underline-offset-4 transition-colors hover:text-blue-300"
               >
                 live site ↗
               </a>
@@ -237,7 +229,7 @@ function ProjectsPanel() {
                 href={project.links.repo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={LINK}
+                className="font-semibold text-blue-500 underline decoration-1 underline-offset-4 transition-colors hover:text-blue-300"
               >
                 source ↗
               </a>
@@ -254,8 +246,12 @@ function SkillsPanel() {
     <div className="space-y-6">
       {Object.entries(CONFIG.skills).map(([category, skills]) => (
         <div key={category}>
-          <h3 className={MONO_LABEL}>{category}</h3>
-          <p className={`mt-1.5 ${PROSE}`}>{skills.join(", ")}</p>
+          <h3 className="text-[14px] font-medium tracking-[0.16em] text-blue-400">
+            {category}
+          </h3>
+          <p className="mt-1.5 text-[15px] leading-7 text-[#d6d1c6] sm:text-base sm:leading-8">
+            {skills.join(" || ")}
+          </p>
         </div>
       ))}
     </div>
@@ -267,11 +263,13 @@ function CertificationsPanel() {
     <div className="space-y-8 divide-y divide-[#272521]">
       {CERTIFICATIONS.map((cert) => (
         <div key={cert.verifyUrl}>
-          <h2 className={H2}>{cert.title}</h2>
-          <p className={`mt-1.5 ${MONO_LABEL}`}>
+          <h2 className="text-xl font-bold leading-snug text-[#f2eee5]">
+            {cert.title}
+          </h2>
+          <p className="mt-1.5 text-[13px] font-normal tracking-[0.16em] text-[#8b867c]">
             {cert.issuer} · issued {cert.issued}
           </p>
-          <p className={`mt-3 ${PROSE}`}>
+          <p className="mt-3 text-[15px] leading-7 text-[#d6d1c6] sm:text-base sm:leading-8">
             <span className="text-[#f2eee5]">Skills evaluated:</span>{" "}
             {cert.skills.join(", ")}
           </p>
@@ -280,7 +278,7 @@ function CertificationsPanel() {
               href={cert.verifyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={LINK}
+              className="font-semibold text-blue-500 underline decoration-1 underline-offset-4 transition-colors hover:text-blue-200 "
             >
               verify credential ↗
             </a>
@@ -295,8 +293,10 @@ function EducationPanel() {
   const e = CONFIG.education;
   return (
     <div>
-      <h2 className={H2}>{e.institution}</h2>
-      <p className={`mt-1.5 ${MONO_LABEL}`}>
+      <h2 className="text-xl font-bold leading-snug text-[#f2eee5]">
+        {e.institution}
+      </h2>
+      <p className="mt-1.5 text-[13px] font-normal tracking-[0.16em] text-[#8b867c]">
         {e.period} · {e.location}
       </p>
 
@@ -304,7 +304,9 @@ function EducationPanel() {
         {e.degree} — {e.field}
       </p>
 
-      <p className={`mt-2 ${PROSE}`}>{e.description}</p>
+      <p className="mt-2 text-[15px] leading-7 text-[#d6d1c6] sm:text-base sm:leading-8">
+        {e.description}
+      </p>
 
       <p className="mt-4 text-sm">
         <a
@@ -312,7 +314,7 @@ function EducationPanel() {
           download
           target="_blank"
           rel="noopener noreferrer"
-          className={LINK}
+          className="font-semibold text-blue-500 underline decoration-1 underline-offset-4 transition-colors hover:text-blue-200 "
         >
           download transcript (pdf) ↓
         </a>
@@ -322,10 +324,9 @@ function EducationPanel() {
 }
 
 /* ── PAGE ───────────────────────────────────────────────── */
-const SOCIAL_LABEL: Record<string, string> = { Gmail: "email" };
+const SOCIAL_LABEL: Record<string, string> = { Gmail: "Gmail id" };
 
 export default function Home() {
-  const [bannerOk, setBannerOk] = useState(true);
   const [profileOk, setProfileOk] = useState(true);
   const [tab, setTab] = useState<TabId>("experience");
 
@@ -344,7 +345,7 @@ export default function Home() {
               <img
                 src="/profile.jpg"
                 alt="Kinshuk Jain"
-                className="h-20 w-20 shrink-0 rounded-xl object-cover sm:h-20 sm:w-20"
+                className="h-30 w-30 shrink-0 rounded-2xl object-cover sm:h-35 sm:w-25"
                 onError={() => setProfileOk(false)}
               />
             )}
@@ -366,22 +367,13 @@ export default function Home() {
             available for collaboration
           </p>
 
-          {/* Banner */}
-          {bannerOk && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src="/banner.png"
-              alt=""
-              aria-hidden="true"
-              className="mt-7 aspect-[3/1] w-full object-cover"
-              onError={() => setBannerOk(false)}
-            />
-          )}
-
           {/* Bio */}
           <div className="mt-7 space-y-4">
             {bio.map((paragraph, i) => (
-              <p key={i} className={PROSE}>
+              <p
+                key={i}
+                className="text-[15px] leading-7 text-[#d6d1c6] sm:text-base sm:leading-8"
+              >
                 {paragraph}
               </p>
             ))}
@@ -395,26 +387,32 @@ export default function Home() {
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={LINK}
+                className="font-semibold text-blue-500  underline decoration-2"
               >
-                {SOCIAL_LABEL[s.platform] ?? s.platform.toLowerCase()}
+                {SOCIAL_LABEL[s.platform] ?? s.platform}
               </a>
             ))}
           </div>
 
           {/* CTAs */}
           <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
-            <Link href="/myresumekinshuk.pdf" className={LINK}>
-              résumé (pdf) ↓
+            <Link
+              href="/myresumekinshuk.pdf"
+              className="font-semibold text-blue-500 underline decoration-2"
+            >
+              My resume download (pdf)
             </Link>
-            <Link href="/blogs" className={LINK}>
-              blog ↗
+            <Link
+              href="/blogs"
+              className="font-semibold text-blue-500 underline decoration-2"
+            >
+              Read my Blogs
             </Link>
           </div>
         </header>
 
         {/* ============ NAVIGATION ============ */}
-        <hr className={`mt-10 border-0 border-t ${RULE}`} />
+        <hr className="mt-10 border-0 border-t border-[#272521]" />
 
         <nav
           role="tablist"
@@ -432,14 +430,14 @@ export default function Home() {
                 aria-controls={`panel-${t.id}`}
                 id={`tab-${t.id}`}
                 onClick={() => setTab(t.id)}
-                className={`font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d0a869] focus-visible:ring-offset-4 focus-visible:ring-offset-[#0d0d0c] ${
+                className={`font-medium text-[16px]  cursor-pointer ${
                   active
-                    ? "text-[#d0a869]"
+                    ? "text-blue-400 underline font-semibold"
                     : "text-[#8b867c] hover:text-[#d6d1c6]"
                 }`}
               >
                 <span aria-hidden className={active ? "" : "opacity-0"}>
-                  »{" "}
+                  {" "}
                 </span>
                 {t.label}
               </button>
@@ -447,7 +445,7 @@ export default function Home() {
           })}
         </nav>
 
-        <hr className={`mt-5 border-0 border-t ${RULE}`} />
+        <hr className="mt-5 border-0 border-t border-[#272521]" />
 
         {/* ============ ACTIVE PANEL ============ */}
         <div
@@ -466,9 +464,7 @@ export default function Home() {
         </div>
 
         {/* ============ FOOTER ============ */}
-        <footer
-          className={`mt-16 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t pt-5 ${RULE} ${MONO_LABEL}`}
-        >
+        <footer className="mt-16 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-[#272521] pt-5 text-[13px] font-normal tracking-[0.16em] text-[#8b867c]">
           <span>kinshuk jain © {new Date().getFullYear()}</span>
           <span>hand-coded · no templates</span>
         </footer>

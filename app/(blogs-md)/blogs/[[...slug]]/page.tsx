@@ -30,7 +30,7 @@ const FOCUS = `focus-visible:outline-none focus-visible:ring-1 focus-visible:rin
 
 const LINK = `text-[${ACCENT}] underline decoration-1 underline-offset-4 transition-colors hover:text-[${ACCENT_HOVER}] ${FOCUS}`;
 
-const MONO = ` text-[11px] uppercase tracking-[0.16em] text-[${MUTED}]`;
+const MONO = ` text-[13px] font-medium  tracking-[0.16em] text-white`;
 
 const PROSE = `my-5 break-words text-[15px] leading-7 text-[${FG}] sm:text-base sm:leading-8`;
 
@@ -289,11 +289,11 @@ export default async function DocPage({ params }: Props) {
       <header
         className={`mb-10 border-b border-[${RULE}] pb-8 sm:mb-12 sm:pb-10`}
       >
-        <p className={MONO}>blog post · {readTime} min read</p>
+        <p className={MONO}>Blog post · {readTime} min read</p>
 
         {doc.meta.title && (
           <h1
-            className={`mt-4 break-words  text-3xl leading-[1.15] tracking-tight text-[${HEAD}] sm:text-4xl md:text-5xl`}
+            className={`mt-4 break-words  text-3xl font-semibold leading-[1.15] tracking-tight text-[${HEAD}] sm:text-4xl md:text-5xl`}
           >
             {doc.meta.title}
           </h1>
@@ -327,13 +327,13 @@ export default async function DocPage({ params }: Props) {
         <nav className="mb-10">
           <Link
             href="/blogs"
-            className={`group inline-flex items-center gap-2 text-[13px] text-[${ACCENT}] transition-colors hover:text-[${ACCENT_HOVER}] ${FOCUS}`}
+            className={`group inline-flex items-center gap-2 px-3 py-2 bg-blue-800 rounded-full text-[13px] text-white font-medium transition-colors hover:text-white ${FOCUS}`}
           >
             <IoArrowBack
               className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5"
               aria-hidden="true"
             />
-            <span>back to all articles</span>
+            <span>Back to all articles</span>
           </Link>
         </nav>
 
@@ -347,7 +347,7 @@ export default async function DocPage({ params }: Props) {
                     <li key={h.id}>
                       <a
                         href={`#${h.id}`}
-                        className={`block leading-snug text-[${MUTED}] transition-colors hover:text-[${ACCENT}] ${
+                        className={`block leading-snug text-white transition-colors hover:text-blue-300 ${
                           h.level === 3 ? "pl-4" : ""
                         }`}
                       >

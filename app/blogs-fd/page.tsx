@@ -111,7 +111,7 @@ export default function FeedbackPage() {
           </p>
 
           <h1 className="mt-3  text-[28px] leading-tight font-bold tracking-tight text-[#f2eee5] sm:text-4xl">
-            Comments on <span className="italic text-[#8b867c]">blogs</span>
+            Comments & Thoughts on <span className=" text-blue-400">blogs</span>
           </h1>
 
           <p className={`mt-4 ${PROSE}`}>

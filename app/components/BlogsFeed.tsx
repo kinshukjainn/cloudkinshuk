@@ -31,7 +31,7 @@ const FOCUS =
 
 const PROSE = "text-[15px] leading-7 sm:text-base sm:leading-8";
 
-const MONO = " text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]";
+const MONO = " text-[14px] font-semibold  tracking-[0.16em] text-white";
 
 const RULE = "border-[var(--rule)]";
 
@@ -65,8 +65,8 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
         {/* ── Header ───────────────────────────────────── */}
         <header>
           <p className={MONO}>
-            blogs · {totalArticles}{" "}
-            {totalArticles === 1 ? "article" : "articles"}
+            Blogs · {totalArticles}{" "}
+            {totalArticles === 1 ? "Article" : "Articles"}
           </p>
 
           <h1 className="mt-3  text-[28px] leading-tight font-bold tracking-tight text-[var(--head)] sm:text-4xl">
@@ -82,7 +82,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
         {/* ── Search ───────────────────────────────────── */}
         <div className="mt-10">
           <label htmlFor="blog-search" className={MONO}>
-            search
+            Search your blog
           </label>
 
           <div
@@ -149,7 +149,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
                         href={`/blogs/${item.slug}`}
                         className={`group block py-5 ${FOCUS}`}
                       >
-                        <h3 className=" text-lg leading-snug text-[var(--head)] font-semibold transition-colors group-hover:text-[var(--accent-hover)]">
+                        <h3 className=" text-lg leading-snug text-[var(--head)] font-semibold transition-colors group-hover:text-blue-300">
                           {item.title}
                         </h3>
 
@@ -157,8 +157,8 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
                           {item.description}
                         </p>
 
-                        <span className="mt-2 inline-flex items-center gap-1.5 text-[13px] text-[var(--accent)] transition-colors group-hover:text-[var(--accent-hover)]">
-                          read
+                        <span className="mt-2 inline-flex items-center gap-1.5 text-[15px] text-blue-500 font-medium transition-colors group-hover:text-blue-300">
+                          Read
                           <span
                             aria-hidden="true"
                             className="transition-transform duration-200 group-hover:translate-x-0.5"

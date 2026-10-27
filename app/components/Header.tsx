@@ -89,10 +89,7 @@ export default function Header() {
     pathname === href || pathname.startsWith(`${href}/`);
 
   return (
-    <header
-      style={TOKENS}
-      className="sticky top-0 z-50 w-full border-b border-[var(--rule)] bg-[var(--bg)]/85 backdrop-blur-md"
-    >
+    <header style={TOKENS} className="sticky top-0 z-50 w-full  bg-[var(--bg)]">
       <div className="mx-auto flex h-14 w-full max-w-[680px] items-center gap-2 px-4 sm:h-16 sm:gap-4 sm:px-8">
         {/* Brand — serif, tilde prefix matches the homepage shell vibe */}
         <Link

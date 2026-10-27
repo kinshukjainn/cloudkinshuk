@@ -89,19 +89,19 @@ export default function Header() {
     pathname === href || pathname.startsWith(`${href}/`);
 
   return (
-    <header style={TOKENS} className="sticky top-0 z-50 w-full  bg-[var(--bg)]">
+    <header style={TOKENS} className="sticky top-0 z-50 w-full  bg-[#242526]">
       <div className="mx-auto flex h-14 w-full max-w-[680px] items-center gap-2 px-4 sm:h-16 sm:gap-4 sm:px-8">
         {/* Brand — serif, tilde prefix matches the homepage shell vibe */}
         <Link
           href="/"
           aria-label="Home"
           className={[
-            "inline-flex shrink-0 items-baseline gap-1  text-[15px] text-[var(--head)] font-bold  transition-colors hover:text-[var(--accent-hover)] sm:text-lg",
+            "inline-flex shrink-0 items-baseline gap-1  text-[17px] text-[var(--head)] font-bold  transition-colors hover:text-[var(--accent-hover)] sm:text-lg",
             FOCUS,
           ].join(" ")}
         >
-          <span className="hidden min-[400px]:inline">cloudkinshuk</span>
-          <span className="min-[400px]:hidden">ck</span>
+          <span className="hidden min-[400px]:inline">Cloudkinshuk.in</span>
+          <span className="min-[400px]:hidden">Cloudkinshuk.in</span>
         </Link>
 
         {/* Nav — flat links, underline marks the active page */}
@@ -118,11 +118,11 @@ export default function Header() {
                 href={entry.href}
                 aria-current={active ? "page" : undefined}
                 className={[
-                  "inline-flex h-9 shrink-0 items-center gap-1.5 px-2 text-[15px] transition-colors sm:px-3",
+                  "inline-flex h-9 shrink-0 items-center rounded-md gap-1.5 px-2 py-2 text-[15px] transition-colors sm:px-3",
                   FOCUS,
                   active
-                    ? "text-blue-300  underline decoration-2 font-medium underline-offset-[6px]"
-                    : "text-gray-400 hover:text-blue-200",
+                    ? "text-white  bg-[#121212]  font-medium underline-offset-[6px]"
+                    : "text-gray-300 hover:text-white  hover:bg-[#121212]",
                 ].join(" ")}
               >
                 <Icon className="h-[15px] w-[15px] shrink-0" />

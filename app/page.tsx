@@ -181,10 +181,27 @@ function ExperiencePanel() {
         Jul 2025 – Aug 2025
       </p>
       <p className="mt-3 text-[15px] leading-7 text-[#d6d1c6] sm:text-base sm:leading-8">
-        Worked with the transmission division to understand the operation,
-        protection, and maintenance of 132kV and 220kV substations. Prepared
-        technical documentation and maintained logs on equipment performance and
-        safety checks.
+        Gained practical exposure to the operation, monitoring, and maintenance
+        of 132 kV and 220 kV extra-high-voltage (EHV) substations, understanding
+        their role in transmitting bulk electrical power from generating
+        stations and the interstate transmission network to distribution
+        substations across Uttar Pradesh.Studied substation layouts, single-line
+        diagrams (SLDs), and power flow through key equipment, including power
+        transformers, busbars, circuit breakers, isolators, current transformers
+        (CTs), potential/voltage transformers (PTs/VTs), lightning arresters,
+        and earthing systems. Learned about SCADA (Supervisory Control and Data
+        Acquisition) systems used for remote monitoring and supervisory control
+        of substations, including the observation of voltage, current, active
+        and reactive power, breaker status, alarms, and equipment indications
+        through human-machine interface (HMI) displays.Studied the operation and
+        maintenance of overhead transmission lines, including conductors,
+        insulators, towers, earth wires, and associated line bays, along with
+        the importance of insulation coordination, lightning protection, and
+        reliable power transfer across the transmission network. Assisted with
+        technical documentation and the maintenance of equipment-performance
+        records, inspection logs, and safety-check documentation, gaining
+        familiarity with preventive maintenance practices, abnormal-condition
+        reporting, and systematic record-keeping in high-voltage installations.
       </p>
     </div>
   );
@@ -208,9 +225,9 @@ function ProjectsPanel() {
             ))}
           </div>
 
-          <p className="mt-4 text-sm leading-6 text-[#8b867c]">
-            <span className="text-[#d6d1c6]">Stack:</span>{" "}
-            {project.technologies.join(" · ")}
+          <p className="mt-4 text-sm leading-6 text-gray-300">
+            <span className="text-blue-400 font-bold">Stack:</span>{" "}
+            {project.technologies.join(" | ")}
           </p>
 
           <p className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm">
@@ -219,9 +236,9 @@ function ProjectsPanel() {
                 href={project.links.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-semibold text-blue-500 underline decoration-1 underline-offset-4 transition-colors hover:text-blue-300"
+                className="font-semibold text-white bg-black py-1.5 rounded-md px-3  underline-offset-4 transition-colors"
               >
-                live site ↗
+                Live site ↗
               </a>
             )}
             {project.links.repo && (
@@ -229,7 +246,7 @@ function ProjectsPanel() {
                 href={project.links.repo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-semibold text-blue-500 underline decoration-1 underline-offset-4 transition-colors hover:text-blue-300"
+                className="font-semibold text-black bg-white py-1.5 rounded-md px-3  underline-offset-4 transition-colors "
               >
                 source ↗
               </a>
@@ -278,9 +295,9 @@ function CertificationsPanel() {
               href={cert.verifyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold text-blue-500 underline decoration-1 underline-offset-4 transition-colors hover:text-blue-200 "
+              className="font-semibold text-white bg-black px-3 py-1.5 rounded-md  underline-offse-4 "
             >
-              verify credential ↗
+              Verify credential ↗
             </a>
           </p>
         </div>
@@ -314,9 +331,9 @@ function EducationPanel() {
           download
           target="_blank"
           rel="noopener noreferrer"
-          className="font-semibold text-blue-500 underline decoration-1 underline-offset-4 transition-colors hover:text-blue-200 "
+          className="font-semibold text-white bg-black px-3 py-1.5 rounded-md  underline-offse-4 "
         >
-          download transcript (pdf) ↓
+          Download transcript (pdf) ↓
         </a>
       </p>
     </div>
@@ -333,7 +350,7 @@ export default function Home() {
   const [tagline, ...bio] = CONFIG.personal.bio;
 
   return (
-    <div className="min-h-screen bg-[#0d0d0c] font-sans text-[#d6d1c6] selection:bg-[#d0a869] selection:text-[#0d0d0c]">
+    <div className="min-h-screen bg-[#1B1B1D] font-sans text-[#d6d1c6] selection:bg-[#d0a869] selection:text-[#0d0d0c]">
       <style>{`@keyframes panelIn{from{opacity:0}to{opacity:1}}`}</style>
 
       <main className="mx-auto w-full max-w-[680px] px-5 py-12 sm:px-8 sm:py-16">
@@ -350,7 +367,7 @@ export default function Home() {
               />
             )}
             <div className="min-w-0">
-              <h1 className="text-[28px] leading-none font-semibold tracking-tight text-[#f2eee5] sm:text-4xl">
+              <h1 className="text-[38px] leading-none font-semibold tracking-tight text-[#f2eee5] sm:text-5xl">
                 Kinshuk Jain
               </h1>
               <p className="mt-2 text-base text-[#8b867c] sm:text-lg">
@@ -387,7 +404,7 @@ export default function Home() {
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-semibold text-blue-500  underline decoration-2"
+                className="font-semibold text-black px-2 py-1.5 rounded-md bg-green-400  "
               >
                 {SOCIAL_LABEL[s.platform] ?? s.platform}
               </a>
@@ -398,13 +415,13 @@ export default function Home() {
           <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
             <Link
               href="/myresumekinshuk.pdf"
-              className="font-semibold text-blue-500 underline decoration-2"
+              className="font-semibold text-black bg-white px-2 py-1.5 rounded-md "
             >
               My resume download (pdf)
             </Link>
             <Link
               href="/blogs"
-              className="font-semibold text-blue-500 underline decoration-2"
+              className="font-semibold text-black bg-gray-400 px-2 py-1.5 rounded-md "
             >
               Read my Blogs
             </Link>
@@ -430,10 +447,10 @@ export default function Home() {
                 aria-controls={`panel-${t.id}`}
                 id={`tab-${t.id}`}
                 onClick={() => setTab(t.id)}
-                className={`font-medium text-[16px]  cursor-pointer ${
+                className={`font-medium text-[16px] py-1.5 px-3 rounded-md  cursor-pointer ${
                   active
-                    ? "text-blue-400 underline font-semibold"
-                    : "text-[#8b867c] hover:text-[#d6d1c6]"
+                    ? "text-white bg-[#121212]  font-semibold"
+                    : "text-[#8b867c] hover:bg-[#121212] hover:text-[#d6d1c6]"
                 }`}
               >
                 <span aria-hidden className={active ? "" : "opacity-0"}>

@@ -59,7 +59,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
   return (
     <div
       style={TOKENS}
-      className="min-h-screen bg-[var(--bg)] text-[var(--fg)] selection:bg-[var(--accent)] selection:text-[var(--bg)]"
+      className="min-h-screen bg-[#1B1B1D] text-[var(--fg)] selection:bg-[var(--accent)] selection:text-[var(--bg)]"
     >
       <main className="mx-auto w-full max-w-[680px] px-5 py-12 sm:px-8 sm:py-16">
         {/* ── Header ───────────────────────────────────── */}
@@ -86,10 +86,10 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
           </label>
 
           <div
-            className={`mt-2 flex items-center gap-2 border-b pb-2 transition-colors focus-within:border-[var(--accent)] ${RULE}`}
+            className={`mt-2 flex items-center gap-2 bg-[#121212] px-3 py-2 rounded-full pb-2  ${RULE}`}
           >
             <Search
-              className="h-4 w-4 shrink-0 text-[var(--muted)]"
+              className="h-4 w-4 shrink-0 text-[var(--muted)] "
               aria-hidden="true"
             />
             <input
@@ -99,7 +99,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="title, keyword…"
               aria-label="Search articles"
-              className="w-full min-w-0 bg-transparent text-[15px] text-[var(--head)] placeholder:text-[var(--muted)] focus:outline-none"
+              className="w-full min-w-0  text-[15px] text-[var(--head)] placeholder:text-[var(--muted)] focus:outline-none"
             />
             {search && (
               <button

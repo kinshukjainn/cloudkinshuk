@@ -21,6 +21,7 @@ const config: Config = {
         roboto: "var(--font-roboto) sans-serif",
         sourceSerif: "var(--font-source-serif) , serif",
         inter: "var(--font-inter), sans-serif",
+        segoeui: "var(--font-segoeui) , sans-serif",
         ubuntuSans: "var(--font-ubuntu-sans) sans-serif, ",
         robotoSlab: "var(--font-roboto-slab), serif",
         VarelaRound: "var(--font-varela-round) , sans-serif",

@@ -33,7 +33,7 @@ const LINK =
   "text-[#d0a869] underline decoration-1 underline-offset-4 transition-colors hover:text-[#e8c98f] " +
   FOCUS;
 
-const MONO = "font-mono text-[11px] uppercase tracking-[0.16em] text-[#8b867c]";
+const MONO = " text-[15px]  tracking-[0.16em] text-white font-semibold";
 
 const PROSE = "text-[15px] leading-7 text-[#d6d1c6] sm:text-base sm:leading-8";
 
@@ -101,7 +101,7 @@ export default function FeedbackPage() {
   });
 
   return (
-    <div className="min-h-screen bg-[#0d0d0c] text-[#d6d1c6] selection:bg-[#d0a869] selection:text-[#0d0d0c]">
+    <div className="min-h-screen bg-[#1B1B1D] text-[#d6d1c6] selection:bg-[#d0a869] selection:text-[#0d0d0c]">
       <main className="mx-auto w-full max-w-[680px] px-5 py-12 sm:px-8 sm:py-16">
         {/* ── Header ─────────────────────────────────────── */}
         <header>
@@ -126,7 +126,7 @@ export default function FeedbackPage() {
           </label>
 
           <div
-            className={`mt-2 flex items-center gap-2 border-b pb-2 transition-colors focus-within:border-[#d0a869] ${RULE}`}
+            className={`mt-2 flex items-center gap-2  bg-[#121212] px-3 py-2 rounded-full pb-2  ${RULE}`}
           >
             <Search
               className="h-4 w-4 shrink-0 text-[#8b867c]"

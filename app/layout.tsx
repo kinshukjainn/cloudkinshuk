@@ -35,6 +35,18 @@ export const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
+export const segoeui = localFont({
+  src: [
+    {
+      path: "../public/fonts/segoeui.woff2",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-segoe-ui",
+  display: "swap",
+});
+
 const cabinSketch = Cabin_Sketch({
   subsets: ["latin"],
   weight: ["400", "700"],

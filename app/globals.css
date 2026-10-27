@@ -154,7 +154,7 @@
 
 body {
   background-color: #0d0d0c;
-  font-family: sans-serif;
+  font-family: var(--font-segoeui), sans-serif;
 }
 
 .h-font {

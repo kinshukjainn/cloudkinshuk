@@ -24,7 +24,7 @@ const ACCENT_HOVER = "#e8c98f";
 const RULE = "#272521";
 const CODE_BG = "#171715";
 
-const SHELL = `min-h-screen bg-[${BG}] text-[${FG}] selection:bg-[${ACCENT}] selection:text-[${BG}]`;
+const SHELL = `min-h-screen bg-[#1b1b1d] text-[${FG}] selection:bg-[${ACCENT}] selection:text-[${BG}]`;
 
 const FOCUS = `focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[${ACCENT}] focus-visible:ring-offset-4 focus-visible:ring-offset-[${BG}]`;
 

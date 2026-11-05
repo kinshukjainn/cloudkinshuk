@@ -1,10 +1,6 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ============================================
-   Syntax highlighting — switches with .dark
-   ============================================ */
-
 :root {
   --hljs-bg: #f6f8fa;
   --hljs-fg: #24292f;
@@ -154,7 +150,7 @@
 
 body {
   background-color: #0d0d0c;
-  font-family: var(--font-segoeui), sans-serif;
+  font-family: var(--font-geist-sans), sans-serif;
 }
 
 .h-font {

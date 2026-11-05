@@ -19,7 +19,7 @@ export const navigation: NavSection[] = [
         slug: "aws-ccp-exam",
       },
       {
-        title: "Why PostgreSQL Became My Go-To Database",
+        title: "Why Postgress SQL Became My Go-To Database",
         slug: "db-sql",
       },
       {

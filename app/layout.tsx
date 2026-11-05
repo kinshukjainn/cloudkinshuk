@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import {
   Inter,
-  Alegreya,
   Roboto_Serif,
   IBM_Plex_Serif,
   Roboto_Slab,
   PT_Sans,
   Varela_Round,
   Source_Serif_4,
-  Geist_Mono,
   Roboto,
   IBM_Plex_Sans,
   DM_Sans,
@@ -17,7 +15,10 @@ import {
   Public_Sans,
   Rubik,
   Work_Sans,
+  GeistSans,
+  Alegreya,
   Open_Sans,
+  Geist,
 } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
@@ -30,9 +31,9 @@ export const inter = Inter({
   display: "swap",
 });
 
-export const geistMono = Geist_Mono({
+export const geistSans = Geist({
   subsets: ["latin"],
-  variable: "--font-geist-mono",
+  variable: "--font-geist-sans",
 });
 
 export const segoeui = localFont({
@@ -178,7 +179,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-google-analytics-opt-out="" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${openSans.variable} ${sourceSerif.variable} ${ibmPlexSans.variable} ${varelaRound.variable} ${rubik.variable} ${dmSans.variable} ${verdana.variable} ${cabinSketch.variable} ${publicSans.variable} ${geistMono.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
+        className={`${inter.variable} ${openSans.variable} ${sourceSerif.variable} ${ibmPlexSans.variable} ${varelaRound.variable} ${rubik.variable} ${dmSans.variable} ${verdana.variable} ${cabinSketch.variable} ${publicSans.variable} ${geistSans.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >
         <Header />
         {children}

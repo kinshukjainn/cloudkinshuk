@@ -118,7 +118,7 @@ export default function Header() {
                 href={entry.href}
                 aria-current={active ? "page" : undefined}
                 className={[
-                  "inline-flex h-9 shrink-0 items-center rounded-md gap-1.5 px-2 py-2 text-[15px] transition-colors sm:px-3",
+                  "inline-flex h-9 shrink-0 items-center rounded-full gap-1.5 px-2 py-2 text-[15px] transition-colors sm:px-3",
                   FOCUS,
                   active
                     ? "text-white  bg-[#121212]  font-medium underline-offset-[6px]"

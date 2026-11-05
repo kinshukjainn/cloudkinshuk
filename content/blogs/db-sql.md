@@ -1,7 +1,7 @@
 ---
-title: Why PostgreSQL Became My Go-To Database.
+title: Why Postgress SQL Became My Go-To Database.
 slug: db-sql
-description: The article shows that why i choosed postgress SQL database over other dabatbase for my projects i build
+description: The article shows that why i choosed postgress SQL database over other database for my projects i build
 ---
 
 When you start building full-stack applications, choosing a database can feel overwhelming. There are so many options—NoSQL databases that promise ultimate flexibility, trendy key-value stores, and traditional relational databases.
@@ -16,8 +16,8 @@ Here is why PostgreSQL became my go-to database, explained simply without gettin
 
 When building apps like a cloud storage platform (where users have files, tiers, and quotas) or a password manager, your data has clear relationships:
 
-* A **User** has many **Files**.
-* A **Plan Tier** has specific storage limits applied to many **Users**.
+- A **User** has many **Files**.
+- A **Plan Tier** has specific storage limits applied to many **Users**.
 
 In a relational database like PostgreSQL, you represent this naturally using tables and foreign keys. Everything has a designated place. When a user deletes their account, I didn't want orphaned files or leftover data floating around in the cloud. With PostgreSQL, features like `ON DELETE CASCADE` handle this cleanly—deleting the user automatically cleans up their connected data.
 
@@ -49,8 +49,8 @@ PostgreSQL supports **ACID-compliant transactions**, which means operations eith
 
 Another reason PostgreSQL is amazing for projects is that it grows with you.
 
-* When you are starting out, you can run it easily with a serverless provider like Neon.
-* As your app grows, you can add reference tables (like moving hardcoded limits into a proper `plans` table), add compound indexes for lightning-fast searches, and handle complex relational queries.
+- When you are starting out, you can run it easily with a serverless provider like Neon.
+- As your app grows, you can add reference tables (like moving hardcoded limits into a proper `plans` table), add compound indexes for lightning-fast searches, and handle complex relational queries.
 
 You don't need to migrate to a "bigger" database later; PostgreSQL handles the small prototype phase just as well as it handles production traffic.
 

@@ -350,7 +350,7 @@ export default function Home() {
   const [tagline, ...bio] = CONFIG.personal.bio;
 
   return (
-    <div className="min-h-screen bg-[#1B1B1D] font-sans text-[#d6d1c6] selection:bg-[#d0a869] selection:text-[#0d0d0c]">
+    <div className="min-h-screen bg-[#1B1B1D]  text-[#d6d1c6] selection:bg-[#d0a869] selection:text-[#0d0d0c]">
       <style>{`@keyframes panelIn{from{opacity:0}to{opacity:1}}`}</style>
 
       <main className="mx-auto w-full max-w-[680px] px-5 py-12 sm:px-8 sm:py-16">

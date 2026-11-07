@@ -4,13 +4,8 @@ import { isValidElement, useRef, useState, type ReactNode } from "react";
 import { IoCheckmark, IoCopyOutline } from "react-icons/io5";
 
 /* ─────────────────────────────────────────────────────────────
-   CodeBlock — forced dark theme with readable syntax colors
+   CodeBlock — forced light theme with readable syntax colors
    ───────────────────────────────────────────────────────────── */
-
-const FOCUS =
-  "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d0a869] focus-visible:ring-offset-0";
-
-const SPRING = "ease-[cubic-bezier(0.34,1.56,0.64,1)]";
 
 const LANGUAGE_DOTS: Record<string, string> = {
   js: "#d4a94e",
@@ -109,43 +104,43 @@ export default function CodeBlock({ children }: CodeBlockProps) {
   };
 
   return (
-    <div className="my-8 overflow-hidden border border-[#272521] bg-[#171715]">
-      {/* 
-        CRITICAL FIX: Overrides the default `hljs` light theme 
-        so syntax highlighting is visible on the dark background.
+    <div className="my-8 overflow-hidden border border-[#e5e2db] bg-[#faf9f6]">
+      {/*
+        Light-theme syntax highlighting overrides.
+        Ensures hljs tokens are readable on the light background.
       */}
       <style>{`
         .hljs {
-          color: #e2ddd2 !important;
+          color: #2a2822 !important;
           background: transparent !important;
         }
         .hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-section, .hljs-link {
-          color: #d0a869 !important;
+          color: #9a5b1a !important;
         }
         .hljs-string, .hljs-regexp, .hljs-addition, .hljs-attribute, .hljs-meta .hljs-string {
-          color: #7d9b6a !important;
+          color: #3d6b2a !important;
         }
         .hljs-comment, .hljs-quote, .hljs-deletion {
           color: #8b867c !important;
           font-style: italic;
         }
         .hljs-number, .hljs-built_in, .hljs-builtin-name, .hljs-template-variable, .hljs-variable, .hljs-title, .hljs-type {
-          color: #c47a4a !important;
+          color: #b85c1f !important;
         }
         .hljs-function, .hljs-params, .hljs-class, .hljs-title.class_ {
-          color: #7fb8c4 !important;
+          color: #2a6b8a !important;
         }
       `}</style>
 
       {/* ── Chrome bar ─────────────────────────────────────── */}
-      <div className="flex items-center justify-between gap-3 border-b border-[#272521] bg-[#0d0d0c] px-4 py-2">
+      <div className="flex items-center justify-between gap-3 border-b border-[#e5e2db] bg-[#f0ede6] px-4 py-2">
         <div className="flex min-w-0 items-center gap-2">
           <span
             aria-hidden="true"
             className="h-2 w-2 shrink-0 rounded-full"
             style={{ backgroundColor: dotColor(language) }}
           />
-          <span className="truncate font-mono text-[10.5px] uppercase tracking-[0.16em] text-[#8b867c]">
+          <span className="truncate font-mono text-[10.5px] uppercase tracking-[0.16em] text-[#6b6660]">
             {language ?? "code"}
           </span>
         </div>
@@ -156,21 +151,20 @@ export default function CodeBlock({ children }: CodeBlockProps) {
           aria-label={copied ? "Code copied" : "Copy code"}
           aria-live="polite"
           className={[
-            "inline-flex shrink-0 items-center gap-1.5 px-2 py-1 font-mono text-[10.5px] uppercase tracking-[0.14em] transition-colors",
-            FOCUS,
-            copied ? "text-[#7d9b6a]" : "text-[#8b867c] hover:text-[#d0a869]",
+            "inline-flex shrink-0 items-center gap-1.5 px-2 py-1 font-mono text-[10.5px] uppercase tracking-[0.14em] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#8a6d35] focus-visible:ring-offset-0",
+            copied ? "text-[#3d6b2a]" : "text-[#6b6660] hover:text-[#8a6d35]",
           ].join(" ")}
         >
           <span className="relative grid h-3.5 w-3.5 place-items-center">
             <IoCheckmark
               aria-hidden="true"
-              className={`absolute inset-0 m-auto h-3.5 w-3.5 transition-all duration-300 ${SPRING} ${
+              className={`absolute inset-0 m-auto h-3.5 w-3.5 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
                 copied ? "scale-100 opacity-100" : "scale-50 opacity-0"
               }`}
             />
             <IoCopyOutline
               aria-hidden="true"
-              className={`absolute inset-0 m-auto h-3.5 w-3.5 transition-all duration-300 ${SPRING} ${
+              className={`absolute inset-0 m-auto h-3.5 w-3.5 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
                 copied ? "scale-50 opacity-0" : "scale-100 opacity-100"
               }`}
             />
@@ -182,7 +176,7 @@ export default function CodeBlock({ children }: CodeBlockProps) {
       {/* ── Code area ──────────────────────────────────────── */}
       <pre
         ref={preRef}
-        className="m-0 overflow-x-auto px-5 py-4 monofont text-[13.5px] leading-[1.75] text-[#e2ddd2] [scrollbar-width:thin] [scrollbar-color:#272521_transparent]"
+        className="m-0 overflow-x-auto px-5 py-4 monofont text-[13.5px] leading-[1.75] text-[#2a2822] [scrollbar-width:thin] [scrollbar-color:#d6d1c6_transparent]"
       >
         {children}
       </pre>

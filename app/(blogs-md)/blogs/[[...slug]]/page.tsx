@@ -14,28 +14,6 @@ import CodeBlock from "@/app/components/CodeBlock";
 
 type Props = { params: Promise<{ slug?: string[] }> };
 
-/* ── Palette (hardcoded, matches homepage) ─────────────── */
-const BG = "#0d0d0c";
-const FG = "#d6d1c6";
-const HEAD = "#f2eee5";
-const MUTED = "#8b867c";
-const ACCENT = "#d0a869";
-const ACCENT_HOVER = "#e8c98f";
-const RULE = "#272521";
-const CODE_BG = "#171715";
-
-const SHELL = `min-h-screen bg-[#1b1b1d] text-[${FG}] selection:bg-[${ACCENT}] selection:text-[${BG}]`;
-
-const FOCUS = `focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[${ACCENT}] focus-visible:ring-offset-4 focus-visible:ring-offset-[${BG}]`;
-
-const LINK = `text-[${ACCENT}] underline decoration-1 underline-offset-4 transition-colors hover:text-[${ACCENT_HOVER}] ${FOCUS}`;
-
-const MONO = ` text-[13px] font-medium  tracking-[0.16em] text-white`;
-
-const PROSE = `my-5 break-words text-[15px] leading-7 text-[${FG}] sm:text-base sm:leading-8`;
-
-const HEAD_ID_OFFSET = "scroll-mt-24";
-
 /* ── Slug helpers ──────────────────────────────────────── */
 function slugify(text: string): string {
   return text
@@ -114,24 +92,20 @@ const anchorHeading = (Tag: "h1" | "h2" | "h3" | "h4") =>
 
     const baseClass =
       Tag === "h1"
-        ? `mt-14 mb-6 ${HEAD_ID_OFFSET}  text-3xl tracking-tight sm:text-4xl`
+        ? "mt-14 mb-6 scroll-mt-24  text-3xl  tracking-tight sm:text-4xl"
         : Tag === "h2"
-          ? `group relative mt-14 mb-5 ${HEAD_ID_OFFSET}  text-2xl tracking-tight sm:text-[1.6rem]`
+          ? "group relative mt-14 mb-5 scroll-mt-24  text-2xl tracking-tight sm:text-[1.6rem]"
           : Tag === "h3"
-            ? `group relative mt-10 mb-4 ${HEAD_ID_OFFSET}  text-xl tracking-tight`
-            : `mt-8 mb-3 ${HEAD_ID_OFFSET}  text-base font-semibold`;
+            ? "group relative mt-10 mb-4 scroll-mt-24  text-xl tracking-tight"
+            : "mt-8 mb-3 scroll-mt-24  text-base font-semibold";
 
     return (
-      <Tag
-        id={id}
-        className={`${baseClass} text-[${HEAD}]`}
-        {...omitNode(rest)}
-      >
+      <Tag id={id} className={`${baseClass} text-black`} {...omitNode(rest)}>
         {showAnchor && id && (
           <a
             href={`#${id}`}
             aria-label={`Link to ${text}`}
-            className={`absolute -left-6 hidden text-[${RULE}] opacity-0 transition-opacity duration-150 hover:text-[${ACCENT}] group-hover:opacity-100 lg:block`}
+            className="absolute -left-6 hidden text-black  transition-opacity duration-150 hover:text-blue-800  lg:block"
           >
             #
           </a>
@@ -148,31 +122,45 @@ const components: Components = {
   h3: anchorHeading("h3"),
   h4: anchorHeading("h4"),
   h5: (p) => (
-    <h5 className={`mt-6 mb-2 ${HEAD_ID_OFFSET} ${MONO}`} {...omitNode(p)} />
+    <h5
+      className="mt-6 mb-2 scroll-mt-24  text-[13px] font-medium  tracking-[0.16em] text-black"
+      {...omitNode(p)}
+    />
   ),
   h6: (p) => (
-    <h6 className={`mt-6 mb-2 ${HEAD_ID_OFFSET} ${MONO}`} {...omitNode(p)} />
+    <h6
+      className="mt-6 mb-2 scroll-mt-24  text-[13px] font-medium  tracking-[0.16em] text-gray-800"
+      {...omitNode(p)}
+    />
   ),
 
-  p: (p) => <p className={PROSE} {...omitNode(p)} />,
+  p: (p) => (
+    <p
+      className="my-5 break-words text-[15px] leading-7 text-gray-800 sm:text-base sm:leading-8"
+      {...omitNode(p)}
+    />
+  ),
   strong: (p) => (
-    <strong className={`font-semibold text-[${HEAD}]`} {...omitNode(p)} />
+    <strong className="font-semibold text-black" {...omitNode(p)} />
   ),
   em: (p) => <em className="italic" {...omitNode(p)} />,
-  del: (p) => (
-    <del className={`text-[${MUTED}] line-through`} {...omitNode(p)} />
+  del: (p) => <del className="text-black line-through" {...omitNode(p)} />,
+  a: (p) => (
+    <a
+      className="text-blue-800 underline decoration-1 underline-offset-4 transition-colors hover:text-blue-800 focus-visible:outline-none"
+      {...omitNode(p)}
+    />
   ),
-  a: (p) => <a className={LINK} {...omitNode(p)} />,
 
   ul: (p) => (
     <ul
-      className={`my-5 list-outside list-disc space-y-2 pl-6 text-[15px] leading-7 text-[${FG}] marker:text-[${MUTED}] sm:text-base sm:leading-8`}
+      className="my-5 list-outside list-disc space-y-2 pl-6 text-[15px] leading-7 text-gray-700  marker:text-black sm:text-base sm:leading-8"
       {...omitNode(p)}
     />
   ),
   ol: (p) => (
     <ol
-      className={`my-5 list-outside list-decimal space-y-2 pl-6 text-[15px] leading-7 text-[${FG}] marker:text-[${MUTED}] sm:text-base sm:leading-8`}
+      className="my-5 list-outside list-decimal space-y-2 pl-6 text-[15px] leading-7 text-gray-700 marker:text-black sm:text-base sm:leading-8"
       {...omitNode(p)}
     />
   ),
@@ -180,11 +168,11 @@ const components: Components = {
 
   blockquote: (p) => (
     <blockquote
-      className={`my-8 border-l-2 border-[${ACCENT}] py-1 pl-5 italic text-[${MUTED}] [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2`}
+      className="my-8 border-l-5 rounded-sm border-gray-600 bg-gray-100  py-1 px-2 pl-5 italic text-gray-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2"
       {...omitNode(p)}
     />
   ),
-  hr: () => <hr className={`my-12 border-0 border-t border-[${RULE}]`} />,
+  hr: () => <hr className="my-12 border-0 border-t border-[#272521]" />,
 
   pre: (p) => {
     const { children } = omitNode(p);
@@ -195,14 +183,14 @@ const components: Components = {
       /language-/.test(className ?? "") || /hljs/.test(className ?? "");
     if (isBlock) {
       return (
-        <code className={`monofont ${className ?? ""}`} {...omitNode(rest)}>
+        <code className={`font-mono ${className ?? ""}`} {...omitNode(rest)}>
           {children}
         </code>
       );
     }
     return (
       <code
-        className={`break-words border border-[${RULE}] bg-[${CODE_BG}] px-1.5 py-0.5 monofont text-[0.85em] text-[${HEAD}]`}
+        className="break-words bg-gray-200 px-1.5 py-0.5 font-mono rounded-md font-semibold text-[0.85em] text-gray-800"
         {...omitNode(rest)}
       >
         {children}
@@ -219,23 +207,23 @@ const components: Components = {
     </div>
   ),
   thead: (p) => (
-    <thead className={`border-b border-[${RULE}]`} {...omitNode(p)} />
+    <thead className="border-b-2 border-gray-500" {...omitNode(p)} />
   ),
   tbody: (p) => <tbody {...omitNode(p)} />,
   tr: (p) => (
     <tr
-      className={`border-b border-[${RULE}] last:border-b-0`}
+      className="border-b-2 border-gray-400 last:border-b-0"
       {...omitNode(p)}
     />
   ),
   th: (p) => (
     <th
-      className={`whitespace-nowrap px-4 py-3 text-left ${MONO} text-[${HEAD}]`}
+      className="whitespace-nowrap px-4 py-3 text-left  text-[16px] font-medium  tracking-[0.16em] text-black text-[#f2eee5]"
       {...omitNode(p)}
     />
   ),
   td: (p) => (
-    <td className={`px-4 py-3 align-top text-[${FG}]`} {...omitNode(p)} />
+    <td className="px-4 py-3 align-top text-gray-700" {...omitNode(p)} />
   ),
 
   img: (p) => (
@@ -245,7 +233,7 @@ const components: Components = {
 
   input: (p) => (
     <input
-      className={`mr-2 h-4 w-4 translate-y-[2px] accent-[${ACCENT}]`}
+      className="mr-2 h-4 w-4 translate-y-[2px] accent-[#d0a869]"
       {...omitNode(p)}
     />
   ),
@@ -286,23 +274,19 @@ export default async function DocPage({ params }: Props) {
     <article
       className={`min-w-0 max-w-[680px] ${hasToc ? "mx-auto lg:mx-0" : "mx-auto"}`}
     >
-      <header
-        className={`mb-10 border-b border-[${RULE}] pb-8 sm:mb-12 sm:pb-10`}
-      >
-        <p className={MONO}>Blog post · {readTime} min read</p>
+      <header className="mb-10 border-b border-gray-500  pb-8 sm:mb-12 sm:pb-10">
+        <p className=" text-[15px] font-medium  tracking-[0.16em] text-black">
+          Blog post · {readTime} min read
+        </p>
 
         {doc.meta.title && (
-          <h1
-            className={`mt-4 break-words  text-3xl font-semibold leading-[1.15] tracking-tight text-[${HEAD}] sm:text-4xl md:text-5xl`}
-          >
+          <h1 className="mt-4 break-words  text-3xl font-semibold leading-[1.15] tracking-tight text-black sm:text-4xl md:text-5xl">
             {doc.meta.title}
           </h1>
         )}
 
         {doc.meta.description && (
-          <p
-            className={`mt-4 max-w-2xl text-base leading-7 text-[${MUTED}] sm:text-lg sm:leading-8`}
-          >
+          <p className="mt-4 max-w-2xl text-base leading-7 text-gray-700 sm:text-lg sm:leading-8">
             {doc.meta.description}
           </p>
         )}
@@ -321,13 +305,13 @@ export default async function DocPage({ params }: Props) {
   );
 
   return (
-    <div className={SHELL}>
+    <div className="min-h-screen bg-white text-black selection:bg-[#d0a869] blog-font  selection:text-[#0d0d0c]">
       <main className="mx-auto w-full max-w-[980px] px-5 py-12 sm:px-8 sm:py-16">
         {/* Back link */}
         <nav className="mb-10">
           <Link
             href="/blogs"
-            className={`group inline-flex items-center gap-2 px-3 py-2 bg-blue-800 rounded-full text-[13px] text-white font-medium transition-colors hover:text-white ${FOCUS}`}
+            className="group inline-flex items-center gap-2 px-3 py-2 bg-blue-800 rounded-full text-[13px] text-white font-medium transition-colors hover:text-white focus-visible:outline-none font-sans focus-visible:ring-1 focus-visible:ring-[#d0a869] focus-visible:ring-offset-4 focus-visible:ring-offset-[#0d0d0c]"
           >
             <IoArrowBack
               className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5"
@@ -341,13 +325,15 @@ export default async function DocPage({ params }: Props) {
           <div className="lg:grid lg:grid-cols-[180px_minmax(0,1fr)] lg:gap-10">
             <aside aria-label="Table of contents" className="hidden lg:block">
               <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-2">
-                <p className={`mb-3 ${MONO}`}>on this page</p>
+                <p className="mb-3  text-[16px] font-medium  tracking-[0.16em] text-green-800">
+                  On this page
+                </p>
                 <ul className="space-y-2 text-sm">
                   {headings.map((h) => (
                     <li key={h.id}>
                       <a
                         href={`#${h.id}`}
-                        className={`block leading-snug text-white transition-colors hover:text-blue-300 ${
+                        className={`block leading-snug text-black transition-colors hover:text-blue-800 ${
                           h.level === 3 ? "pl-4" : ""
                         }`}
                       >
@@ -366,12 +352,8 @@ export default async function DocPage({ params }: Props) {
         )}
       </main>
 
-      <footer
-        className={`mx-auto w-full max-w-[980px] border-t border-[${RULE}] px-5 py-6 sm:px-8`}
-      >
-        <div
-          className={`flex flex-wrap items-center justify-between gap-x-4 gap-y-2 ${MONO}`}
-        >
+      <footer className="mx-auto w-full max-w-[980px] border-t border-[#272521] px-5 py-6 sm:px-8">
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2  text-[13px] font-medium  tracking-[0.16em] text-black">
           <span>kinshuk jain © {new Date().getFullYear()}</span>
           <span>hand-coded · no templates</span>
         </div>

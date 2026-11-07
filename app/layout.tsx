@@ -15,7 +15,6 @@ import {
   Public_Sans,
   Rubik,
   Work_Sans,
-  GeistSans,
   Alegreya,
   Open_Sans,
   Geist,

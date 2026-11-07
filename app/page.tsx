@@ -447,10 +447,10 @@ export default function Home() {
                 aria-controls={`panel-${t.id}`}
                 id={`tab-${t.id}`}
                 onClick={() => setTab(t.id)}
-                className={`font-medium text-[16px] py-1.5 px-3 rounded-md  cursor-pointer ${
+                className={` text-[16px] py-1.5 px-3   cursor-pointer ${
                   active
-                    ? "text-white bg-[#121212]  font-semibold"
-                    : "text-[#8b867c] hover:bg-[#121212] hover:text-[#d6d1c6]"
+                    ? "text-blue-500 border-b-2 border-blue-500  font-bold"
+                    : "text-[#8b867c] font-medium hover:bg-[#121212] hover:text-[#d6d1c6]"
                 }`}
               >
                 <span aria-hidden className={active ? "" : "opacity-0"}>

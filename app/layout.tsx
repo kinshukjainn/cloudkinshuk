@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import {
   Inter,
-  Roboto_Serif,
   IBM_Plex_Serif,
   Roboto_Slab,
   PT_Sans,
@@ -106,12 +105,6 @@ const workSans = Work_Sans({
   display: "swap",
 });
 
-export const robotoSerif = Roboto_Serif({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700"],
-  variable: "--font-roboto-serif",
-  display: "swap",
-});
 const alegreya = Alegreya({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
@@ -178,7 +171,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-google-analytics-opt-out="" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${openSans.variable} ${sourceSerif.variable} ${ibmPlexSans.variable} ${varelaRound.variable} ${rubik.variable} ${dmSans.variable} ${verdana.variable} ${cabinSketch.variable} ${publicSans.variable} ${geistSans.variable} ${robotoSerif.variable} ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
+        className={`${inter.variable} ${openSans.variable} ${sourceSerif.variable} ${ibmPlexSans.variable} ${varelaRound.variable} ${rubik.variable} ${dmSans.variable} ${verdana.variable} ${cabinSketch.variable} ${publicSans.variable} ${geistSans.variable}  ${roboto.variable} ${lucideSans.variable} ${ubuntuSans.variable} ${ptSans.variable} ${workSans.variable} ${robotoSlab.variable} ${alegreya.variable}  ${ibmplex_serif.variable} antialiased`}
       >
         <Header />
         {children}

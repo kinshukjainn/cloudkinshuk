@@ -28,7 +28,6 @@ const config: Config = {
         verdana: "var(--font-verdana) , sans-serif",
         lucidaSans: "var(--font-lucida-sans) , sans-serif",
         publicsans: ["var(--font-public-sans)", "sans-serif"],
-        robotoserif: "var(--font-roboto-serif), serif",
         ibmPlexSans: "var(--font-ibm-plex-sans) , sans-serif",
       },
     },

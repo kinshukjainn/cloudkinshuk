@@ -311,7 +311,7 @@ export default async function DocPage({ params }: Props) {
         <nav className="mb-10">
           <Link
             href="/blogs"
-            className="group inline-flex items-center gap-2 px-3 py-2 bg-blue-800 rounded-full text-[13px] text-white font-medium transition-colors hover:text-white focus-visible:outline-none font-sans focus-visible:ring-1 focus-visible:ring-[#d0a869] focus-visible:ring-offset-4 focus-visible:ring-offset-[#0d0d0c]"
+            className="group inline-flex items-center gap-2 px-3 py-2 bg-blue-800 rounded-full text-[13px] text-white font-medium transition-colors hover:text-white focus-visible:outline-none  focus-visible:ring-1 focus-visible:ring-[#d0a869] focus-visible:ring-offset-4 focus-visible:ring-offset-[#0d0d0c]"
           >
             <IoArrowBack
               className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5"

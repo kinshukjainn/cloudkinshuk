@@ -222,7 +222,7 @@ function ExperiencePanel() {
       </p>
 
       <Link
-        className="inline-flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-md text-base font-medium"
+        className="inline-flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-full text-base font-medium"
         href="/blogs/upptcl-exp"
       >
         <BookOpen className="h-5 w-5" />
@@ -275,7 +275,7 @@ function ProjectsPanel() {
                 href={project.links.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-md text-base font-medium"
+                className="inline-flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-full text-base font-medium"
               >
                 <ExternalLink className="h-5 w-5" />
                 View Live Site
@@ -286,7 +286,7 @@ function ProjectsPanel() {
                 href={project.links.repo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-gray-200 text-black px-5 py-2.5 rounded-md text-base font-medium"
+                className="inline-flex items-center gap-2 bg-gray-200 text-black px-5 py-2.5 rounded-full text-base font-medium"
               >
                 <Code2 className="h-5 w-5" />
                 Source Code
@@ -343,7 +343,7 @@ function CertificationsPanel() {
               href={cert.verifyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-gray-200 text-black px-5 py-2.5 rounded-md text-base font-medium"
+              className="inline-flex items-center gap-2 bg-gray-200 text-black px-5 py-2.5 rounded-full text-base font-medium"
             >
               Verify Credential
             </a>
@@ -377,7 +377,7 @@ function EducationPanel() {
         download
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-md text-base font-medium"
+        className="inline-flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-full text-base font-medium"
       >
         <Download className="h-5 w-5" />
         Download Transcript (PDF)
@@ -440,7 +440,7 @@ export default function Home() {
                   href={s.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-gray-100 text-black px-4 py-2.5 rounded-md text-base font-medium hover:bg-gray-200 transition-none"
+                  className="inline-flex items-center gap-2 bg-gray-100 text-black px-4 py-2.5 rounded-full text-base font-medium hover:bg-gray-200 transition-none"
                 >
                   <Icon className="h-5 w-5" />
                   {SOCIAL_LABEL[s.platform] ?? s.platform}
@@ -453,14 +453,14 @@ export default function Home() {
           <div className="flex flex-wrap items-center gap-4">
             <Link
               href="/myresumekinshuk.pdf"
-              className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-md text-base font-medium"
+              className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full text-base font-medium"
             >
               <Download className="h-5 w-5" />
               Download Resume (PDF)
             </Link>
             <Link
               href="/blogs"
-              className="inline-flex items-center gap-2 bg-gray-100 text-black px-6 py-3 rounded-md text-base font-medium"
+              className="inline-flex items-center gap-2 bg-gray-100 text-black px-6 py-3 rounded-full text-base font-medium"
             >
               <BookOpen className="h-5 w-5" />
               Read my Blogs
@@ -486,9 +486,9 @@ export default function Home() {
                 aria-controls={`panel-${t.id}`}
                 id={`tab-${t.id}`}
                 onClick={() => setTab(t.id)}
-                className={`flex items-center gap-2 pb-4 text-base font-bold transition-none ${
+                className={`flex items-center gap-2 px-2 text-base font-bold transition-none ${
                   active
-                    ? "text-black border-b-2 border-black"
+                    ? "text-black border-2 border-black rounded-full "
                     : "text-gray-500 hover:text-black"
                 }`}
               >

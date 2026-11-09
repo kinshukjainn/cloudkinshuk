@@ -150,15 +150,7 @@
 
 body {
   background-color: white;
-  font-family: var(--font-source-serif), serif;
-}
-
-.h-font {
-  font-family: var(--font-varela-round), sans-serif;
-}
-
-.blog-font {
-  font-family: var(--font-source-serif), serif;
+  font-family: var(--font-verdana), serif;
 }
 
 .monofont {

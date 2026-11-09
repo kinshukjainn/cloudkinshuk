@@ -4,13 +4,13 @@ slug: aws-ccp-exam
 description: This article shows how we can clear AWS certification exams in the right practical ways. These tips and guide are completely based on my experience while preparing for AWS certification exams.
 ---
 
-## What is AWS certification exams ?
+#### What is AWS certification exams ?
 
 An AWS Certification exam is a professional exam created by **Amazon Web Services** to validate that you understand and can apply AWS knowledge for a particular role. The important thing is that it is not simply a test of whether you memorized AWS service definitions.
 
 > **Can you look at a software-development/cloud scenario, understand the requirements, and choose or implement the appropriate AWS solution?**
 
-### AWS has certifications covering different levels and roles.
+###### AWS has certifications covering different levels and roles.
 
 A simplified view is:
 
@@ -41,7 +41,7 @@ The goal should not only be to clear the exam. The goal should be to come out of
 
 ---
 
-# 1. First understand what your certification exam is actually testing
+## 1. First understand what your certification exam is actually testing
 
 Before starting preparation, the first thing you should do is understand the certification itself. Do not immediately open a random YouTube course and start watching it from lecture one.
 
@@ -49,7 +49,7 @@ Go to the official AWS Certification page for the certification you are preparin
 
 This is important because different AWS certifications test different kinds of knowledge. For example, Cloud Practitioner is foundational, while Developer Associate focuses much more on developing and maintaining applications on AWS. Therefore, the preparation strategy should also change according to the certification.
 
-### Read the official exam guide before studying
+###### Read the official exam guide before studying
 
 The exam guide should become your starting point because it gives you the boundary of the examination. It helps you understand which areas are important and prevents you from spending too much time learning services or concepts that are not relevant to your certification.
 
@@ -59,7 +59,7 @@ Do not treat the exam guide as something you read once and forget. Keep it with 
 
 ---
 
-# 2. Do not start by memorizing AWS services
+## 2. Do not start by memorizing AWS services
 
 One of the biggest mistakes while preparing for AWS certifications is trying to memorize the names and definitions of services.
 
@@ -71,16 +71,16 @@ is useful, but it is not enough.
 
 You should continue asking questions such as:
 
-* Why would I use S3 instead of another storage service?
-* How does S3 store objects?
-* What are buckets and objects?
-* How does access control work?
-* What happens when an object is deleted?
-* What is versioning?
-* What are lifecycle rules?
-* How can another AWS service interact with S3?
-* What happens when a file is uploaded?
-* How can I securely give someone temporary access to an object?
+- Why would I use S3 instead of another storage service?
+- How does S3 store objects?
+- What are buckets and objects?
+- How does access control work?
+- What happens when an object is deleted?
+- What is versioning?
+- What are lifecycle rules?
+- How can another AWS service interact with S3?
+- What happens when a file is uploaded?
+- How can I securely give someone temporary access to an object?
 
 Once you start asking these questions, you stop learning a definition and start understanding the service.
 
@@ -88,7 +88,7 @@ That difference becomes extremely important in scenario-based certification ques
 
 ---
 
-# 3. Read the official AWS documentation
+## 3. Read the official AWS documentation
 
 After identifying the important services from the exam guide, the next step should be the **official AWS documentation**.
 
@@ -96,7 +96,7 @@ There are many excellent courses and tutorials available on the internet, but AW
 
 For every important service, start with the official documentation and understand the basic concepts before jumping into practice questions.
 
-### What should you read in the documentation?
+###### What should you read in the documentation?
 
 You do not necessarily need to read every page of a service's documentation from beginning to end. Instead, focus on the sections that help you understand how the service works.
 
@@ -112,7 +112,7 @@ The purpose is to answer:
 
 ---
 
-# 4. Understand every important service in depth
+## 4. Understand every important service in depth
 
 Once you identify the services relevant to your certification, start studying them individually.
 
@@ -130,7 +130,7 @@ You do not need to know every possible feature of every AWS service. Instead, yo
 
 ---
 
-# 5. Learn services by understanding the problem they solve
+## 5. Learn services by understanding the problem they solve
 
 A very useful way to study AWS is to start from the problem rather than starting from the service.
 
@@ -152,7 +152,7 @@ This way of thinking is much closer to how scenario-based AWS certification ques
 
 ---
 
-# 6. Do hands-on practice in the AWS Console
+## 6. Do hands-on practice in the AWS Console
 
 This is one of the most important parts of the entire preparation.
 
@@ -168,7 +168,7 @@ The point is to make the AWS service behave in front of you.
 
 ---
 
-# 7. Build small experiments instead of huge projects
+## 7. Build small experiments instead of huge projects
 
 You do not need to build a complete Next.js application every time you want to learn an AWS service.
 
@@ -194,7 +194,7 @@ One small experiment can teach you about S3 events, Lambda, IAM, CloudWatch, per
 
 ---
 
-# 8. Learn by breaking things
+## 8. Learn by breaking things
 
 One of the most effective ways to understand AWS is to intentionally make something fail.
 
@@ -236,7 +236,7 @@ You have now experienced why that execution role matters.
 
 ---
 
-# 9. Understand how AWS services work together
+## 9. Understand how AWS services work together
 
 Learning AWS services individually is only the beginning.
 
@@ -276,7 +276,7 @@ This is where AWS knowledge becomes much more practical.
 
 ---
 
-# 10. Learn the differences between similar services
+## 10. Learn the differences between similar services
 
 AWS certification exams often become difficult when several services can appear to solve a similar problem.
 
@@ -284,14 +284,14 @@ You should therefore learn **comparisons and trade-offs**, not just individual d
 
 For example, understand the difference between:
 
-* SQS and SNS
-* SNS and EventBridge
-* DynamoDB and RDS
-* S3 and EBS
-* Lambda and EC2
-* Secrets Manager and Parameter Store
-* CloudWatch and CloudTrail
-* Security groups and network ACLs
+- SQS and SNS
+- SNS and EventBridge
+- DynamoDB and RDS
+- S3 and EBS
+- Lambda and EC2
+- Secrets Manager and Parameter Store
+- CloudWatch and CloudTrail
+- Security groups and network ACLs
 
 The important question is not:
 
@@ -305,7 +305,7 @@ This type of reasoning is extremely useful for scenario-based questions.
 
 ---
 
-# 11. Use AWS CLI and SDKs after learning the Console
+## 11. Use AWS CLI and SDKs after learning the Console
 
 The AWS Console is a very good place to begin because you can visually understand the services and their configuration.
 
@@ -329,7 +329,7 @@ You start seeing that the console is simply one way of interacting with AWS APIs
 
 ---
 
-# 12. Automate your hands-on labs
+## 12. Automate your hands-on labs
 
 Once you have manually created a few labs, start automating them.
 
@@ -363,7 +363,7 @@ You can also explore infrastructure-as-code tools such as **AWS CloudFormation o
 
 ---
 
-# 13. Keep a personal AWS notes system
+## 13. Keep a personal AWS notes system
 
 Do not copy entire documentation pages into your notes.
 
@@ -400,7 +400,7 @@ The most valuable notes are often not the things you already know. They are the 
 
 ---
 
-# 14. Use practice questions after learning, not before
+## 14. Use practice questions after learning, not before
 
 Practice questions are extremely useful, but they should not become your primary source of knowledge.
 
@@ -428,7 +428,7 @@ The goal is to understand the **reasoning behind the answer**.
 
 ---
 
-# 15. Do not memorize dumps
+## 15. Do not memorize dumps
 
 There is a big difference between practicing with legitimate sample questions and memorizing exam dumps.
 
@@ -442,7 +442,7 @@ If you understand the underlying concept, a differently worded question should s
 
 ---
 
-# 16. Create scenario-based questions for yourself
+## 16. Create scenario-based questions for yourself
 
 After completing a lab, don't immediately move to another service.
 
@@ -482,7 +482,7 @@ This turns your preparation into active learning.
 
 ---
 
-# 17. Learn architecture, even if your certification is not an architecture certification
+## 17. Learn architecture, even if your certification is not an architecture certification
 
 You do not need to become a Solutions Architect to prepare for an AWS certification.
 
@@ -522,7 +522,7 @@ This helps you understand why a particular AWS service exists in a particular ar
 
 ---
 
-# 18. Learn security alongside every service
+## 18. Learn security alongside every service
 
 Do not leave security for the final week.
 
@@ -558,7 +558,7 @@ Security becomes much easier when you learn it as part of the architecture rathe
 
 ---
 
-# 19. Learn monitoring and troubleshooting
+## 19. Learn monitoring and troubleshooting
 
 A real application is not finished when it successfully runs once.
 
@@ -586,7 +586,7 @@ This builds a very different kind of understanding from simply reading service d
 
 ---
 
-# 20. Always clean up your AWS resources
+## 20. Always clean up your AWS resources
 
 Hands-on learning is important, but AWS resources can cost money.
 
@@ -612,7 +612,7 @@ Never assume that because a lab is small, every AWS service involved is automati
 
 ---
 
-# 21. Follow the official AWS learning resources
+## 21. Follow the official AWS learning resources
 
 AWS provides its own learning resources, documentation, workshops, tutorials, sample architectures, and certification preparation material.
 
@@ -638,7 +638,7 @@ Third-party courses can be very useful for explaining difficult concepts in simp
 
 ---
 
-# 22. Build one large project only after learning the smaller pieces
+## 22. Build one large project only after learning the smaller pieces
 
 Large projects are useful, but I would not make them the first step of certification preparation.
 
@@ -676,7 +676,7 @@ and
 
 ---
 
-# 23. Keep track of what you actually know
+## 23. Keep track of what you actually know
 
 After studying a service, close the documentation and try to explain it from memory.
 
@@ -702,7 +702,7 @@ If you can explain these things clearly without constantly looking at documentat
 
 ---
 
-# 24. Use practice exams as a measurement tool
+## 24. Use practice exams as a measurement tool
 
 Eventually, you should start taking full-length practice exams.
 
@@ -727,25 +727,25 @@ Instead of revising everything again, focus on the areas where your understandin
 
 ---
 
-# 25. The final stage should be revision, not new learning
+## 25. The final stage should be revision, not new learning
 
 As you get closer to the exam, stop trying to learn every new AWS feature.
 
 Your final preparation should focus on:
 
-* Revising important concepts.
-* Reviewing your mistakes.
-* Repeating difficult hands-on labs.
-* Practicing scenario-based questions.
-* Reviewing service comparisons.
-* Reviewing security and troubleshooting concepts.
-* Taking full practice exams under exam-like conditions.
+- Revising important concepts.
+- Reviewing your mistakes.
+- Repeating difficult hands-on labs.
+- Practicing scenario-based questions.
+- Reviewing service comparisons.
+- Reviewing security and troubleshooting concepts.
+- Taking full practice exams under exam-like conditions.
 
 The final stage should be about making your existing knowledge reliable.
 
 ---
 
-# 26. The preparation loop I recommend
+## 26. The preparation loop I recommend
 
 If I had to summarize the entire preparation method into one loop, it would be:
 
@@ -777,7 +777,7 @@ This approach works particularly well because it combines theoretical knowledge 
 
 ---
 
-# 27. What "clearing the exam" should actually mean
+## 27. What "clearing the exam" should actually mean
 
 There are two different meanings of clearing an AWS certification exam.
 
@@ -799,7 +799,7 @@ If you prepare to actually understand AWS, then the certification becomes a **va
 
 ---
 
-# 28. My recommended formula
+## 28. My recommended formula
 
 Based on my experience preparing for AWS certification, I would divide the preparation roughly like this:
 
@@ -839,7 +839,7 @@ The strongest preparation combines all of them.
 
 ---
 
-# Final Thoughts
+## Final Thoughts
 
 AWS certification preparation should not be treated as a competition to see how quickly you can finish a course.
 
@@ -854,3 +854,11 @@ Prepare so that when AWS gives you a completely new scenario, you can look at th
 That is the difference between **studying AWS for an exam** and **actually learning AWS**.
 
 And ultimately, the second one is what makes the certification worth doing.
+
+#### Written by
+
+**Kinshuk Jain**
+
+- Website — [cloudkinshuk.in](https://cloudkinshuk.in)
+- LinkedIn — [linkedin.com/in/kinshukjainn](https://www.linkedin.com/in/kinshukjainn/)
+- X (Twitter) — [@realkinshuk004](https://x.com/realkinshuk004)

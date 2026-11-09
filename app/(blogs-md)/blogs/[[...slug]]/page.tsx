@@ -71,7 +71,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   if (!slug || slug.length === 0) {
-    return { title: "Blog", description: "Our latest articles and thoughts." };
+    return {};
   }
   const doc = getDoc(slug[0]);
   return { title: doc?.meta.title, description: doc?.meta.description };

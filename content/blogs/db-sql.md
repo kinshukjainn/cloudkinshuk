@@ -61,3 +61,11 @@ You don't need to migrate to a "bigger" database later; PostgreSQL handles the s
 If you are a student or a developer building your own projects, don't shy away from relational databases just because SQL looks intimidating at first. You don't need to be a database guru to use PostgreSQL effectively.
 
 By designing your core structure and using AI to help bridge the gap for queries and migrations, you can build secure, reliable, and production-ready applications from the ground up. PostgreSQL gives you the structure, safety, and scalability you need—making it the ultimate database choice for modern projects.
+
+## Written by
+
+**Kinshuk Jain**
+
+- Website — [cloudkinshuk.in](https://cloudkinshuk.in)
+- LinkedIn — [linkedin.com/in/kinshukjainn](https://www.linkedin.com/in/kinshukjainn/)
+- X (Twitter) — [@realkinshuk004](https://x.com/realkinshuk004)

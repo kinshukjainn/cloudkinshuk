@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Search, X } from "lucide-react";
+import { Search, X, ArrowRight, AlertCircle } from "lucide-react";
 
 type Article = {
   title: string;
@@ -14,26 +14,6 @@ type Section = {
   title: string;
   items: Article[];
 };
-
-/* ── Design tokens (identical to homepage + header) ─────── */
-const TOKENS = {
-  "--bg": "#0d0d0c",
-  "--fg": "#d6d1c6",
-  "--head": "#f2eee5",
-  "--muted": "#8b867c",
-  "--accent": "#d0a869",
-  "--accent-hover": "#e8c98f",
-  "--rule": "#272521",
-} as React.CSSProperties;
-
-const FOCUS =
-  "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--bg)]";
-
-const PROSE = "text-[15px] leading-7 sm:text-base sm:leading-8";
-
-const MONO = " text-[14px] font-semibold  tracking-[0.16em] text-white";
-
-const RULE = "border-[var(--rule)]";
 
 export default function BlogFeed({ sections }: { sections: Section[] }) {
   const [search, setSearch] = useState("");
@@ -57,39 +37,48 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
   );
 
   return (
-    <div
-      style={TOKENS}
-      className="min-h-screen bg-[#1B1B1D] text-[var(--fg)] selection:bg-[var(--accent)] selection:text-[var(--bg)]"
-    >
-      <main className="mx-auto w-full max-w-[680px] px-5 py-12 sm:px-8 sm:py-16">
+    <div className="min-h-screen bg-white text-black selection:bg-black selection:text-white">
+      <main className="mx-auto w-full max-w-[700px] px-6 py-16 sm:py-24">
         {/* ── Header ───────────────────────────────────── */}
-        <header>
-          <p className={MONO}>
-            Blogs · {totalArticles}{" "}
+        <header className="mb-10">
+          <p className="text-sm font-bold uppercase tracking-widest text-gray-500 mb-4">
+            Blogs • {totalArticles}{" "}
             {totalArticles === 1 ? "Article" : "Articles"}
           </p>
 
-          <h1 className="mt-3  text-[28px] leading-tight font-bold tracking-tight text-[var(--head)] sm:text-4xl">
-            Blogs, Notes &{" "}
-            <span className=" text-[var(--muted)]">Thoughts</span>
+          <h1 className="text-3xl font-bold text-black tracking-tight mb-4">
+            Blogs, Notes & Thoughts
           </h1>
 
-          <p className={`mt-4 ${PROSE}`}>
+          <p className="text-[18px] leading-8 text-gray-900">
             Read my latest project descriptions, technical notes, and updates.
           </p>
         </header>
 
+        {/* ── Content Advisory (Professional Editorial Callout) */}
+        <div className="border-l-4 border-black bg-gray-50 p-6 mb-12">
+          <h2 className="flex items-center gap-2 text-lg font-bold text-black mb-2">
+            <AlertCircle className="h-5 w-5" />
+            Content Removed
+          </h2>
+          <p className="text-[17px] leading-relaxed text-gray-800">
+            Some blog post has been removed as they are being updated and few
+            parts will be removed. They will be available on 18th november 2026
+          </p>
+        </div>
+
         {/* ── Search ───────────────────────────────────── */}
-        <div className="mt-10">
-          <label htmlFor="blog-search" className={MONO}>
+        <div className="mb-16">
+          <label
+            htmlFor="blog-search"
+            className="block text-base font-bold text-black mb-3"
+          >
             Search your blog
           </label>
 
-          <div
-            className={`mt-2 flex items-center gap-2 bg-[#121212] px-3 py-2 rounded-full pb-2  ${RULE}`}
-          >
+          <div className="flex items-center gap-3 bg-gray-100 px-4 py-3.5 rounded-md focus-within:ring-2 focus-within:ring-black">
             <Search
-              className="h-4 w-4 shrink-0 text-[var(--muted)] "
+              className="h-5 w-5 text-gray-600 shrink-0"
               aria-hidden="true"
             />
             <input
@@ -97,16 +86,16 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="title, keyword…"
+              placeholder="Title, keyword…"
               aria-label="Search articles"
-              className="w-full min-w-0  text-[15px] text-[var(--head)] placeholder:text-[var(--muted)] focus:outline-none"
+              className="w-full bg-transparent text-base text-black placeholder:text-gray-500 focus:outline-none"
             />
             {search && (
               <button
                 type="button"
                 onClick={() => setSearch("")}
                 aria-label="Clear search"
-                className={`shrink-0 text-[var(--muted)] transition-colors hover:text-[var(--accent)] ${FOCUS}`}
+                className="shrink-0 p-1 text-gray-500 hover:text-black bg-gray-200 hover:bg-gray-300 rounded-sm"
               >
                 <X className="h-4 w-4" aria-hidden="true" />
               </button>
@@ -114,57 +103,49 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
           </div>
 
           {search && (
-            <p className={`mt-3 ${MONO}`}>
+            <p className="mt-4 text-sm font-bold text-gray-500 uppercase tracking-widest">
               {totalResults === 0
-                ? "no results"
-                : `${totalResults} result${totalResults === 1 ? "" : "s"}`}
+                ? "No results found"
+                : `${totalResults} result${totalResults === 1 ? "" : "s"} found`}
             </p>
           )}
         </div>
 
         {/* ── Feed ─────────────────────────────────────── */}
-        <div className="mt-12">
+        <div>
           {filteredSections.length > 0 ? (
             filteredSections.map((section) => (
-              <section key={section.title} className="mb-12 last:mb-0">
-                <div
-                  className={`mb-1 flex items-baseline justify-between gap-4 border-b pb-2 ${RULE}`}
-                >
-                  <h2 className=" text-xl leading-snug font-semibold text-[var(--head)]">
+              <section key={section.title} className="mb-16 last:mb-0">
+                <div className="flex items-baseline justify-between gap-4 border-b border-gray-200 pb-3 mb-2">
+                  <h2 className="text-xl font-bold text-black">
                     {section.title}
                   </h2>
-                  <span className={`shrink-0 ${MONO}`}>
+                  <span className="text-sm font-bold uppercase tracking-widest text-gray-500">
                     {section.items.length}{" "}
                     {section.items.length === 1 ? "entry" : "entries"}
                   </span>
                 </div>
 
-                <ul>
+                <ul className="flex flex-col">
                   {section.items.map((item) => (
                     <li
                       key={item.slug}
-                      className={`border-b last:border-b-0 ${RULE}`}
+                      className="border-b border-gray-200 last:border-b-0"
                     >
                       <Link
                         href={`/blogs/${item.slug}`}
-                        className={`group block py-5 ${FOCUS}`}
+                        className="group block py-8 focus:outline-none"
                       >
-                        <h3 className=" text-lg leading-snug text-[var(--head)] font-semibold transition-colors group-hover:text-blue-300">
+                        <h3 className="text-[22px] font-bold text-black leading-snug mb-3 group-hover:underline decoration-2 underline-offset-4">
                           {item.title}
                         </h3>
 
-                        <p className="mt-1.5 line-clamp-2 text-[15px] leading-7 text-[var(--muted)]">
+                        <p className="text-[17px] leading-8 text-gray-800 line-clamp-2 mb-4">
                           {item.description}
                         </p>
 
-                        <span className="mt-2 inline-flex items-center gap-1.5 text-[15px] text-blue-500 font-medium transition-colors group-hover:text-blue-300">
-                          Read
-                          <span
-                            aria-hidden="true"
-                            className="transition-transform duration-200 group-hover:translate-x-0.5"
-                          >
-                            →
-                          </span>
+                        <span className="inline-flex items-center gap-1.5 text-base font-bold text-black">
+                          Read Article <ArrowRight className="h-4 w-4" />
                         </span>
                       </Link>
                     </li>
@@ -174,19 +155,19 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
             ))
           ) : (
             /* ── Empty state ──────────────────────────── */
-            <div className="py-16 text-center">
-              <p className=" text-lg text-[var(--head)]">
+            <div className="py-16 text-center border border-gray-200 rounded-md bg-gray-50">
+              <p className="text-xl font-bold text-black mb-2">
                 No matching articles
               </p>
-              <p className="mx-auto mt-2 max-w-sm text-[15px] leading-7 text-[var(--muted)]">
+              <p className="text-[17px] text-gray-800 mb-6">
                 Nothing matched &ldquo;{search}&rdquo;. Try a different keyword.
               </p>
               <button
                 type="button"
                 onClick={() => setSearch("")}
-                className={`mt-5 text-[13px] text-[var(--accent)] underline decoration-1 underline-offset-4 transition-colors hover:text-[var(--accent-hover)] ${FOCUS}`}
+                className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-md text-base font-medium"
               >
-                clear filter
+                Clear Search Filter
               </button>
             </div>
           )}

@@ -161,6 +161,23 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Home | Cloudkinshuk",
   description: "Kinshuk Jain's personal portfolio and blog site.",
+
+  icons: {
+    icon: [
+      {
+        url: "/homelogo.png",
+        type: "image/png",
+        sizes: "32x32",
+      },
+    ],
+    apple: [
+      {
+        url: "/homelogo.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

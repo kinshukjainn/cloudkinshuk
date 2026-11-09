@@ -8,26 +8,26 @@ Live example: **[https://cloudkinshuk.in](https://cloudkinshuk.in)** (replace wi
 
 ## ✨ Features
 
-* ⚡ **Next.js 16 (App Router)** for high performance and SEO
-* 🎨 **Tailwind CSS 4** for utility‑first, scalable styling
-* 🧩 **TypeScript** for type safety and maintainability
-* 🎞 **Framer Motion** for smooth, modern animations
-* 📱 **Fully responsive** (mobile, tablet, desktop)
-* 🧠 **Reusable components** and clean folder structure
-* 🚀 **Production‑ready** and easily deployable on Vercel
+- ⚡ **Next.js 16 (App Router)** for high performance and SEO
+- 🎨 **Tailwind CSS 4** for utility‑first, scalable styling
+- 🧩 **TypeScript** for type safety and maintainability
+- 🎞 **Framer Motion** for smooth, modern animations
+- 📱 **Fully responsive** (mobile, tablet, desktop)
+- 🧠 **Reusable components** and clean folder structure
+- 🚀 **Production‑ready** and easily deployable on Vercel
 
 ---
 
 ## 🛠 Tech Stack
 
-* **Framework:** Next.js 16.1.6
-* **UI Library:** React 19.2.3
-* **Language:** TypeScript 5
-* **Styling:** Tailwind CSS 4, tailwindcss-animate
-* **Animations:** Framer Motion
-* **Icons:** lucide-react, react-icons
-* **HTTP Client:** Axios
-* **Linting:** ESLint (Next.js config)
+- **Framework:** Next.js 16.1.6
+- **UI Library:** React 19.2.3
+- **Language:** TypeScript 5
+- **Styling:** Tailwind CSS 4, tailwindcss-animate
+- **Animations:** Framer Motion
+- **Icons:** lucide-react, react-icons
+- **HTTP Client:** Axios
+- **Linting:** ESLint (Next.js config)
 
 ---
 
@@ -39,8 +39,8 @@ Follow these steps to run the project locally.
 
 Make sure you have the following installed:
 
-* **Node.js** ≥ 18
-* **npm / yarn / pnpm / bun**
+- **Node.js** ≥ 18
+- **npm / yarn / pnpm / bun**
 
 Check versions:
 
@@ -108,22 +108,22 @@ After cloning, you can easily personalize it:
 
 ### 🔹 Update Content
 
-* Edit `app/page.tsx` – main landing content
-* Update components inside `components/`
-* Replace images and assets in `public/`
+- Edit `app/page.tsx` – main landing content
+- Update components inside `components/`
+- Replace images and assets in `public/`
 
 ### 🔹 Update Metadata & SEO
 
 Modify `app/layout.tsx`:
 
-* Title
-* Description
-* Open Graph tags
+- Title
+- Description
+- Open Graph tags
 
 ### 🔹 Styling
 
-* Tailwind styles: `globals.css`
-* Tailwind config: `tailwind.config.ts`
+- Tailwind styles: `globals.css`
+- Tailwind config: `tailwind.config.ts`
 
 ---
 
@@ -141,7 +141,7 @@ This creates an optimized production build.
 ## ☁️ Deployment (Vercel – Recommended)
 
 ```bash
-You can use AWS ( Amazon Web Services) , Azure , GCP any cloud services you prefer. For mine i have deployed it on aws as it my prefered cloud platform. 
+You can use AWS ( Amazon Web Services) , Azure , GCP any cloud services you prefer. For mine i have deployed it on aws as it my prefered cloud platform.
 
 Thank You.
 
@@ -195,7 +195,7 @@ This project is **open‑source** and available under the **MIT License**.
 Cloud & Frontend Developer
 🌐 [https://cloudkinshuk.in](https://cloudkinshuk.in)
 💼 AWS | React | Next.js | TypeScript
-🌐 [https://cloudkinshuk.in/home-blog](https://cloudkinshuk.in)
+🌐 [https://cloudkinshuk.in/blogs](https://cloudkinshuk.in)
 💼 | Articles | Thoughts | Blogs | Aws SRM
 
 ---

@@ -1,8 +1,8 @@
 # Kosha — Your Personal Cloud Storage
 
-A real cloud storage platform  where your files never touch my server.
+A real cloud storage platform where your files never touch my server.
 
-Not a tutorial clone. Not a Firebase wrapper. A from-scratch reverse-engineering of the architecture behind Dropbox and Google Drive  built by a student to actually understand how the real thing works.
+Not a tutorial clone. Not a Firebase wrapper. A from-scratch reverse-engineering of the architecture behind Dropbox and Google Drive built by a student to actually understand how the real thing works.
 
 **Stack:** Next.js 16 · TypeScript 5 · React 19 · AWS S3 · PostgreSQL (NeonDB) · Clerk · Tailwind CSS 4
 
@@ -14,7 +14,7 @@ Not a tutorial clone. Not a Firebase wrapper. A from-scratch reverse-engineering
 
 Every cloud storage tutorial online stores files on the server, drops them in a folder, and calls it done. That breaks the moment two users sign up.
 
-I wanted to understand how the *real* thing works — the architecture serving billions of files without melting. So I built it properly.
+I wanted to understand how the _real_ thing works — the architecture serving billions of files without melting. So I built it properly.
 
 ---
 
@@ -50,26 +50,26 @@ The server's job is just to be the **gatekeeper and bookkeeper** — never the p
 ## Highlights
 
 - **Zero-touch uploads** — files travel browser → S3 directly via presigned URLs that self-destruct in 60 seconds.
-- **Quota enforcement** — per-user storage and file-count limits are checked *before* the presigned URL is issued, not after the upload.
+- **Quota enforcement** — per-user storage and file-count limits are checked _before_ the presigned URL is issued, not after the upload.
 - **Plan tiers via reference table** — limits live in a `plans` table, not hardcoded per-row. Migrating tiers means one row change, not a backfill.
 - **Atomic storage accounting** — verification, file record insert, and storage-counter update happen in a single PostgreSQL transaction. No drift.
-- **Orphaned-file cleanup** — when a user deletes their account, a Clerk webhook purges every S3 object under their prefix *before* the database cascade fires. Order matters: delete the references first and you've lost the map to the files.
+- **Orphaned-file cleanup** — when a user deletes their account, a Clerk webhook purges every S3 object under their prefix _before_ the database cascade fires. Order matters: delete the references first and you've lost the map to the files.
 - **Search** — fuzzy client-side search over file metadata via Fuse.js.
 
 ---
 
 ## Tech Stack
 
-| Layer           | Choice                                   |
-| --------------- | ---------------------------------------- |
-| Framework       | Next.js 16 (App Router) + React 19       |
-| Language        | TypeScript                               |
-| Auth & webhooks | Clerk + Svix                             |
-| Storage         | AWS S3 (presigned PUT)                   |
-| Database        | NeonDB (serverless PostgreSQL)           |
-| Styling         | Tailwind CSS v4                          |
-| Animation       | Framer Motion                            |
-| Search          | Fuse.js                                  |
+| Layer           | Choice                             |
+| --------------- | ---------------------------------- |
+| Framework       | Next.js 16 (App Router) + React 19 |
+| Language        | TypeScript                         |
+| Auth & webhooks | Clerk + Svix                       |
+| Storage         | AWS S3 (presigned PUT)             |
+| Database        | NeonDB (serverless PostgreSQL)     |
+| Styling         | Tailwind CSS v4                    |
+| Animation       | Framer Motion                      |
+| Search          | Fuse.js                            |
 
 ---
 
@@ -156,13 +156,13 @@ npm run lint     # eslint
 
 ## A Note on AI
 
-I used AI heavily building this — specifically Claude. But not the way people assume. I didn't paste *"build me a Google Drive"* and copy the output. That doesn't work for something like this.
+I used AI heavily building this — specifically Claude. But not the way people assume. I didn't paste _"build me a Google Drive"_ and copy the output. That doesn't work for something like this.
 
-I'd hit a wall  understanding presigned URLs, or chasing down why my storage counter was drifting  and dump my actual code into the conversation asking *"what's wrong here?"* It would spot the architectural flaw I was too close to see. The migration from hardcoded limits to a `plans` reference table came from a conversation where I explained my problem and got walked through *why* a reference table beats per-row limits. The orphaned-files fix was the same  I described the symptom, got the root cause back.
+I'd hit a wall understanding presigned URLs, or chasing down why my storage counter was drifting and dump my actual code into the conversation asking _"what's wrong here?"_ It would spot the architectural flaw I was too close to see. The migration from hardcoded limits to a `plans` reference table came from a conversation where I explained my problem and got walked through _why_ a reference table beats per-row limits. The orphaned-files fix was the same I described the symptom, got the root cause back.
 
-**AI didn't build this. I did.** AI was the senior engineer I didn't have access to  available at 2 AM when I was stuck, patient enough to explain concepts three different ways, honest enough to say my first approach was bad.
+**AI didn't build this. I did.** AI was the senior engineer I didn't have access to available at 2 AM when I was stuck, patient enough to explain concepts three different ways, honest enough to say my first approach was bad.
 
-If you're a student thinking about building: stop watching tutorials. Pick a real product, figure out *why* it works the way it does, and rebuild it. Use AI as a thinking partner, not a vending machine. That's where the learning lives.
+If you're a student thinking about building: stop watching tutorials. Pick a real product, figure out _why_ it works the way it does, and rebuild it. Use AI as a thinking partner, not a vending machine. That's where the learning lives.
 
 Full write-up → [How I built this](https://cloudkinshuk.in/home-blog/blogG)
 
@@ -184,4 +184,12 @@ MIT — do whatever, just don't sell it as your own.
 
 ---
 
-*Built by [Kinshuk Jain](https://cloudkinshuk.in) · The app is live. The code is real. I understand every line because I fought for each one.*
+_Built by [Kinshuk Jain](https://cloudkinshuk.in) · The app is live. The code is real. I understand every line because I fought for each one._
+
+## Written by
+
+**Kinshuk Jain**
+
+- Website — [cloudkinshuk.in](https://cloudkinshuk.in)
+- LinkedIn — [linkedin.com/in/kinshukjainn](https://www.linkedin.com/in/kinshukjainn/)
+- X (Twitter) — [@realkinshuk004](https://x.com/realkinshuk004)

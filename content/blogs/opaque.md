@@ -4,7 +4,6 @@ slug: opaque
 description: This is the deep project documentation of opaque
 ---
 
-
 A zero-knowledge, end-to-end encrypted password vault built on Next.js, Clerk, and Neon.
 
 opaque is built around one simple promise: **the server never sees your secrets.** Titles, usernames, passwords, URLs, notes even the name of the service get encrypted in your browser before they ever leave it. The backend only ever stores opaque ciphertext and IV blobs that it cannot read.
@@ -161,3 +160,11 @@ opaque leans entirely on client-side cryptography. The master password and recov
 ## License
 
 MIT. See `LICENSE` for details.
+
+## Written by
+
+**Kinshuk Jain**
+
+- Website — [cloudkinshuk.in](https://cloudkinshuk.in)
+- LinkedIn — [linkedin.com/in/kinshukjainn](https://www.linkedin.com/in/kinshukjainn/)
+- X (Twitter) — [@realkinshuk004](https://x.com/realkinshuk004)

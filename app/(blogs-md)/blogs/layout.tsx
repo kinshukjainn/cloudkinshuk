@@ -1,8 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blogs, Articles | Cloudkinshuk",
+  title: " Blogs | Cloudkinshuk",
   description: "Read our latest thoughts and articles.",
+  icons: {
+    icon: [
+      {
+        url: "/blogslogo.png",
+        type: "image/png",
+      },
+    ],
+  },
+  openGraph: {
+    title: " Blogs | Cloudkinshuk.in",
+    description: "Kinshuk Jain's portfolio and blog.",
+    images: ["/blogslogo.png"],
+  },
 };
 
 export default function BlogLayout({

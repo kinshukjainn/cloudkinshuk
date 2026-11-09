@@ -1,11 +1,8 @@
 ---
-
 title: Different architectures in AWS I have been using for my projects
 slug: infra-service
 description: This article shows how I have been using AWS services in my projects from an infrastructure and cost-optimization perspective.
 ---
-
-# Different architectures in AWS I have been using for my projects
 
 When I started building applications with AWS, I initially looked at cloud services mainly as tools that I could connect to my application. Over time, I started looking at them differently.
 
@@ -21,7 +18,7 @@ This article is not about describing my projects one by one. Instead, I want to 
 
 ---
 
-# 1. Amazon S3 — My storage layer
+## 1. Amazon S3 : My storage layer
 
 One of the AWS services I have used most directly is **Amazon S3**.
 
@@ -57,7 +54,7 @@ Instead, I prefer the architecture where the browser communicates directly with 
 
 ---
 
-# 2. Presigned URLs — Removing file traffic from the application
+## 2. Presigned URLs : Removing file traffic from the application
 
 One of the most useful patterns I have implemented with S3 is **direct browser-to-S3 uploads using presigned URLs**.
 
@@ -103,7 +100,7 @@ It also means that storage and application compute can scale independently.
 
 ---
 
-# 3. AWS Lambda — Compute without maintaining servers
+## 3. AWS Lambda — Compute without maintaining servers
 
 Another service I use heavily is **AWS Lambda**.
 
@@ -133,7 +130,7 @@ In my fault detection system, I used Lambda together with API Gateway and CloudW
 
 ---
 
-# 4. Lambda from a cost perspective
+## 4. Lambda from a cost perspective
 
 Cost is one of the reasons I prefer serverless architecture for many of my smaller applications.
 
@@ -174,7 +171,7 @@ The important principle is:
 
 ---
 
-# 5. API Gateway — The entry point for backend APIs
+## 5. API Gateway — The entry point for backend APIs
 
 When Lambda becomes the compute layer, I need something that can expose those functions as APIs.
 
@@ -213,7 +210,7 @@ From an infrastructure perspective, I prefer this separation because API managem
 
 ---
 
-# 6. API Gateway + Lambda is a useful serverless boundary
+## 6. API Gateway + Lambda is a useful serverless boundary
 
 I usually think of API Gateway and Lambda as a pair.
 
@@ -255,7 +252,7 @@ This separation becomes very useful when monitoring and debugging.
 
 ---
 
-# 7. AWS Amplify — Simplifying application deployment
+## 7. AWS Amplify — Simplifying application deployment
 
 I have also used **AWS Amplify** for deploying my web applications.
 
@@ -281,7 +278,7 @@ This is particularly useful for personal projects because I can keep my infrastr
 
 ---
 
-# 8. Why I don't put everything on one server
+## 8. Why I don't put everything on one server
 
 One of the biggest architectural decisions I have gradually moved toward is **separating responsibilities**.
 
@@ -326,7 +323,7 @@ This separation is one of the main reasons I prefer cloud-native architectures.
 
 ---
 
-# 9. Amazon CloudFront — Putting a distribution layer in front
+## 9. Amazon CloudFront : Putting a distribution layer in front
 
 Another service in my AWS skill set is **Amazon CloudFront**.
 
@@ -350,10 +347,10 @@ Instead of every request always going directly to the origin, CloudFront can ser
 
 From an infrastructure perspective, this can improve:
 
-* Latency
-* Content delivery performance
-* Origin load
-* Scalability
+- Latency
+- Content delivery performance
+- Origin load
+- Scalability
 
 But I don't treat CloudFront as something I automatically add to every application.
 
@@ -361,7 +358,7 @@ If an application is tiny and the additional complexity does not provide a meani
 
 ---
 
-# 10. Route 53 — Connecting domains to infrastructure
+## 10. Route 53 : Connecting domains to infrastructure
 
 I use **Amazon Route 53** as the DNS layer for applications.
 
@@ -387,7 +384,7 @@ This also gives me flexibility because the infrastructure behind the domain can 
 
 ---
 
-# 11. IAM — The service I don't want to ignore
+## 11. IAM : The service I don't want to ignore
 
 If there is one AWS service that affects almost every other AWS service, it is **IAM**.
 
@@ -422,7 +419,7 @@ This is both a security principle and an architectural principle.
 
 ---
 
-# 12. Least privilege as an infrastructure decision
+## 12. Least privilege as an infrastructure decision
 
 I try to think about IAM permissions as part of the architecture rather than something I configure at the end.
 
@@ -460,7 +457,7 @@ The second approach may make development easier temporarily, but it creates unne
 
 ---
 
-# 13. CloudWatch — Observability rather than just logging
+## 13. CloudWatch — Observability rather than just logging
 
 I use **Amazon CloudWatch** as the monitoring and observability layer in my AWS architecture.
 
@@ -499,7 +496,7 @@ This creates an interesting relationship between the application and the infrast
 
 ---
 
-# 14. Amazon Bedrock — AI as another infrastructure component
+## 14. Amazon Bedrock — AI as another infrastructure component
 
 For my AI-oriented work, I have also used **Amazon Bedrock**.
 
@@ -530,7 +527,7 @@ That fits the same architectural philosophy I use elsewhere:
 
 ---
 
-# 15. Combining the services
+## 15. Combining the services
 
 Once these services are considered individually, they start forming a larger infrastructure pattern.
 
@@ -586,7 +583,7 @@ Rather, these are building blocks that I choose depending on the problem I am so
 
 ---
 
-# 16. Cost optimization is about avoiding unnecessary infrastructure
+## 16. Cost optimization is about avoiding unnecessary infrastructure
 
 When I think about cost optimization, I don't think only about finding the cheapest AWS service.
 
@@ -606,7 +603,7 @@ This leads to a general principle:
 
 ---
 
-# 17. But "serverless = cheap" is not always true
+## 17. But "serverless = cheap" is not always true
 
 I also don't think serverless should automatically be considered the cheapest option.
 
@@ -626,7 +623,7 @@ It is:
 
 ---
 
-# 18. Why I prefer managed services
+## 18. Why I prefer managed services
 
 One pattern that appears repeatedly in my AWS architecture is the use of managed services.
 
@@ -663,17 +660,17 @@ It changes where the engineering effort goes.
 
 Instead of spending most of my time maintaining infrastructure, I can focus more on:
 
-* Application logic
-* Security
-* Data flow
-* Reliability
-* User requirements
-* Observability
-* Architecture
+- Application logic
+- Security
+- Data flow
+- Reliability
+- User requirements
+- Observability
+- Architecture
 
 ---
 
-# 19. Infrastructure should follow the application requirement
+## 19. Infrastructure should follow the application requirement
 
 One thing I have learned from working with these services is that there is no single "AWS architecture."
 
@@ -729,7 +726,7 @@ The services are not the architecture by themselves.
 
 ---
 
-# 20. What I have learned from building this way
+## 20. What I have learned from building this way
 
 The biggest change in my thinking has been moving from:
 
@@ -757,7 +754,7 @@ That separation makes the system easier to reason about.
 
 ---
 
-# Final thoughts
+## Final thoughts
 
 The AWS services I have been using are not just a collection of technologies that I put on my resume. Each one represents a particular infrastructure decision.
 

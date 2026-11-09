@@ -6,22 +6,26 @@ export const navigation: NavSection[] = [
     title: "Blogs",
     items: [
       {
+        title: "MY internship at UPPTCL",
+        slug: "upptcl-exp",
+      },
+      {
         title: "How i use ai in my development and workspace",
         slug: "ai-view",
       },
-      {
-        title:
-          "Different archietecture in aws i have been using for my projects",
-        slug: "infra-service",
-      },
+      // {
+      //   title:
+      //     "Different archietecture in aws i have been using for my projects",
+      //   slug: "infra-service",
+      // },
       {
         title: "Right way to clear AWS certification",
         slug: "aws-ccp-exam",
       },
-      {
-        title: "Why Postgress SQL Became My Go-To Database",
-        slug: "db-sql",
-      },
+      // {
+      //   title: "Why Postgress SQL Became My Go-To Database",
+      //   slug: "db-sql",
+      // },
       {
         title: "How Instagram Is Engineered Under The Hood",
         slug: "how-instagram-is-engineered-under-the-hood",
@@ -38,28 +42,14 @@ export const navigation: NavSection[] = [
         title: " The AWS Shared Responsibility Model Explained",
         slug: "the-aws-shared-responsibility-model-explained",
       },
-      {
-        title: " I Built My Own Google Drive. Here's How It Actually Works.",
-        slug: "google-drive",
-      },
-      {
-        title: " The Power of Blogging: Why I'm Committed to Sharing Knowledge",
-        slug: "the-power-of-blogging-why-im-committed-to-sharing-knowledge",
-      },
-    ],
-  },
-  {
-    title: "Projects Description",
-    items: [
-      { title: "Kosha : Your Person Cloud Storage System", slug: "kosha" },
-      {
-        title: "opaque : Your personal password manager",
-        slug: "opaque",
-      },
-      {
-        title: "My custom terminal theme called kijauk",
-        slug: "kijauktheme",
-      },
+      // {
+      //   title: " I Built My Own Google Drive. Here's How It Actually Works.",
+      //   slug: "google-drive",
+      // },
+      // {
+      //   title: " The Power of Blogging: Why I'm Committed to Sharing Knowledge",
+      //   slug: "the-power-of-blogging-why-im-committed-to-sharing-knowledge",
+      // },
     ],
   },
 ];

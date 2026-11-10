@@ -157,26 +157,46 @@ const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   display: "swap",
 });
-
 export const metadata: Metadata = {
-  title: "Home | Cloudkinshuk",
-  description: "Kinshuk Jain's personal portfolio and blog site.",
+  title: "Blogs | Cloudkinshuk.in",
+  description: "Kinshuk Jain's portfolio and blog.",
 
   icons: {
     icon: [
       {
-        url: "/homelogo.png",
-        type: "image/png",
-        sizes: "32x32",
+        url: "/homfavicon.ico",
+        type: "image/x-icon",
       },
-    ],
-    apple: [
       {
         url: "/homelogo.png",
+        type: "image/png",
+      },
+    ],
+    shortcut: "/homfavicon.ico",
+    apple: [
+      {
+        url: "/homeslogo.png",
         sizes: "180x180",
         type: "image/png",
       },
     ],
+  },
+
+  openGraph: {
+    title: "Home | Cloudkinshuk.in",
+    description: "Kinshuk Jain's portfolio and blog",
+    url: "https://cloudkinshuk.in/blogs",
+    siteName: "Cloudkinshuk",
+    images: [
+      {
+        url: "/homelogo.png",
+        width: 1200,
+        height: 630,
+        alt: "Cloudkinshuk Homepage",
+      },
+    ],
+    locale: "en_IN",
+    type: "website",
   },
 };
 

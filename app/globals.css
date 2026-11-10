@@ -150,7 +150,7 @@
 
 body {
   background-color: white;
-  font-family: var(--font-verdana), serif;
+  font-family: var(--font-segoeui), sans-serif;
 }
 
 .monofont {

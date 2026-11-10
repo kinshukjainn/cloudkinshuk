@@ -1,20 +1,45 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: " Blogs | Cloudkinshuk",
-  description: "Read our latest thoughts and articles.",
+  title: "Blogs | Cloudkinshuk.in",
+  description: "Kinshuk Jain's portfolio and blog.",
+
   icons: {
     icon: [
+      {
+        url: "/blogsfavicon.ico",
+        type: "image/x-icon",
+      },
       {
         url: "/blogslogo.png",
         type: "image/png",
       },
     ],
+    shortcut: "/blogsfavicon.ico",
+    apple: [
+      {
+        url: "/blogslogo.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
+    ],
   },
+
   openGraph: {
-    title: " Blogs | Cloudkinshuk.in",
+    title: "Blogs | Cloudkinshuk.in",
     description: "Kinshuk Jain's portfolio and blog.",
-    images: ["/blogslogo.png"],
+    url: "https://cloudkinshuk.in/blogs",
+    siteName: "Cloudkinshuk",
+    images: [
+      {
+        url: "/blogslogo.png",
+        width: 1200,
+        height: 630,
+        alt: "Cloudkinshuk Blogs",
+      },
+    ],
+    locale: "en_IN",
+    type: "website",
   },
 };
 

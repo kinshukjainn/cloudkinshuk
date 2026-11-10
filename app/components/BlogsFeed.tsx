@@ -41,12 +41,12 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
       <main className="mx-auto w-full max-w-[700px] px-6 py-16 sm:py-24">
         {/* ── Header ───────────────────────────────────── */}
         <header className="mb-10">
-          <p className="text-sm font-bold uppercase tracking-widest text-gray-500 mb-4">
+          <p className="text-sm font-medium uppercase tracking-widest text-gray-500 mb-4">
             Blogs • {totalArticles}{" "}
             {totalArticles === 1 ? "Article" : "Articles"}
           </p>
 
-          <h1 className="text-3xl font-bold text-black tracking-tight mb-4">
+          <h1 className="text-5xl font-thin text-black tracking-tight mb-4">
             Blogs, Notes & Thoughts
           </h1>
 
@@ -57,7 +57,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
 
         {/* ── Content Advisory (Professional Editorial Callout) */}
         <div className="border-l-4 border-black bg-gray-50 p-6 mb-12">
-          <h2 className="flex items-center gap-2 text-lg font-bold text-black mb-2">
+          <h2 className="flex items-center gap-2 text-lg font-medium text-black mb-2">
             <AlertCircle className="h-5 w-5" />
             Content Removed
           </h2>
@@ -71,7 +71,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
         <div className="mb-16">
           <label
             htmlFor="blog-search"
-            className="block text-base font-bold text-black mb-3"
+            className="block text-base font-medium text-black mb-3"
           >
             Search your blog
           </label>
@@ -103,7 +103,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
           </div>
 
           {search && (
-            <p className="mt-4 text-sm font-bold text-gray-500 uppercase tracking-widest">
+            <p className="mt-4 text-sm font-medium text-gray-500 uppercase tracking-widest">
               {totalResults === 0
                 ? "No results found"
                 : `${totalResults} result${totalResults === 1 ? "" : "s"} found`}
@@ -117,10 +117,10 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
             filteredSections.map((section) => (
               <section key={section.title} className="mb-16 last:mb-0">
                 <div className="flex items-baseline justify-between gap-4 border-b border-gray-200 pb-3 mb-2">
-                  <h2 className="text-xl font-bold text-black">
+                  <h2 className="text-xl font-medium text-black">
                     {section.title}
                   </h2>
-                  <span className="text-sm font-bold uppercase tracking-widest text-gray-500">
+                  <span className="text-sm font-medium uppercase tracking-widest text-gray-500">
                     {section.items.length}{" "}
                     {section.items.length === 1 ? "entry" : "entries"}
                   </span>
@@ -136,7 +136,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
                         href={`/blogs/${item.slug}`}
                         className="group block py-8 focus:outline-none"
                       >
-                        <h3 className="text-[22px] font-bold text-black leading-snug mb-3 group-hover:underline decoration-2 underline-offset-4">
+                        <h3 className="text-[22px] font-medium text-black leading-snug mb-3 group-hover:underline decoration-2 underline-offset-4">
                           {item.title}
                         </h3>
 
@@ -144,7 +144,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
                           {item.description}
                         </p>
 
-                        <span className="inline-flex items-center gap-1.5 text-base font-bold text-black">
+                        <span className="inline-flex items-center gap-1.5 text-base font-medium text-black">
                           Read Article <ArrowRight className="h-4 w-4" />
                         </span>
                       </Link>
@@ -156,7 +156,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
           ) : (
             /* ── Empty state ──────────────────────────── */
             <div className="py-16 text-center border border-gray-200 rounded-md bg-gray-50">
-              <p className="text-xl font-bold text-black mb-2">
+              <p className="text-xl font-medium text-black mb-2">
                 No matching articles
               </p>
               <p className="text-[17px] text-gray-800 mb-6">

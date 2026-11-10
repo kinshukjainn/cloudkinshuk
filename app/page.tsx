@@ -104,7 +104,7 @@ const CONFIG = {
       title: "Kosha : Your Personal Cloud Storage Platform",
       year: "2026",
       status: "Live",
-      type: "Cloud Storage SaaS",
+      type: "Cloud Storage Platform",
       description: [
         "Kosha is a personal cloud storage platform built with React, TypeScript, Tailwind CSS, and Nextjs as the framework, and NeonDB, AWS S3, Clerk Auth on the backend. It allows users to upload, manage, and organize their files in a secure and user-friendly interface.",
       ],
@@ -205,7 +205,7 @@ const TABS: { id: TabId; label: string; icon: React.ElementType }[] = [
 function ExperiencePanel() {
   return (
     <div className="py-4">
-      <h2 className="text-2xl font-bold text-black mb-1">
+      <h2 className="text-2xl font-semibold text-black mb-1">
         UPPTCL — Uttar Pradesh Power Transmission Corporation Limited
       </h2>
       <p className="text-base font-semibold text-gray-700 mb-6">
@@ -222,7 +222,7 @@ function ExperiencePanel() {
       </p>
 
       <Link
-        className="inline-flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-full text-base font-medium"
+        className="inline-flex items-center gap-2 bg-green-400 text-black px-5 py-1 rounded-xl text-base font-medium"
         href="/blogs/upptcl-exp"
       >
         <BookOpen className="h-5 w-5" />
@@ -240,15 +240,15 @@ function ProjectsPanel() {
           key={project.title}
           className="pb-12 border-b border-gray-200 last:border-0 last:pb-0"
         >
-          <h2 className="text-2xl font-bold text-black mb-2">
+          <h2 className="text-2xl font-semibold text-black mb-2">
             {project.title}
           </h2>
 
           <div className="flex flex-wrap items-center gap-3 mb-6">
-            <span className="bg-gray-200 text-black px-3 py-1 rounded-sm text-sm font-semibold">
+            <span className="text-neutral-700 text-xs font-semibold">
               {project.type}
             </span>
-            <span className="bg-gray-200 text-black px-3 py-1 rounded-sm text-sm font-semibold">
+            <span className="text-neutral-700 text-xs font-semibold">
               {project.status}
             </span>
             <span className="text-gray-700 text-sm font-semibold">
@@ -263,7 +263,9 @@ function ProjectsPanel() {
           </div>
 
           <div className="mb-8">
-            <p className="text-base font-bold text-black mb-3">Technologies:</p>
+            <p className="text-base font-semibold text-black mb-3">
+              Technologies:
+            </p>
             <p className="text-[17px] text-gray-800 leading-relaxed">
               {project.technologies.join(" • ")}
             </p>
@@ -275,10 +277,10 @@ function ProjectsPanel() {
                 href={project.links.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-full text-base font-medium"
+                className="inline-flex items-center gap-2 bg-blue-800 text-white px-5 py-1 rounded-xl text-base font-normal"
               >
                 <ExternalLink className="h-5 w-5" />
-                View Live Site
+                Link
               </a>
             )}
             {project.links.repo && (
@@ -286,7 +288,7 @@ function ProjectsPanel() {
                 href={project.links.repo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-gray-200 text-black px-5 py-2.5 rounded-full text-base font-medium"
+                className="inline-flex items-center gap-2 bg-gray-300 text-black px-5 py-1 rounded-xl text-base font-medium"
               >
                 <Code2 className="h-5 w-5" />
                 Source Code
@@ -304,7 +306,7 @@ function SkillsPanel() {
     <div className="space-y-10">
       {Object.entries(CONFIG.skills).map(([category, skills]) => (
         <div key={category}>
-          <h3 className="text-lg font-bold text-black mb-3 pb-2 border-b border-gray-200">
+          <h3 className="text-lg font-semibold text-black mb-3 pb-2 border-b border-gray-200">
             {category}
           </h3>
           <p className="text-[17px] leading-8 text-gray-900">
@@ -326,7 +328,7 @@ function CertificationsPanel() {
         >
           <div className="flex items-start gap-3 mb-2">
             <BadgeCheck className="h-7 w-7 text-black shrink-0" />
-            <h2 className="text-2xl font-bold text-black">{cert.title}</h2>
+            <h2 className="text-2xl font-semibold text-black">{cert.title}</h2>
           </div>
 
           <p className="text-base font-semibold text-gray-700 mb-4 pl-10">
@@ -334,7 +336,7 @@ function CertificationsPanel() {
           </p>
 
           <p className="text-[17px] leading-8 text-gray-900 mb-6 pl-10">
-            <span className="font-bold">Skills evaluated:</span>{" "}
+            <span className="font-semibold">Skills evaluated:</span>{" "}
             {cert.skills.join(", ")}
           </p>
 
@@ -343,7 +345,7 @@ function CertificationsPanel() {
               href={cert.verifyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-gray-200 text-black px-5 py-2.5 rounded-full text-base font-medium"
+              className="inline-flex items-center gap-2 bg-gray-300 text-black px-5 py-1 rounded-xl text-base font-medium"
             >
               Verify Credential
             </a>
@@ -358,13 +360,15 @@ function EducationPanel() {
   const e = CONFIG.education;
   return (
     <div className="py-4">
-      <h2 className="text-2xl font-bold text-black mb-1">{e.institution}</h2>
+      <h2 className="text-2xl font-semibold text-black mb-1">
+        {e.institution}
+      </h2>
 
       <p className="text-base font-semibold text-gray-700 mb-6">
         {e.location} • {e.period}
       </p>
 
-      <p className="text-[19px] font-bold text-black mb-4">
+      <p className="text-[19px] font-semibold text-black mb-4">
         {e.degree} in {e.field}
       </p>
 
@@ -377,7 +381,7 @@ function EducationPanel() {
         download
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-full text-base font-medium"
+        className="inline-flex items-center gap-2 bg-blue-400 text-black px-5 py-1 rounded-xl text-base font-medium"
       >
         <Download className="h-5 w-5" />
         Download Transcript (PDF)
@@ -409,12 +413,12 @@ export default function Home() {
               <img
                 src="/profile.jpg"
                 alt="Kinshuk Jain"
-                className="h-24 w-24 shrink-0 rounded-full object-cover bg-gray-100"
+                className="h-24 w-24 shrink-0 rounded-xl object-cover bg-gray-100"
                 onError={() => setProfileOk(false)}
               />
             )}
             <div>
-              <h1 className="text-3xl font-bold text-black tracking-tight mb-2">
+              <h1 className="text-5xl font-thin text-black tracking-tight mb-2">
                 Kinshuk Jain
               </h1>
               <p className="flex items-center gap-2 text-base font-semibold text-gray-700">
@@ -424,7 +428,7 @@ export default function Home() {
           </div>
 
           <div className="space-y-5 text-[18px] leading-8 text-gray-900 mb-10">
-            <p className="font-bold text-[20px]">{tagline}</p>
+            <p className="font-semibold text-[20px]">{tagline}</p>
             {bio.map((paragraph, i) => (
               <p key={i}>{paragraph}</p>
             ))}
@@ -440,7 +444,7 @@ export default function Home() {
                   href={s.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-gray-100 text-black px-4 py-2.5 rounded-full text-base font-medium hover:bg-gray-200 transition-none"
+                  className="inline-flex items-center gap-2  text-blue-800 hover:underline  px-4 py-1 rounded-xl text-base font-medium  transition-none"
                 >
                   <Icon className="h-5 w-5" />
                   {SOCIAL_LABEL[s.platform] ?? s.platform}
@@ -453,14 +457,14 @@ export default function Home() {
           <div className="flex flex-wrap items-center gap-4">
             <Link
               href="/myresumekinshuk.pdf"
-              className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full text-base font-medium"
+              className="inline-flex items-center gap-2 bg-blue-400 text-black px-6 py-2 rounded-xl text-base font-medium"
             >
               <Download className="h-5 w-5" />
               Download Resume (PDF)
             </Link>
             <Link
               href="/blogs"
-              className="inline-flex items-center gap-2 bg-gray-100 text-black px-6 py-3 rounded-full text-base font-medium"
+              className="inline-flex items-center gap-2 bg-green-300 text-black px-6 py-2 rounded-xl text-base font-medium"
             >
               <BookOpen className="h-5 w-5" />
               Read my Blogs
@@ -472,7 +476,7 @@ export default function Home() {
         <nav
           role="tablist"
           aria-label="Portfolio sections"
-          className="flex flex-wrap gap-x-8 gap-y-4 border-b border-gray-200 mb-10"
+          className="flex flex-wrap gap-x-2 gap-y-2  mb-10"
         >
           {TABS.map((t) => {
             const active = tab === t.id;
@@ -486,9 +490,9 @@ export default function Home() {
                 aria-controls={`panel-${t.id}`}
                 id={`tab-${t.id}`}
                 onClick={() => setTab(t.id)}
-                className={`flex items-center gap-2 px-2 text-base font-bold transition-none ${
+                className={`flex items-center gap-2 px-2 py-2 text-base font-medium cursor-pointer transition-none ${
                   active
-                    ? "text-black border-2 border-black rounded-full "
+                    ? "text-black  border-b-2 border-neutral-900 "
                     : "text-gray-500 hover:text-black"
                 }`}
               >

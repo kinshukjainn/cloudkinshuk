@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Search, X, ArrowRight, AlertCircle } from "lucide-react";
+import { Search, X, Sparkle } from "lucide-react";
 
 type Article = {
   title: string;
@@ -30,45 +30,26 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
     }))
     .filter((section) => section.items.length > 0);
 
-  const totalArticles = sections.reduce((acc, s) => acc + s.items.length, 0);
   const totalResults = filteredSections.reduce(
     (acc, s) => acc + s.items.length,
     0,
   );
 
   return (
-    <div className="min-h-screen bg-white text-black selection:bg-black selection:text-white">
-      <main className="mx-auto w-full max-w-[700px] px-6 py-16 sm:py-24">
+    <div className="min-h-screen bg-yellow-100 text-black selection:bg-black selection:text-white">
+      <main className="mx-auto w-full max-w-[700px] px-6 py-8 sm:py-14">
         {/* ── Header ───────────────────────────────────── */}
         <header className="mb-10">
-          <p className="text-sm font-medium uppercase tracking-widest text-gray-500 mb-4">
-            Blogs • {totalArticles}{" "}
-            {totalArticles === 1 ? "Article" : "Articles"}
-          </p>
-
-          <h1 className="text-5xl font-thin text-black tracking-tight mb-4">
-            Blogs, Notes & Thoughts
+          <h1 className="text-4xl font-thin text-black tracking-tight mb-4">
+            My writings
           </h1>
 
-          <p className="text-[18px] leading-8 text-gray-900">
+          <p className="text-[18px] leading-8 text-gray-700">
             Read my latest project descriptions, technical notes, and updates.
           </p>
         </header>
 
-        {/* ── Content Advisory (Professional Editorial Callout) */}
-        <div className="border-l-4 border-black bg-gray-50 p-6 mb-12">
-          <h2 className="flex items-center gap-2 text-lg font-medium text-black mb-2">
-            <AlertCircle className="h-5 w-5" />
-            Content Removed
-          </h2>
-          <p className="text-[17px] leading-relaxed text-gray-800">
-            Some blog post has been removed as they are being updated and few
-            parts will be removed. They will be available on 18th november 2026
-          </p>
-        </div>
-
-        {/* ── Search ───────────────────────────────────── */}
-        <div className="mb-16">
+        <div className="mb-12">
           <label
             htmlFor="blog-search"
             className="block text-base font-medium text-black mb-3"
@@ -76,7 +57,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
             Search your blog
           </label>
 
-          <div className="flex items-center gap-3 bg-gray-100 px-4 py-3.5 rounded-md focus-within:ring-2 focus-within:ring-black">
+          <div className="flex items-center gap-3 border-b-2 border-gray-700  px-4 py-1 ">
             <Search
               className="h-5 w-5 text-gray-600 shrink-0"
               aria-hidden="true"
@@ -116,37 +97,30 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
           {filteredSections.length > 0 ? (
             filteredSections.map((section) => (
               <section key={section.title} className="mb-16 last:mb-0">
-                <div className="flex items-baseline justify-between gap-4 border-b border-gray-200 pb-3 mb-2">
+                <div className="flex items-baseline justify-between gap-1  pb-3 mb-2">
                   <h2 className="text-xl font-medium text-black">
                     {section.title}
                   </h2>
                   <span className="text-sm font-medium uppercase tracking-widest text-gray-500">
                     {section.items.length}{" "}
-                    {section.items.length === 1 ? "entry" : "entries"}
+                    {section.items.length === 1 ? "Article" : "Articles"}
                   </span>
                 </div>
 
                 <ul className="flex flex-col">
                   {section.items.map((item) => (
-                    <li
-                      key={item.slug}
-                      className="border-b border-gray-200 last:border-b-0"
-                    >
+                    <li key={item.slug} className=" last:border-b-0">
                       <Link
                         href={`/blogs/${item.slug}`}
-                        className="group block py-8 focus:outline-none"
+                        className="group inline-flex items-start gap-2 py-1 text-left focus:outline-none"
                       >
-                        <h3 className="text-[22px] font-medium text-black leading-snug mb-3 group-hover:underline decoration-2 underline-offset-4">
+                        <Sparkle
+                          className="mt-1 fill-blue-800 h-4 w-4 shrink-0 text-blue-800 group-hover:text-blue-600 transition-colors"
+                          aria-hidden="true"
+                        />
+                        <h3 className="mb-3 text-[18px] font-normal leading-snug text-blue-800 underline decoration-blue-800 underline-offset-4">
                           {item.title}
                         </h3>
-
-                        <p className="text-[17px] leading-8 text-gray-800 line-clamp-2 mb-4">
-                          {item.description}
-                        </p>
-
-                        <span className="inline-flex items-center gap-1.5 text-base font-medium text-black">
-                          Read Article <ArrowRight className="h-4 w-4" />
-                        </span>
                       </Link>
                     </li>
                   ))}
@@ -165,7 +139,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
               <button
                 type="button"
                 onClick={() => setSearch("")}
-                className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-md text-base font-medium"
+                className="inline-flex items-center gap-2 bg-[#ff9100] text-black px-6 py-1 rounded-md text-base font-medium"
               >
                 Clear Search Filter
               </button>

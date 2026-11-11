@@ -150,7 +150,11 @@
 
 body {
   background-color: white;
-  font-family: var(--font-segoeui), sans-serif;
+  font-family: var(--font-roboto), sans-serif;
+}
+
+.headerheading {
+  font-family: var(--font-alegreya), sans-serif;
 }
 
 .monofont {

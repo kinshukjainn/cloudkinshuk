@@ -305,7 +305,7 @@ export default async function DocPage({ params }: Props) {
   );
 
   return (
-    <div className="min-h-screen bg-white text-black selection:bg-[#d0a869] blog-font  selection:text-[#0d0d0c]">
+    <div className="min-h-screen bg-yellow-100 text-black selection:bg-[#d0a869] blog-font  selection:text-[#0d0d0c]">
       <main className="mx-auto w-full max-w-[980px] px-5 py-12 sm:px-8 sm:py-16">
         {/* Back link */}
         <nav className="mb-10">

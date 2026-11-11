@@ -10,10 +10,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        ptSans: "var(--font-pt-sans) , sans-serif",
-        alegreya: "var(--font-alegreya) , serif",
         workSans: "var(--font-work-sans) , sans-serif",
         dmSans: "var(--font-dm-sans) , sans-serif",
+        ptSans: "var(--font-pt-sans) , sans-serif",
         cabinSketch: "var(--font-cabin-sketch) , cursive",
         openSans: "var(--font-open-sans) , cursive",
         rubik: "var(--font-rubik) sans-serif",
@@ -24,6 +23,7 @@ const config: Config = {
         geistSans: "var(--font-geist-sans) , sans-serif",
         segoeui: "var(--font-segoeui) , sans-serif",
         VarelaRound: "var(--font-varela-round) , sans-serif",
+        alegreya: "var(--font-alegreya) , serif",
         inter: "var(--font-inter), sans-serif",
         verdana: "var(--font-verdana) , sans-serif",
         lucidaSans: "var(--font-lucida-sans) , sans-serif",

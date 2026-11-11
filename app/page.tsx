@@ -17,7 +17,8 @@ import {
   Briefcase,
   ExternalLink,
   Cpu,
-  BadgeCheck,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 /* ── TYPES ──────────────────────────────────────────────── */
@@ -31,8 +32,20 @@ type Certification = {
   title: string;
   issuer: string;
   issued: string;
+  logo: string;
   skills: string[];
   verifyUrl: string;
+};
+
+type Project = {
+  title: string;
+  year: string;
+  status: string;
+  type: string;
+  images: string[];
+  description: string[];
+  technologies: string[];
+  links: { live: string | null; repo: string | null };
 };
 
 type TabId =
@@ -105,6 +118,7 @@ const CONFIG = {
       year: "2026",
       status: "Live",
       type: "Cloud Storage Platform",
+      images: ["/koshaimageone.png", "/koshasigninpage.png"],
       description: [
         "Kosha is a personal cloud storage platform built with React, TypeScript, Tailwind CSS, and Nextjs as the framework, and NeonDB, AWS S3, Clerk Auth on the backend. It allows users to upload, manage, and organize their files in a secure and user-friendly interface.",
       ],
@@ -151,6 +165,7 @@ const CONFIG = {
       year: "2025-26",
       status: "Live",
       type: "Security Tool",
+      images: ["/opaqueimageone.png", "/opaquedashboard.png"],
       description: [
         "Opaque is a modern, end-to-end encrypted password vault engineered for absolute privacy. By strictly separating authentication from decryption, your master key never leaves your browser's local memory. Say goodbye to cloud vulnerabilities and hello to a private ecosystem where the server remains a blind gatekeeper never a reader.",
       ],
@@ -170,7 +185,7 @@ const CONFIG = {
         repo: "https://github.com/kinshukjainn/opaque",
       },
     },
-  ],
+  ] as Project[],
   education: {
     degree: "Bachelor of Technology",
     field: "Electrical Engineering",
@@ -187,6 +202,7 @@ const CERTIFICATIONS: Certification[] = [
     title: "AWS Certified Cloud Practitioner",
     issuer: "Amazon Web Services",
     issued: "September 2026",
+    logo: "/aws.jpg",
     skills: ["Cloud Concepts", "AWS Core Services", "Billing & Pricing"],
     verifyUrl:
       "https://www.credly.com/badges/f42e01a4-b2d6-4069-8038-db78a81c81b5/public_url",
@@ -222,12 +238,58 @@ function ExperiencePanel() {
       </p>
 
       <Link
-        className="inline-flex items-center gap-2 bg-green-400 text-black px-5 py-1 rounded-xl text-base font-medium"
+        className="inline-flex items-center gap-2 bg-[#ff9100] text-black px-5 py-1 rounded-xs text-base font-medium"
         href="/blogs/upptcl-exp"
       >
         <BookOpen className="h-5 w-5" />
-        Read Full Experience
+        Read more..
       </Link>
+    </div>
+  );
+}
+
+/* ── PROJECT IMAGE BANNER (no animation, plain slide) ───── */
+function ProjectBanner({ images, title }: { images: string[]; title: string }) {
+  const [index, setIndex] = useState(0);
+
+  if (!images || images.length === 0) return null;
+
+  const total = images.length;
+  const prev = () => setIndex((i) => (i - 1 + total) % total);
+  const next = () => setIndex((i) => (i + 1) % total);
+
+  return (
+    <div className="relative w-full mb-6 border border-gray-200 bg-gray-100">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={images[index]}
+        alt={`${title} preview ${index + 1}`}
+        className="h-full w-full object-cover"
+      />
+
+      {total > 1 && (
+        <>
+          <button
+            type="button"
+            onClick={prev}
+            aria-label="Previous image"
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-gray-900 text-white p-1 rounded-sm cursor-pointer"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={next}
+            aria-label="Next image"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-900 text-white p-1 rounded-sm cursor-pointer"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+          <span className="absolute bottom-2 right-2 bg-gray-900 text-white text-xs font-semibold px-2 py-0.5 rounded-sm">
+            {index + 1} / {total}
+          </span>
+        </>
+      )}
     </div>
   );
 }
@@ -240,6 +302,8 @@ function ProjectsPanel() {
           key={project.title}
           className="pb-12 border-b border-gray-200 last:border-0 last:pb-0"
         >
+          <ProjectBanner images={project.images} title={project.title} />
+
           <h2 className="text-2xl font-semibold text-black mb-2">
             {project.title}
           </h2>
@@ -277,10 +341,10 @@ function ProjectsPanel() {
                 href={project.links.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-blue-800 text-white px-5 py-1 rounded-xl text-base font-normal"
+                className="inline-flex items-center gap-2 bg-[#ff9100] text-black px-5 py-1 rounded-xs text-base font-medium"
               >
                 <ExternalLink className="h-5 w-5" />
-                Link
+                check live project
               </a>
             )}
             {project.links.repo && (
@@ -288,10 +352,10 @@ function ProjectsPanel() {
                 href={project.links.repo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-gray-300 text-black px-5 py-1 rounded-xl text-base font-medium"
+                className="inline-flex items-center gap-2 bg-gray-900 text-white px-5 py-1 rounded-xs text-base font-medium"
               >
                 <Code2 className="h-5 w-5" />
-                Source Code
+                Github repository link
               </a>
             )}
           </div>
@@ -327,7 +391,14 @@ function CertificationsPanel() {
           className="pb-12 border-b border-gray-200 last:border-0 last:pb-0"
         >
           <div className="flex items-start gap-3 mb-2">
-            <BadgeCheck className="h-7 w-7 text-black shrink-0" />
+            {cert.logo && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={cert.logo}
+                alt={`${cert.issuer} logo`}
+                className="h-7 w-7 shrink-0 object-contain bg-gray-100"
+              />
+            )}
             <h2 className="text-2xl font-semibold text-black">{cert.title}</h2>
           </div>
 
@@ -345,7 +416,7 @@ function CertificationsPanel() {
               href={cert.verifyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-gray-300 text-black px-5 py-1 rounded-xl text-base font-medium"
+              className="inline-flex items-center gap-2 bg-[#ff9100] text-black px-5 py-1 rounded-sm text-base font-medium"
             >
               Verify Credential
             </a>
@@ -376,16 +447,28 @@ function EducationPanel() {
         {e.description}
       </p>
 
-      <a
-        href="/2200910200015.pdf"
-        download
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 bg-blue-400 text-black px-5 py-1 rounded-xl text-base font-medium"
-      >
-        <Download className="h-5 w-5" />
-        Download Transcript (PDF)
-      </a>
+      <div className="flex flex-wrap items-center gap-4">
+        <a
+          href="/2200910200015.pdf"
+          download
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 bg-[#ff9100] text-black px-5 py-1 rounded-xs text-base font-medium"
+        >
+          <Download className="h-5 w-5" />
+          Download PDC
+        </a>
+        <a
+          href="/degreecertificate.pdf"
+          download
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 bg-[#ff9100] text-black px-5 py-1 rounded-xs text-base font-medium"
+        >
+          <Download className="h-5 w-5" />
+          Download Digilocker verified PDC
+        </a>
+      </div>
     </div>
   );
 }
@@ -403,7 +486,7 @@ export default function Home() {
   const [tagline, ...bio] = CONFIG.personal.bio;
 
   return (
-    <div className="min-h-screen bg-white text-black selection:bg-black selection:text-white">
+    <div className="min-h-screen bg-yellow-100 text-black selection:bg-black selection:text-white">
       <main className="mx-auto w-full max-w-[700px] px-6 py-16 sm:py-24">
         {/* ============ HEADER ============ */}
         <header className="mb-16">
@@ -413,7 +496,7 @@ export default function Home() {
               <img
                 src="/profile.jpg"
                 alt="Kinshuk Jain"
-                className="h-24 w-24 shrink-0 rounded-xl object-cover bg-gray-100"
+                className="h-44 w-44 shrink-0 rounded-full object-cover bg-gray-100"
                 onError={() => setProfileOk(false)}
               />
             )}
@@ -444,9 +527,11 @@ export default function Home() {
                   href={s.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2  text-blue-800 hover:underline  px-4 py-1 rounded-xl text-base font-medium  transition-none"
+                  className="inline-flex items-center gap-2  text-gray-700 hover:underline  px-4 py-1 rounded-xl text-base font-medium  transition-none"
                 >
-                  <Icon className="h-5 w-5" />
+                  <span className="flex  items-center justify-center  p-2  shrink-0 rounded-full bg-gray-800">
+                    <Icon className="h-5 w-5  text-gray-200" />
+                  </span>
                   {SOCIAL_LABEL[s.platform] ?? s.platform}
                 </a>
               );
@@ -457,14 +542,14 @@ export default function Home() {
           <div className="flex flex-wrap items-center gap-4">
             <Link
               href="/myresumekinshuk.pdf"
-              className="inline-flex items-center gap-2 bg-blue-400 text-black px-6 py-2 rounded-xl text-base font-medium"
+              className="inline-flex items-center gap-2 bg-[#ff9100] text-black px-2 py-1 rounded-sm text-base font-medium"
             >
               <Download className="h-5 w-5" />
-              Download Resume (PDF)
+              Download Resume
             </Link>
             <Link
               href="/blogs"
-              className="inline-flex items-center gap-2 bg-green-300 text-black px-6 py-2 rounded-xl text-base font-medium"
+              className="inline-flex items-center gap-2 bg-[#ff9100] text-black px-2 py-1 rounded-sm text-base font-medium"
             >
               <BookOpen className="h-5 w-5" />
               Read my Blogs
@@ -490,10 +575,10 @@ export default function Home() {
                 aria-controls={`panel-${t.id}`}
                 id={`tab-${t.id}`}
                 onClick={() => setTab(t.id)}
-                className={`flex items-center gap-2 px-2 py-2 text-base font-medium cursor-pointer transition-none ${
+                className={`flex items-center gap-2 py-1 px-2  text-base font-medium cursor-pointer transition-none ${
                   active
-                    ? "text-black  border-b-2 border-neutral-900 "
-                    : "text-gray-500 hover:text-black"
+                    ? "text-black  bg-[#ff9100] p-2 rounded-xs"
+                    : "text-gray-700 hover:text-black"
                 }`}
               >
                 <Icon className="h-5 w-5" />

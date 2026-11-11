@@ -175,7 +175,7 @@ export const metadata: Metadata = {
     shortcut: "/homfavicon.ico",
     apple: [
       {
-        url: "/homeslogo.png",
+        url: "/homelogo.png",
         sizes: "180x180",
         type: "image/png",
       },

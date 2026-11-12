@@ -157,20 +157,17 @@ const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   display: "swap",
 });
+
 export const metadata: Metadata = {
-  title: "Blogs | Cloudkinshuk.in",
+  metadataBase: new URL("https://cloudkinshuk.in"),
+
+  title: "Home | Cloudkinshuk.in",
   description: "Kinshuk Jain's portfolio and blog.",
 
   icons: {
     icon: [
-      {
-        url: "/homfavicon.ico",
-        type: "image/x-icon",
-      },
-      {
-        url: "/homelogo.png",
-        type: "image/png",
-      },
+      { url: "/homfavicon.ico", type: "image/x-icon" },
+      { url: "/homelogo.png", type: "image/png" },
     ],
     shortcut: "/homfavicon.ico",
     apple: [
@@ -184,19 +181,32 @@ export const metadata: Metadata = {
 
   openGraph: {
     title: "Home | Cloudkinshuk.in",
-    description: "Kinshuk Jain's portfolio and blog",
-    url: "https://cloudkinshuk.in/blogs",
+    description: "Kinshuk Jain's portfolio and blog.",
+    url: "https://cloudkinshuk.in",
     siteName: "Cloudkinshuk",
     images: [
       {
         url: "/homelogo.png",
         width: 1200,
         height: 630,
-        alt: "Cloudkinshuk Homepage",
+        alt: "Cloudkinshuk - Kinshuk Jain",
+        type: "image/png",
       },
     ],
     locale: "en_IN",
     type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Blogs | Cloudkinshuk.in",
+    description: "Kinshuk Jain's portfolio and blog.",
+    images: ["/homelogo.png"],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

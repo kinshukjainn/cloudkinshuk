@@ -1,19 +1,15 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://cloudkinshuk.in/blogs"),
+
   title: "Blogs | Cloudkinshuk.in",
-  description: "Kinshuk Jain's portfolio and blog.",
+  description: "Read kinshuk jain's latest blogs and thoughts",
 
   icons: {
     icon: [
-      {
-        url: "/blogsfavicon.ico",
-        type: "image/x-icon",
-      },
-      {
-        url: "/blogslogo.png",
-        type: "image/png",
-      },
+      { url: "/blogsfavicon.ico", type: "image/x-icon" },
+      { url: "/blogslogo.png", type: "image/png" },
     ],
     shortcut: "/blogsfavicon.ico",
     apple: [
@@ -27,19 +23,32 @@ export const metadata: Metadata = {
 
   openGraph: {
     title: "Blogs | Cloudkinshuk.in",
-    description: "Kinshuk Jain's portfolio and blog.",
+    description: "Read kinshuk jain's latest blogs and thoughts",
     url: "https://cloudkinshuk.in/blogs",
-    siteName: "Cloudkinshuk",
+    siteName: "Blogs || Cloudkinshuk",
     images: [
       {
         url: "/blogslogo.png",
         width: 1200,
         height: 630,
-        alt: "Cloudkinshuk Blogs",
+        alt: "Blogs cloudkinshuk - Kinshuk Jain",
+        type: "image/png",
       },
     ],
     locale: "en_IN",
     type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Blogs | Cloudkinshuk.in",
+    description: "Read kinshuk jain's thoughts and blogs.",
+    images: ["/blogslogo.png"],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

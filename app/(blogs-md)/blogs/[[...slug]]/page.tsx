@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { isValidElement, type ReactNode } from "react";
+import { createElement, isValidElement, type ReactNode } from "react";
 import Markdown from "react-markdown";
 import type { Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -92,26 +92,30 @@ const anchorHeading = (Tag: "h1" | "h2" | "h3" | "h4") =>
 
     const baseClass =
       Tag === "h1"
-        ? "mt-14 mb-6 scroll-mt-24  text-3xl  tracking-tight sm:text-4xl"
+        ? "mt-8 mb-4 scroll-mt-24  text-2xl sm:text-3xl font-normal leading-tight border-b border-[#a2a9b1] pb-1 text-[#202122]"
         : Tag === "h2"
-          ? "group relative mt-14 mb-5 scroll-mt-24  text-2xl tracking-tight sm:text-[1.6rem]"
+          ? "group relative mt-8 mb-3 scroll-mt-24  text-xl sm:text-2xl font-normal leading-tight border-b border-[#a2a9b1] pb-1 text-[#202122]"
           : Tag === "h3"
-            ? "group relative mt-10 mb-4 scroll-mt-24  text-xl tracking-tight"
-            : "mt-8 mb-3 scroll-mt-24  text-base font-semibold";
+            ? "group relative mt-6 mb-2 scroll-mt-24 font-sans text-lg font-bold text-[#202122]"
+            : "mt-5 mb-2 scroll-mt-24 font-sans text-base font-bold text-[#202122]";
 
-    return (
-      <Tag id={id} className={`${baseClass} text-black`} {...omitNode(rest)}>
-        {showAnchor && id && (
-          <a
-            href={`#${id}`}
-            aria-label={`Link to ${text}`}
-            className="absolute -left-6 hidden text-black  transition-opacity duration-150 hover:text-blue-800  lg:block"
-          >
-            #
-          </a>
-        )}
-        {children}
-      </Tag>
+    return createElement(
+      Tag,
+      {
+        id,
+        className: baseClass,
+        ...omitNode(rest),
+      },
+      showAnchor && id ? (
+        <a
+          href={`#${id}`}
+          aria-label={`Link to ${text}`}
+          className="absolute -left-5 hidden font-sans text-sm font-normal text-[#0645ad] opacity-0 transition-opacity duration-150 group-hover:opacity-100 hover:underline lg:block"
+        >
+          #
+        </a>
+      ) : null,
+      children,
     );
   };
 
@@ -123,56 +127,56 @@ const components: Components = {
   h4: anchorHeading("h4"),
   h5: (p) => (
     <h5
-      className="mt-6 mb-2 scroll-mt-24  text-[13px] font-medium  tracking-[0.16em] text-black"
+      className="mt-4 mb-2 scroll-mt-24 font-sans text-sm font-bold text-[#202122]"
       {...omitNode(p)}
     />
   ),
   h6: (p) => (
     <h6
-      className="mt-6 mb-2 scroll-mt-24  text-[13px] font-medium  tracking-[0.16em] text-gray-800"
+      className="mt-4 mb-2 scroll-mt-24 font-sans text-sm font-bold italic text-[#202122]"
       {...omitNode(p)}
     />
   ),
 
   p: (p) => (
     <p
-      className="my-5 break-words text-[15px] leading-7 text-gray-800 sm:text-base sm:leading-8"
+      className="my-3.5 break-words text-[14px] leading-[1.6] text-[#202122] sm:text-[15px]"
       {...omitNode(p)}
     />
   ),
   strong: (p) => (
-    <strong className="font-semibold text-black" {...omitNode(p)} />
+    <strong className="font-bold text-[#202122]" {...omitNode(p)} />
   ),
   em: (p) => <em className="italic" {...omitNode(p)} />,
-  del: (p) => <del className="text-black line-through" {...omitNode(p)} />,
+  del: (p) => <del className="text-[#202122] line-through" {...omitNode(p)} />,
   a: (p) => (
     <a
-      className="text-blue-800 underline decoration-1 underline-offset-4 transition-colors hover:text-blue-800 focus-visible:outline-none"
+      className="text-[#0645ad] hover:text-[#0b0080] hover:underline focus-visible:outline-none"
       {...omitNode(p)}
     />
   ),
 
   ul: (p) => (
     <ul
-      className="my-5 list-outside list-disc space-y-2 pl-6 text-[15px] leading-7 text-gray-700  marker:text-black sm:text-base sm:leading-8"
+      className="my-3.5 list-outside list-disc space-y-1 pl-6 text-[14px] leading-[1.6] text-[#202122] marker:text-[#202122] sm:pl-8 sm:text-[15px]"
       {...omitNode(p)}
     />
   ),
   ol: (p) => (
     <ol
-      className="my-5 list-outside list-decimal space-y-2 pl-6 text-[15px] leading-7 text-gray-700 marker:text-black sm:text-base sm:leading-8"
+      className="my-3.5 list-outside list-decimal space-y-1 pl-6 text-[14px] leading-[1.6] text-[#202122] marker:text-[#202122] sm:pl-8 sm:text-[15px]"
       {...omitNode(p)}
     />
   ),
-  li: (p) => <li className="pl-1 leading-7" {...omitNode(p)} />,
+  li: (p) => <li className="pl-1 leading-[1.6]" {...omitNode(p)} />,
 
   blockquote: (p) => (
     <blockquote
-      className="my-8 border-l-5 rounded-sm border-gray-600 bg-gray-100  py-1 px-2 pl-5 italic text-gray-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2"
+      className="my-4 border-l-4 border-[#c8ccd1] bg-[#f8f9fa] px-4 py-2 italic text-[#202122] sm:mx-6 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-1.5"
       {...omitNode(p)}
     />
   ),
-  hr: () => <hr className="my-12 border-0 border-t border-[#272521]" />,
+  hr: () => <hr className="my-8 border-0 border-t border-[#a2a9b1]" />,
 
   pre: (p) => {
     const { children } = omitNode(p);
@@ -183,14 +187,17 @@ const components: Components = {
       /language-/.test(className ?? "") || /hljs/.test(className ?? "");
     if (isBlock) {
       return (
-        <code className={`font-mono ${className ?? ""}`} {...omitNode(rest)}>
+        <code
+          className={`font-mono text-[13px] ${className ?? ""}`}
+          {...omitNode(rest)}
+        >
           {children}
         </code>
       );
     }
     return (
       <code
-        className="break-words bg-gray-200 px-1.5 py-0.5 font-mono rounded-md font-semibold text-[0.85em] text-gray-800"
+        className="break-words rounded-[2px] border border-[#eaecf0] bg-[#f8f9fa] px-1 py-0.5 font-mono text-[0.9em] text-[#202122]"
         {...omitNode(rest)}
       >
         {children}
@@ -199,41 +206,46 @@ const components: Components = {
   },
 
   table: (p) => (
-    <div className="my-8 w-full overflow-x-auto">
+    <div className="my-5 w-full overflow-x-auto">
       <table
-        className="w-full min-w-[560px] border-collapse text-[0.9375rem]"
+        className="w-full min-w-[520px] border-collapse border border-[#a2a9b1] bg-white text-[14px] sm:text-[15px]"
         {...omitNode(p)}
       />
     </div>
   ),
-  thead: (p) => (
-    <thead className="border-b-2 border-gray-500" {...omitNode(p)} />
-  ),
+  thead: (p) => <thead className="bg-[#eaecf0]" {...omitNode(p)} />,
   tbody: (p) => <tbody {...omitNode(p)} />,
   tr: (p) => (
     <tr
-      className="border-b-2 border-gray-400 last:border-b-0"
+      className="border-b border-[#a2a9b1] even:bg-[#f8f9fa]"
       {...omitNode(p)}
     />
   ),
   th: (p) => (
     <th
-      className="whitespace-nowrap px-4 py-3 text-left  text-[16px] font-medium  tracking-[0.16em] text-black text-[#f2eee5]"
+      className="border border-[#a2a9b1] px-3 py-2 text-left font-bold text-[#202122]"
       {...omitNode(p)}
     />
   ),
   td: (p) => (
-    <td className="px-4 py-3 align-top text-gray-700" {...omitNode(p)} />
+    <td
+      className="border border-[#a2a9b1] px-3 py-2 align-top text-[#202122]"
+      {...omitNode(p)}
+    />
   ),
 
   img: (p) => (
     // eslint-disable-next-line @next/next/no-img-element
-    <img className="my-8 h-auto w-full" alt="" {...omitNode(p)} />
+    <img
+      className="my-6 h-auto max-w-full border border-[#c8ccd1] bg-[#f8f9fa] p-1"
+      alt=""
+      {...omitNode(p)}
+    />
   ),
 
   input: (p) => (
     <input
-      className="mr-2 h-4 w-4 translate-y-[2px] accent-[#d0a869]"
+      className="mr-2 h-3.5 w-3.5 translate-y-[2px] accent-[#3366cc]"
       {...omitNode(p)}
     />
   ),
@@ -257,7 +269,7 @@ export default async function DocPage({ params }: Props) {
       }),
     }));
 
-    return <BlogFeed sections={sectionsData} />;
+    return createElement(BlogFeed, { sections: sectionsData });
   }
 
   /* ── ARTICLE ───────────────────────────────────────────── */
@@ -271,70 +283,67 @@ export default async function DocPage({ params }: Props) {
   const readTime = Math.max(1, Math.ceil(wordCount / 200));
 
   const article = (
-    <article
-      className={`min-w-0 max-w-[680px] ${hasToc ? "mx-auto lg:mx-0" : "mx-auto"}`}
-    >
-      <header className="mb-10 border-b border-gray-500  pb-8 sm:mb-12 sm:pb-10">
-        <p className=" text-[15px] font-medium  tracking-[0.16em] text-black">
-          Blog post · {readTime} min read
-        </p>
-
+    <article className="min-w-0 w-full max-w-[820px] bg-white">
+      <header className="mb-6">
         {doc.meta.title && (
-          <h1 className="mt-4 break-words  text-3xl font-semibold leading-[1.15] tracking-tight text-black sm:text-4xl md:text-5xl">
+          <h1 className="break-words border-b border-[#a2a9b1] pb-1.5  text-2xl font-normal leading-tight text-[#202122] sm:text-3xl md:text-[2.1rem]">
             {doc.meta.title}
           </h1>
         )}
 
+        <p className="mt-1.5 text-[12px] text-[#54595d] sm:text-[13px]">
+          Blog post · {readTime} min read
+        </p>
+
         {doc.meta.description && (
-          <p className="mt-4 max-w-2xl text-base leading-7 text-gray-700 sm:text-lg sm:leading-8">
+          <p className="mt-4 text-[14px] italic leading-[1.6] text-[#54595d] sm:text-[15px]">
             {doc.meta.description}
           </p>
         )}
       </header>
 
       <div className="[&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
-        <Markdown
-          remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeHighlight]}
-          components={components}
-        >
-          {doc.content}
-        </Markdown>
+        {createElement(
+          Markdown,
+          {
+            remarkPlugins: [remarkGfm],
+            rehypePlugins: [rehypeHighlight],
+            components,
+          },
+          doc.content,
+        )}
       </div>
     </article>
   );
 
   return (
-    <div className="min-h-screen bg-yellow-100 text-black selection:bg-[#d0a869] blog-font  selection:text-[#0d0d0c]">
-      <main className="mx-auto w-full max-w-[980px] px-5 py-12 sm:px-8 sm:py-16">
+    <div className="min-h-screen bg-white font-sans text-[#202122] selection:bg-[#3366cc] selection:text-white">
+      <main className="mx-auto w-full max-w-[1140px] px-4 py-6 sm:px-8 sm:py-10">
         {/* Back link */}
-        <nav className="mb-10">
+        <nav className="mb-6 border-b border-[#eaecf0] pb-2.5">
           <Link
+            className="inline-flex items-center gap-1.5 text-[13px] text-[#0645ad] hover:underline focus-visible:outline-none"
             href="/blogs"
-            className="group inline-flex items-center gap-2 px-3 py-2 bg-blue-800 rounded-full text-[13px] text-white font-medium transition-colors hover:text-white focus-visible:outline-none  focus-visible:ring-1 focus-visible:ring-[#d0a869] focus-visible:ring-offset-4 focus-visible:ring-offset-[#0d0d0c]"
           >
-            <IoArrowBack
-              className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5"
-              aria-hidden="true"
-            />
+            <IoArrowBack aria-hidden="true" className="h-3.5 w-3.5" />
             <span>Back to all articles</span>
           </Link>
         </nav>
 
         {hasToc ? (
-          <div className="lg:grid lg:grid-cols-[180px_minmax(0,1fr)] lg:gap-10">
+          <div className="lg:grid lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-10">
             <aside aria-label="Table of contents" className="hidden lg:block">
-              <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-2">
-                <p className="mb-3  text-[16px] font-medium  tracking-[0.16em] text-green-800">
+              <div className="sticky top-10 max-h-[calc(100vh-5rem)] overflow-y-auto border-r border-[#eaecf0] pr-4">
+                <p className="mb-2 border-b border-[#eaecf0] pb-1 text-[13px] font-bold text-[#202122]">
                   On this page
                 </p>
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-1.5 text-[13px]">
                   {headings.map((h) => (
                     <li key={h.id}>
                       <a
                         href={`#${h.id}`}
-                        className={`block leading-snug text-black transition-colors hover:text-blue-800 ${
-                          h.level === 3 ? "pl-4" : ""
+                        className={`block leading-snug text-[#0645ad] hover:underline ${
+                          h.level === 3 ? "pl-3 text-[12px]" : ""
                         }`}
                       >
                         {h.text}
@@ -352,8 +361,8 @@ export default async function DocPage({ params }: Props) {
         )}
       </main>
 
-      <footer className="mx-auto w-full max-w-[980px] border-t border-[#272521] px-5 py-6 sm:px-8">
-        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2  text-[13px] font-medium  tracking-[0.16em] text-black">
+      <footer className="mx-auto mt-16 w-full max-w-[1140px] border-t border-[#a2a9b1] px-4 py-6 sm:px-8">
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-[12px] text-[#54595d]">
           <span>kinshuk jain © {new Date().getFullYear()}</span>
           <span>hand-coded · no templates</span>
         </div>

@@ -6,7 +6,7 @@ description: In this blog i will be talking/discussing about that how i use ai i
 
 ## How artificial intelligence has changed the development ?
 
-From past **2 yrs** the way of developing a product/project has changed rapidly and it has become much more faster and optmized. Due to artificial intelligence the amount code written in a particular amount of time has been increasing exponentially , becuase of that the ability to push multiple features or to create a multiple pr has been increased.
+From past **2 yrs** the way of developing a product/project has changed rapidly and it has become much more faster and optmized. Due to artificial intelligence the amount of code written has been increasing exponentially , becuase of that the ability to push multiple features or to create a multiple pr has been increased.
 
 These changes has made each of us to use ai **aggressively** in our workload to **speed up our work effieciently** . There is a catch also as we are increasing its use , we are also using ai for the workloads or the task about **which we dont have any knowledge or context**. This shift has created a lot of decline in the critical thinking of human being that how a human brain is designed to always think critically in difficult situation/task.
 

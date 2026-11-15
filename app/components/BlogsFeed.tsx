@@ -52,7 +52,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
                 My writings
               </h1>
             </Link>
-            <p className="text-[13px] text-[#0066cc] max-w-sm leading-snug">
+            <p className="text-[16px] text-[#0066cc] max-w-sm leading-snug">
               Read my latest project descriptions, technical notes, and updates.
             </p>
           </div>
@@ -61,7 +61,7 @@ export default function BlogFeed({ sections }: { sections: Section[] }) {
           <div className="flex items-stretch h-8 w-full md:w-auto">
             <div className="flex items-center bg-white border border-[#cccccc] border-r-0 px-2 flex-grow md:w-64">
               <Search
-                className="h-4 w-4 text-[#888888] mr-2 shrink-0"
+                className="h-4 w-4 text-black mr-2 shrink-0"
                 aria-hidden="true"
               />
               <input

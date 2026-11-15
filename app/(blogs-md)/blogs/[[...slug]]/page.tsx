@@ -286,7 +286,7 @@ export default async function DocPage({ params }: Props) {
     <article className="min-w-0 w-full max-w-[820px] bg-white">
       <header className="mb-6">
         {doc.meta.title && (
-          <h1 className="break-words border-b border-[#a2a9b1] pb-1.5  text-2xl font-normal leading-tight text-[#202122] sm:text-3xl md:text-[2.1rem]">
+          <h1 className="break-words border-b border-[#a2a9b1] pb-1.5  text-2xl font-serif font-normal leading-tight text-[#202122] sm:text-3xl md:text-[2.1rem]">
             {doc.meta.title}
           </h1>
         )}
@@ -322,7 +322,7 @@ export default async function DocPage({ params }: Props) {
         {/* Back link */}
         <nav className="mb-6 border-b border-[#eaecf0] pb-2.5">
           <Link
-            className="inline-flex items-center gap-1.5 text-[13px] text-[#0645ad] hover:underline focus-visible:outline-none"
+            className="inline-flex items-center gap-1.5 text-[13px] bg-blue-800 py-1 px-1 font-medium text-white hover:underline focus-visible:outline-none"
             href="/blogs"
           >
             <IoArrowBack aria-hidden="true" className="h-3.5 w-3.5" />

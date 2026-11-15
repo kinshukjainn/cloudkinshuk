@@ -20,16 +20,23 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-t-[4px] border-[#333333] border-b border-[#eeeeee] bg-white">
       <div className="mx-auto flex min-h-[70px] max-w-[1024px] items-center px-5 sm:px-8">
         {/* Logo (Styled to match the VideoLAN dual-text structure) */}
+
         <Link
           href="/"
           aria-label="Cloudkinshuk home"
-          className="flex flex-col justify-center mr-10 group"
+          className="flex flex-col headerheading justify-center mr-10 group"
         >
-          <span className="text-[28px] font-light text-[#0066cc] leading-none tracking-tight group-hover:text-[#005bb5] transition-colors">
-            Cloudkinshuk
-          </span>
-          <span className="bg-[#0066cc] text-white text-[10px] font-bold tracking-[0.2em] px-1.5 py-[2px] mt-1 w-fit leading-none uppercase group-hover:bg-[#005bb5] transition-colors">
-            .in
+          <div className="flex items-baseline">
+            <span className="text-[28px] font-light text-[#0066cc] leading-none tracking-tight group-hover:text-[#005bb5] transition-colors">
+              Cloudkinshuk
+            </span>
+            <span className="text-[20px] font-bold text-[#0066cc] leading-none group-hover:text-[#005bb5] transition-colors">
+              .in
+            </span>
+          </div>
+
+          <span className="bg-[#0066cc] text-white text-[10px] font-bold tracking-[0.2em] px-1.5 py-[2px] mt-1 w-fit leading-none  group-hover:bg-[#005bb5] transition-colors">
+            Developer / Engineer
           </span>
         </Link>
 
@@ -42,7 +49,7 @@ export default function Header() {
               className={`text-[17px] transition-colors duration-200
                 ${
                   isActive(link.href)
-                    ? "text-[#004a99] font-semibold"
+                    ? "text-[#004a99] underline font-semibold"
                     : "text-[#0066cc] hover:text-[#004a99]"
                 }`}
             >

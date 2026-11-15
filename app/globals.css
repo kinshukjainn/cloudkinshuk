@@ -150,11 +150,11 @@
 
 body {
   background-color: white;
-  font-family: var(--font-segoeui), sans-serif;
+  font-family: var(--font-inter), sans-serif;
 }
 
 .headerheading {
-  font-family: var(--font-alegreya), sans-serif;
+  font-family: var(--font-dm-sans), sans-serif;
 }
 
 .monofont {
